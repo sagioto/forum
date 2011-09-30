@@ -235,7 +235,7 @@ public class Main {
 		int selectedStrong = calculateSelection(selectedNumbers, numbers, hotNumbers, hotStrong);
 
 		Collections.sort(selectedNumbers);
-		System.out.println("random: 		" + selectedNumbers + " [" + selectedStrong + "]");
+		System.out.println("\n" + "random: 		" + selectedNumbers + " [" + selectedStrong + "]");
 	}
 
 }
