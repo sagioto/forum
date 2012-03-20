@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 
@@ -97,10 +98,15 @@ public class Main {
 	}
 
 	private static void doClicks(WebDriver driver) throws InterruptedException {
+
+
 		driver.get("http://www.pais.co.il/Lotto/Pages/Statistics.aspx");
-		driver.findElement(By.xpath("/html/body/form/div[2]/div[3]/div[3]/div/div/div[2]/div[2]/div/div/span/input")).click();
-		driver.findElement(By.xpath("/html/body/form/div[2]/div[3]/div[3]/div/div/div[2]/div[2]/div/div/div/img")).click();
-		driver.findElement(By.xpath("/html/body/div/div/div/select[2]")).sendKeys("2009");
+		driver.findElement(By.id("PaisRangeSearchTypeDate"));
+		WebElement radio = driver.findElement(By.id("PaisFromDate"));
+		radio.click();
+		radio.isSelected();
+		radio.click();
+		driver.findElement(By.id("/html/body/div/div/div/select[2]")).sendKeys("2009");
 		driver.findElement(By.xpath("/html/body/div/div/div/select")).sendKeys("2");
 		driver.findElement(By.xpath("/html/body/div/div/div/select")).sendKeys("2");
 		driver.findElement(By.xpath("/html/body/div/table/tbody/tr[4]/td[7]/a")).click();
