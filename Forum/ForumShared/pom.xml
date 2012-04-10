@@ -1,0 +1,18 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>edu.forum.shared</groupId>
+  <artifactId>Forum</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>Forum</name>
+  <description>the shared interfaces and classes</description>
+  <packaging>jar</packaging>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  	<build>
+		<defaultGoal>package</defaultGoal>
+		<finalName>ForumShared</finalName>
+	</build>
+</project>
