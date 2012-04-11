@@ -4,13 +4,13 @@ goto :next
 :default
 set arg=package
 :next
-pushd D:\workspace\Forum\ForumShared\
+pushd D:\git\workspace\ForumShared\
 call mvn %arg%
 popd
-pushd D:\workspace\Forum\ForumServer\
+pushd D:\git\workspace\ForumServer\
 call mvn %arg%
 popd
-pushd D:\workspace\Forum\ForumClient\
+pushd D:\git\workspace\ForumClient\
 call mvn %arg%
 popd
 move "D:\git\workspace\ForumShared\target\ForumShared.jar" D:\Users\Sagi\Dropbox\Public
