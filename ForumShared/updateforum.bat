@@ -1,3 +1,4 @@
+@echo off
 if "%1"=="" goto :default
 set arg=%1
 goto :next
