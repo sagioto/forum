@@ -62,6 +62,7 @@ public class Client {
 						case "register":
 							System.out.println(methods.get(commndsArry[0]).invoke(controller, new User(commndsArry[1], commndsArry[2])));
 							break;
+					//TODO: complete commands forwarding
 					}
 						
 //					System.out.println(methods.get(commndsArry[0]).invoke(controller, new User("sagi", "sagi")));
