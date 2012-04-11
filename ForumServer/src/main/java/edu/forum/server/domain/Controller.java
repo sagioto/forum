@@ -24,51 +24,42 @@ public class Controller implements RemoteController {
 	private RemoteUser admin;
 	private ConcurrentMap<String, RemoteUser> users = new ConcurrentHashMap<String, RemoteUser>();
 	private ConcurrentMap<String, RemotePost> posts = new ConcurrentHashMap<String, RemotePost>();
-	private int i = 0;
 
-	public String enter() throws RemoteException {
+	public boolean enter() throws RemoteException {
 		log.info("received request to enter");
-		return String.valueOf(++i);
+		return true;
 	}
 
-	public String register(User toRegister) throws RemoteException {
+	public boolean register(User toRegister) throws RemoteException {
 		RemoteUser prev = users.putIfAbsent(toRegister.getUsername(), toRegister);
-		if(prev != null)
-			return "failed! user name " + toRegister.getUsername() + " is already taken!";
-		return "registration success";
+		return prev != null;
 	}
 
-	public String login(User toLogin) throws RemoteException {
-		if(this.getUsers().get(toLogin.getUsername()) != null)
-				if(SecurityUtils.login(this, toLogin.getUsername(), toLogin.getPassword()))
-					return "login success";
-				else
-					return "login failed check your password";
-		else
-			return "login failed check your user name";
+	public boolean login(User toLogin) throws RemoteException {
+		return (this.getUsers().get(toLogin.getUsername()) != null)
+			&& (SecurityUtils.login(this, toLogin.getUsername(), toLogin.getPassword()));
 	}
 
-	public String logout(User toLogout) throws RemoteException {
+	public boolean logout(User toLogout) throws RemoteException {
 		if(!SecurityUtils.isLoggedIn(this, toLogout)){
 			SecurityUtils.logout(this, toLogout);
-			return "logged out";
+			return true;
 		}
-		else
-			return "you were not logged in";
+		else return false;
 	}
 
 
 	public Map<Timestamp, RemotePost> view(Post toView) throws RemoteException {
 		return toView.getReplies();
-		
+
 	}
 
-	public String post(Post current, Post toPost) throws RemoteException {
+	public boolean post(Post current, Post toPost) throws RemoteException {
 		if(SecurityUtils.isAuthorizedToPost(this, current, toPost.getUser())){
 			DataUtils.post(current, toPost);
-			return "message posted";
+			return true;
 		}
-		return "only logged in members can post";
+		return false;
 	}
 
 	public static void main(String...args){
@@ -79,7 +70,7 @@ public class Controller implements RemoteController {
 
 		log.info("starting initialization sequence...");
 		log.info("trying to bind service...");
-		
+
 		Controller controller = new Controller();
 		try{
 			NetworkUtils.bind(controller);
@@ -96,7 +87,7 @@ public class Controller implements RemoteController {
 			e.printStackTrace();
 		}
 		log.info("server ready to accept connections...");
-		
+
 	}
 
 

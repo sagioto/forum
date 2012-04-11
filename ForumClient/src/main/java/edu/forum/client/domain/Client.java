@@ -55,12 +55,16 @@ public class Client {
 			try {
 				String command;
 				while(true){
-					System.out.print(user.getUsername() + "@" + curreunt.getTitle() + ">> ");
+					System.out.print(user.getUsername() + "@" + curreunt.getTitle() + "> ");
 					command = in.nextLine();
 					String[] commndsArry = command.split(" ");
 					switch(commndsArry[0]){
 						case "register":
-							System.out.println(methods.get(commndsArry[0]).invoke(controller, new User(commndsArry[1], commndsArry[2])));
+							user = new User(commndsArry[1], commndsArry[2]);
+							if ((boolean) methods.get(commndsArry[0]).invoke(controller, user))
+								System.out.println("failed! user name " + user.getUsername() + " is already taken!");
+							else
+								System.out.println("registration success");
 							break;
 					//TODO: complete commands forwarding
 					}
