@@ -13,6 +13,6 @@ popd
 pushd D:\workspace\Forum\ForumClient\
 call mvn %arg%
 popd
-move "D:\workspace\Forum\ForumShared\target\ForumShared.jar" D:\Users\Sagi\Dropbox\Public
-move "D:\workspace\Forum\ForumServer\target\ForumServer.jar" D:\Users\Sagi\Dropbox\Workshop\Forum\ass2
-move "D:\workspace\Forum\ForumClient\target\ForumClient.jar" D:\Users\Sagi\Dropbox\Workshop\Forum\ass2
+move "D:\git\workspace\ForumShared\target\ForumShared.jar" D:\Users\Sagi\Dropbox\Public
+move "D:\git\workspace\ForumServer\target\ForumServer.jar" D:\Users\Sagi\Dropbox\Workshop\Forum\ass2
+move "D:\git\workspace\ForumClient\target\ForumClient.jar" D:\Users\Sagi\Dropbox\Workshop\Forum\ass2
