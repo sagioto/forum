@@ -1,0 +1,309 @@
+13:20:19 INFO main edu.forum.server.Controller - starting initialization sequence...
+13:20:36 INFO main edu.forum.server.Controller - starting initialization sequence...
+13:20:49 INFO main edu.forum.server.Controller - starting initialization sequence...
+13:22:18 INFO main edu.forum.server.Controller - starting initialization sequence...
+13:27:29 INFO main edu.forum.server.Controller - starting initialization sequence...
+13:27:30 ERROR main edu.forum.server.Controller - ComputeEngine exception:
+java.rmi.ServerException: RemoteException occurred in server thread; nested exception is: 
+	java.rmi.UnmarshalException: error unmarshalling arguments; nested exception is: 
+	java.lang.ClassNotFoundException: edu.forum.shared.RemoteController
+	at sun.rmi.server.UnicastServerRef.oldDispatch(UnicastServerRef.java:419)
+	at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:267)
+	at sun.rmi.transport.Transport$1.run(Transport.java:177)
+	at sun.rmi.transport.Transport$1.run(Transport.java:174)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at sun.rmi.transport.Transport.serviceCall(Transport.java:173)
+	at sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:553)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:808)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:667)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1110)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:603)
+	at java.lang.Thread.run(Thread.java:722)
+	at sun.rmi.transport.StreamRemoteCall.exceptionReceivedFromServer(Unknown Source)
+	at sun.rmi.transport.StreamRemoteCall.executeCall(Unknown Source)
+	at sun.rmi.server.UnicastRef.invoke(Unknown Source)
+	at sun.rmi.registry.RegistryImpl_Stub.rebind(Unknown Source)
+	at edu.forum.server.Controller.main(Controller.java:58)
+Caused by: java.rmi.UnmarshalException: error unmarshalling arguments; nested exception is: 
+	java.lang.ClassNotFoundException: edu.forum.shared.RemoteController
+	at sun.rmi.registry.RegistryImpl_Skel.dispatch(Unknown Source)
+	at sun.rmi.server.UnicastServerRef.oldDispatch(UnicastServerRef.java:409)
+	at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:267)
+	at sun.rmi.transport.Transport$1.run(Transport.java:177)
+	at sun.rmi.transport.Transport$1.run(Transport.java:174)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at sun.rmi.transport.Transport.serviceCall(Transport.java:173)
+	at sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:553)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:808)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:667)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1110)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:603)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: java.lang.ClassNotFoundException: edu.forum.shared.RemoteController
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:423)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:264)
+	at sun.rmi.server.LoaderHandler.loadProxyInterfaces(LoaderHandler.java:730)
+	at sun.rmi.server.LoaderHandler.loadProxyClass(LoaderHandler.java:674)
+	at sun.rmi.server.LoaderHandler.loadProxyClass(LoaderHandler.java:611)
+	at java.rmi.server.RMIClassLoader$2.loadProxyClass(RMIClassLoader.java:646)
+	at java.rmi.server.RMIClassLoader.loadProxyClass(RMIClassLoader.java:311)
+	at sun.rmi.server.MarshalInputStream.resolveProxyClass(MarshalInputStream.java:257)
+	at java.io.ObjectInputStream.readProxyDesc(ObjectInputStream.java:1549)
+	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1511)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1750)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1347)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:369)
+	... 13 more
+13:28:24 INFO main edu.forum.server.Controller - starting initialization sequence...
+13:28:55 ERROR main edu.forum.server.Controller - ComputeEngine exception:
+java.rmi.ServerException: RemoteException occurred in server thread; nested exception is: 
+	java.rmi.UnmarshalException: error unmarshalling arguments; nested exception is: 
+	java.lang.ClassNotFoundException: edu.forum.shared.RemoteController
+	at sun.rmi.server.UnicastServerRef.oldDispatch(UnicastServerRef.java:419)
+	at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:267)
+	at sun.rmi.transport.Transport$1.run(Transport.java:177)
+	at sun.rmi.transport.Transport$1.run(Transport.java:174)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at sun.rmi.transport.Transport.serviceCall(Transport.java:173)
+	at sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:553)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:808)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:667)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1110)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:603)
+	at java.lang.Thread.run(Thread.java:722)
+	at sun.rmi.transport.StreamRemoteCall.exceptionReceivedFromServer(Unknown Source)
+	at sun.rmi.transport.StreamRemoteCall.executeCall(Unknown Source)
+	at sun.rmi.server.UnicastRef.invoke(Unknown Source)
+	at sun.rmi.registry.RegistryImpl_Stub.rebind(Unknown Source)
+	at edu.forum.server.Controller.main(Controller.java:58)
+Caused by: java.rmi.UnmarshalException: error unmarshalling arguments; nested exception is: 
+	java.lang.ClassNotFoundException: edu.forum.shared.RemoteController
+	at sun.rmi.registry.RegistryImpl_Skel.dispatch(Unknown Source)
+	at sun.rmi.server.UnicastServerRef.oldDispatch(UnicastServerRef.java:409)
+	at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:267)
+	at sun.rmi.transport.Transport$1.run(Transport.java:177)
+	at sun.rmi.transport.Transport$1.run(Transport.java:174)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at sun.rmi.transport.Transport.serviceCall(Transport.java:173)
+	at sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:553)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:808)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:667)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1110)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:603)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: java.lang.ClassNotFoundException: edu.forum.shared.RemoteController
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:423)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:264)
+	at sun.rmi.server.LoaderHandler.loadProxyInterfaces(LoaderHandler.java:730)
+	at sun.rmi.server.LoaderHandler.loadProxyClass(LoaderHandler.java:674)
+	at sun.rmi.server.LoaderHandler.loadProxyClass(LoaderHandler.java:611)
+	at java.rmi.server.RMIClassLoader$2.loadProxyClass(RMIClassLoader.java:646)
+	at java.rmi.server.RMIClassLoader.loadProxyClass(RMIClassLoader.java:311)
+	at sun.rmi.server.MarshalInputStream.resolveProxyClass(MarshalInputStream.java:257)
+	at java.io.ObjectInputStream.readProxyDesc(ObjectInputStream.java:1549)
+	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1511)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1750)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1347)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:369)
+	... 13 more
+13:30:49 INFO main edu.forum.server.Controller - starting initialization sequence...
+13:30:51 INFO main edu.forum.server.Controller - edu.forum.shared.RemoteController
+13:30:51 INFO main edu.forum.server.Controller - Controller bound
+13:42:10 INFO main edu.forum.server.Controller - starting initialization sequence...
+13:42:10 INFO main edu.forum.server.Controller - edu.forum.shared.RemoteController
+13:42:10 INFO main edu.forum.server.Controller - Controller bound
+13:42:31 INFO main edu.forum.server.Controller - starting initialization sequence...
+13:42:31 ERROR main edu.forum.server.Controller - ComputeEngine exception:
+java.rmi.ServerException: RemoteException occurred in server thread; nested exception is: 
+	java.rmi.UnmarshalException: error unmarshalling arguments; nested exception is: 
+	java.lang.ClassNotFoundException: edu.forum.shared.RemoteController
+	at sun.rmi.server.UnicastServerRef.oldDispatch(UnicastServerRef.java:419)
+	at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:267)
+	at sun.rmi.transport.Transport$1.run(Transport.java:177)
+	at sun.rmi.transport.Transport$1.run(Transport.java:174)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at sun.rmi.transport.Transport.serviceCall(Transport.java:173)
+	at sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:553)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:808)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:667)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1110)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:603)
+	at java.lang.Thread.run(Thread.java:722)
+	at sun.rmi.transport.StreamRemoteCall.exceptionReceivedFromServer(Unknown Source)
+	at sun.rmi.transport.StreamRemoteCall.executeCall(Unknown Source)
+	at sun.rmi.server.UnicastRef.invoke(Unknown Source)
+	at sun.rmi.registry.RegistryImpl_Stub.rebind(Unknown Source)
+	at edu.forum.server.Controller.main(Controller.java:58)
+Caused by: java.rmi.UnmarshalException: error unmarshalling arguments; nested exception is: 
+	java.lang.ClassNotFoundException: edu.forum.shared.RemoteController
+	at sun.rmi.registry.RegistryImpl_Skel.dispatch(Unknown Source)
+	at sun.rmi.server.UnicastServerRef.oldDispatch(UnicastServerRef.java:409)
+	at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:267)
+	at sun.rmi.transport.Transport$1.run(Transport.java:177)
+	at sun.rmi.transport.Transport$1.run(Transport.java:174)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at sun.rmi.transport.Transport.serviceCall(Transport.java:173)
+	at sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:553)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:808)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:667)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1110)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:603)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: java.lang.ClassNotFoundException: edu.forum.shared.RemoteController
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:423)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:264)
+	at sun.rmi.server.LoaderHandler.loadProxyInterfaces(LoaderHandler.java:730)
+	at sun.rmi.server.LoaderHandler.loadProxyClass(LoaderHandler.java:674)
+	at sun.rmi.server.LoaderHandler.loadProxyClass(LoaderHandler.java:611)
+	at java.rmi.server.RMIClassLoader$2.loadProxyClass(RMIClassLoader.java:646)
+	at java.rmi.server.RMIClassLoader.loadProxyClass(RMIClassLoader.java:311)
+	at sun.rmi.server.MarshalInputStream.resolveProxyClass(MarshalInputStream.java:257)
+	at java.io.ObjectInputStream.readProxyDesc(ObjectInputStream.java:1549)
+	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1511)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1750)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1347)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:369)
+	... 13 more
+13:44:20 INFO main edu.forum.server.Controller - starting initialization sequence...
+13:47:25 INFO main edu.forum.server.Controller - starting initialization sequence...
+13:47:26 INFO main edu.forum.server.Controller - Controller bound
+14:03:21 INFO main edu.forum.server.Controller - starting initialization sequence...
+14:03:21 INFO main edu.forum.server.Controller - Controller bound
+14:07:10 INFO main edu.forum.server.Controller - starting initialization sequence...
+14:07:10 ERROR main edu.forum.server.Controller - Forum Server couldn't rebind:
+java.rmi.ServerException: RemoteException occurred in server thread; nested exception is: 
+	java.rmi.UnmarshalException: error unmarshalling arguments; nested exception is: 
+	java.lang.ClassNotFoundException: edu.forum.shared.RemoteController
+	at sun.rmi.server.UnicastServerRef.oldDispatch(UnicastServerRef.java:419)
+	at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:267)
+	at sun.rmi.transport.Transport$1.run(Transport.java:177)
+	at sun.rmi.transport.Transport$1.run(Transport.java:174)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at sun.rmi.transport.Transport.serviceCall(Transport.java:173)
+	at sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:553)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:808)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:667)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1110)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:603)
+	at java.lang.Thread.run(Thread.java:722)
+	at sun.rmi.transport.StreamRemoteCall.exceptionReceivedFromServer(Unknown Source)
+	at sun.rmi.transport.StreamRemoteCall.executeCall(Unknown Source)
+	at sun.rmi.server.UnicastRef.invoke(Unknown Source)
+	at sun.rmi.registry.RegistryImpl_Stub.rebind(Unknown Source)
+	at edu.forum.server.Controller.main(Controller.java:58)
+Caused by: java.rmi.UnmarshalException: error unmarshalling arguments; nested exception is: 
+	java.lang.ClassNotFoundException: edu.forum.shared.RemoteController
+	at sun.rmi.registry.RegistryImpl_Skel.dispatch(Unknown Source)
+	at sun.rmi.server.UnicastServerRef.oldDispatch(UnicastServerRef.java:409)
+	at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:267)
+	at sun.rmi.transport.Transport$1.run(Transport.java:177)
+	at sun.rmi.transport.Transport$1.run(Transport.java:174)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at sun.rmi.transport.Transport.serviceCall(Transport.java:173)
+	at sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:553)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:808)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:667)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1110)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:603)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: java.lang.ClassNotFoundException: edu.forum.shared.RemoteController
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:423)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:264)
+	at sun.rmi.server.LoaderHandler.loadProxyInterfaces(LoaderHandler.java:730)
+	at sun.rmi.server.LoaderHandler.loadProxyClass(LoaderHandler.java:674)
+	at sun.rmi.server.LoaderHandler.loadProxyClass(LoaderHandler.java:611)
+	at java.rmi.server.RMIClassLoader$2.loadProxyClass(RMIClassLoader.java:646)
+	at java.rmi.server.RMIClassLoader.loadProxyClass(RMIClassLoader.java:311)
+	at sun.rmi.server.MarshalInputStream.resolveProxyClass(MarshalInputStream.java:257)
+	at java.io.ObjectInputStream.readProxyDesc(ObjectInputStream.java:1549)
+	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1511)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1750)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1347)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:369)
+	... 13 more
+14:07:30 INFO main edu.forum.server.Controller - starting initialization sequence...
+14:07:30 INFO main edu.forum.server.Controller - Controller bound
+14:25:18 INFO main edu.forum.server.Controller - starting initialization sequence...
+14:25:19 INFO main edu.forum.server.Controller - Controller bound
+14:48:32 INFO main edu.forum.server.Controller - starting initialization sequence...
+14:48:33 ERROR main edu.forum.server.Controller - Forum Server couldn't rebind:
+java.rmi.ConnectException: Connection refused to host: 192.168.2.104; nested exception is: 
+	java.net.ConnectException: Connection refused: connect
+	at sun.rmi.transport.tcp.TCPEndpoint.newSocket(Unknown Source)
+	at sun.rmi.transport.tcp.TCPChannel.createConnection(Unknown Source)
+	at sun.rmi.transport.tcp.TCPChannel.newConnection(Unknown Source)
+	at sun.rmi.server.UnicastRef.newCall(Unknown Source)
+	at sun.rmi.registry.RegistryImpl_Stub.rebind(Unknown Source)
+	at edu.forum.server.Controller.main(Controller.java:59)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	at java.net.PlainSocketImpl.connect(Unknown Source)
+	at java.net.SocksSocketImpl.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at sun.rmi.transport.proxy.RMIDirectSocketFactory.createSocket(Unknown Source)
+	at sun.rmi.transport.proxy.RMIMasterSocketFactory.createSocket(Unknown Source)
+	... 6 more
+14:49:17 INFO main edu.forum.server.Controller - starting initialization sequence...
+14:49:18 ERROR main edu.forum.server.Controller - Forum Server couldn't rebind:
+java.rmi.ConnectException: Connection refused to host: 192.168.2.104; nested exception is: 
+	java.net.ConnectException: Connection refused: connect
+	at sun.rmi.transport.tcp.TCPEndpoint.newSocket(Unknown Source)
+	at sun.rmi.transport.tcp.TCPChannel.createConnection(Unknown Source)
+	at sun.rmi.transport.tcp.TCPChannel.newConnection(Unknown Source)
+	at sun.rmi.server.UnicastRef.newCall(Unknown Source)
+	at sun.rmi.registry.RegistryImpl_Stub.rebind(Unknown Source)
+	at edu.forum.server.Controller.main(Controller.java:59)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	at java.net.PlainSocketImpl.connect(Unknown Source)
+	at java.net.SocksSocketImpl.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at java.net.Socket.<init>(Unknown Source)
+	at sun.rmi.transport.proxy.RMIDirectSocketFactory.createSocket(Unknown Source)
+	at sun.rmi.transport.proxy.RMIMasterSocketFactory.createSocket(Unknown Source)
+	... 6 more
+14:49:39 INFO main edu.forum.server.Controller - starting initialization sequence...
+14:49:40 INFO main edu.forum.server.Controller - Controller bound
+19:37:14 INFO main edu.forum.server.domain.Controller - starting initialization sequence...
+19:37:14 INFO main edu.forum.server.domain.Controller - trying to bind service...
+19:37:14 INFO main edu.forum.server.domain.Controller - Controller bound
+19:39:33 INFO main edu.forum.server.domain.Controller - starting initialization sequence...
+19:39:33 INFO main edu.forum.server.domain.Controller - trying to bind service...
+23:32:44 FATAL main edu.forum.server.domain.Controller - usage: java -jar ForumServer.jar <admin-name> <admin-password>
