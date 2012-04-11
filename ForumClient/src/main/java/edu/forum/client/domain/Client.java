@@ -38,7 +38,7 @@ public class Client {
 			connected = true;
 		}
 
-		User user = new User("guest", "init");
+		User user = new User(Constants.GUEST_USER_NAME, "init");
 		Post curreunt;
 		try {
 			curreunt = new Post("main","", user, new Timestamp(System.currentTimeMillis()));
