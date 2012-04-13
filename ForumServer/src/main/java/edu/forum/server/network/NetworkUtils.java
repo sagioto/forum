@@ -14,7 +14,7 @@ public class NetworkUtils {
 	static Logger log = Logger.getLogger(NetworkUtils.class.getName());
 	
 	public static void bind(RemoteController controller) throws RemoteException {
-			log.info("trying to bind server...");
+			log.info("trying to bind service...");
 			System.setProperty("java.rmi.server.codebase",Constants.CODE_BASE);
 			RemoteController stub =
                 (RemoteController) UnicastRemoteObject.exportObject(controller, 0);

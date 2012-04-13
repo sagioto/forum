@@ -68,8 +68,6 @@ public class Controller implements RemoteController {
 		}
 
 		log.info("starting initialization sequence...");
-		log.info("trying to bind service...");
-
 		Controller controller = new Controller();
 		try{
 			NetworkUtils.bind(controller);
