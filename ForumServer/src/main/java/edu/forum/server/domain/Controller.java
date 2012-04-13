@@ -40,7 +40,7 @@ public class Controller implements RemoteController {
 	}
 
 	public boolean logout(RemoteUser toLogout) throws RemoteException {
-		if(!SecurityUtils.isLoggedIn(this, toLogout)){
+		if(SecurityUtils.isLoggedIn(this, toLogout)){
 			SecurityUtils.logout(this, toLogout);
 			return true;
 		}

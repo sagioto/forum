@@ -23,7 +23,7 @@ public class Client {
 		PrintUtils.printTitle();
 		Scanner in = connectToServer();
 
-		User user = new User(Constants.GUEST_USER_NAME, "init");
+		User user = defaultUser();
 		Post curreunt;
 		try {
 			curreunt = new Post("main","", user, new Timestamp(System.currentTimeMillis()));
@@ -54,13 +54,15 @@ public class Client {
 						user = new User(cmdArray[1], cmdArray[2]);
 						if (controller.login(user))
 							System.out.println("welcome " + user.getUsername());
-						else
+						else{
 							System.out.println("failed! please check your username and password");
+							user = defaultUser();
+						}
 						break;
 					case "logout":
 						if (controller.logout(user)){
 							System.out.println("you are now logged out");
-							user = new User(Constants.GUEST_USER_NAME, "init");
+							user = defaultUser();
 						}
 						else
 							System.out.println("failed! you weren't logged in");
@@ -71,7 +73,7 @@ public class Client {
 						//TODO complete handling
 					default:
 						System.out.println("command " + cmdArray[0] + " is not supported");
-						
+
 					}
 
 				}
@@ -79,9 +81,14 @@ public class Client {
 				e.printStackTrace();
 			}
 		} catch (RemoteException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			System.out.println("server connection problem: " + e1.getMessage());
 		}
+	}
+
+	private static User defaultUser() {
+		User user;
+		user = new User(Constants.GUEST_USER_NAME, "init");
+		return user;
 	}
 
 	private static Scanner connectToServer() {

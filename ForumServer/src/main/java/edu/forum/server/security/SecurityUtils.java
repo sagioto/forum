@@ -14,7 +14,7 @@ public class SecurityUtils {
 	static Logger log = Logger.getLogger(SecurityUtils.class.getName());
 	
 	public static boolean login(Controller controller, String username, String password) throws RemoteException{
-		log.info("get request to log from " + username);
+		log.info("got request to log from " + username);
 		if(controller.getUsers().get(username).getPassword().equals(password)){
 			controller.getUsers().get(username).setLoggedIn(true);
 			return true;
@@ -24,14 +24,13 @@ public class SecurityUtils {
 	}
 	
 	public static void logout(Controller controller, RemoteUser toLogout) throws RemoteException {
-		controller.getUsers().get(toLogout.getUsername()).setLevel(AuthorizationLevel.GUEST);
 		controller.getUsers().get(toLogout.getUsername()).setLoggedIn(false);
 	}
 
 	public static boolean isLoggedIn(Controller controller, RemoteUser toLogout) throws RemoteException {
-		return !(controller.getUsers().get(toLogout.getUsername()).getLevel() == AuthorizationLevel.GUEST)
+		return (!(controller.getUsers().get(toLogout.getUsername()).getLevel() == AuthorizationLevel.GUEST)
 				&& !(toLogout.getUsername().equals(Constants.GUEST_USER_NAME))
-				&& controller.getUsers().get(toLogout.getUsername()).isLoggedIn();
+				&& controller.getUsers().get(toLogout.getUsername()).isLoggedIn());
 	}
 
 	public static boolean isAuthorizedToPost(Controller controller, Post current, RemoteUser remoteUser) throws RemoteException {
