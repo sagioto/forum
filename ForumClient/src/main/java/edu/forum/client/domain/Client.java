@@ -41,19 +41,25 @@ public class Client {
 					String[] cmdArray = command.split(" ");
 					switch(cmdArray[0]){
 					case "quit":
+						if(user.isLoggedIn())
+							controller.logout(user);
 						System.out.println("bye bye");
 						System.exit(0);
 					case "register":
 						user = new User(cmdArray[1], cmdArray[2]);
-						if (controller.register(user))
+						if (controller.register(user)){
 							System.out.println("registration success");
+							user.setLoggedIn(true);
+						}
 						else
 							System.out.println("failed! user name " + user.getUsername() + " is already taken!");
 						break;
 					case "login":
 						user = new User(cmdArray[1], cmdArray[2]);
-						if (controller.login(user))
+						if (controller.login(user)){
 							System.out.println("welcome " + user.getUsername());
+							user.setLoggedIn(true);
+						}
 						else{
 							System.out.println("failed! please check your username and password");
 							user = defaultUser();
