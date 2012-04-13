@@ -46,24 +46,32 @@ public class Client {
 						System.out.println("bye bye");
 						System.exit(0);
 					case "register":
-						user = new User(cmdArray[1], cmdArray[2]);
-						if (controller.register(user)){
-							System.out.println("registration success");
-							user.setLoggedIn(true);
+						if(cmdArray.length >= 3){
+							user = new User(cmdArray[1], cmdArray[2]);
+							if (controller.register(user)){
+								System.out.println("registration success");
+								user.setLoggedIn(true);
+							}
+							else
+								System.out.println("failed! user name " + user.getUsername() + " is already taken!");
 						}
 						else
-							System.out.println("failed! user name " + user.getUsername() + " is already taken!");
+							System.out.println( cmdArray[0] +"- incorrect number of argument");
 						break;
 					case "login":
-						user = new User(cmdArray[1], cmdArray[2]);
-						if (controller.login(user)){
-							System.out.println("welcome " + user.getUsername());
-							user.setLoggedIn(true);
+						if(cmdArray.length >= 3){
+							user = new User(cmdArray[1], cmdArray[2]);
+							if (controller.login(user)){
+								System.out.println("welcome " + user.getUsername());
+								user.setLoggedIn(true);
+							}
+							else{
+								System.out.println("failed! please check your username and password");
+								user = defaultUser();
+							}
 						}
-						else{
-							System.out.println("failed! please check your username and password");
-							user = defaultUser();
-						}
+						else
+							System.out.println( cmdArray[0] +"- incorrect number of argument");
 						break;
 					case "logout":
 						if (controller.logout(user)){
@@ -74,9 +82,17 @@ public class Client {
 							System.out.println("failed! you weren't logged in");
 						break;
 					case "view":
-						//TODO complete handling
+						if(cmdArray.length >= 2){
+							//TODO complete handling
+						}
+						else
+							System.out.println( cmdArray[0] +"- incorrect number of argument");
 					case "post":
-						//TODO complete handling
+						if(cmdArray.length >= 3){
+							//TODO complete handling
+						}
+						else
+							System.out.println( cmdArray[0] +"- incorrect number of argument");
 					default:
 						System.out.println("command " + cmdArray[0] + " is not supported");
 
@@ -108,7 +124,7 @@ public class Client {
 			try {
 				controller = NetworkUtils.lookupServer(host);
 			} catch (RemoteException | NotBoundException e) {
-				System.out.print("\rException connecting to server, let's try again\n");
+				System.out.print("\rcouldn't connect to server, let's try again\n");
 				continue;
 			}
 			System.out.println("\rconnected successfully to " + host);
