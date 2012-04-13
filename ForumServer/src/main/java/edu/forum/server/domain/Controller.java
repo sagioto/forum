@@ -31,8 +31,7 @@ public class Controller implements RemoteController {
 	}
 
 	public boolean register(User toRegister) throws RemoteException {
-		RemoteUser prev = users.putIfAbsent(toRegister.getUsername(), toRegister);
-		return prev != null;
+		return SecurityUtils.register(this, toRegister);
 	}
 
 	public boolean login(User toLogin) throws RemoteException {
@@ -76,7 +75,8 @@ public class Controller implements RemoteController {
 			NetworkUtils.bind(controller);
 			log.info("Controller bound");
 		} catch (Exception e) {
-			log.error("Forum Server couldn't rebind:", e);
+			log.fatal("Forum Server couldn't rebind:", e);
+			System.exit(-1);
 		}
 		createAdmin(controller, args);
 		log.info("populating data");

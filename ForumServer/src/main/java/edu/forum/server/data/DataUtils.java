@@ -3,6 +3,8 @@ package edu.forum.server.data;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 
+import org.apache.log4j.Logger;
+
 import edu.forum.server.domain.Controller;
 import edu.forum.shared.Constants;
 import edu.forum.shared.Post;
@@ -13,8 +15,10 @@ import edu.forum.shared.User;
 
 
 public class DataUtils {
-
+	static Logger log = Logger.getLogger(DataUtils.class.getName());
+	
 	public static void populateData(Controller controller) throws RemoteException{
+		log.info("populating data");
 		for (int i = 0; i < Constants.INITIAL_NUM_OF_USERS; i++) {
 			controller.getUsers().put("name-" + i, new User("name-" + i,"pass" + i));
 		}
@@ -33,6 +37,7 @@ public class DataUtils {
 	}
 
 	public static void post(RemotePost father, Post child) throws RemoteException {
+		log.trace("posting message: "  + child.getTitle());
 		father.addReply(child);
 		synchronized (father) {
 			father.notifyAll();

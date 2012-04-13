@@ -1,7 +1,6 @@
 package edu.forum.client.domain;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -9,6 +8,7 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import edu.forum.client.gui.PrintUtils;
 import edu.forum.client.network.NetworkUtils;
 import edu.forum.shared.Constants;
 import edu.forum.shared.Post;
@@ -20,7 +20,71 @@ public class Client {
 
 	public static void main(String...args){
 		System.setProperty("java.rmi.server.codebase", Constants.CODE_BASE);
-		printTitle();
+		PrintUtils.printTitle();
+		Scanner in = connectToServer();
+
+		User user = new User(Constants.GUEST_USER_NAME, "init");
+		Post curreunt;
+		try {
+			curreunt = new Post("main","", user, new Timestamp(System.currentTimeMillis()));
+			PrintUtils.printAvailableommands();
+
+			HashMap <String, Method> methods = new HashMap<String, Method>();
+			for(Method method : RemoteController.class.getDeclaredMethods()){
+				methods.put(method.getName(), method);
+			}
+			try {
+				String command;
+				while(true){
+					System.out.print(user.getUsername() + "@" + curreunt.getTitle() + "> ");
+					command = in.nextLine();
+					String[] cmdArray = command.split(" ");
+					switch(cmdArray[0]){
+					case "quit":
+						System.out.println("bye bye");
+						System.exit(0);
+					case "register":
+						user = new User(cmdArray[1], cmdArray[2]);
+						if (controller.register(user))
+							System.out.println("registration success");
+						else
+							System.out.println("failed! user name " + user.getUsername() + " is already taken!");
+						break;
+					case "login":
+						user = new User(cmdArray[1], cmdArray[2]);
+						if (controller.login(user))
+							System.out.println("welcome " + user.getUsername());
+						else
+							System.out.println("failed! please check your username and password");
+						break;
+					case "logout":
+						if (controller.logout(user)){
+							System.out.println("you are now logged out");
+							user = new User(Constants.GUEST_USER_NAME, "init");
+						}
+						else
+							System.out.println("failed! you weren't logged in");
+						break;
+					case "view":
+						//TODO complete handling
+					case "post":
+						//TODO complete handling
+					default:
+						System.out.println("command " + cmdArray[0] + " is not supported");
+						
+					}
+
+				}
+			} catch (IOException | IllegalArgumentException e) {
+				e.printStackTrace();
+			}
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
+	private static Scanner connectToServer() {
 		Scanner in = new Scanner(System.in);
 		boolean connected = false;
 		while(!connected){
@@ -31,66 +95,15 @@ public class Client {
 			try {
 				controller = NetworkUtils.lookupServer(host);
 			} catch (RemoteException | NotBoundException e) {
-				System.err.println("\rException connecting to server, let's try again");
+				System.out.print("\rException connecting to server, let's try again\n");
 				continue;
 			}
 			System.out.println("\rconnected successfully to " + host);
 			connected = true;
 		}
-
-		User user = new User(Constants.GUEST_USER_NAME, "init");
-		Post curreunt;
-		try {
-			curreunt = new Post("main","", user, new Timestamp(System.currentTimeMillis()));
-			System.out.print("you can now give the following commands: ");
-			HashMap <String, Method> methods = new HashMap<String, Method>();
-			for(Method method : RemoteController.class.getDeclaredMethods()){
-				methods.put(method.getName(), method);
-			}
-			System.out.println(methods.keySet());
-			/*	HashMap <String, String> methodsHelp = new HashMap<String, String>();
-			for(Method method : RemoteController.class.getDeclaredMethods()){
-				methodsHelp.put(method.getName(), Arrays.deepToString(method.getParameterTypes()));
-			}*/
-			try {
-				String command;
-				while(true){
-					System.out.print(user.getUsername() + "@" + curreunt.getTitle() + "> ");
-					command = in.nextLine();
-					String[] commndsArry = command.split(" ");
-					switch(commndsArry[0]){
-						case "register":
-							user = new User(commndsArry[1], commndsArry[2]);
-							if ((boolean) methods.get(commndsArry[0]).invoke(controller, user))
-								System.out.println("failed! user name " + user.getUsername() + " is already taken!");
-							else
-								System.out.println("registration success");
-							break;
-					//TODO: complete commands forwarding
-					}
-						
-//					System.out.println(methods.get(commndsArry[0]).invoke(controller, new User("sagi", "sagi")));
-				}
-			} catch (IOException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-				e.printStackTrace();
-			}
-		} catch (RemoteException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		return in;
 	}
 
-	private static void printTitle() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("  $$\\     $$\\                        $$$$$$\\                                             \n");
-		sb.append("  $$ |    $$ |                      $$  __$$\\                                            \n");
-		sb.append("$$$$$$\\   $$$$$$$\\   $$$$$$\\        $$ /  \\__|$$$$$$\\   $$$$$$\\  $$\\   $$\\ $$$$$$\\$$$$\\  \n");
-		sb.append("\\_$$  _|  $$  __$$\\ $$  __$$\\       $$$$\\    $$  __$$\\ $$  __$$\\ $$ |  $$ |$$  _$$  _$$\\ \n");
-		sb.append("  $$ |    $$ |  $$ |$$$$$$$$ |      $$  _|   $$ /  $$ |$$ |  \\__|$$ |  $$ |$$ / $$ / $$ |\n");
-		sb.append("  $$ |$$\\ $$ |  $$ |$$   ____|      $$ |     $$ |  $$ |$$ |      $$ |  $$ |$$ | $$ | $$ |\n");
-		sb.append("  \\$$$$  |$$ |  $$ |\\$$$$$$$\\       $$ |     \\$$$$$$  |$$ |      \\$$$$$$  |$$ | $$ | $$ |\n");
-		sb.append("   \\____/ \\__|  \\__| \\_______|      \\__|      \\______/ \\__|       \\______/ \\__| \\__| \\__|\n");
-		System.out.println(sb.toString());
-	}
+
 
 }

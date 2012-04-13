@@ -5,12 +5,16 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+import org.apache.log4j.Logger;
+
 import edu.forum.shared.Constants;
 import edu.forum.shared.RemoteController;
 
 public class NetworkUtils {
-
+	static Logger log = Logger.getLogger(NetworkUtils.class.getName());
+	
 	public static void bind(RemoteController controller) throws RemoteException {
+			log.info("trying to bind server...");
 			System.setProperty("java.rmi.server.codebase",Constants.CODE_BASE);
 			RemoteController stub =
                 (RemoteController) UnicastRemoteObject.exportObject(controller, 0);
