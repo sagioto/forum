@@ -30,16 +30,16 @@ public class Controller implements RemoteController {
 		return true;
 	}
 
-	public boolean register(User toRegister) throws RemoteException {
+	public boolean register(RemoteUser toRegister) throws RemoteException {
 		return SecurityUtils.register(this, toRegister);
 	}
 
-	public boolean login(User toLogin) throws RemoteException {
+	public boolean login(RemoteUser toLogin) throws RemoteException {
 		return (this.getUsers().get(toLogin.getUsername()) != null)
 			&& (SecurityUtils.login(this, toLogin.getUsername(), toLogin.getPassword()));
 	}
 
-	public boolean logout(User toLogout) throws RemoteException {
+	public boolean logout(RemoteUser toLogout) throws RemoteException {
 		if(!SecurityUtils.isLoggedIn(this, toLogout)){
 			SecurityUtils.logout(this, toLogout);
 			return true;

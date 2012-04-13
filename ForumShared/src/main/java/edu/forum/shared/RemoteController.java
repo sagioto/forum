@@ -9,11 +9,11 @@ public interface RemoteController extends Remote {
 
 	public boolean enter() throws RemoteException;
 
-	public boolean register(User toRegister) throws RemoteException;
+	public boolean register(RemoteUser toRegister) throws RemoteException;
 	
-	public boolean login(User toLogin) throws RemoteException;
+	public boolean login(RemoteUser toLogin) throws RemoteException;
 	
-	public boolean logout(User toLogout) throws RemoteException;
+	public boolean logout(RemoteUser toLogout) throws RemoteException;
 	
 	public Map<Timestamp, RemotePost> view(Post toView) throws RemoteException;
 	
