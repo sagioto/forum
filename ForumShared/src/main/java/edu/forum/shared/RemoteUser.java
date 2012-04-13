@@ -9,6 +9,10 @@ public interface RemoteUser extends Remote {
 	public String getUsername() throws RemoteException;
 	
 	public void setUsername(String toSet) throws RemoteException;
+
+	public boolean isLoggedIn() throws RemoteException;
+	
+	public void setLoggedIn(boolean toSet) throws RemoteException;
 	
 	public String getPassword() throws RemoteException;
 	

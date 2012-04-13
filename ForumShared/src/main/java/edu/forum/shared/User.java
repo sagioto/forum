@@ -14,6 +14,7 @@ public class User implements RemoteUser, Serializable {
 	private Set<RemotePost> posts;
 	private Set<RemoteUser> friends;
 	private static boolean isAdmin = false;
+	private boolean loggedIn = false;
 	private AuthorizationLevel level = AuthorizationLevel.GUEST;
 	
 	public User(){
@@ -113,6 +114,16 @@ public class User implements RemoteUser, Serializable {
 		} else if (!username.equals(other.username))
 			return false;
 		return true;
+	}
+
+	@Override
+	public boolean isLoggedIn() throws RemoteException {
+		return this.loggedIn;
+	}
+
+	@Override
+	public void setLoggedIn(boolean toSet) throws RemoteException {
+		this.loggedIn = toSet;
 	}
 	
 	
