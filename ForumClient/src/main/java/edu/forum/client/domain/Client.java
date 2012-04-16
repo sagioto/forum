@@ -46,7 +46,7 @@ public class Client {
 					System.exit(0);
 				case "register":
 					if(cmdArray.length >= 3){
-						user = new User(cmdArray[1], cmdArray[2]);
+						setUserCredentials(user, cmdArray[1], cmdArray[2]);
 						if (controller.register(user)){
 							System.out.println("registration success");
 							user.setLoggedIn(true);
@@ -59,7 +59,7 @@ public class Client {
 					break;
 				case "login":
 					if(cmdArray.length >= 3){
-						user = new User(cmdArray[1], cmdArray[2]);
+						setUserCredentials(user, cmdArray[1], cmdArray[2]);
 						if (controller.login(user)){
 							System.out.println("welcome " + user.getUsername());
 							user.setLoggedIn(true);
@@ -75,7 +75,7 @@ public class Client {
 				case "logout":
 					if (controller.logout(user)){
 						System.out.println("you are now logged out");
-						user = defaultUser();
+						setUserCredentials(user, Constants.GUEST_USER_NAME, Constants.GUEST_PASSWORD);
 					}
 					else
 						System.out.println("failed! you weren't logged in");
@@ -103,10 +103,13 @@ public class Client {
 		}
 	}
 
+	private static void setUserCredentials(User user, String username, String password) {
+		user.setUsername(username);
+		user.setPassword(password);
+	}
+
 	private static User defaultUser() {
-		User user;
-		user = new User(Constants.GUEST_USER_NAME, "init");
-		return user;
+		return new User(Constants.GUEST_USER_NAME, Constants.GUEST_PASSWORD);
 	}
 
 	private static Scanner connectToServer() {
