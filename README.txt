@@ -5,8 +5,8 @@ https://github.com/sagioto/forum/wiki/overview
 Currently collaborating on the project:
 Sagi Bernstein
 Dagan Sandler
+Dor Leitman
 
 Waiting for:
-Dor Leitman
 Ran Greenberg
 Romi Bitter
