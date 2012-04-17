@@ -25,92 +25,91 @@ public class Client {
 
 		User user = defaultUser();
 		Post curreunt;
-		try {
-			curreunt = new Post("main","", user, new Timestamp(System.currentTimeMillis()));
-			PrintUtils.printAvailableommands();
+		curreunt = new Post("main","", user, new Timestamp(System.currentTimeMillis()));
+		PrintUtils.printAvailableommands();
 
-			HashMap <String, Method> methods = new HashMap<String, Method>();
-			for(Method method : RemoteController.class.getDeclaredMethods()){
-				methods.put(method.getName(), method);
-			}
-			try {
-				String command;
-				while(true){
-					System.out.print(user.getUsername() + "@" + curreunt.getTitle() + "> ");
-					command = in.nextLine();
-					String[] cmdArray = command.split(" ");
-					switch(cmdArray[0]){
-					case "quit":
-						if(user.isLoggedIn())
-							controller.logout(user);
-						System.out.println("bye bye");
-						System.exit(0);
-					case "register":
-						if(cmdArray.length >= 3){
-							user = new User(cmdArray[1], cmdArray[2]);
-							if (controller.register(user)){
-								System.out.println("registration success");
-								user.setLoggedIn(true);
-							}
-							else
-								System.out.println("failed! user name " + user.getUsername() + " is already taken!");
+		HashMap <String, Method> methods = new HashMap<String, Method>();
+		for(Method method : RemoteController.class.getDeclaredMethods()){
+			methods.put(method.getName(), method);
+		}
+		try {
+			String command;
+			while(true){
+				System.out.print(user.getUsername() + "@" + curreunt.getTitle() + "> ");
+				command = in.nextLine();
+				String[] cmdArray = command.split(" ");
+				switch(cmdArray[0]){
+				case "quit":
+					if(user.isLoggedIn())
+						controller.logout(user);
+					System.out.println("bye bye");
+					System.exit(0);
+				case "register":
+					if(cmdArray.length >= 3){
+						setUserCredentials(user, cmdArray[1], cmdArray[2]);
+						if (controller.register(user)){
+							System.out.println("registration success");
+							user.setLoggedIn(true);
 						}
 						else
-							System.out.println( cmdArray[0] +"- incorrect number of argument");
-						break;
-					case "login":
-						if(cmdArray.length >= 3){
-							user = new User(cmdArray[1], cmdArray[2]);
-							if (controller.login(user)){
-								System.out.println("welcome " + user.getUsername());
-								user.setLoggedIn(true);
-							}
-							else{
-								System.out.println("failed! please check your username and password");
-								user = defaultUser();
-							}
+							System.out.println("failed! user name " + user.getUsername() + " is already taken!");
+					}
+					else
+						System.out.println( cmdArray[0] +"- incorrect number of argument");
+					break;
+				case "login":
+					if(cmdArray.length >= 3){
+						setUserCredentials(user, cmdArray[1], cmdArray[2]);
+						if (controller.login(user)){
+							System.out.println("welcome " + user.getUsername());
+							user.setLoggedIn(true);
 						}
-						else
-							System.out.println( cmdArray[0] +"- incorrect number of argument");
-						break;
-					case "logout":
-						if (controller.logout(user)){
-							System.out.println("you are now logged out");
+						else{
+							System.out.println("failed! please check your username and password");
 							user = defaultUser();
 						}
-						else
-							System.out.println("failed! you weren't logged in");
-						break;
-					case "view":
-						if(cmdArray.length >= 2){
-							//TODO complete handling
-						}
-						else
-							System.out.println( cmdArray[0] +"- incorrect number of argument");
-					case "post":
-						if(cmdArray.length >= 3){
-							//TODO complete handling
-						}
-						else
-							System.out.println( cmdArray[0] +"- incorrect number of argument");
-					default:
-						System.out.println("command " + cmdArray[0] + " is not supported");
-
 					}
+					else
+						System.out.println( cmdArray[0] +"- incorrect number of argument");
+					break;
+				case "logout":
+					if (controller.logout(user)){
+						System.out.println("you are now logged out");
+						setUserCredentials(user, Constants.GUEST_USER_NAME, Constants.GUEST_PASSWORD);
+					}
+					else
+						System.out.println("failed! you weren't logged in");
+					break;
+				case "view":
+					if(cmdArray.length >= 2){
+						//TODO complete handling
+					}
+					else
+						System.out.println( cmdArray[0] +"- incorrect number of argument");
+				case "post":
+					if(cmdArray.length >= 3){
+						//TODO complete handling
+					}
+					else
+						System.out.println( cmdArray[0] +"- incorrect number of argument");
+				default:
+					System.out.println("command " + cmdArray[0] + " is not supported");
 
 				}
-			} catch (IOException | IllegalArgumentException e) {
-				e.printStackTrace();
+
 			}
-		} catch (RemoteException e1) {
-			System.out.println("server connection problem: " + e1.getMessage());
+		} catch (IOException | IllegalArgumentException e) {
+			e.printStackTrace();
 		}
 	}
 
+	private static void setUserCredentials(User user, String username, String password) {
+		user.setUsername(username);
+		user.setPassword(password);
+	}
+
 	private static User defaultUser() {
-		User user;
-		user = new User(Constants.GUEST_USER_NAME, "init");
-		return user;
+		return new User(Constants.GUEST_USER_NAME, Constants.GUEST_PASSWORD);
 	}
 
 	private static Scanner connectToServer() {

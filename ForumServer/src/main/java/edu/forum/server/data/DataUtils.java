@@ -8,8 +8,6 @@ import org.apache.log4j.Logger;
 import edu.forum.server.domain.Controller;
 import edu.forum.shared.Constants;
 import edu.forum.shared.Post;
-import edu.forum.shared.RemotePost;
-import edu.forum.shared.RemoteUser;
 import edu.forum.shared.User;
 
 
@@ -27,7 +25,7 @@ public class DataUtils {
 			controller.getPosts().put("sub-forum-" + i,
 					new Post("sub-forum-" + i, "", controller.getAdmin(), timestamp));
 		}
-		for (RemoteUser user : controller.getUsers().values()) {
+		for (User user : controller.getUsers().values()) {
 			for (int i = 0; i < Constants.INITIAL_SUB_FORUM_SIZE; i++) {
 				post(controller.getPosts().get("sub-forum-" + i),
 						new Post("title-" + i, "content", user, new Timestamp(System.currentTimeMillis())));
@@ -36,7 +34,7 @@ public class DataUtils {
 
 	}
 
-	public static void post(RemotePost father, Post child) throws RemoteException {
+	public static void post(Post father, Post child) throws RemoteException {
 		log.trace("posting message: "  + child.getTitle());
 		father.addReply(child);
 		synchronized (father) {

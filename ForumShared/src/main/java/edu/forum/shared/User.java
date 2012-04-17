@@ -1,32 +1,36 @@
 package edu.forum.shared;
 
 import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 
-public class User implements RemoteUser, Serializable {
+public class User implements Serializable {
 	private static final long serialVersionUID = 3696402751827425419L;
 	private String username;
 	private String password;
-	private RemotePost currentPost;
-	private Set<RemotePost> posts;
-	private Set<RemoteUser> friends;
+	private Post currentPost;
+	private Set<Post> posts;
+	private Set<User> friends;
 	private static boolean isAdmin = false;
 	private boolean loggedIn = false;
 	private AuthorizationLevel level = AuthorizationLevel.GUEST;
 	
 	public User(){
 		super();
-		posts = new ConcurrentSkipListSet<RemotePost>();
-		friends = new ConcurrentSkipListSet<RemoteUser>();
+		posts = new ConcurrentSkipListSet<Post>();
+		friends = new ConcurrentSkipListSet<User>();
 	}
 	
 	public User(String username, String password){
 		this();
+		assertNotGuestUsername(username);
 		this.username = username;
 		this.password = password;
+	}
+	
+	public void assertNotGuestUsername(String toCheck) throws IllegalArgumentException{
+		if(toCheck.equals(Constants.GUEST_USER_NAME));
 	}
 	
 	private User(String username, String password, boolean isAdmin){
@@ -35,58 +39,59 @@ public class User implements RemoteUser, Serializable {
 		level = AuthorizationLevel.ADMIN;
 	}
 	
-	public static RemoteUser createAdmin(String username, String password) throws AdminExistException{
+	public static User createAdmin(String username, String password) throws AdminExistException{
 		if(isAdmin)
 			throw new AdminExistException("admin user already exists");
 		return new User(username, password, true);
 	}
 	
-	public String getUsername() throws RemoteException {
+	public String getUsername() {
 		return username;
 	}
 
-	public void setUsername(String toSet) throws RemoteException {
+	public void setUsername(String toSet) {
+		assertNotGuestUsername(toSet);
 		this.username = toSet;
 	}
 
-	public String getPassword() throws RemoteException {
+	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String toSet) throws RemoteException {
+	public void setPassword(String toSet) {
 		this.password = toSet;
 	}
 
-	public Set<RemotePost> getPosts() throws RemoteException{
+	public Set<Post> getPosts(){
 		return posts;
 	}
 
-	public Set<RemoteUser> getFriends() throws RemoteException{
+	public Set<User> getFriends(){
 		return friends;
 	}
 
-	public RemotePost getCurrentPost() throws RemoteException{
+	public Post getCurrentPost(){
 		return currentPost;
 	}
 
-	public void setCurrentPost(RemotePost currentPost) throws RemoteException{
+	public void setCurrentPost(Post currentPost){
 		this.currentPost = currentPost;
 	}
 
-	public void addPost(RemotePost toAdd) throws RemoteException {
+	public void addPost(Post toAdd) {
 		posts.add(toAdd);
 		
 	}
 
-	public void addFriend(RemoteUser toAdd) throws RemoteException {
+	public void addFriend(User toAdd) {
 		friends.add(toAdd);
 	}
 
-	public AuthorizationLevel getLevel() throws RemoteException {
+	public AuthorizationLevel getLevel() {
 		return level;
 	}
 
-	public void setLevel(AuthorizationLevel level) throws RemoteException {
+	public void setLevel(AuthorizationLevel level) {
 		this.level = level;
 	}
 
@@ -97,6 +102,14 @@ public class User implements RemoteUser, Serializable {
 		result = prime * result
 				+ ((username == null) ? 0 : username.hashCode());
 		return result;
+	}
+
+	public boolean isLoggedIn() {
+		return this.loggedIn;
+	}
+	
+	public void setLoggedIn(boolean toSet) {
+		this.loggedIn = toSet;
 	}
 
 	@Override
@@ -116,15 +129,6 @@ public class User implements RemoteUser, Serializable {
 		return true;
 	}
 
-	@Override
-	public boolean isLoggedIn() throws RemoteException {
-		return this.loggedIn;
-	}
-
-	@Override
-	public void setLoggedIn(boolean toSet) throws RemoteException {
-		this.loggedIn = toSet;
-	}
 	
 	
 	

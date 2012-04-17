@@ -1,61 +1,60 @@
 package edu.forum.shared;
 
 import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 
-public class Post implements RemotePost, Comparable<PostKey>, Serializable {
+public class Post implements Comparable<PostKey>, Serializable {
 	private static final long serialVersionUID = 1503444426061687478L;
 	private PostKey key;
 	private String title;
 	private String body;
-	private ConcurrentMap<Timestamp, RemotePost> replies;
-	private RemoteUser user;
+	private ConcurrentMap<Timestamp, Post> replies;
+	private User user;
 	private Timestamp time;
 	
-	public Post(String title, String body, RemoteUser user, Timestamp time) throws RemoteException {
+	public Post(String title, String body, User user, Timestamp time) {
 		super();
 		this.title = title;
 		this.body = body;
 		this.user = user;
 		this.time = time;
-		replies = new ConcurrentHashMap<Timestamp, RemotePost>();
+		replies = new ConcurrentHashMap<Timestamp, Post>();
 		this.key = new PostKey(user.getUsername(), time);
 	}
 
-	public String getTitle() throws RemoteException {
+	public String getTitle() {
 		return title;
 	}
 
-	public void setTitle(String title) throws RemoteException {
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
-	public String getBody() throws RemoteException {
+	public String getBody() {
 		return body;
 	}
 
-	public void setBody(String body) throws RemoteException {
+	public void setBody(String body) {
 		this.body = body;
 	}
 
-	public Map<Timestamp, RemotePost> getReplies() throws RemoteException {
+	public Map<Timestamp, Post> getReplies() {
 		return replies;
 	}
 
-	public void addReply(RemotePost reply) throws RemoteException {
+	public void addReply(Post reply) {
 		this.replies.put(reply.getTime(), reply);
 	}
 
-	public RemoteUser getUser() throws RemoteException {
+	public User getUser() {
 		return user;
 	}
 
-	public Timestamp getTime() throws RemoteException {
+	public Timestamp getTime() {
 		return time;
 	}
 

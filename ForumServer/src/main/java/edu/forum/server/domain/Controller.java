@@ -14,32 +14,30 @@ import edu.forum.server.security.SecurityUtils;
 import edu.forum.shared.AdminExistException;
 import edu.forum.shared.Post;
 import edu.forum.shared.RemoteController;
-import edu.forum.shared.RemotePost;
-import edu.forum.shared.RemoteUser;
 import edu.forum.shared.User;
 
 
 public class Controller implements RemoteController {
 	static Logger log = Logger.getLogger(Controller.class.getName());
-	private RemoteUser admin;
-	private ConcurrentMap<String, RemoteUser> users = new ConcurrentHashMap<String, RemoteUser>();
-	private ConcurrentMap<String, RemotePost> posts = new ConcurrentHashMap<String, RemotePost>();
+	private User admin;
+	private ConcurrentMap<String, User> users = new ConcurrentHashMap<String, User>();
+	private ConcurrentMap<String, Post> posts = new ConcurrentHashMap<String, Post>();
 
 	public boolean enter() throws RemoteException {
 		log.info("received request to enter");
 		return true;
 	}
 
-	public boolean register(RemoteUser toRegister) throws RemoteException {
+	public boolean register(User toRegister) throws RemoteException {
 		return SecurityUtils.register(this, toRegister);
 	}
 
-	public boolean login(RemoteUser toLogin) throws RemoteException {
+	public boolean login(User toLogin) throws RemoteException {
 		return (this.getUsers().get(toLogin.getUsername()) != null)
 			&& (SecurityUtils.login(this, toLogin.getUsername(), toLogin.getPassword()));
 	}
 
-	public boolean logout(RemoteUser toLogout) throws RemoteException {
+	public boolean logout(User toLogout) throws RemoteException {
 		if(SecurityUtils.isLoggedIn(this, toLogout)){
 			SecurityUtils.logout(this, toLogout);
 			return true;
@@ -48,7 +46,7 @@ public class Controller implements RemoteController {
 	}
 
 
-	public Map<Timestamp, RemotePost> view(Post toView) throws RemoteException {
+	public Map<Timestamp, Post> view(Post toView) throws RemoteException {
 		return toView.getReplies();
 
 	}
@@ -99,27 +97,27 @@ public class Controller implements RemoteController {
 		}
 	}
 
-	public RemoteUser getAdmin() {
+	public User getAdmin() {
 		return this.admin;
 	}
 
-	public void setAdmin(RemoteUser admin) {
+	public void setAdmin(User admin) {
 		this.admin = admin;
 	}
 
-	public ConcurrentMap<String, RemoteUser> getUsers() {
+	public ConcurrentMap<String, User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(ConcurrentMap<String, RemoteUser> users) {
+	public void setUsers(ConcurrentMap<String, User> users) {
 		this.users = users;
 	}
 
-	public ConcurrentMap<String, RemotePost> getPosts() {
+	public ConcurrentMap<String, Post> getPosts() {
 		return posts;
 	}
 
-	public void setPosts(ConcurrentMap<String, RemotePost> posts) {
+	public void setPosts(ConcurrentMap<String, Post> posts) {
 		this.posts = posts;
 	}
 
