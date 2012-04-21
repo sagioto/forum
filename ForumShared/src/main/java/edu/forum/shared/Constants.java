@@ -5,6 +5,8 @@ public class Constants {
 	public static final String CODE_BASE = "http://dl.dropbox.com/u/8720454/ForumShared.jar";
 	public static final String GUEST_USER_NAME = "guest";
 	public static final String GUEST_PASSWORD = "init";
+	public static final String MAIN_POST_WRITTER= "init-writter";
+	
 	
 	//these are for the no persistency version
 	public static final int INITIAL_SUB_FORUM_SIZE = 10;

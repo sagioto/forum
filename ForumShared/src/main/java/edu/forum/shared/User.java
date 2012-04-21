@@ -11,7 +11,7 @@ public class User implements Serializable {
 	private String password;
 	private Post currentPost;
 	private Set<Post> posts;
-	private Set<User> friends;
+	private Set<String> friends;
 	private static boolean isAdmin = false;
 	private boolean loggedIn = false;
 	private AuthorizationLevel level = AuthorizationLevel.GUEST;
@@ -19,7 +19,7 @@ public class User implements Serializable {
 	public User(){
 		super();
 		posts = new ConcurrentSkipListSet<Post>();
-		friends = new ConcurrentSkipListSet<User>();
+		friends = new ConcurrentSkipListSet<String>();
 	}
 	
 	public User(String username, String password){
@@ -66,7 +66,7 @@ public class User implements Serializable {
 		return posts;
 	}
 
-	public Set<User> getFriends(){
+	public Set<String> getFriends(){
 		return friends;
 	}
 
@@ -83,7 +83,7 @@ public class User implements Serializable {
 		
 	}
 
-	public void addFriend(User toAdd) {
+	public void addFriend(String toAdd) {
 		friends.add(toAdd);
 	}
 

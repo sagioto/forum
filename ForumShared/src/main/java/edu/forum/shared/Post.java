@@ -10,20 +10,29 @@ import java.util.concurrent.ConcurrentMap;
 public class Post implements Comparable<PostKey>, Serializable {
 	private static final long serialVersionUID = 1503444426061687478L;
 	private PostKey key;
+	private Post parent;
 	private String title;
 	private String body;
 	private ConcurrentMap<Timestamp, Post> replies;
-	private User user;
+	private String username;
 	private Timestamp time;
-	
-	public Post(String title, String body, User user, Timestamp time) {
+	private boolean isSubForum = false;
+
+	public Post(Post parent, String title) {
+		super();
+		this.title = title;
+		this.parent = parent;
+	}
+
+	public Post(String title, String body, String string, Timestamp time, Post parent) {
 		super();
 		this.title = title;
 		this.body = body;
-		this.user = user;
+		this.username = string;
 		this.time = time;
+		this.parent = parent;
 		replies = new ConcurrentHashMap<Timestamp, Post>();
-		this.key = new PostKey(user.getUsername(), time);
+		this.key = new PostKey(getUsername(), time);
 	}
 
 	public String getTitle() {
@@ -48,10 +57,11 @@ public class Post implements Comparable<PostKey>, Serializable {
 
 	public void addReply(Post reply) {
 		this.replies.put(reply.getTime(), reply);
+		reply.setParent(this);
 	}
 
-	public User getUser() {
-		return user;
+	public String getUsername() {
+		return username;
 	}
 
 	public Timestamp getTime() {
@@ -66,12 +76,28 @@ public class Post implements Comparable<PostKey>, Serializable {
 		this.key = key;
 	}
 
+	public boolean isSubForum() {
+		return isSubForum;
+	}
+
+	public Post getParent() {
+		return parent;
+	}
+
+	public void setParent(Post parent) {
+		this.parent = parent;
+	}
+
+	public void setSubForum(boolean isSubForum) {
+		this.isSubForum = isSubForum;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((time == null) ? 0 : time.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
@@ -89,10 +115,10 @@ public class Post implements Comparable<PostKey>, Serializable {
 				return false;
 		} else if (!time.equals(other.time))
 			return false;
-		if (user == null) {
-			if (other.user != null)
+		if (username == null) {
+			if (other.username != null)
 				return false;
-		} else if (!user.equals(other.user))
+		} else if (!username.equals(other.username))
 			return false;
 		return true;
 	}
@@ -102,7 +128,14 @@ public class Post implements Comparable<PostKey>, Serializable {
 			return getKey().getTime().compareTo(o.getTime());
 		return getKey().getUsername().compareTo(o.getUsername());
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Post [key=" + key + ", title=" + title + ", body=" + body
+				+ ", replies=" + replies.size() + ", username=" + username + ", time="
+				+ time + ", isSubForum=" + isSubForum + "]";
+	}
+
+
 
 }

@@ -23,9 +23,9 @@ public class Controller implements RemoteController {
 	private ConcurrentMap<String, User> users = new ConcurrentHashMap<String, User>();
 	private ConcurrentMap<String, Post> posts = new ConcurrentHashMap<String, Post>();
 
-	public boolean enter() throws RemoteException {
-		log.info("received request to enter");
-		return true;
+	public Post enter() throws RemoteException {
+		log.info("received request to enter");	
+		return DataUtils.getMainPost();
 	}
 
 	public boolean register(User toRegister) throws RemoteException {
@@ -47,13 +47,13 @@ public class Controller implements RemoteController {
 
 
 	public Map<Timestamp, Post> view(Post toView) throws RemoteException {
-		return toView.getReplies();
+			return posts.get(toView.getTitle()).getReplies(); 
 
 	}
 
 	public boolean post(Post current, Post toPost) throws RemoteException {
-		if(SecurityUtils.isAuthorizedToPost(this, current, toPost.getUser())){
-			DataUtils.post(current, toPost);
+		if(SecurityUtils.isAuthorizedToPost(this, current, toPost.getUsername())){
+			DataUtils.post(posts.get(current.getTitle()), toPost);
 			return true;
 		}
 		return false;
@@ -78,7 +78,7 @@ public class Controller implements RemoteController {
 		log.info("populating data");
 		try {
 			DataUtils.populateData(controller);
-		} catch (RemoteException e) {
+		} catch (RemoteException | InterruptedException e) {
 			log.error("error while populating data");
 			e.printStackTrace();
 		}

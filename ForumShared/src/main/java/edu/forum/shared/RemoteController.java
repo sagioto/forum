@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface RemoteController extends Remote {
 
-	public boolean enter() throws RemoteException;
+	public Post enter() throws RemoteException;
 
 	public boolean register(User toRegister) throws RemoteException;
 	
