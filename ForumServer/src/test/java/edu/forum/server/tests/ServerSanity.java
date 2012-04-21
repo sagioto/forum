@@ -15,8 +15,6 @@ import edu.forum.server.security.SecurityUtils;
 import edu.forum.shared.AdminExistException;
 import edu.forum.shared.User;
 
-;
-
 public class ServerSanity {
 
 	Controller server;
