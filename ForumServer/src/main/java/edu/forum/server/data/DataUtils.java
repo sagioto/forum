@@ -22,7 +22,7 @@ public class DataUtils {
 		
 		setMainPost(new Post("main", "", Constants.MAIN_POST_WRITTER, new Timestamp(0), null));
 		getMainPost().setSubForum(true);
-		controller.getPosts().put(Constants.MAIN_POST_WRITTER + new Timestamp(0), getMainPost());
+		controller.getPosts().put("main", getMainPost());
 		
 		for (int i = 0; i < Constants.INITIAL_NUM_OF_USERS; i++) {
 			controller.getUsers().put("name-" + i, new User("name-" + i,"pass" + i));
