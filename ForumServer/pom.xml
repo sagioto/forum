@@ -21,12 +21,26 @@
 			<version>0.0.1-SNAPSHOT</version>
 			<type>jar</type>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<defaultGoal>package</defaultGoal>
 		<finalName>ForumServer</finalName>
 		<plugins>
+		<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
