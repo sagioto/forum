@@ -15,13 +15,14 @@ import java.io.PrintWriter;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * @author Dagan
  * 
  */
-public class ForumTestLayout {
+public class ForumLayoutTest {
 
 	String server = "localhost";
 	ProcessBuilder pb;
@@ -76,6 +77,7 @@ public class ForumTestLayout {
 	}
 
 	@Test
+	@Ignore
 	public final void test() {
 		OutputStream os = client.getOutputStream();
 		PrintWriter pw = new PrintWriter(new BufferedWriter(
