@@ -34,11 +34,12 @@ public class Controller implements RemoteController {
 
 	public boolean login(User toLogin) throws RemoteException {
 		return (this.getUsers().get(toLogin.getUsername()) != null)
-			&& (SecurityUtils.login(this, toLogin.getUsername(), toLogin.getPassword()));
+				&& (SecurityUtils.login(this, toLogin.getUsername(), toLogin.getPassword()));
 	}
 
 	public boolean logout(User toLogout) throws RemoteException {
-		if(SecurityUtils.isLoggedIn(this, toLogout)){
+		if(this.getUsers().get(toLogout.getUsername()) != null
+				&& SecurityUtils.isLoggedIn(this, toLogout)){
 			SecurityUtils.logout(this, toLogout);
 			return true;
 		}
@@ -47,7 +48,7 @@ public class Controller implements RemoteController {
 
 
 	public Map<Timestamp, Post> view(Post toView) throws RemoteException {
-			return posts.get(toView.getTitle()).getReplies(); 
+		return posts.get(toView.getTitle()).getReplies(); 
 
 	}
 
