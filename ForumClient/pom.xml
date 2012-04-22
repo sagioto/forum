@@ -43,7 +43,7 @@
 					<appendAssemblyId>false</appendAssemblyId>
 					<archive>
 						<manifest>
-							<mainClass>edu.forum.client.domain.Client</mainClass>
+							<mainClass>edu.forum.client.gui.Client</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
