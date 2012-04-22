@@ -10,8 +10,8 @@ import edu.forum.shared.Constants;
 import edu.forum.shared.Post;
 import edu.forum.shared.User;
 
-public class SecurityUtils {
-	static Logger log = Logger.getLogger(SecurityUtils.class.getName());
+public class SecurityManager {
+	static Logger log = Logger.getLogger(SecurityManager.class.getName());
 	
 	public static boolean login(Controller controller, String username, String password) throws RemoteException{
 		log.info("got request to log from " + username);

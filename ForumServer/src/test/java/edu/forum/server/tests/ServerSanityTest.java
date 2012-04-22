@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.forum.server.domain.Controller;
-import edu.forum.server.security.SecurityUtils;
+import edu.forum.server.security.SecurityManager;
 import edu.forum.shared.AdminExistException;
 import edu.forum.shared.User;
 
@@ -55,7 +55,7 @@ public class ServerSanityTest {
 
 			for (User user : users.values()) {
 				Assert.assertTrue("Checking users were logged in",
-						SecurityUtils.isLoggedIn(server, user));
+						SecurityManager.isLoggedIn(server, user));
 			}
 
 			for (User user : users.values()) {
@@ -64,7 +64,7 @@ public class ServerSanityTest {
 
 			for (User user : users.values()) {
 				Assert.assertFalse("Checking users were logged out",
-						SecurityUtils.isLoggedIn(server, user));
+						SecurityManager.isLoggedIn(server, user));
 			}
 
 			

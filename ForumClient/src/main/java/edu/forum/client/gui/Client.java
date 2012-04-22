@@ -14,7 +14,7 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import edu.forum.client.domain.ClientController;
-import edu.forum.client.network.NetworkUtils;
+import edu.forum.client.network.NetworkManager;
 import edu.forum.shared.Constants;
 import edu.forum.shared.Post;
 import edu.forum.shared.RemoteController;
@@ -211,7 +211,7 @@ public class Client {
 				System.out.print(".");
 			}
 			try {
-				clientController.setForumServer(NetworkUtils.lookupServer(host));
+				clientController.setForumServer(NetworkManager.lookupServer(host));
 				
 			} catch (Exception e) {
 				System.out.print("\rCouldn't connect to server, let's try again\n");

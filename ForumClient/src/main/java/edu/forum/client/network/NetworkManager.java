@@ -8,7 +8,7 @@ import java.rmi.registry.Registry;
 import edu.forum.shared.Constants;
 import edu.forum.shared.RemoteController;
 
-public class NetworkUtils {
+public class NetworkManager {
 
 	public static RemoteController lookupServer(String serverIP) throws RemoteException, NotBoundException {
 			Registry registry = LocateRegistry.getRegistry(serverIP);

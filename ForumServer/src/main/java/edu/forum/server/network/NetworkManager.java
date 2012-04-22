@@ -10,8 +10,8 @@ import org.apache.log4j.Logger;
 import edu.forum.shared.Constants;
 import edu.forum.shared.RemoteController;
 
-public class NetworkUtils {
-	static Logger log = Logger.getLogger(NetworkUtils.class.getName());
+public class NetworkManager {
+	static Logger log = Logger.getLogger(NetworkManager.class.getName());
 	
 	public static void bind(RemoteController controller) throws RemoteException {
 			log.info("trying to bind service...");

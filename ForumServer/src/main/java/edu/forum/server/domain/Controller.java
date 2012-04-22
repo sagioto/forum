@@ -8,9 +8,9 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.apache.log4j.Logger;
 
-import edu.forum.server.data.DataUtils;
-import edu.forum.server.network.NetworkUtils;
-import edu.forum.server.security.SecurityUtils;
+import edu.forum.server.data.DataManager;
+import edu.forum.server.network.NetworkManager;
+import edu.forum.server.security.SecurityManager;
 import edu.forum.shared.AdminExistException;
 import edu.forum.shared.Post;
 import edu.forum.shared.RemoteController;
@@ -25,22 +25,22 @@ public class Controller implements RemoteController {
 
 	public Post enter() throws RemoteException {
 		log.info("received request to enter");	
-		return DataUtils.getMainPost();
+		return DataManager.getMainPost();
 	}
 
 	public boolean register(User toRegister) throws RemoteException {
-		return SecurityUtils.register(this, toRegister);
+		return SecurityManager.register(this, toRegister);
 	}
 
 	public boolean login(User toLogin) throws RemoteException {
 		return (this.getUsers().get(toLogin.getUsername()) != null)
-				&& (SecurityUtils.login(this, toLogin.getUsername(), toLogin.getPassword()));
+				&& (SecurityManager.login(this, toLogin.getUsername(), toLogin.getPassword()));
 	}
 
 	public boolean logout(User toLogout) throws RemoteException {
 		if(this.getUsers().get(toLogout.getUsername()) != null
-				&& SecurityUtils.isLoggedIn(this, toLogout)){
-			SecurityUtils.logout(this, toLogout);
+				&& SecurityManager.isLoggedIn(this, toLogout)){
+			SecurityManager.logout(this, toLogout);
 			return true;
 		}
 		else return false;
@@ -53,8 +53,8 @@ public class Controller implements RemoteController {
 	}
 
 	public boolean post(Post current, Post toPost) throws RemoteException {
-		if(SecurityUtils.isAuthorizedToPost(this, current, toPost.getUsername())){
-			DataUtils.post(posts.get(current.getTitle()), toPost);
+		if(SecurityManager.isAuthorizedToPost(this, current, toPost.getUsername())){
+			DataManager.post(posts.get(current.getTitle()), toPost);
 			return true;
 		}
 		return false;
@@ -69,7 +69,7 @@ public class Controller implements RemoteController {
 		log.info("starting initialization sequence...");
 		Controller controller = new Controller();
 		try{
-			NetworkUtils.bind(controller);
+			NetworkManager.bind(controller);
 			log.info("Controller bound");
 		} catch (Exception e) {
 			log.fatal("Forum Server couldn't rebind:", e);
@@ -78,7 +78,7 @@ public class Controller implements RemoteController {
 		createAdmin(controller, args);
 		log.info("populating data");
 		try {
-			DataUtils.populateData(controller);
+			DataManager.populateData(controller);
 		} catch (RemoteException | InterruptedException e) {
 			log.error("error while populating data");
 			e.printStackTrace();

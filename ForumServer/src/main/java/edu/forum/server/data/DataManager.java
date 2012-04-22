@@ -13,8 +13,8 @@ import edu.forum.shared.User;
 
 
 
-public class DataUtils {
-	static Logger log = Logger.getLogger(DataUtils.class.getName());
+public class DataManager {
+	static Logger log = Logger.getLogger(DataManager.class.getName());
 	private static Post mainPost;
 	
 	public static void populateData(Controller controller) throws RemoteException, InterruptedException{
@@ -56,7 +56,7 @@ public class DataUtils {
 	}
 
 	public static void setMainPost(Post mainPost) {
-		DataUtils.mainPost = mainPost;
+		DataManager.mainPost = mainPost;
 	}
 
 
