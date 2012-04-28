@@ -66,15 +66,15 @@ public class ClientController {
 	}
 
 	public boolean logout(User currentUser) throws RemoteException {
-		return forumServer.logout(currentUser);
+		return forumServer.logout(currentUser.getUsername(), currentUser.getPassword());
 	}
 
 	public boolean register(User currentUser) throws RemoteException {
-		return forumServer.register(currentUser);
+		return forumServer.register(currentUser.getUsername(), currentUser.getPassword());
 	}
 
 	public boolean login(User currentUser) throws RemoteException {
-		return forumServer.login(currentUser);
+		return forumServer.login(currentUser.getUsername(), currentUser.getPassword());
 	}
 	
 	public Map<Timestamp, Post> view(Post toView) throws RemoteException

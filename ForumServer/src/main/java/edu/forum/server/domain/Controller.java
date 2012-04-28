@@ -30,19 +30,20 @@ public class Controller implements RemoteController {
 		return DataManager.getMainPost();
 	}
 
-	public boolean register(User toRegister) throws RemoteException {
-		return SecurityManager.register(this, toRegister);
+	public boolean register(String username, String password) throws RemoteException {
+		return SecurityManager.register(this, username, password);
 	}
 
-	public boolean login(User toLogin) throws RemoteException {
-		return (this.getUsers().get(toLogin.getUsername()) != null)
-				&& (SecurityManager.login(this, toLogin.getUsername(), toLogin.getPassword()));
+	public boolean login(String username, String password) throws RemoteException {
+		return (this.getUsers().get(username) != null)
+				&& (SecurityManager.login(this, username, password));
 	}
 
-	public boolean logout(User toLogout) throws RemoteException {
-		if(this.getUsers().get(toLogout.getUsername()) != null
-				&& SecurityManager.isLoggedIn(this, toLogout)){
-			SecurityManager.logout(this, toLogout);
+	public boolean logout(String username, String password) throws RemoteException {
+		if(this.getUsers().get(username) != null
+				&& SecurityManager.isLoggedIn(this, getUsers().get(username))
+				&& getUsers().get(username).getPassword().equals(password)){
+			SecurityManager.logout(this, username);
 			return true;
 		}
 		else return false;

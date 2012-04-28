@@ -43,14 +43,14 @@ public class ServerSanityTest {
 			for (int i = 0; i < 10; i++) {
 				User user = new User("User" + i, "pass");
 				users.put("User" + i, user);
-				server.register(user);
+				server.register("User" + i, "pass");
 			}
 
 			Assert.assertEquals("Checking users were registered successfully",
 					users, server.getUsers());
 
 			for (User user : users.values()) {
-				server.login(user);
+				server.login(user.getUsername(), user.getPassword());
 			}
 
 			for (User user : users.values()) {
@@ -59,7 +59,7 @@ public class ServerSanityTest {
 			}
 
 			for (User user : users.values()) {
-				server.logout(user);
+				server.logout(user.getUsername(), user.getPassword());
 			}
 
 			for (User user : users.values()) {

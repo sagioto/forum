@@ -23,9 +23,9 @@ public class SecurityManager {
 		return false;
 	}
 	
-	public static void logout(Controller controller, User toLogout) throws RemoteException {
-		log.info("got request to logout from " + toLogout.getUsername());
-		controller.getUsers().get(toLogout.getUsername()).setLoggedIn(false);
+	public static void logout(Controller controller, String username) throws RemoteException {
+		log.info("got request to logout from " + username);
+		controller.getUsers().get(username).setLoggedIn(false);
 	}
 
 	public static boolean isLoggedIn(Controller controller, User toLogout) throws RemoteException {
@@ -40,9 +40,10 @@ public class SecurityManager {
 		else return false;
 	}
 
-	public static boolean register(Controller controller, User toRegister) throws RemoteException {
-		log.info("got request to log from " + toRegister.getUsername());
-		User prev = controller.getUsers().putIfAbsent(toRegister.getUsername(), toRegister);
+	public static boolean register(Controller controller, String username, String password) throws RemoteException {
+		log.info("got request to log from " + username);
+		User toRegister = new User(username, password);
+		User prev = controller.getUsers().putIfAbsent(username, toRegister);
 		if(prev != null)
 			return false;
 		else
