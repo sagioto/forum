@@ -18,4 +18,6 @@ public interface RemoteController extends Remote {
 	public Map<Timestamp, Post> view(Post toView) throws RemoteException;
 	
 	public boolean post(Post current, Post toPost) throws RemoteException;
+	
+	public Post registerForPost() throws RemoteException;
 }

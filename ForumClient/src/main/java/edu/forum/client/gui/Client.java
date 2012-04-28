@@ -1,54 +1,73 @@
 package edu.forum.client.gui;
 
-import java.io.IOException;
-import java.lang.reflect.Method;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import edu.forum.client.domain.ClientController;
 import edu.forum.client.network.NetworkManager;
 import edu.forum.shared.Constants;
 import edu.forum.shared.Post;
-import edu.forum.shared.RemoteController;
 
 public class Client {
 	private static ClientController clientController = new ClientController(); 
-
+	private static Post latestPost = null;
+	private volatile static boolean run = true;
+	
+	
 	public static void main(String...args){
 		PrintUtils.printTitle(); 
 		Scanner in = connectToServer();
 		PrintUtils.printAvailableommands();
-		HashMap <String, Method> methods = new HashMap<String, Method>();
-		for(Method method : RemoteController.class.getDeclaredMethods()){
-			methods.put(method.getName(), method);
-		}
+
 		try {
 			clientController.setCurrentPost(clientController.getForumServer().enter());
+
+			Executors.newSingleThreadExecutor().execute(new Runnable() {
+				@Override
+				public void run() {
+					while (run){
+						Post newPost = null;
+						try {
+							newPost = clientController.getForumServer().registerForPost();
+						} catch (Exception e) {
+							e.printStackTrace();
+							//TODO: consider what to do
+						}
+						if (newPost != null && 
+								!clientController.getCurrentUser().getUsername().equals(newPost.getUsername())){
+							latestPost = newPost;
+							System.out.println("\na new message by " + latestPost.getUsername() + " was posted");
+						}
+
+					}
+				}
+			});
+
 			String command;
 			while(true){
 				System.out.print(clientController.getCurrentUser().getUsername() + "@" + clientController.getCurrentPost().getTitle() + "> ");
 				command = in.nextLine();
 				String[] cmdArray = command.split(" ");
 				switch (cmdArray[0]){
-				
 				case "quit":
+					run = false;
 					if(clientController.getCurrentUser().isLoggedIn())
 						try
-						{
+					{
 							clientController.logout(clientController.getCurrentUser());
-						}
-						catch (RemoteException e) {
-							System.out.println("Coudln't logout from server: " + e.getMessage());
 					}
-					for (int i=0; i< 3; i++){
+					catch (RemoteException e) {
+						System.out.println("Coudln't logout from server: " + e.getMessage());
+					}
+					for (int i = 0; i < 3; i++){
 						System.out.print("By ");
 						try {
 							TimeUnit.MILLISECONDS.sleep(500);
@@ -56,7 +75,7 @@ public class Client {
 					}
 					System.out.println("!");
 					System.exit(0);
-					
+
 				case "register":
 					if(cmdArray.length >= 3){
 						clientController.setUserCredentials(clientController.getCurrentUser(), cmdArray[1], cmdArray[2]);
@@ -68,7 +87,7 @@ public class Client {
 							}
 							else
 								System.out.println("Failed! username " + clientController.getCurrentUser().getUsername() + " is already taken!");
-								clientController.setDefaultUser();
+							clientController.setDefaultUser();
 						}
 						catch (RemoteException e) {
 							System.out.println("Couldn't register to server: " + e.getMessage());
@@ -77,7 +96,7 @@ public class Client {
 					else
 						System.out.println( cmdArray[0] +"- incorrect number of argument");
 					break;
-					
+
 				case "login":
 					if(cmdArray.length >= 3){
 						clientController.setUserCredentials(clientController.getCurrentUser(), cmdArray[1], cmdArray[2]);
@@ -98,7 +117,7 @@ public class Client {
 					else
 						System.out.println( cmdArray[0] +"- incorrect number of argument");
 					break;
-					
+
 				case "logout":
 					if (clientController.logout(clientController.getCurrentUser())){
 						System.out.println("You are now logged out");
@@ -107,7 +126,7 @@ public class Client {
 					else
 						System.out.println("Failed! you weren't logged in");
 					break;
-					
+
 				case "enter":
 					if(cmdArray.length >= 2){
 						if (cmdArray[1].equals("..")) 	// In case of returning to a parent forum
@@ -126,7 +145,7 @@ public class Client {
 					else
 						System.out.println(cmdArray[0] +"- incorrect number of argument");
 					break;
-					
+
 				case "view":
 					if(cmdArray.length >= 1){
 						Map<Timestamp, Post> postsToView = clientController.view(clientController.getCurrentPost());
@@ -141,7 +160,7 @@ public class Client {
 							else{
 								System.out.println();
 							}
-							
+
 							for (Timestamp timestamp : keyList)
 							{
 								PrintUtils.printPost(postsToView.get(timestamp), 0);
@@ -152,7 +171,7 @@ public class Client {
 					else
 						System.out.println( cmdArray[0] +"- incorrect number of argument");
 					break;
-					
+
 				case "post":
 					if(cmdArray.length >= 1){
 						if (clientController.getCurrentPost().getParent() == null)
@@ -187,7 +206,7 @@ public class Client {
 				}
 
 			}
-		} catch ( IOException | IllegalArgumentException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -203,25 +222,25 @@ public class Client {
 			String host = in.nextLine();
 
 			System.out.print("Trying to connect to " + host);
-			for (int i=0; i<8; i++)
-			{
-				try {
-					TimeUnit.MILLISECONDS.sleep(500);
-				} catch (InterruptedException e) {}
-				System.out.print(".");
-			}
+			//			for (int i=0; i<8; i++)
+			//			{
+			//				try {
+			//					TimeUnit.MILLISECONDS.sleep(500);
+			//				} catch (InterruptedException e) {}
+			//				System.out.print(".");
+			//			}
 			try {
 				clientController.setForumServer(NetworkManager.lookupServer(host));
-				
+
 			} catch (Exception e) {
 				System.out.print("\rCouldn't connect to server, let's try again\n");
 				continue;
 			}
-			System.out.println("\rConnected successfully to " + host);
+			System.out.println("\rConnected successfully to " + host + "   ");
 			try {
 				TimeUnit.MILLISECONDS.sleep(800);
 			} catch (InterruptedException e) {}
-			
+
 			connected = true;
 		}
 		return in;

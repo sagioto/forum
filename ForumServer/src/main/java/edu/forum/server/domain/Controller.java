@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 
@@ -22,6 +23,7 @@ public class Controller implements RemoteController {
 	private User admin;
 	private ConcurrentMap<String, User> users = new ConcurrentHashMap<String, User>();
 	private ConcurrentMap<String, Post> posts = new ConcurrentHashMap<String, Post>();
+	private Post latestPost = DataManager.getMainPost();
 
 	public Post enter() throws RemoteException {
 		log.info("received request to enter");	
@@ -54,7 +56,7 @@ public class Controller implements RemoteController {
 
 	public boolean post(Post current, Post toPost) throws RemoteException {
 		if(SecurityManager.isAuthorizedToPost(this, current, toPost.getUsername())){
-			DataManager.post(posts.get(current.getTitle()), toPost);
+			DataManager.post(this, posts.get(current.getTitle()), toPost);
 			return true;
 		}
 		return false;
@@ -121,6 +123,27 @@ public class Controller implements RemoteController {
 	public void setPosts(ConcurrentMap<String, Post> posts) {
 		this.posts = posts;
 	}
+
+	public Post getLatestPost() {
+		return latestPost;
+	}
+
+	//TODO: maybe add synchronized on this method
+	public void setLatestPost(Post latestPost) {
+		this.latestPost = latestPost;
+	}
+
+	@Override
+	public synchronized Post registerForPost() throws RemoteException {
+			try {
+				long start = System.currentTimeMillis();
+				wait(TimeUnit.MINUTES.toMillis(1));
+				if (System.currentTimeMillis() - start < TimeUnit.MINUTES.toMillis(1)) {
+					return getLatestPost();					
+				}
+			} catch (InterruptedException e) {}
+			return null;
+		}
 
 
 }

@@ -13,7 +13,7 @@ public class Post implements Comparable<PostKey>, Serializable {
 	private Post parent;
 	private String title;
 	private String body;
-	private ConcurrentMap<Timestamp, Post> replies;
+	private ConcurrentMap<Timestamp, Post> replies = new ConcurrentHashMap<Timestamp, Post>();
 	private String username;
 	private Timestamp time;
 	private boolean isSubForum = false;
@@ -31,7 +31,6 @@ public class Post implements Comparable<PostKey>, Serializable {
 		this.username = string;
 		this.time = time;
 		this.parent = parent;
-		replies = new ConcurrentHashMap<Timestamp, Post>();
 		this.key = new PostKey(getUsername(), time);
 	}
 

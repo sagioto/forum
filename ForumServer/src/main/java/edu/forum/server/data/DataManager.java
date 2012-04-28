@@ -37,7 +37,7 @@ public class DataManager {
 		}
 		for (User user : controller.getUsers().values()) {
 			for (int i = 0; i < Constants.INITIAL_SUB_FORUM_SIZE; i++) {
-				post(controller.getPosts().get("sub-forum-" + i),
+				post(controller, controller.getPosts().get("sub-forum-" + i),
 						new Post("title-" + i + " " + user.getUsername(),
 								"content", user.getUsername(), new Timestamp(System.currentTimeMillis()),
 								controller.getPosts().get("sub-forum-" + i)));
@@ -46,9 +46,13 @@ public class DataManager {
 
 	}
 
-	public static void post(Post father, Post child) throws RemoteException {
+	public static void post(Controller controller, Post father, Post child) throws RemoteException {
 		log.trace("posting message: "  + child.getTitle());
 		father.addReply(child);
+		controller.setLatestPost(child);
+		synchronized (controller) {
+			controller.notifyAll();
+		}
 	}
 
 	public static Post getMainPost() {
