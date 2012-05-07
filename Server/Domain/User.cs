@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ForumServer.DataLayer
+namespace ForumServer.Domain
 {
-    public class DBAdaptor : IDataBaseAdaptor
+    public class User
     {
+        private string userName;
     }
 }

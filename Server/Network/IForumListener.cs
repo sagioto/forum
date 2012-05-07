@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ServiceModel;
 
-namespace ForumServer.NetworkLayer
+namespace ForumServer.Network
 {
     /// <summary>
     /// This interface is used for defining client object which gets callbacks from server

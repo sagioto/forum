@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ForumServer.DataTypes
+namespace ForumServer.Data
 {
-    public class PostType
+    public class DataManager
     {
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ForumClientCore.NetworkLayer;
+using ForumClientCore.Network;
 using System.ServiceModel;
 
 namespace ForumClientCore
@@ -10,7 +10,6 @@ namespace ForumClientCore
     public class ClientController
     {
         ClientNetworkAdaptor netAdaptor;  
-
         public event ClientNetworkAdaptor.OnUpdate OnUpdateFromServer;  //Event to be invoked when getting a notify by NetworkAdaptor
 
         /// <summary>

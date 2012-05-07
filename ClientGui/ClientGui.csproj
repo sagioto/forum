@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3FD9B9D9-D1F4-4D88-A4E2-78398712084D}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{BE68A022-3E9F-4845-9327-4E29DA8A9169}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ForumClientConsole</RootNamespace>
-    <AssemblyName>ForumClientConsole</AssemblyName>
+    <RootNamespace>ForumClientGui</RootNamespace>
+    <AssemblyName>ForumClientGui</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,10 +40,18 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientConsole.cs" />
+    <Compile Include="ClientFormUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientFormUI.Designer.cs">
+      <DependentUpon>ClientFormUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\ForumService\Reference.cs">
@@ -51,19 +59,29 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ForumClientCore\ForumClientCore.csproj">
-      <Project>{EE409FC7-F8B3-430D-8C3A-277FB90A0349}</Project>
-      <Name>ForumClientCore</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
+    <EmbeddedResource Include="ClientFormUI.resx">
+      <DependentUpon>ClientFormUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <None Include="app.config" />
     <None Include="Properties\DataSources\ForumClientCore.ForumService.CompositeType.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
     <None Include="Service References\ForumService\ServerNetworkAdaptor.wsdl" />
     <None Include="Service References\ForumService\ServerNetworkAdaptor.xsd">
       <SubType>Designer</SubType>
@@ -74,6 +92,15 @@
     <None Include="Service References\ForumService\ServerNetworkAdaptor2.xsd">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClientCore\ClientCore.csproj">
+      <Project>{EE409FC7-F8B3-430D-8C3A-277FB90A0349}</Project>
+      <Name>ForumClientCore</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ForumService\" />

@@ -1,23 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumClientCore", "ForumClientCore\ForumClientCore.csproj", "{EE409FC7-F8B3-430D-8C3A-277FB90A0349}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientCore", "ClientCore\ClientCore.csproj", "{EE409FC7-F8B3-430D-8C3A-277FB90A0349}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A27A133F-3BE9-4869-B21E-045605A58827} = {A27A133F-3BE9-4869-B21E-045605A58827}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C8BCFA8B-B789-414C-BA68-D2D9CDCEB304}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumServer", "ForumServer\ForumServer.csproj", "{A27A133F-3BE9-4869-B21E-045605A58827}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{A27A133F-3BE9-4869-B21E-045605A58827}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumUtils", "ForumUtils\ForumUtils.csproj", "{8E463DBF-841C-4989-9219-A0AE255F58F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumClientGui", "ForumClientGui\ForumClientGui.csproj", "{BE68A022-3E9F-4845-9327-4E29DA8A9169}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientGui", "ClientGui\ClientGui.csproj", "{BE68A022-3E9F-4845-9327-4E29DA8A9169}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A27A133F-3BE9-4869-B21E-045605A58827} = {A27A133F-3BE9-4869-B21E-045605A58827}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumClientConsole", "ForumClientConsole\ForumClientConsole.csproj", "{3FD9B9D9-D1F4-4D88-A4E2-78398712084D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientConsole", "ClientConsole\ClientConsole.csproj", "{3FD9B9D9-D1F4-4D88-A4E2-78398712084D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A27A133F-3BE9-4869-B21E-045605A58827} = {A27A133F-3BE9-4869-B21E-045605A58827}
 	EndProjectSection

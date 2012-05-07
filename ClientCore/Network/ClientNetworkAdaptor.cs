@@ -5,7 +5,7 @@ using System.Text;
 using ForumClientCore.ForumService;
 using System.ServiceModel;
 
-namespace ForumClientCore.NetworkLayer
+namespace ForumClientCore.Network
 {
     public class ClientNetworkAdaptor
     {

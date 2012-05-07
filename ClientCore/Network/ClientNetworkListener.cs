@@ -5,7 +5,7 @@ using System.Text;
 using System.ServiceModel;
 using ForumClientCore.ForumService;
 
-namespace ForumClientCore.NetworkLayer
+namespace ForumClientCore.Network
 {
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
     class ClientNetworkListener : ForumService.IForumServiceCallback

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ForumServer.DataLayer
+namespace ForumServer.Data
 {
-    public class DataManager
+    public class DataBaseAdaptor : IDataBaseAdaptor
     {
     }
 }
