@@ -14,6 +14,7 @@ namespace ForumServer.NetworkLayer
         public JsonSerializer()
         {
             serializer = new JavaScriptSerializer();
+            serializer.RecursionLimit = 1;
         }
 
 
