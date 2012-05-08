@@ -14,10 +14,10 @@ namespace ForumServer.DataLayer
          bool addReply(Post reply, Postkey originalPost);
 
         /// <summary>
-        /// Changing title & content of originalPost. Not changing post`s TimeStamp (keypost)
+        /// Changing title & content of postKey. Not changing post`s TimeStamp (keypost)
         /// </summary>
         /// <param name="postToUpdate"></param>
-        /// <param name="originalPost"></param>
+        /// <param name="postKey"></param>
         /// <returns></returns>
          bool editPost(Post postToUpdate, Postkey originalPost);
 
