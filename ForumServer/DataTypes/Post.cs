@@ -12,8 +12,13 @@ namespace ForumServer.DataTypes
         private Post parentPost;
         private string body;
         private Dictionary<Postkey, Post> replies;
-        private string username;
-        private DateTime time;
+
+        public Post(Postkey postKey, string title, Post parentPost)
+        {
+            this.key = postKey;
+            this.title = title;
+            this.parentPost = parentPost;
+        }
 
         #region Fields Properties
 
@@ -83,31 +88,26 @@ namespace ForumServer.DataTypes
         }
 
 
-        public String Username
-        {
-            get
-            {
-                return username;
-            }
-            set
-            {
-                username = value;
-            }
-        }
-
-        public DateTime Time
-        {
-            get
-            {
-                return time;
-            }
-            set
-            {
-                time = value;
-            }
-        }
-
 #endregion
+
+        #region Public methods
+
+        public bool AddReply(Post reply)
+        {
+            try
+            {
+                this.replies.Add(reply.Key, reply);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return true;
+        }
+
+
+
+        #endregion
 
         #region IComparable Members
         public int CompareTo(object p)

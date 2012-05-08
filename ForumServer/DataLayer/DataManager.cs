@@ -8,35 +8,18 @@ namespace ForumServer.DataLayer
 {
     public class DataManager : IDataManager
     {
-<<<<<<< HEAD
         private Dictionary<string, User> users;
         private Dictionary<string, Subforum> subforumsList;
 
+        public DataManager()
+        {
+            users = new Dictionary<string, User>();
+            subforumsList = new Dictionary<string, Subforum>();
+        }
+
         #region IDataManager methods
 
-        public bool addPost(Post post, string subforum)
-        {
-            return subforumsList[subforum].addPost(post);
-        }
-
-        public bool addReply(Post reply, Postkey originalPost)
-        {
-            string subforum = GetSubforumOfPost(originalPost);
-            if (subforum == null)
-                throw new PostNotFoundException();
-            try
-            {
-                subforumsList[subforum].Posts[originalPost].Replies.Add(reply.Key, reply);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return true;
-        }
-
-
-        public bool editPost(Post postToUpdate, Postkey originalPost)
+        public bool EditPost(Post postToUpdate, Postkey originalPost)
         {
             string subforum = GetSubforumOfPost(originalPost);
             if (subforum == null)
@@ -53,66 +36,56 @@ namespace ForumServer.DataLayer
             return true;
         }
 
-        public Dictionary<string, Subforum> getSubforumsDic()
-=======
-
         public bool AddPost(DataTypes.Post post, string subforum)
         {
-            throw new NotImplementedException();
+            return subforumsList[subforum].AddPost(post);
         }
 
         public bool AddReply(DataTypes.Post reply, DataTypes.Postkey originalPost)
->>>>>>> 95b5b5c04d483a3301c550c0defc830854d32edb
         {
-            throw new NotImplementedException();
+            string subforum = GetSubforumOfPost(originalPost);
+            if (subforum == null)
+                throw new PostNotFoundException();
+            try
+            {
+                subforumsList[subforum].Posts[originalPost].Replies.Add(reply.Key, reply);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return true;
         }
 
-<<<<<<< HEAD
-        public Subforum getSubforum(string subforum)
-=======
-        public bool EditPost(DataTypes.Post postToUpdate, DataTypes.Postkey originalPost)
->>>>>>> 95b5b5c04d483a3301c550c0defc830854d32edb
-        {
-            throw new NotImplementedException();
-        }
 
-<<<<<<< HEAD
-        public User getUser(string username)
-=======
-        public Dictionary<string, DataTypes.Subforum> getSubforumsDic()
->>>>>>> 95b5b5c04d483a3301c550c0defc830854d32edb
-        {
-            throw new NotImplementedException();
-        }
-
-<<<<<<< HEAD
-        public bool updateUser(User user)
-=======
         public DataTypes.Subforum GetSubforum(string subforum)
->>>>>>> 95b5b5c04d483a3301c550c0defc830854d32edb
+
         {
             throw new NotImplementedException();
         }
 
-<<<<<<< HEAD
-        public List<string> getModerators(string subforum)
-=======
+
         public DataTypes.User GetUser(string username)
->>>>>>> 95b5b5c04d483a3301c550c0defc830854d32edb
         {
             throw new NotImplementedException();
         }
 
-<<<<<<< HEAD
-        public bool setModerators(string subforum)
-=======
+
         public bool UpdateUser(DataTypes.User user)
->>>>>>> 95b5b5c04d483a3301c550c0defc830854d32edb
         {
             throw new NotImplementedException();
         }
 
-<<<<<<< HEAD
+              public List<string> GetModerators(string subforum)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SetModerators(string subforum)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region Private methods
@@ -143,16 +116,6 @@ namespace ForumServer.DataLayer
 
         #endregion
 
-=======
-        public List<string> GetModerators(string subforum)
-        {
-            throw new NotImplementedException();
-        }
 
-        public bool SetModerators(string subforum)
-        {
-            throw new NotImplementedException();
-        }
->>>>>>> 95b5b5c04d483a3301c550c0defc830854d32edb
     }
 }

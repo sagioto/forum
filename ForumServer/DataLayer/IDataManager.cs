@@ -21,8 +21,6 @@ namespace ForumServer.DataLayer
         /// <returns></returns>
          bool EditPost(Post postToUpdate, Postkey originalPost);
 
-         Dictionary<string, Subforum> getSubforumsDic();
-
          Subforum GetSubforum(string subforum);
 
          User GetUser(string username);

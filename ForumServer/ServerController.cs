@@ -25,7 +25,7 @@ namespace ForumServer
 
         public bool Register(string username, string password)
         {
-            return dataManager;
+            return true;
         }
 
     }

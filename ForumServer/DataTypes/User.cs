@@ -15,10 +15,13 @@ namespace ForumServer.DataTypes
         private AuthorizationLevel level;
         private UserState currentState;
 
-        public void User(string username, string password)
+        public User(string username, string password)
         {
             this.username = username;
             this.password = password;
+            friends = new List<string>();
+            this.level = AuthorizationLevel.GUEST;
+            currentState = UserState.Logout;
         }
 
         #region Parameters Properties

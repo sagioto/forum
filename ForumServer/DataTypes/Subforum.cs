@@ -11,6 +11,11 @@ namespace ForumServer.DataTypes
         private List<string> moderatorsList;
         private Dictionary<Postkey, Post> posts;
 
+        public Subforum(string name)
+        {
+            this.name = name;
+        }
+
         #region Parameters Properties
 
         public string Name
@@ -53,9 +58,9 @@ namespace ForumServer.DataTypes
 
         #endregion
 
-        #region Subforum methods
+        #region Subforum public methods
 
-        public bool addPost(Post p)
+        public bool AddPost(Post p)
         {
             try
             {
