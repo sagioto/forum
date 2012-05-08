@@ -102,7 +102,7 @@ namespace ForumServer.DataLayer
             return null;
         }
 
-        private string GetPost(Postkey postKey)
+        private string GetPostString(Postkey postKey)
         {
             foreach (KeyValuePair<string, Subforum> subforumEntry in subforumsList)
             {
@@ -117,5 +117,16 @@ namespace ForumServer.DataLayer
         #endregion
 
 
+
+        public Subforum[] GetSubforums()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Post GetPost(Postkey postkey)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -12,12 +12,14 @@ namespace ForumServer.DataTypes
         private Post parentPost;
         private string body;
         private Dictionary<Postkey, Post> replies;
+        private Subforum subforum;
 
-        public Post(Postkey postKey, string title, Post parentPost)
+        public Post(Postkey postKey, string title, Post parentPost, Subforum subforum)
         {
             this.key = postKey;
             this.title = title;
             this.parentPost = parentPost;
+            this.subforum = subforum;
         }
 
         #region Fields Properties
@@ -86,6 +88,14 @@ namespace ForumServer.DataTypes
                 replies = value;
             }
         }
+
+        public Subforum Subforum
+        {
+            get { return subforum; }
+            set { subforum = value; }
+        }
+
+
 
 
 #endregion

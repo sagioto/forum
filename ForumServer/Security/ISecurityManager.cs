@@ -9,7 +9,9 @@ namespace ForumServer.Security
     interface ISecurityManager
     {
 
-        bool AuthorizedLogin(string username);
+        bool AuthorizedRegister(string username, string password);
+
+        bool AuthorizedLogin(string username, string password);
 
         bool AuthorizedLogout(string username);
 
@@ -19,7 +21,7 @@ namespace ForumServer.Security
 
         bool IsAuthorizedToEdit(string username, Postkey post);
 
-        bool IsAuthorizedToEditSubforum(string username);
+        bool IsAuthorizedToEditSubforums(string username);
 
 
     }

@@ -31,6 +31,8 @@ namespace ForumServer.DataLayer
 
         User GetUser(string username);
 
+        Post GetPost(Postkey postkey);
+        
         bool UpdateUser(User user);
 
         List<string> GetModerators(string subforum);

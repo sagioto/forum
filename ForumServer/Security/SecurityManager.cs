@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using ForumServer.DataTypes;
 
 namespace ForumServer.Security
 {
@@ -11,49 +12,92 @@ namespace ForumServer.Security
 
         public SecurityManager(DataLayer.DataManager dataManager)
         {
-            // TODO: Complete member initialization
             this.dataManager = dataManager;
+            
+            string adminName = System.Web.Configuration.WebConfigurationManager.AppSettings["adminName"];
+            string adminPassword = System.Web.Configuration.WebConfigurationManager.AppSettings["adminPassword"];
+            User admin = new User(adminName, adminPassword);
+            admin.Level = AuthorizationLevel.ADMIN;
+
+            dataManager.UpdateUser(admin);
         }
 
 
-        public bool AuthorizedLogin(string username)
+        public bool AuthorizedRegister(string username, string password)
         {
-            throw new NotImplementedException();
+            User user = dataManager.GetUser(username);
+            if (user != null)
+                return false;
+            else
+            {
+                user = new User(username, password);
+                user.Level = AuthorizationLevel.MEMBER;
+                dataManager.UpdateUser(user);
+                return true;
+            }
+        }
+
+        public bool AuthorizedLogin(string username, string password)
+        {
+            User user = dataManager.GetUser(username);
+            if (user != null && user.Password.Equals(password))
+            {
+                user.CurrentState = UserState.Login;
+                dataManager.UpdateUser(user);
+                return true;
+            }
+            else return false;
         }
 
         public bool AuthorizedLogout(string username)
         {
-            throw new NotImplementedException();
+            User user = dataManager.GetUser(username);
+            if (IsUserLoggendIn(user))
+            {
+                user.CurrentState = UserState.Logout;
+                dataManager.UpdateUser(user);
+                return true;
+            }
+            else return false;
         }
 
         public bool IsLoggedin(string username)
         {
-            throw new NotImplementedException();
+            User user = dataManager.GetUser(username);
+            return (IsUserLoggendIn(user));
         }
 
+        
         public bool IsAuthorizedToPost(string username, string subforum)
         {
-            throw new NotImplementedException();
+            //TODO check if sub forum should be considered
+            User user = dataManager.GetUser(username);
+            return (user != null && user.Level.Equals(AuthorizationLevel.MEMBER) 
+                && IsUserLoggendIn(user));
         }
 
-        public bool IsAuthorizedToEdit(string username, DataTypes.Postkey post)
+        public bool IsAuthorizedToEdit(string username, Postkey postkey)
         {
-            throw new NotImplementedException();
+            User user = dataManager.GetUser(username);
+            Post post = dataManager.GetPost(postkey);
+            return user != null && post != null
+                && (post.Key.Username.Equals(username)
+                    || (user.Level.Equals(AuthorizationLevel.MODERATOR) && (user as Moderator).Mananged.Contains(post.Subforum))
+                    || (user.Level.Equals(AuthorizationLevel.ADMIN)));                
         }
 
-        public bool IsAuthorizedToEditSubforum(string username)
+        public bool IsAuthorizedToEditSubforums(string username)
         {
-            throw new NotImplementedException();
+            //TODO check if this is the right condition
+            User user = dataManager.GetUser(username);
+            return user != null && user.Level.Equals(AuthorizationLevel.ADMIN);
         }
 
-        internal bool AuthorizedRegister(string username, string password)
+
+        private static bool IsUserLoggendIn(User user)
         {
-            throw new NotImplementedException();
+            return user != null && user.CurrentState.Equals(UserState.Login);
         }
 
-        internal bool AuthorizedLogin(string username, string password)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
