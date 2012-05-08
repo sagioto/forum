@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 using ForumServer.NetworkLayer;
+using System.Web.Script.Serialization;
 
 namespace ForumServer
 {
@@ -16,16 +17,69 @@ namespace ForumServer
     public interface IForumService
     {
 
+        /// <summary>
+        /// Returns subforums list
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+        string Enter();
+
+        [OperationContract]
+         bool register(String username, String password);
+
+        [OperationContract]
+         bool login(String username, String password);
+
+        [OperationContract]
+         bool logout(String username);
+
+        [OperationContract]
+         string getSubforumsList(string subforum);
+
+        [OperationContract]
+         string getSubforum(string subforum);
+
+        /// <summary>
+        /// postkey contains of username + timestamp 
+        /// </summary>
+        /// <param name="postkey"></param>
+        /// <returns></returns>
+        [OperationContract]
+         string getPost(string postkey);
+
+        [OperationContract]
+         bool post(string current, string toPost);
+
+        /// <summary>
+        /// Not used in Version 2.0.
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+         string subscribe();
+
+        /// <summary>
+        /// Not used
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         [OperationContract]
         bool AddMessage(string message);
 
+        /// <summary>
+        /// Not used
+        /// </summary>
+        /// <returns></returns>
         [OperationContract]
         bool SubscribeToForum();
 
+        /// <summary>
+        /// Not used
+        /// </summary>
+        /// <returns></returns>
         [OperationContract]
         bool UnsubscribeFromForum();
 
-     
+
 
         // The following methods are only for debugg:
         [OperationContract]
@@ -47,15 +101,27 @@ namespace ForumServer
         [DataMember]
         public bool BoolValue
         {
-            get { return boolValue; }
-            set { boolValue = value; }
+            get
+            {
+                return boolValue;
+            }
+            set
+            {
+                boolValue = value;
+            }
         }
 
         [DataMember]
         public string StringValue
         {
-            get { return stringValue; }
-            set { stringValue = value; }
+            get
+            {
+                return stringValue;
+            }
+            set
+            {
+                stringValue = value;
+            }
         }
     }
 }

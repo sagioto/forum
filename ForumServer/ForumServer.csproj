@@ -66,15 +66,19 @@
     <Compile Include="DataLayer\DataManager.cs" />
     <Compile Include="DataLayer\DBAdaptor.cs" />
     <Compile Include="DataLayer\IDataBaseAdaptor.cs" />
-    <Compile Include="DataTypes\PostType.cs" />
-    <Compile Include="DataTypes\SubForumType.cs" />
-    <Compile Include="DataTypes\UserType.cs" />
+    <Compile Include="DataLayer\IDataManager.cs" />
+    <Compile Include="DataTypes\Post.cs" />
+    <Compile Include="DataTypes\Postkey.cs" />
+    <Compile Include="DataTypes\Subforum.cs" />
+    <Compile Include="DataTypes\User.cs" />
     <Compile Include="NetworkLayer\IForumListener.cs" />
     <Compile Include="NetworkLayer\ServerNetworkAdaptor.svc.cs">
       <DependentUpon>ServerNetworkAdaptor.svc</DependentUpon>
     </Compile>
     <Compile Include="NetworkLayer\IForumService.cs" />
+    <Compile Include="Policy\IPolicyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\ISecurityManager.cs" />
     <Compile Include="ServerController.cs" />
   </ItemGroup>
   <ItemGroup>

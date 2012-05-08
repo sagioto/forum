@@ -11,6 +11,53 @@ namespace ForumServer
 {
     public class ServerNetworkAdaptor : IForumService
     {
+        public string Enter()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool register(String username, String password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool login(String username, String password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool logout(String username)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string getSubforumsList(string subforum)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string getSubforum(string subforum)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public string getPost(string postkey)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public bool post(string current, string toPost)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public string subscribe()
+        {
+            throw new NotImplementedException();
+        }
 
         private static List<IForumListener> subscribers = new List<IForumListener>();
 
