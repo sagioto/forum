@@ -17,7 +17,7 @@ namespace ForumServer.Security
 
         bool IsLoggedin(string username);
 
-        bool IsAuthorizedToPost(string username, string subforum);
+        bool IsAuthorizedToPost(string username, Subforum subforum);
 
         bool IsAuthorizedToEdit(string username, Postkey post);
 

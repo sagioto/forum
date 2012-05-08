@@ -51,24 +51,25 @@ namespace ForumServer
 
         public Post GetPost(Postkey key)
         {
-            throw new NotImplementedException();
-            //TODO GetPost
-            //return dataManager.;
+            return dataManager.GetPost(key);
         }
 
         public bool Post(Subforum subforum, Post post)
         {
-            return dataManager.AddPost(post, subforum.ToString());
+            return securityManager.IsAuthorizedToPost(post.Key.Username, subforum)
+                && dataManager.AddPost(post, subforum.ToString());
         }
 
         public bool Reply(Postkey currPost, Post post)
         {
-            return dataManager.AddReply(post, currPost);
+            return securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum)
+                && dataManager.AddReply(post, currPost);
         }
 
         internal bool EditPost(Postkey currPost, DataTypes.Post post)
         {
-            return dataManager.EditPost(post, currPost);
+            return securityManager.IsAuthorizedToEdit(post.Key.Username, currPost)
+                && dataManager.EditPost(post, currPost);
         }
     }
 }

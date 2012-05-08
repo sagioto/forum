@@ -68,7 +68,7 @@ namespace ForumServer.Security
         }
 
         
-        public bool IsAuthorizedToPost(string username, string subforum)
+        public bool IsAuthorizedToPost(string username, Subforum subforum)
         {
             //TODO check if sub forum should be considered
             User user = dataManager.GetUser(username);
