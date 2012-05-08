@@ -25,19 +25,19 @@ namespace ForumServer
         string Enter();
 
         [OperationContract]
-         bool register(String username, String password);
+         bool Register(String username, String password);
 
         [OperationContract]
-         bool login(String username, String password);
+         bool Login(String username, String password);
 
         [OperationContract]
-         bool logout(String username);
+         bool Logout(String username);
 
         [OperationContract]
-         string getSubforumsList(string subforum);
+         string GetSubforumsList(string subforum);
 
         [OperationContract]
-         string getSubforum(string subforum);
+         string GetSubforum(string subforum);
 
         /// <summary>
         /// postkey contains of username + timestamp 
@@ -45,17 +45,17 @@ namespace ForumServer
         /// <param name="postkey"></param>
         /// <returns></returns>
         [OperationContract]
-         string getPost(string postkey);
+         string GetPost(string postkey);
 
         [OperationContract]
-         bool post(string current, string toPost);
+         bool Post(string current, string toPost);
 
         /// <summary>
         /// Not used in Version 2.0.
         /// </summary>
         /// <returns></returns>
         [OperationContract]
-         string subscribe();
+         string Subscribe();
 
         /// <summary>
         /// Not used

@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataLayer\DataManager.cs" />
-    <Compile Include="DataLayer\DBAdaptor.cs" />
+    <Compile Include="DataLayer\DataBaseAdaptor.cs" />
     <Compile Include="DataLayer\IDataBaseAdaptor.cs" />
     <Compile Include="DataLayer\IDataManager.cs" />
     <Compile Include="DataTypes\Post.cs" />
@@ -80,8 +80,10 @@
     </Compile>
     <Compile Include="NetworkLayer\IForumService.cs" />
     <Compile Include="Policy\IPolicyManager.cs" />
+    <Compile Include="Policy\PolicyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ISecurityManager.cs" />
+    <Compile Include="Security\SecurityManager.cs" />
     <Compile Include="ServerController.cs" />
   </ItemGroup>
   <ItemGroup>

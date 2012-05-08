@@ -7,11 +7,11 @@ namespace ForumServer.Policy
 {
     interface IPolicyManager
     {
-         bool addModerator(string username, string subforum);
+         bool AddModerator(string username, string subforum);
 
-         bool removeModerator(string username, string subforum);
+         bool RemoveModerator(string username, string subforum);
 
-         bool changeModerator(string oldUsername, string newUsername, string subforum);
+         bool ChangeModerator(string oldUsername, string newUsername, string subforum);
  
     }
 }
