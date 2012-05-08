@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 using ForumServer.NetworkLayer;
+using ForumServer.DataTypes;
 
 namespace ForumServer
 {
@@ -16,7 +17,7 @@ namespace ForumServer
         
         public string Enter()
         {
-            throw new NotImplementedException();
+            return serializer.Serialize(controller.Enter());
         }
 
         public bool Register(String username, String password)
@@ -26,34 +27,51 @@ namespace ForumServer
 
         public bool Login(String username, String password)
         {
-            throw new NotImplementedException();
+            return controller.Login(username, password);
         }
 
         public bool Logout(String username)
         {
-            throw new NotImplementedException();
+            return controller.Logout(username);
         }
 
         public string GetSubforumsList(string subforum)
         {
-            throw new NotImplementedException();
+            return serializer.Serialize(controller.Enter());
         }
 
         public string GetSubforum(string subforum)
         {
-            throw new NotImplementedException();
+            return serializer.SerializeSubforum(controller.GetSubForum(subforum));
         }
 
 
         public string GetPost(string postkey)
         {
-            throw new NotImplementedException();
+            Postkey toGet = serializer.DeserializePostkey(postkey);
+            return serializer.SerializePost(controller.GetPost(toGet));
         }
 
 
         public bool Post(string current, string toPost)
         {
-            throw new NotImplementedException();
+            Subforum currentSubforum = serializer.DeserializeSubforum(current);
+            Post toAdd = serializer.DeserializePost(toPost);
+            return controller.Post(currentSubforum, toAdd);
+        }
+
+        public bool Reply(string current, string toPost)
+        {
+            Postkey currentKey = serializer.DeserializePostkey(current);
+            Post toAdd= serializer.DeserializePost(toPost);
+            return controller.Reply(currentKey, toAdd);
+        }
+
+        public bool EditPost(string postToUpdate, string originalPost)
+        {
+            Postkey originalPostKey = serializer.DeserializePostkey(originalPost);
+            Post toUpdate = serializer.DeserializePost(postToUpdate);
+            return controller.EditPost(originalPostKey, toUpdate);
         }
 
 
@@ -153,5 +171,7 @@ namespace ForumServer
         }
 
         #endregion
+
+
     }
 }

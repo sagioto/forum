@@ -20,24 +20,36 @@ namespace ForumServer
         /// <summary>
         /// Returns subforums list
         /// </summary>
-        /// <returns></returns>
+        /// <param name="subforum"></param>
+        /// <returns>returns a json of an array of the sub forum</returns>
         [OperationContract]
         string Enter();
 
-        [OperationContract]
-         bool Register(String username, String password);
 
         [OperationContract]
-         bool Login(String username, String password);
+        bool Register(String username, String password);
 
         [OperationContract]
-         bool Logout(String username);
+        bool Login(String username, String password);
 
         [OperationContract]
-         string GetSubforumsList(string subforum);
+        bool Logout(String username);
 
+        /// <summary>
+        /// Returns subforums list
+        /// </summary>
+        /// <param name="subforum"></param>
+        /// <returns>returns a json of an array of the sub forum</returns>
         [OperationContract]
-         string GetSubforum(string subforum);
+        string GetSubforumsList(string subforum);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subforum"></param>
+        /// <returns>returns a json of the requested sub-forum</returns>
+        [OperationContract]
+        string GetSubforum(string subforum);
 
         /// <summary>
         /// postkey contains of username + timestamp 
@@ -45,17 +57,41 @@ namespace ForumServer
         /// <param name="postkey"></param>
         /// <returns></returns>
         [OperationContract]
-         string GetPost(string postkey);
+        string GetPost(string postkey);
 
+        /// <summary>
+        /// add a post to a sub forum
+        /// </summary>
+        /// <param name="current">the sub forum json</param>
+        /// <param name="toPost">the post to add json</param>
+        /// <returns></returns>
         [OperationContract]
-         bool Post(string current, string toPost);
+        bool Post(string current, string toPost);
 
+        /// <summary>
+        /// add post as reply to current post
+        /// </summary>
+        /// <param name="current">the current post postkey json</param>
+        /// <param name="toPost">the post to add json</param>
+        /// <returns></returns>
+        [OperationContract]
+        bool Reply(string current, string toPost);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="postToUpdate">json of the post</param>
+        /// <param name="originalPost">json of the current postkey</param>
+        /// <returns></returns>
+        bool EditPost(string postToUpdate, string originalPost);
+
+        #region not used
         /// <summary>
         /// Not used in Version 2.0.
         /// </summary>
         /// <returns></returns>
         [OperationContract]
-         string Subscribe();
+        string Subscribe();
 
         /// <summary>
         /// Not used
@@ -88,6 +124,7 @@ namespace ForumServer
         [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);
 
+        #endregion
     }
 
 

@@ -45,5 +45,15 @@ namespace ForumServer.Security
         {
             throw new NotImplementedException();
         }
+
+        internal bool AuthorizedRegister(string username, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal bool AuthorizedLogin(string username, string password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
