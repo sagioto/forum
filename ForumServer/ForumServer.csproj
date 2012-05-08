@@ -14,6 +14,7 @@
     <AssemblyName>ForumServer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -72,6 +73,8 @@
     <Compile Include="DataTypes\Subforum.cs" />
     <Compile Include="DataTypes\User.cs" />
     <Compile Include="NetworkLayer\IForumListener.cs" />
+    <Compile Include="NetworkLayer\ISerializer.cs" />
+    <Compile Include="NetworkLayer\JsonSerializer.cs" />
     <Compile Include="NetworkLayer\ServerNetworkAdaptor.svc.cs">
       <DependentUpon>ServerNetworkAdaptor.svc</DependentUpon>
     </Compile>
