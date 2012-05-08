@@ -9,9 +9,9 @@ namespace ForumServer.DataLayer
     interface IDataManager
     {
 
-         bool AddPost(Post post, string subforum);
+        bool AddPost(Post post, string subforum);
 
-         bool AddReply(Post reply, Postkey originalPost);
+        bool AddReply(Post reply, Postkey originalPost);
 
         /// <summary>
         /// Changing title & content of postKey. Not changing post`s TimeStamp (keypost)
@@ -19,17 +19,23 @@ namespace ForumServer.DataLayer
         /// <param name="postToUpdate"></param>
         /// <param name="postKey"></param>
         /// <returns></returns>
-         bool EditPost(Post postToUpdate, Postkey originalPost);
+        bool EditPost(Post postToUpdate, Postkey originalPost);
 
-         Subforum GetSubforum(string subforum);
+        Subforum GetSubforum(string subforum);
 
-         User GetUser(string username);
+        /// <summary>
+        /// returns all sub forms sorted by title
+        /// </summary>
+        /// <returns></returns>
+        Subforum[] GetSubforums();
 
-         bool UpdateUser(User user);
+        User GetUser(string username);
 
-         List<string> GetModerators(string subforum);
+        bool UpdateUser(User user);
 
-         bool SetModerators(string subforum);
+        List<string> GetModerators(string subforum);
+
+        bool SetModerators(string subforum);
 
     }
 }

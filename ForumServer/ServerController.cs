@@ -25,12 +25,7 @@ namespace ForumServer
 
         public Subforum[] Enter()
         {
-            throw new NotImplementedException();
-            //TODO Enter
-            //Dictionary<string, Subforum> dict = dataManager.GetSubforum();
-            //Subforum[] subforums = new Subforum[dict.Count];
-            //dict.Values.CopyTo(subforums, 0);
-            //return subforums;
+            return dataManager.GetSubforums();
         }
 
         public bool Register(string username, string password)
