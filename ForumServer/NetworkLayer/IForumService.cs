@@ -85,6 +85,26 @@ namespace ForumServer
         /// <returns></returns>
         bool EditPost(string postToUpdate, string originalPost);
 
+        bool RemovePost(string postkey);
+
+        #region admin functions
+
+        bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum);
+
+        bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum);
+
+        bool RemoveModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum);
+
+        bool AddSubforum(string adminUsername, string adminPassword, string subforumName);
+
+        bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName);
+
+        string ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName);
+
+        string ReportUserTotalPosts(string adminUsername, string adminPassword, string username);
+
+        #endregion
+
         #region not used
         /// <summary>
         /// Not used in Version 2.0.

@@ -8,12 +8,15 @@ namespace ForumServer.DataTypes
     public class Subforum
     {
         private string name;
-        private List<string> moderatorsList;
-        private Dictionary<Postkey, Post> posts;
+        private List<string> moderatorsList = new List<string>();
+        private Dictionary<Postkey, Post> posts = new Dictionary<Postkey,Post>();
+        private int totalPosts;
 
+        
         public Subforum(string name)
         {
             this.name = name;
+            totalPosts = 0;
         }
 
         #region Parameters Properties
@@ -54,6 +57,12 @@ namespace ForumServer.DataTypes
             {
                 posts = value;
             }
+        }
+
+        public int TotalPosts
+        {
+            get { return totalPosts; }
+            set { totalPosts = value; }
         }
 
         #endregion

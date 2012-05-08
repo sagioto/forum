@@ -75,6 +75,49 @@ namespace ForumServer
         }
 
 
+        public bool RemovePost(string postkey)
+        {
+            throw new NotImplementedException();
+        }
+
+        #region admin functions
+
+        public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ReportUserTotalPosts(string adminUsername, string adminPassword, string username)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
         public string Subscribe()
         {
             throw new NotImplementedException();
@@ -171,7 +214,6 @@ namespace ForumServer
         }
 
         #endregion
-
 
     }
 }
