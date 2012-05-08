@@ -11,50 +11,53 @@ namespace ForumServer
 {
     public class ServerNetworkAdaptor : IForumService
     {
+        private static ServerController controller = new ServerController();
+        private ISerializer serializer = new JsonSerializer();
+        
         public string Enter()
         {
             throw new NotImplementedException();
         }
 
-        public bool register(String username, String password)
+        public bool Register(String username, String password)
+        {
+            return controller.Register(username, password);
+        }
+
+        public bool Login(String username, String password)
         {
             throw new NotImplementedException();
         }
 
-        public bool login(String username, String password)
+        public bool Logout(String username)
         {
             throw new NotImplementedException();
         }
 
-        public bool logout(String username)
+        public string GetSubforumsList(string subforum)
         {
             throw new NotImplementedException();
         }
 
-        public string getSubforumsList(string subforum)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string getSubforum(string subforum)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public string getPost(string postkey)
+        public string GetSubforum(string subforum)
         {
             throw new NotImplementedException();
         }
 
 
-        public bool post(string current, string toPost)
+        public string GetPost(string postkey)
         {
             throw new NotImplementedException();
         }
 
 
-        public string subscribe()
+        public bool Post(string current, string toPost)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public string Subscribe()
         {
             throw new NotImplementedException();
         }

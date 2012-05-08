@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ForumServer.DataLayer
 {
-    public class DBAdaptor : IDataBaseAdaptor
+    public class DataBaseAdaptor : IDataBaseAdaptor
     {
     }
 }

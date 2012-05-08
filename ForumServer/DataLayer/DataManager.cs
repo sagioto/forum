@@ -8,6 +8,7 @@ namespace ForumServer.DataLayer
 {
     public class DataManager : IDataManager
     {
+<<<<<<< HEAD
         private Dictionary<string, User> users;
         private Dictionary<string, Subforum> subforumsList;
 
@@ -53,35 +54,65 @@ namespace ForumServer.DataLayer
         }
 
         public Dictionary<string, Subforum> getSubforumsDic()
+=======
+
+        public bool AddPost(DataTypes.Post post, string subforum)
         {
             throw new NotImplementedException();
         }
 
+        public bool AddReply(DataTypes.Post reply, DataTypes.Postkey originalPost)
+>>>>>>> 95b5b5c04d483a3301c550c0defc830854d32edb
+        {
+            throw new NotImplementedException();
+        }
+
+<<<<<<< HEAD
         public Subforum getSubforum(string subforum)
+=======
+        public bool EditPost(DataTypes.Post postToUpdate, DataTypes.Postkey originalPost)
+>>>>>>> 95b5b5c04d483a3301c550c0defc830854d32edb
         {
             throw new NotImplementedException();
         }
 
+<<<<<<< HEAD
         public User getUser(string username)
+=======
+        public Dictionary<string, DataTypes.Subforum> getSubforumsDic()
+>>>>>>> 95b5b5c04d483a3301c550c0defc830854d32edb
         {
             throw new NotImplementedException();
         }
 
+<<<<<<< HEAD
         public bool updateUser(User user)
+=======
+        public DataTypes.Subforum GetSubforum(string subforum)
+>>>>>>> 95b5b5c04d483a3301c550c0defc830854d32edb
         {
             throw new NotImplementedException();
         }
 
+<<<<<<< HEAD
         public List<string> getModerators(string subforum)
+=======
+        public DataTypes.User GetUser(string username)
+>>>>>>> 95b5b5c04d483a3301c550c0defc830854d32edb
         {
             throw new NotImplementedException();
         }
 
+<<<<<<< HEAD
         public bool setModerators(string subforum)
+=======
+        public bool UpdateUser(DataTypes.User user)
+>>>>>>> 95b5b5c04d483a3301c550c0defc830854d32edb
         {
             throw new NotImplementedException();
         }
 
+<<<<<<< HEAD
         #endregion
 
         #region Private methods
@@ -112,5 +143,16 @@ namespace ForumServer.DataLayer
 
         #endregion
 
+=======
+        public List<string> GetModerators(string subforum)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SetModerators(string subforum)
+        {
+            throw new NotImplementedException();
+        }
+>>>>>>> 95b5b5c04d483a3301c550c0defc830854d32edb
     }
 }

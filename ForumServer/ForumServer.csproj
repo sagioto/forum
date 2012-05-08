@@ -14,6 +14,7 @@
     <AssemblyName>ForumServer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -64,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataLayer\DataManager.cs" />
-    <Compile Include="DataLayer\DBAdaptor.cs" />
+    <Compile Include="DataLayer\DataBaseAdaptor.cs" />
     <Compile Include="DataLayer\IDataBaseAdaptor.cs" />
     <Compile Include="DataLayer\IDataManager.cs" />
     <Compile Include="DataTypes\PostNotFoundException.cs" />
@@ -75,13 +76,17 @@
     <Compile Include="DataTypes\User.cs" />
     <Compile Include="DataTypes\UserState.cs" />
     <Compile Include="NetworkLayer\IForumListener.cs" />
+    <Compile Include="NetworkLayer\ISerializer.cs" />
+    <Compile Include="NetworkLayer\JsonSerializer.cs" />
     <Compile Include="NetworkLayer\ServerNetworkAdaptor.svc.cs">
       <DependentUpon>ServerNetworkAdaptor.svc</DependentUpon>
     </Compile>
     <Compile Include="NetworkLayer\IForumService.cs" />
     <Compile Include="Policy\IPolicyManager.cs" />
+    <Compile Include="Policy\PolicyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ISecurityManager.cs" />
+    <Compile Include="Security\SecurityManager.cs" />
     <Compile Include="ServerController.cs" />
   </ItemGroup>
   <ItemGroup>
