@@ -46,5 +46,17 @@ namespace ForumServer.NetworkLayer
         {
             return serializer.Deserialize(toDeserialize, typeof(Postkey)) as Postkey;
         }
+
+        public string Serialize(object toSerialize)
+        {
+            return serializer.Serialize(toSerialize);
+        }
+
+        public object Deserialize(string toDeserialize, Type type)
+        {
+            return serializer.Deserialize(toDeserialize, type);
+        }
+
+
     }
 }

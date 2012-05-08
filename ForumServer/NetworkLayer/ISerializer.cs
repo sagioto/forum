@@ -20,5 +20,9 @@ namespace ForumServer.NetworkLayer
 
         Postkey DeserializePostkey(string toDeserialize);
 
+        string Serialize(object toSerialize);
+
+        object Deserialize(string toDeserialize, Type type);
+
     }
 }
