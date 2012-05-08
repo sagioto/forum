@@ -53,9 +53,8 @@ namespace ForumServer
         }
 
 
-        public bool Post(string current, string toPost)
+        public bool Post(string currentSubforum, string toPost)
         {
-            Subforum currentSubforum = serializer.DeserializeSubforum(current);
             Post toAdd = serializer.DeserializePost(toPost);
             return controller.Post(currentSubforum, toAdd);
         }
@@ -67,17 +66,18 @@ namespace ForumServer
             return controller.Reply(currentKey, toAdd);
         }
 
-        public bool EditPost(string postToUpdate, string originalPost)
+        public bool EditPost(string postToUpdate, string originalPost, string username, string password)
         {
             Postkey originalPostKey = serializer.DeserializePostkey(originalPost);
             Post toUpdate = serializer.DeserializePost(postToUpdate);
-            return controller.EditPost(originalPostKey, toUpdate);
+            return controller.EditPost(originalPostKey, toUpdate, password);
         }
 
 
-        public bool RemovePost(string postkey)
+        public bool RemovePost(string postkey, string username, string password)
         {
-            throw new NotImplementedException();
+            Postkey originalPostKey = serializer.DeserializePostkey(postkey);
+            return controller.RemovePost(originalPostKey, password);
         }
 
         #region admin functions
@@ -116,6 +116,12 @@ namespace ForumServer
         {
             throw new NotImplementedException();
         }
+
+        public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         public string Subscribe()
@@ -215,5 +221,8 @@ namespace ForumServer
 
         #endregion
 
+
+
+       
     }
 }

@@ -83,9 +83,9 @@ namespace ForumServer
         /// <param name="postToUpdate">json of the post</param>
         /// <param name="originalPost">json of the current postkey</param>
         /// <returns></returns>
-        bool EditPost(string postToUpdate, string originalPost);
+        bool EditPost(string postToUpdate, string originalPost, string password);
 
-        bool RemovePost(string postkey);
+        bool RemovePost(string postkey, string password);
 
         #region admin functions
 
@@ -102,6 +102,8 @@ namespace ForumServer
         string ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName);
 
         string ReportUserTotalPosts(string adminUsername, string adminPassword, string username);
+
+        bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword);
 
         #endregion
 

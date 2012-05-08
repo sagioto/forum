@@ -20,6 +20,7 @@ namespace ForumServer.Security
             admin.Level = AuthorizationLevel.ADMIN;
 
             dataManager.UpdateUser(admin);
+            //TODO replace eith dataManager.Admin = admin;
         }
 
 
@@ -68,7 +69,7 @@ namespace ForumServer.Security
         }
 
         
-        public bool IsAuthorizedToPost(string username, Subforum subforum)
+        public bool IsAuthorizedToPost(string username, string subforum)
         {
             //TODO check if sub forum should be considered
             User user = dataManager.GetUser(username);
@@ -76,11 +77,12 @@ namespace ForumServer.Security
                 && IsUserLoggendIn(user));
         }
 
-        public bool IsAuthorizedToEdit(string username, Postkey postkey)
+        public bool IsAuthorizedToEdit(string username, Postkey postkey, string password)
         {
             User user = dataManager.GetUser(username);
             Post post = dataManager.GetPost(postkey);
             return user != null && post != null
+                && user.Password.Equals(password)
                 && (post.Key.Username.Equals(username)
                     || (user.Level.Equals(AuthorizationLevel.MODERATOR) && post.Subforum.ModeratorsList.Contains(username))
                     || (user.Level.Equals(AuthorizationLevel.ADMIN)));                
@@ -94,10 +96,17 @@ namespace ForumServer.Security
         }
 
 
+        public bool AuthenticateAdmin(string username, string password)
+        {
+            throw new NotImplementedException();
+        }
+
         private static bool IsUserLoggendIn(User user)
         {
             return user != null && user.CurrentState.Equals(UserState.Login);
         }
+
+
 
     }
 }

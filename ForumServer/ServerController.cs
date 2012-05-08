@@ -54,7 +54,7 @@ namespace ForumServer
             return dataManager.GetPost(key);
         }
 
-        public bool Post(Subforum subforum, Post post)
+        public bool Post(string subforum, Post post)
         {
             return securityManager.IsAuthorizedToPost(post.Key.Username, subforum)
                 && dataManager.AddPost(post, subforum.ToString());
@@ -62,14 +62,22 @@ namespace ForumServer
 
         public bool Reply(Postkey currPost, Post post)
         {
-            return securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum)
+            return securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum.Name)
                 && dataManager.AddReply(post, currPost);
         }
 
-        internal bool EditPost(Postkey currPost, DataTypes.Post post)
+        public bool EditPost(Postkey currPost, Post post, string password)
         {
-            return securityManager.IsAuthorizedToEdit(post.Key.Username, currPost)
+            return securityManager.IsAuthorizedToEdit(post.Key.Username, currPost, password)
                 && dataManager.EditPost(post, currPost);
+        }
+
+        public bool RemovePost(Postkey originalPostKey, string password)
+        {
+            return securityManager.IsAuthorizedToEdit(originalPostKey.Username, originalPostKey, password)
+                && policyManager.IsAuthorizedToEdit(originalPostKey, originalPostKey.Username);
+            //TODO remove comment 
+                //&& dataManager.RemovePost(originalPostKey);
         }
     }
 }
