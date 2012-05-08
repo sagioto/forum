@@ -82,7 +82,7 @@ namespace ForumServer.Security
             Post post = dataManager.GetPost(postkey);
             return user != null && post != null
                 && (post.Key.Username.Equals(username)
-                    || (user.Level.Equals(AuthorizationLevel.MODERATOR) && (user as Moderator).Mananged.Contains(post.Subforum))
+                    || (user.Level.Equals(AuthorizationLevel.MODERATOR) && post.Subforum.ModeratorsList.Contains(username))
                     || (user.Level.Equals(AuthorizationLevel.ADMIN)));                
         }
 

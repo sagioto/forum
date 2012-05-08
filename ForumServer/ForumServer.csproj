@@ -68,7 +68,6 @@
     <Compile Include="DataLayer\DataBaseAdaptor.cs" />
     <Compile Include="DataLayer\IDataBaseAdaptor.cs" />
     <Compile Include="DataLayer\IDataManager.cs" />
-    <Compile Include="DataTypes\Moderator.cs" />
     <Compile Include="DataTypes\Postkey.cs" />
     <Compile Include="DataTypes\PostNotFoundException.cs" />
     <Compile Include="DataTypes\AuthorizationLevel.cs" />
