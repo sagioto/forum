@@ -93,15 +93,15 @@ namespace ForumServer
 
         bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum);
 
-        bool RemoveModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum);
+        bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum);
 
         bool AddSubforum(string adminUsername, string adminPassword, string subforumName);
 
         bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName);
 
-        string ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName);
+        int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName);
 
-        string ReportUserTotalPosts(string adminUsername, string adminPassword, string username);
+        int ReportUserTotalPosts(string adminUsername, string adminPassword, string username);
 
         bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword);
 

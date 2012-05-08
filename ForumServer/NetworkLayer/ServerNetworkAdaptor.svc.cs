@@ -84,42 +84,42 @@ namespace ForumServer
 
         public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
         {
-            throw new NotImplementedException();
+            return controller.AddModerator(adminUsername, adminPassword, usernameToAdd, subforum);
         }
 
         public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
         {
-            throw new NotImplementedException();
+            return controller.RemoveModerator(adminUsername, adminPassword, usernameToRemove, subforum);
         }
 
-        public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
+        public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
         {
-            throw new NotImplementedException();
+            return controller.ReplaceModerator(adminUsername, adminPassword, usernameToRemove, subforum);
         }
 
         public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
         {
-            throw new NotImplementedException();
+            return controller.AddSubforum(adminUsername, adminPassword, subforumName);
         }
 
         public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
         {
-            throw new NotImplementedException();
+            return controller.RemoveSubforum(adminUsername, adminPassword, subforumName);
         }
 
-        public string ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName)
+        public int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName)
         {
-            throw new NotImplementedException();
+            return controller.ReportSubForumTotalPosts(adminUsername, adminPassword, subforumName);
         }
 
-        public string ReportUserTotalPosts(string adminUsername, string adminPassword, string username)
+        public int ReportUserTotalPosts(string adminUsername, string adminPassword, string username)
         {
-            throw new NotImplementedException();
+            return controller.ReportUserTotalPosts(adminUsername, adminPassword, username);
         }
 
         public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
         {
-            throw new NotImplementedException();
+            return controller.ReplaceAdmin(oldAdminUsername, oldAdminPassword, newAdminUsername, newAdminPassword);
         }
 
         #endregion

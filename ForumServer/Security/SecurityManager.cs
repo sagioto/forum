@@ -98,6 +98,9 @@ namespace ForumServer.Security
 
         public bool AuthenticateAdmin(string username, string password)
         {
+            //User admin = dataManager.GetAdmin();
+            //return admin.Password.Equals(password) && admin.Username.Equals(password);
+            //TODO remove comment
             throw new NotImplementedException();
         }
 
