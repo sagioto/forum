@@ -300,7 +300,7 @@ namespace ForumServer
                 log.Info("got request to add sub forum " + subforumName);
 
                 return securityManager.AuthenticateAdmin(adminUsername, adminPassword)
-            && dataManager.AddSubforum(subforumName);
+            && dataManager.AddSubforum(new Subforum(subforumName));     //TODO - Its better that you will build the Subforum. No more required fields (like at least one Moderator?)
 
             }
             catch (Exception e)
