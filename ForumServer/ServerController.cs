@@ -14,6 +14,7 @@ namespace ForumServer
         private DataManager dataManager;
         private SecurityManager securityManager;
         private PolicyManager policyManager;
+        private log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
         public ServerController()
@@ -21,11 +22,22 @@ namespace ForumServer
             dataManager = new DataManager();
             securityManager = new SecurityManager(dataManager);
             policyManager = new PolicyManager(dataManager);
+            log4net.Config.XmlConfigurator.Configure();
+
         }
 
         public Subforum[] Enter()
         {
-            return dataManager.GetSubforums().ToArray<Subforum>();
+            try
+            {
+                log.Info("got requset to enter from someone");
+                return dataManager.GetSubforums().ToArray<Subforum>();
+            }
+            catch (Exception e)
+            {
+                log.Error("got requset to enter from someone but got error", e);
+                throw e;
+            }
         }
 
         public bool Register(string username, string password)
