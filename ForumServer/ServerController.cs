@@ -75,9 +75,8 @@ namespace ForumServer
         public bool RemovePost(Postkey originalPostKey, string username, string password)
         {
             return securityManager.IsAuthorizedToEdit(username, originalPostKey, password)
-                && policyManager.IsAuthorizedToEdit(originalPostKey, username);
-            //TODO remove comment 
-                //&& dataManager.RemovePost(originalPostKey);
+                && policyManager.IsAuthorizedToEdit(originalPostKey, username)
+                && dataManager.RemovePost(originalPostKey);
         }
 
         public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
@@ -129,20 +128,20 @@ namespace ForumServer
 
         public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
         {
-            return securityManager.AuthenticateAdmin(adminUsername, adminPassword);
-                //TODO && dataManager.AddSubforum(subforum)
+            return securityManager.AuthenticateAdmin(adminUsername, adminPassword)
+                    && dataManager.AddSubforum(subforumName);
         }
 
         public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
         {
-            return securityManager.AuthenticateAdmin(adminUsername, adminPassword);
-            //TODO && dataManager.RemoveSubforum(subforum)
+            return securityManager.AuthenticateAdmin(adminUsername, adminPassword)
+                    && dataManager.RemoveSubforum(subforumName);
         }
 
         public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
         {
-            return securityManager.AuthenticateAdmin(oldAdminUsername, oldAdminPassword);
-            //TODO && dataManager.SetAdmin(new User(newAdminUsername, newAdminPassword))
+            return securityManager.AuthenticateAdmin(oldAdminUsername, oldAdminPassword)
+                    && dataManager.SetAdmin(new User(newAdminUsername, newAdminPassword));
         }
 
         public int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName)
@@ -155,9 +154,7 @@ namespace ForumServer
         public int ReportUserTotalPosts(string adminUsername, string adminPassword, string username)
         {
             if (securityManager.AuthenticateAdmin(adminUsername, adminPassword))
-                //return dataManager.GetUser(username);
-                //TODO complete
-                return 0;
+                return dataManager.GetAllPosts().Select(post => post.Key.Username.Equals(username)).Count(); ;
             return -1;
         }
     }

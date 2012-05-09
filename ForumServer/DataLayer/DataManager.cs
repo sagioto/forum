@@ -343,7 +343,7 @@ namespace ForumServer.DataLayer
         }
 
 
-        public bool addSubforum(Subforum subforum)
+        public bool AddSubforum(Subforum subforum)
         {
             try
             {
@@ -354,6 +354,21 @@ namespace ForumServer.DataLayer
             {
                 throw ex;
             }
+        }
+
+        public bool AddSubforum(string subforumName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SetAdmin(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Post> GetAllPosts()
+        {
+            throw new NotImplementedException();
         }
     }
 }

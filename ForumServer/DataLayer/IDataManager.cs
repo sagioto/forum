@@ -47,6 +47,10 @@ namespace ForumServer.DataLayer
 
         bool RemovePost(Postkey postkey);
 
-        bool addSubforum(Subforum subforum);
+        bool AddSubforum(Subforum subforum);
+
+        void SetAdmin(User admin);
+
+        List<Post> GetAllPosts();
     }
 }
