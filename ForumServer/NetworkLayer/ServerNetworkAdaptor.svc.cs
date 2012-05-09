@@ -94,7 +94,7 @@ namespace ForumServer
 
         public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
         {
-            return controller.ReplaceModerator(adminUsername, adminPassword, usernameToRemove, subforum);
+            return controller.ReplaceModerator(adminUsername, adminPassword, usernameToAdd, usernameToRemove, subforum);
         }
 
         public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)

@@ -82,42 +82,83 @@ namespace ForumServer
 
         public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
         {
-            throw new NotImplementedException();
+            if (securityManager.AuthenticateAdmin(adminUsername, adminPassword)
+                && policyManager.AddModerator(usernameToAdd, subforum))
+            {
+                dataManager.GetSubforum(subforum).ModeratorsList.Add(usernameToAdd);
+                User user = dataManager.GetUser(usernameToAdd);
+                if (!user.Level.Equals(AuthorizationLevel.ADMIN))
+                {
+                    user.Level = AuthorizationLevel.MODERATOR;
+                    dataManager.UpdateUser(user);
+                }
+                return true;
+            }
+            else return false;
         }
 
         public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
         {
-            throw new NotImplementedException();
+            if (securityManager.AuthenticateAdmin(adminUsername, adminPassword)
+                && policyManager.RemoveModerator(usernameToRemove, subforum))
+            {
+                dataManager.GetSubforum(subforum).ModeratorsList.Remove(usernameToRemove);
+                bool moderator = false;
+                foreach (Subforum sub in dataManager.GetSubforums())
+                {
+                    if (sub.ModeratorsList.Contains(usernameToRemove))
+                        moderator = true;
+                }
+                if (!moderator)
+                {
+                    User user = dataManager.GetUser(usernameToRemove);
+                    user.Level = AuthorizationLevel.MEMBER;
+                    dataManager.UpdateUser(user);
+                }
+                return true;
+            }
+            else return false;
         }
 
-        public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
+        public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
         {
-            throw new NotImplementedException();
+            return policyManager.ChangeModerator(usernameToRemove, usernameToAdd, subforum)
+                && RemoveModerator(adminUsername, adminPassword, usernameToRemove, subforum)
+                && AddModerator(adminUsername, adminPassword, usernameToAdd, subforum);
         }
 
         public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
         {
-            throw new NotImplementedException();
+            return securityManager.AuthenticateAdmin(adminUsername, adminPassword);
+                //TODO && dataManager.AddSubforum(subforum)
         }
 
-        internal bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
+        public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
         {
-            throw new NotImplementedException();
+            return securityManager.AuthenticateAdmin(adminUsername, adminPassword);
+            //TODO && dataManager.RemoveSubforum(subforum)
         }
 
-        internal bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
+        public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
         {
-            throw new NotImplementedException();
+            return securityManager.AuthenticateAdmin(oldAdminUsername, oldAdminPassword);
+            //TODO && dataManager.SetAdmin(new User(newAdminUsername, newAdminPassword))
         }
 
-        internal int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName)
+        public int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName)
         {
-            throw new NotImplementedException();
+            if (securityManager.AuthenticateAdmin(adminUsername, adminPassword))
+                return dataManager.GetSubforum(subforumName).TotalPosts;
+            return -1;
         }
 
-        internal int ReportUserTotalPosts(string adminUsername, string adminPassword, string username)
+        public int ReportUserTotalPosts(string adminUsername, string adminPassword, string username)
         {
-            throw new NotImplementedException();
+            if (securityManager.AuthenticateAdmin(adminUsername, adminPassword))
+                //return dataManager.GetUser(username);
+                //TODO complete
+                return 0;
+            return -1;
         }
     }
 }
