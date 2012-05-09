@@ -65,10 +65,13 @@
     <Compile Include="DataBaseAdaptorServerTests.cs" />
     <Compile Include="DataManagerServerTests.cs" />
     <Compile Include="IDataManagerServerTests.cs" />
+    <Compile Include="PolicyManagerTest.cs" />
     <Compile Include="PostkeyServerTests.cs" />
     <Compile Include="PostNotFoundExceptionServerTests.cs" />
     <Compile Include="PostServerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecurityManagerTest.cs" />
+    <Compile Include="ServerControllerTest.cs" />
     <Compile Include="SubforumServerTests.cs" />
     <Compile Include="UserServerTests.cs" />
   </ItemGroup>
