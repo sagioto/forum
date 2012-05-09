@@ -277,5 +277,65 @@ namespace ServerTests
             actual = target.RemovePost(pk2);
             Assert.IsTrue(actual);
         }
+
+        /// <summary>
+        ///A test for InitForumData
+        ///</summary>
+        [TestMethod()]
+        public void InitForumDataServerTests()
+        {
+            DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
+            target.InitForumData();
+            Assert.IsNotNull(target.GetSubforums());
+        }
+
+        /// <summary>
+        ///A test for GetAllPosts
+        ///</summary>
+        [TestMethod()]
+        public void GetAllPostsServerTests()
+        {
+            DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
+            Subforum subforum = new Subforum("subforum1");
+            target.AddSubforum(subforum);
+            Postkey pk = new Postkey("dor", DateTime.Now);
+            Postkey pk2 = new Postkey("dor", DateTime.Now);
+            target.AddPost(new Post(pk, "post1", null, null), "subforum1");
+            target.AddPost(new Post(new Postkey("dor", DateTime.Now), "post2", null, null), "subforum1");
+            target.AddPost(new Post(new Postkey("dor2", DateTime.Now), "post3", null, null), "subforum1");
+            target.AddReply(new Post(pk2, "reply1 to post1", null, null), pk);
+            List<Post> actual;
+            actual = target.GetAllPosts();
+            Assert.IsNotNull(actual);
+        }
+
+        /// <summary>
+        ///A test for SetAdmin
+        ///</summary>
+        [TestMethod()]
+        public void SetAdminServerTests()
+        {
+            DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
+            User admin = null; // TODO: Initialize to an appropriate value
+            bool expected = false; // TODO: Initialize to an appropriate value
+            bool actual;
+            actual = target.SetAdmin(admin);
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for GetAdmin
+        ///</summary>
+        [TestMethod()]
+        public void GetAdminServerTests()
+        {
+            DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
+            User expected = null; // TODO: Initialize to an appropriate value
+            User actual;
+            actual = target.GetAdmin();
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
     }
 }

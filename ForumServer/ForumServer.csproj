@@ -95,9 +95,6 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ForumUtils\ForumUtils.csproj">
       <Project>{8E463DBF-841C-4989-9219-A0AE255F58F9}</Project>
       <Name>ForumUtils</Name>

@@ -9,6 +9,14 @@ namespace ForumServer.DataLayer
     interface IDataManager
     {
 
+        #region Init methods
+
+        /// <summary>
+        /// Creates subforums & posts according to web.Config file parameters
+        /// </summary>
+        void InitForumData();
+        #endregion
+
         #region Posts & Reply methods
 
         /// <summary>

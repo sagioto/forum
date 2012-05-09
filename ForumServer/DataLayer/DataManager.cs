@@ -27,6 +27,36 @@ namespace ForumServer.DataLayer
 
         #region IDataManager methods
 
+        #region Init methods
+
+        public void InitForumData()
+        {
+            try
+            {
+                int numberOfSubforums = Convert.ToInt32(ConfigurationManager.AppSettings["initializeNumberOfSubforums"].ToString());
+                string[] subforumsNamesList = ConfigurationManager.AppSettings["subforumsNamesList"].ToString().Split(',');
+                int numberOfPosts = Convert.ToInt32(ConfigurationManager.AppSettings["numberOfPostsInEachSubforum"].ToString());
+                string adminName = ConfigurationManager.AppSettings["adminName"].ToString();
+
+                for (int i = 0 ; i < numberOfSubforums ; i++)
+                {
+                    Subforum s = new Subforum(subforumsNamesList[i]);
+                    this.AddSubforum(s);
+                    for (int j = 0 ; j < numberOfPosts ; j++)
+                    {
+                        this.AddPost(new Post(new Postkey(adminName, DateTime.Now),
+                            "Post" + j + " in Subforum: " + s.Name, null, s), s.Name);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+        #endregion
+
         #region Posts & Reply methods
 
         public Post GetPost(Postkey postkey)
@@ -123,10 +153,10 @@ namespace ForumServer.DataLayer
             {
                 try
                 {
-                    allPosts.Union(subforumEntry.Value.Posts.Values.ToList<Post>());
+                    allPosts = allPosts.Union(subforumEntry.Value.Posts.Values.ToList<Post>()).ToList<Post>();
                     foreach (Post post in subforumEntry.Value.Posts.Values)
                     {
-                        allPosts.Union(GetAllReplyOfPost(post));
+                        allPosts = allPosts.Union(GetAllReplyOfPost(post)).ToList<Post>();
                     }
                 }
                 catch (Exception ex)
@@ -137,7 +167,7 @@ namespace ForumServer.DataLayer
             return allPosts;
         }
 
-        
+
 
         #endregion
 
@@ -430,10 +460,10 @@ namespace ForumServer.DataLayer
         private List<Post> GetAllReplyOfPost(Post post)
         {
             List<Post> allReplies = new List<Post>();
-            allReplies.Union(post.Replies.Values);
+            allReplies = allReplies.Union(post.Replies.Values).ToList<Post>();
             foreach (Post p in post.Replies.Values)
             {
-                allReplies.Union(GetAllReplyOfPost(p));
+                allReplies = allReplies.Union(GetAllReplyOfPost(p)).ToList<Post>();
             }
             return allReplies;
         }

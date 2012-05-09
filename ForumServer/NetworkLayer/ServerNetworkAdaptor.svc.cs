@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -70,14 +70,14 @@ namespace ForumServer
         {
             Postkey originalPostKey = serializer.DeserializePostkey(originalPost);
             Post toUpdate = serializer.DeserializePost(postToUpdate);
-            return controller.EditPost(originalPostKey, toUpdate, username, password);
+            return controller.EditPost(originalPostKey, toUpdate, originalPostKey.Username, password);
         }
 
 
         public bool RemovePost(string postkey, string password)
         {
             Postkey originalPostKey = serializer.DeserializePostkey(postkey);
-            return controller.RemovePost(originalPostKey, username, password);
+            return controller.RemovePost(originalPostKey, originalPostKey.Username , password);
         }
 
         #region admin functions
@@ -223,6 +223,17 @@ namespace ForumServer
 
 
 
-       
+
+
+
+        public bool EditPost(string postToUpdate, string originalPost, string usrname, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemovePost(string postkey, string username, string password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
