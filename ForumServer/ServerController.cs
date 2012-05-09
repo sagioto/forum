@@ -54,7 +54,7 @@ namespace ForumServer
             return dataManager.GetPost(key);
         }
 
-        public bool Post(Subforum subforum, Post post)
+        public bool Post(string subforum, Post post)
         {
             return securityManager.IsAuthorizedToPost(post.Key.Username, subforum)
                 && dataManager.AddPost(post, subforum.ToString());
@@ -62,14 +62,103 @@ namespace ForumServer
 
         public bool Reply(Postkey currPost, Post post)
         {
-            return securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum)
+            return securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum.Name)
                 && dataManager.AddReply(post, currPost);
         }
 
-        internal bool EditPost(Postkey currPost, DataTypes.Post post)
+        public bool EditPost(Postkey currPost, Post post, string password)
         {
-            return securityManager.IsAuthorizedToEdit(post.Key.Username, currPost)
+            return securityManager.IsAuthorizedToEdit(post.Key.Username, currPost, password)
                 && dataManager.EditPost(post, currPost);
+        }
+
+        public bool RemovePost(Postkey originalPostKey, string password)
+        {
+            return securityManager.IsAuthorizedToEdit(originalPostKey.Username, originalPostKey, password)
+                && policyManager.IsAuthorizedToEdit(originalPostKey, originalPostKey.Username);
+            //TODO remove comment 
+                //&& dataManager.RemovePost(originalPostKey);
+        }
+
+        public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
+        {
+            if (securityManager.AuthenticateAdmin(adminUsername, adminPassword)
+                && policyManager.AddModerator(usernameToAdd, subforum))
+            {
+                dataManager.GetSubforum(subforum).ModeratorsList.Add(usernameToAdd);
+                User user = dataManager.GetUser(usernameToAdd);
+                if (!user.Level.Equals(AuthorizationLevel.ADMIN))
+                {
+                    user.Level = AuthorizationLevel.MODERATOR;
+                    dataManager.UpdateUser(user);
+                }
+                return true;
+            }
+            else return false;
+        }
+
+        public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
+        {
+            if (securityManager.AuthenticateAdmin(adminUsername, adminPassword)
+                && policyManager.RemoveModerator(usernameToRemove, subforum))
+            {
+                dataManager.GetSubforum(subforum).ModeratorsList.Remove(usernameToRemove);
+                bool moderator = false;
+                foreach (Subforum sub in dataManager.GetSubforums())
+                {
+                    if (sub.ModeratorsList.Contains(usernameToRemove))
+                        moderator = true;
+                }
+                if (!moderator)
+                {
+                    User user = dataManager.GetUser(usernameToRemove);
+                    user.Level = AuthorizationLevel.MEMBER;
+                    dataManager.UpdateUser(user);
+                }
+                return true;
+            }
+            else return false;
+        }
+
+        public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
+        {
+            return policyManager.ChangeModerator(usernameToRemove, usernameToAdd, subforum)
+                && RemoveModerator(adminUsername, adminPassword, usernameToRemove, subforum)
+                && AddModerator(adminUsername, adminPassword, usernameToAdd, subforum);
+        }
+
+        public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
+        {
+            return securityManager.AuthenticateAdmin(adminUsername, adminPassword);
+                //TODO && dataManager.AddSubforum(subforum)
+        }
+
+        public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
+        {
+            return securityManager.AuthenticateAdmin(adminUsername, adminPassword);
+            //TODO && dataManager.RemoveSubforum(subforum)
+        }
+
+        public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
+        {
+            return securityManager.AuthenticateAdmin(oldAdminUsername, oldAdminPassword);
+            //TODO && dataManager.SetAdmin(new User(newAdminUsername, newAdminPassword))
+        }
+
+        public int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName)
+        {
+            if (securityManager.AuthenticateAdmin(adminUsername, adminPassword))
+                return dataManager.GetSubforum(subforumName).TotalPosts;
+            return -1;
+        }
+
+        public int ReportUserTotalPosts(string adminUsername, string adminPassword, string username)
+        {
+            if (securityManager.AuthenticateAdmin(adminUsername, adminPassword))
+                //return dataManager.GetUser(username);
+                //TODO complete
+                return 0;
+            return -1;
         }
     }
 }

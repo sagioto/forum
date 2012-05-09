@@ -17,12 +17,12 @@ namespace ForumServer.Security
 
         bool IsLoggedin(string username);
 
-        bool IsAuthorizedToPost(string username, Subforum subforum);
+        bool IsAuthorizedToPost(string username, string subforum);
 
-        bool IsAuthorizedToEdit(string username, Postkey post);
+        bool IsAuthorizedToEdit(string username, string post, string password);
 
         bool IsAuthorizedToEditSubforums(string username);
 
-
+        bool AuthenticateAdmin(string username, string password);
     }
 }

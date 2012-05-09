@@ -83,7 +83,29 @@ namespace ForumServer
         /// <param name="oldPost">json of the oldPost</param>
         /// <param name="originalPost">json of the current postkey</param>
         /// <returns></returns>
-        bool EditPost(string postToUpdate, string originalPost);
+        bool EditPost(string postToUpdate, string originalPost, string password);
+
+        bool RemovePost(string postkey, string password);
+
+        #region admin functions
+
+        bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum);
+
+        bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum);
+
+        bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum);
+
+        bool AddSubforum(string adminUsername, string adminPassword, string subforumName);
+
+        bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName);
+
+        int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName);
+
+        int ReportUserTotalPosts(string adminUsername, string adminPassword, string username);
+
+        bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword);
+
+        #endregion
 
         #region not used
         /// <summary>

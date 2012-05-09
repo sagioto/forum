@@ -53,9 +53,8 @@ namespace ForumServer
         }
 
 
-        public bool Post(string current, string toPost)
+        public bool Post(string currentSubforum, string toPost)
         {
-            Subforum currentSubforum = serializer.DeserializeSubforum(current);
             Post toAdd = serializer.DeserializePost(toPost);
             return controller.Post(currentSubforum, toAdd);
         }
@@ -67,13 +66,63 @@ namespace ForumServer
             return controller.Reply(currentKey, toAdd);
         }
 
-        public bool EditPost(string postToUpdate, string originalPost)
+        public bool EditPost(string postToUpdate, string originalPost, string username, string password)
         {
             Postkey originalPostKey = serializer.DeserializePostkey(originalPost);
             Post toUpdate = serializer.DeserializePost(postToUpdate);
-            return controller.EditPost(originalPostKey, toUpdate);
+            return controller.EditPost(originalPostKey, toUpdate, password);
         }
 
+
+        public bool RemovePost(string postkey, string username, string password)
+        {
+            Postkey originalPostKey = serializer.DeserializePostkey(postkey);
+            return controller.RemovePost(originalPostKey, password);
+        }
+
+        #region admin functions
+
+        public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
+        {
+            return controller.AddModerator(adminUsername, adminPassword, usernameToAdd, subforum);
+        }
+
+        public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
+        {
+            return controller.RemoveModerator(adminUsername, adminPassword, usernameToRemove, subforum);
+        }
+
+        public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
+        {
+            return controller.ReplaceModerator(adminUsername, adminPassword, usernameToAdd, usernameToRemove, subforum);
+        }
+
+        public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
+        {
+            return controller.AddSubforum(adminUsername, adminPassword, subforumName);
+        }
+
+        public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
+        {
+            return controller.RemoveSubforum(adminUsername, adminPassword, subforumName);
+        }
+
+        public int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName)
+        {
+            return controller.ReportSubForumTotalPosts(adminUsername, adminPassword, subforumName);
+        }
+
+        public int ReportUserTotalPosts(string adminUsername, string adminPassword, string username)
+        {
+            return controller.ReportUserTotalPosts(adminUsername, adminPassword, username);
+        }
+
+        public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
+        {
+            return controller.ReplaceAdmin(oldAdminUsername, oldAdminPassword, newAdminUsername, newAdminPassword);
+        }
+
+        #endregion
 
         public string Subscribe()
         {
@@ -173,5 +222,7 @@ namespace ForumServer
         #endregion
 
 
+
+       
     }
 }

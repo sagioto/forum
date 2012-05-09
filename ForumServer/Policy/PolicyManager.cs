@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using ForumServer.DataTypes;
+using System.Threading.Tasks;
 
 namespace ForumServer.Policy
 {
@@ -11,22 +13,40 @@ namespace ForumServer.Policy
 
         public PolicyManager(DataLayer.DataManager dataManager)
         {
-            // TODO: Complete member initialization
             this.dataManager = dataManager;
         }
         public bool AddModerator(string username, string subforum)
-        {
+        {  
+            Subforum forum = dataManager.GetSubforum(subforum);
+            User user = dataManager.GetUser(username);
+            //TODO completeSreturn user != null && user.
+            if(user != null && forum != null)
+            {
+              
+            }
             throw new NotImplementedException();
         }
 
         public bool RemoveModerator(string username, string subforum)
         {
+            Subforum forum = dataManager.GetSubforum(subforum);
+            User user = dataManager.GetUser(username);
+            //TODO completeSreturn user != null && user.
+            if (user != null && forum != null)
+            {
+
+            }
             throw new NotImplementedException();
         }
 
         public bool ChangeModerator(string oldUsername, string newUsername, string subforum)
         {
-            throw new NotImplementedException();
+            return true;
+        }
+
+        internal bool IsAuthorizedToEdit(DataTypes.Postkey originalPostKey, string p)
+        {
+            return true;
         }
     }
 }
