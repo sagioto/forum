@@ -19,7 +19,7 @@ namespace ForumServer.Security
 
         bool IsAuthorizedToPost(string username, string subforum);
 
-        bool IsAuthorizedToEdit(string username, string post, string password);
+        bool IsAuthorizedToEdit(string username, Postkey post, string password);
 
         bool IsAuthorizedToEditSubforums(string username);
 

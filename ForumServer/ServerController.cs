@@ -66,16 +66,16 @@ namespace ForumServer
                 && dataManager.AddReply(post, currPost);
         }
 
-        public bool EditPost(Postkey currPost, Post post, string password)
+        public bool EditPost(Postkey currPost, Post post, string username, string password)
         {
-            return securityManager.IsAuthorizedToEdit(post.Key.Username, currPost, password)
+            return securityManager.IsAuthorizedToEdit(username, currPost, password)
                 && dataManager.EditPost(post, currPost);
         }
 
-        public bool RemovePost(Postkey originalPostKey, string password)
+        public bool RemovePost(Postkey originalPostKey, string username, string password)
         {
-            return securityManager.IsAuthorizedToEdit(originalPostKey.Username, originalPostKey, password)
-                && policyManager.IsAuthorizedToEdit(originalPostKey, originalPostKey.Username);
+            return securityManager.IsAuthorizedToEdit(username, originalPostKey, password)
+                && policyManager.IsAuthorizedToEdit(originalPostKey, username);
             //TODO remove comment 
                 //&& dataManager.RemovePost(originalPostKey);
         }

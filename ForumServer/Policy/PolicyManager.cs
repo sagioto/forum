@@ -44,7 +44,7 @@ namespace ForumServer.Policy
             return true;
         }
 
-        internal bool IsAuthorizedToEdit(DataTypes.Postkey originalPostKey, string p)
+        public bool IsAuthorizedToEdit(Postkey originalPostKey, string username)
         {
             return true;
         }

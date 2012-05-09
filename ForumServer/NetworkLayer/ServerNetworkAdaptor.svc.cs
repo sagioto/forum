@@ -35,7 +35,7 @@ namespace ForumServer
             return controller.Logout(username);
         }
 
-        public string GetSubforumsList(string subforum)
+        public string GetSubforumsList()
         {
             return serializer.Serialize(controller.Enter());
         }
@@ -70,14 +70,14 @@ namespace ForumServer
         {
             Postkey originalPostKey = serializer.DeserializePostkey(originalPost);
             Post toUpdate = serializer.DeserializePost(postToUpdate);
-            return controller.EditPost(originalPostKey, toUpdate, password);
+            return controller.EditPost(originalPostKey, toUpdate, username, password);
         }
 
 
         public bool RemovePost(string postkey, string username, string password)
         {
             Postkey originalPostKey = serializer.DeserializePostkey(postkey);
-            return controller.RemovePost(originalPostKey, password);
+            return controller.RemovePost(originalPostKey, username, password);
         }
 
         #region admin functions
