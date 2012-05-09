@@ -77,11 +77,14 @@ namespace ForumServer
         [OperationContract]
         bool Reply(string current, string toPost);
 
-        /// <summary>
-        /// 
+
+
+
+
         /// </summary>
-        /// <param name="oldPost">json of the oldPost</param>
+        /// <param name="postToUpdate">json of new post</param>
         /// <param name="originalPost">json of the current postkey</param>
+        /// <param name="password"></param>
         /// <returns></returns>
         bool EditPost(string postToUpdate, string originalPost, string password);
 

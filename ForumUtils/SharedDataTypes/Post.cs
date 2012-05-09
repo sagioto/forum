@@ -13,6 +13,7 @@ namespace ForumServer.DataTypes
         private string body;
         private Dictionary<Postkey, Post> replies;
         private Subforum subforum;
+        private Post postToUpdate;
 
 
         //TODO - Why Subforum needed? (To Sagi)
@@ -23,6 +24,11 @@ namespace ForumServer.DataTypes
             this.parentPost = parentPost;
             this.subforum = subforum;
             this.replies = new Dictionary<Postkey, Post>();
+        }
+
+        public Post(Post postToCopy)
+        {
+            this.postToUpdate = postToCopy;
         }
 
         #region Fields Properties

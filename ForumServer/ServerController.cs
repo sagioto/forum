@@ -130,13 +130,13 @@ namespace ForumServer
         public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
         {
             return securityManager.AuthenticateAdmin(adminUsername, adminPassword);
-                //TODO && dataManager.AddSubforum(subforum)
+                //TODO && dataManager.AddSubforum(subforumName)
         }
 
         public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
         {
             return securityManager.AuthenticateAdmin(adminUsername, adminPassword);
-            //TODO && dataManager.RemoveSubforum(subforum)
+            //TODO && dataManager.RemoveSubforum(subforumName)
         }
 
         public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)

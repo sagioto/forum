@@ -22,15 +22,56 @@ namespace ForumServer.DataLayer
 
         #region IDataManager methods
 
-        /// <summary>
-        /// Adding a oldPost to given subforumName
-        /// </summary>
-        /// <param name="oldPost"></param>
-        /// <param name="subforumName"></param>
-        /// <returns></returns>
+        #region Posts & Reply methods
+
+        public Post GetPost(Postkey postkey)
+        {
+            Post res;
+            GetPost(postkey, out res);
+            if (res != null)
+            {
+                return res;
+            }
+            else
+            {
+                throw new PostNotFoundException();
+            }
+        }
+
         public bool AddPost(Post post, string subforum)
         {
-            return subforumsList[subforum].AddPost(post);
+            try
+            {
+                return subforumsList[subforum].AddPost(post);
+            }
+            catch (Exception)
+            {
+                throw new SubforumNotFoundException();
+            }
+        }
+
+        public bool RemovePost(Postkey postkey)
+        {
+            foreach (KeyValuePair<string, Subforum> subforumEntry in subforumsList)
+            {
+                try
+                {
+                    if (subforumEntry.Value.Posts.ContainsKey(postkey))
+                    {
+                        subforumsList[subforumEntry.Key].Posts.Remove(postkey);
+                        return true;
+                    }
+                    else
+                    {
+                        return RemoveReply(postkey, subforumsList[subforumEntry.Key].Posts);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            return false;
         }
 
         public bool AddReply(Post reply, Postkey originalPost)
@@ -51,24 +92,16 @@ namespace ForumServer.DataLayer
             }
         }
 
-
-
-        /// <summary>
-        /// Updates the body of oldPost & only this field. Postkey, title, replies & parent oldPost will remain   
-        /// the same.
-        /// </summary>
-        /// <param name="oldPost"></param>
-        /// <param name="originalPost"></param>
-        /// <returns></returns>
         public bool EditPost(Post postToUpdate, Postkey originalPost)
         {
             Post oldPost;
-            GetPost(postToUpdate.Key, out oldPost);
+            GetPost(originalPost, out oldPost);
             if (oldPost == null)
                 throw new PostNotFoundException();
             try
             {
-                oldPost = postToUpdate;
+                oldPost.Body = postToUpdate.Body;
+                oldPost.Title = postToUpdate.Title;
                 return true;
                 //return UpdatePost(oldPost);
             }
@@ -78,51 +111,15 @@ namespace ForumServer.DataLayer
             }
         }
 
+        #endregion
 
+        #region Subforms Getters & Setters
 
-        /// <summary>
-        /// Returns requested Subforum with title 'subforumName'
-        /// </summary>
-        /// <param name="subforumName"></param>
-        /// <returns></returns>
-        public Subforum GetSubforum(string subforumName)
+        public bool AddSubforum(Subforum subforum)
         {
             try
             {
-                return subforumsList[subforumName];
-            }
-            catch (Exception ex)
-            {
-                
-                throw ex;
-            }
-            
-        }
-
-        /// <summary>
-        /// Returns the requested User with given 'user'
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public User GetUser(string username)
-        {
-            try
-            {
-                return users[username];
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-
-        public bool UpdateUser(User user)
-        {
-            try
-            {
-                users[user.Username] = user;
+                subforumsList.TryAdd(subforum.Name, subforum);
                 return true;
             }
             catch (Exception ex)
@@ -131,15 +128,48 @@ namespace ForumServer.DataLayer
             }
         }
 
+        public bool RemoveSubforum(string subforum)
+        {
+            try
+            {
+                Subforum s;
+                return subforumsList.TryRemove(subforum, out s);
+            }
+            catch (Exception)
+            {
+                throw new SubforumNotFoundException();
+            }
+        }
+
+        public Subforum GetSubforum(string subforumName)
+        {
+            try
+            {
+                return subforumsList[subforumName];
+            }
+            catch (Exception)
+            {
+                throw new SubforumNotFoundException();
+            }
+
+        }
+
+        public List<Subforum> GetSubforums()
+        {
+            List<Subforum> result = subforumsList.Values.ToList<Subforum>();
+            result.Sort();
+            return result;
+        }
+
         public List<string> GetModerators(string subforum)
         {
             try
             {
                 return subforumsList[subforum].ModeratorsList;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw new SubforumNotFoundException();
             }
         }
 
@@ -150,13 +180,81 @@ namespace ForumServer.DataLayer
                 subforumsList[subforum].ModeratorsList = moderatorsList;
                 return true;
             }
+            catch (Exception)
+            {
+                throw new SubforumNotFoundException();
+            }
+        }
+
+        #endregion
+
+        #region Users methods
+
+        public bool AddUser(User user)
+        {
+            try
+            {
+                users.TryAdd(user.Username, user);
+                return true;
+            }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
 
-        public void GetPost(Postkey postkey, out Post returnedPost)
+        public User GetUser(string username)
+        {
+            try
+            {
+                return users[username];
+            }
+            catch (Exception)
+            {
+                throw new UserNotFoundException();
+            }
+        }
+
+        public bool UpdateUser(User user)
+        {
+            try
+            {
+                users[user.Username] = user;
+                return true;
+            }
+            catch (Exception)
+            {
+                throw new UserNotFoundException();
+            }
+        }
+
+        public bool SetUserState(string username, UserState state)
+        {
+            try
+            {
+                users[username].CurrentState = state;
+                return true;
+            }
+            catch (Exception)
+            {
+                throw new UserNotFoundException();
+            }
+        }
+
+        public List<Post> GetUserPosts(string username)
+        {
+            List<Post> postsOfUser;
+            GetUserPosts(username, out postsOfUser);
+            return postsOfUser;
+        }
+
+        #endregion
+
+        #endregion //IDataManager methods
+
+        #region Internal Private methods
+
+        private void GetPost(Postkey postkey, out Post returnedPost)
         {
             returnedPost = null;
             foreach (KeyValuePair<string, Subforum> subforumEntry in subforumsList)
@@ -169,7 +267,7 @@ namespace ForumServer.DataLayer
                     }
                     else    // If oldPost is not main oldPost, search oldPost in replies & update
                     {
-                        GetReply(postkey, subforumsList[subforumEntry.Key].Posts,out returnedPost);
+                        GetReply(postkey, subforumsList[subforumEntry.Key].Posts, out returnedPost);
                     }
                 }
                 catch (Exception ex)
@@ -179,74 +277,66 @@ namespace ForumServer.DataLayer
             }
         }
 
-        /// <summary>
-        /// Returns an array of all existing subforums
-        /// </summary>
-        /// <returns></returns>
-        public List<Subforum> GetSubforums()
+        private void GetRepliesOfUser(Post post, string username, List<Post> listOfUserPosts, out List<Post> returnedReplies)
         {
-            List<Subforum> result = subforumsList.Values.ToList<Subforum>();
-            result.Sort();
-            return result;
-        }
-        
-        public bool SetUserState(string username, UserState state)
-        {
-            try
+            returnedReplies = listOfUserPosts;
+            foreach (Post reply in post.Replies.Values)
             {
-                users[username].CurrentState = state;
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                if (reply.Key.Username == username)
+                {
+                    returnedReplies.Add(reply);
+                    GetRepliesOfUser(reply, username, listOfUserPosts.Union(returnedReplies).ToList(), out returnedReplies);
+                }
             }
         }
 
-
-
-        public List<Post> GetUserPosts(string username)
+        private void GetUserPosts(string username, out List<Post> returnedPosts)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool RemoveSubforum(string subforum)
-        {
-            try
+            returnedPosts = new List<Post>();
+            List<Post> returnedReplies = null;
+            foreach (KeyValuePair<string, Subforum> subforumEntry in subforumsList)
             {
-                Subforum s;
-                return subforumsList.TryRemove(subforum,out s);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                try
+                {
+                    foreach (Post post in subforumEntry.Value.Posts.Values)
+                    {
+                        if (post.Key.Username == username)
+                        {
+                            returnedPosts.Add(post);
+                            GetRepliesOfUser(post, username, new List<Post>(), out returnedReplies);
+                            returnedPosts = returnedPosts.Union(returnedReplies).ToList<Post>();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
         }
 
-        public bool RemovePost(Postkey postkey)
+        private bool RemoveReply(Postkey postkey, Dictionary<Postkey, Post> repliesList)
         {
-            throw new NotImplementedException();
+            foreach (Post reply in repliesList.Values)
+            {
+                if (reply.Replies.ContainsKey(postkey))
+                {
+                    reply.Replies.Remove(postkey);
+                    return true;
+                }
+                else
+                {
+                    return RemoveReply(postkey, reply.Replies);
+                }
+            }
+            return false;
         }
 
 
-        #endregion
-
-        #region Private methods
-
-        //private string GetSubforumOfPost(Postkey postKey)
-        //{
-        //    foreach (KeyValuePair<string, Subforum> subforumEntry in subforumsList)
-        //    {
-        //        if (subforumEntry.Value.Posts.ContainsKey(postKey))
-        //        {
-        //            return subforumEntry.Key;
-        //        }
-        //    }
-        //    return null;
-        //}
 
         private void GetReply(Postkey postkey, Dictionary<Postkey, Post> postsList, out Post returnedPost)
         {
+            returnedPost = null;
             if (postsList.ContainsKey(postkey))
             {
                 returnedPost = postsList[postkey];
@@ -255,38 +345,10 @@ namespace ForumServer.DataLayer
             {
                 foreach (Post reply in postsList.Values)
                 {
-                    GetReply(postkey, reply.Replies,out returnedPost);
+                    GetReply(postkey, reply.Replies, out returnedPost);
                 }
-                returnedPost = null;
             }
         }
-
-        //private bool UpdatePost(Post postToUpdate)
-        //{
-            
-
-            //foreach (KeyValuePair<string, Subforum> subforumEntry in subforumsList)
-            //{
-            //    try
-            //    {
-            //        if (subforumEntry.Value.Posts.ContainsKey(oldPost.Key))    // If oldPost is main oldPost in subforumName
-            //        {
-            //            subforumsList[subforumEntry.Key].Posts[oldPost.Key] = oldPost;    // update oldPost
-            //            return true;
-            //        }
-            //        else    // If oldPost is not main oldPost, search oldPost in replies & update
-            //        {
-            //            return UpdateReply(oldPost, subforumsList[subforumEntry.Key].Posts);
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        throw ex;
-            //    }
-            //}
-            //return false;
-        //}
-
 
         private bool UpdateReply(Post replyToUpdate, Dictionary<Postkey, Post> postsList)
         {
@@ -310,50 +372,7 @@ namespace ForumServer.DataLayer
             }
         }
 
-
-
-        //private string GetPostString(Postkey postKey)
-        //{
-        //    foreach (KeyValuePair<string, Subforum> subforumEntry in subforumsList)
-        //    {
-        //        if (subforumEntry.Value.Posts.ContainsKey(postKey))
-        //        {
-        //            return subforumEntry.Key;
-        //        }
-        //    }
-        //    return null;
-        //}
-
         #endregion
 
-
-
-
-
-
-
-
-
-        public Post GetPost(Postkey postkey)
-        {
-            Post res;
-            GetPost(postkey,out res);
-            return res;
-
-        }
-
-
-        public bool addSubforum(Subforum subforum)
-        {
-            try
-            {
-                subforumsList.TryAdd(subforum.Name, subforum);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
     }
 }

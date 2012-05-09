@@ -7,8 +7,6 @@ using System.Collections.Generic;
 
 namespace ServerTests
 {
-    
-    
     /// <summary>
     ///This is a test class for DataManagerServerTests and is intended
     ///to contain all DataManagerServerTests Unit Tests
@@ -70,13 +68,7 @@ namespace ServerTests
         /// <summary>
         ///A test for DataManager Constructor
         ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        //[HostType("ASP.NET")]
-        //[AspNetDevelopmentServerHost("C:\\Users\\dleitman\\Documents\\Git\\forum\\ForumServer", "/")]
-        //[UrlToTest("http://localhost:52644/")]
         public void DataManagerConstructorServerTests()
         {
             DataManager target = new DataManager();
@@ -86,225 +78,205 @@ namespace ServerTests
         /// <summary>
         ///A test for AddPost
         ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        //[HostType("ASP.NET")]
-        //[AspNetDevelopmentServerHost("C:\\Users\\dleitman\\Documents\\Git\\forum\\ForumServer", "/")]
-        //[UrlToTest("http://localhost:52644/")]
         public void AddPostServerTests()
         {
-            DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
-            Post post = null; // TODO: Initialize to an appropriate value
-            string subforum = string.Empty; // TODO: Initialize to an appropriate value
-            bool expected = false; // TODO: Initialize to an appropriate value
-            bool actual;
-            actual = target.AddPost(post, subforum);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            DataManager target = new DataManager();
+            target.AddSubforum(new Subforum("subforumName"));
+            Postkey pk = new Postkey("dor", DateTime.Now);
+            bool actual = target.AddPost(new Post(pk, "Post", null, null), "subforumName");
+            Assert.AreEqual(target.GetSubforum("subforumName")!=null, actual);
         }
 
         /// <summary>
         ///A test for AddReply
         ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        //[HostType("ASP.NET")]
-        //[AspNetDevelopmentServerHost("C:\\Users\\dleitman\\Documents\\Git\\forum\\ForumServer", "/")]
-        //[UrlToTest("http://localhost:52644/")]
         public void AddReplyServerTests()
         {
-            DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
-            
-            target.addSubforum(new Subforum("subforum"));
+            DataManager target = new DataManager();
+
+            target.AddSubforum(new Subforum("subforumName"));
             Postkey pk = new Postkey("dor", DateTime.Now);
-            target.AddPost(new Post(pk, "Post", null, null), "subforum");
-            Post reply = new Post(new Postkey("dor", DateTime.Now), "Reply", null, null);
+            target.AddPost(new Post(pk, "Post", null, null), "subforumName");
+            //Post reply = new Post(new Postkey("dor", DateTime.Now), "Reply", null, null);
+            Post reply = new Post(new Postkey("dor222", pk.Time), "Reply", null, null);
+            reply.Body = "reply body";
             bool ans = target.AddReply(reply, pk);
-            Post reply2 = new Post(new Postkey("dor", DateTime.Now), "Reply2 - new Update", null, null);
-            bool ans2 = target.EditPost(reply2, reply.Key);
+            //Post reply2 = new Post(new Postkey("dor", DateTime.Now), "Reply2 - new Update", null, null);
+            Post reply2 = new Post(new Postkey("dor222", pk.Time), "Reply2 - new Update", null, null);
+            reply2.Body = " reply 2 body";
+            //ans = target.AddReply(reply2, reply.Key);
+            //reply.Replies.Add(reply2.Key, reply2);
+            //reply.Replies.ContainsKey(reply2.Key);
+            //bool ans2 = target.EditPost(reply2, reply.Key);
             Assert.IsTrue(ans);
-            Assert.IsTrue(ans2);
-            //Postkey originalPost = null; // TODO: Initialize to an appropriate value
-            //bool expected = false; // TODO: Initialize to an appropriate value
-            //bool actual;
-            //actual = target.AddReply(reply, originalPost);
-            //Assert.AreEqual(expected, actual);
-            //Assert.Inconclusive("Verify the correctness of this test method.");
+            Assert.AreEqual(target.GetPost(reply.Key) != null, ans);
         }
 
         /// <summary>
         ///A test for EditPost
         ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        //[HostType("ASP.NET")]
-        //[AspNetDevelopmentServerHost("C:\\Users\\dleitman\\Documents\\Git\\forum\\ForumServer", "/")]
-        //[UrlToTest("http://localhost:52644/")]
         public void EditPostServerTests()
         {
-            DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
-            Post postToUpdate = null; // TODO: Initialize to an appropriate value
-            Postkey originalPost = null; // TODO: Initialize to an appropriate value
-            bool expected = false; // TODO: Initialize to an appropriate value
-            bool actual;
-            actual = target.EditPost(postToUpdate, originalPost);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            DataManager target = new DataManager();
+            target.AddSubforum(new Subforum("subforumName"));
+            Postkey pk = new Postkey("dor", DateTime.Now);
+            target.AddPost(new Post(pk, "Post", null, null), "subforumName");
+            //Post reply = new Post(new Postkey("dor", DateTime.Now), "Reply", null, null);
+            Post reply = new Post(new Postkey("dor222", pk.Time), "Reply", null, null);
+            reply.Body = "reply body";
+            bool ans = target.AddReply(reply, pk);
+            //Post reply2 = new Post(new Postkey("dor", DateTime.Now), "Reply2 - new Update", null, null);
+            Post reply2 = new Post(new Postkey("dor222", pk.Time), "Reply2 - new Update", null, null);
+            reply2.Body = " reply 2 body";
+            bool ans2 = target.EditPost(reply2, reply.Key);
+            Assert.IsTrue(ans2); // Need to check with debugger the content of reply
         }
 
         /// <summary>
         ///A test for GetModerators
         ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        //[HostType("ASP.NET")]
-        //[AspNetDevelopmentServerHost("C:\\Users\\dleitman\\Documents\\Git\\forum\\ForumServer", "/")]
-        //[UrlToTest("http://localhost:52644/")]
         public void GetModeratorsServerTests()
         {
-            DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
-            string subforum = string.Empty; // TODO: Initialize to an appropriate value
-            List<string> expected = null; // TODO: Initialize to an appropriate value
+            DataManager target = new DataManager();
+            string subforum = "subforum";
             List<string> actual;
+            target.AddSubforum(new Subforum(subforum));
+            List<string> moderators = new List<string>();
+            moderators.Add("dagan");
+            moderators.Add("sagi");
+            moderators.Add("romi");
+            target.SetModerators(subforum,moderators);
             actual = target.GetModerators(subforum);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            Assert.AreEqual(moderators, actual);
         }
 
         /// <summary>
         ///A test for GetPost
         ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        //[HostType("ASP.NET")]
-        //[AspNetDevelopmentServerHost("C:\\Users\\dleitman\\Documents\\Git\\forum\\ForumServer", "/")]
-        //[UrlToTest("http://localhost:52644/")]
-        [DeploymentItem("ForumServer.dll")]
         public void GetPostServerTests()
         {
-            DataManager_Accessor target = new DataManager_Accessor(); // TODO: Initialize to an appropriate value
-            Postkey postKey = null; // TODO: Initialize to an appropriate value
-            Post expected = target.GetPost(postKey); // TODO: Initialize to an appropriate value
-            Post p = target.GetPost(postKey);
-            Assert.AreEqual(expected, p);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            DataManager_Accessor target = new DataManager_Accessor();
+            target.AddSubforum(new Subforum("subforumName"));
+            Postkey pk = new Postkey("dor", DateTime.Now);
+            target.AddPost(new Post(pk, "Post", null, null), "subforumName");
+            Post p = target.GetPost(pk);
+            Assert.IsNotNull(p);
         }
 
         /// <summary>
         ///A test for GetSubforum
         ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        //[HostType("ASP.NET")]
-        //[AspNetDevelopmentServerHost("C:\\Users\\dleitman\\Documents\\Git\\forum\\ForumServer", "/")]
-        //[UrlToTest("http://localhost:52644/")]
         public void GetSubforumServerTests()
         {
             DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
-            string subforum = string.Empty; // TODO: Initialize to an appropriate value
-            Subforum expected = null; // TODO: Initialize to an appropriate value
-            Subforum actual;
+            string subforum = "subforum";
+            Subforum actual = null;
+            try
+            {
+                actual = target.GetSubforum(subforum);
+            }
+            catch (SubforumNotFoundException)
+            {
+                Assert.IsNull(actual);
+            }
+            bool ans = target.AddSubforum(new Subforum(subforum));
             actual = target.GetSubforum(subforum);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            Assert.IsNotNull(actual);
         }
-
-        ///// <summary>
-        /////A test for GetSubforumOfPost
-        /////</summary>
-        //// TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        //// http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        //// whether you are testing a page, web service, or a WCF service.
-        //[TestMethod()]
-        //[HostType("ASP.NET")]
-        //[AspNetDevelopmentServerHost("C:\\Users\\dleitman\\Documents\\Git\\forum\\ForumServer", "/")]
-        //[UrlToTest("http://localhost:52644/")]
-        //[DeploymentItem("ForumServer.dll")]
-        //public void GetSubforumOfPostServerTests()
-        //{
-        //    DataManager_Accessor target = new DataManager_Accessor(); // TODO: Initialize to an appropriate value
-        //    Postkey postKey = null; // TODO: Initialize to an appropriate value
-        //    string expected = string.Empty; // TODO: Initialize to an appropriate value
-        //    string actual;
-        //    actual = target.GetSubforumOfPost(postKey);
-        //    Assert.AreEqual(expected, actual);
-        //    Assert.Inconclusive("Verify the correctness of this test method.");
-        //}
 
         /// <summary>
         ///A test for GetUser
         ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        //[HostType("ASP.NET")]
-        //[AspNetDevelopmentServerHost("C:\\Users\\dleitman\\Documents\\Git\\forum\\ForumServer", "/")]
-        //[UrlToTest("http://localhost:52644/")]
         public void GetUserServerTests()
         {
             DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
-            string username = string.Empty; // TODO: Initialize to an appropriate value
-            User expected = null; // TODO: Initialize to an appropriate value
+            target.AddUser(new User("dor", "dor"));
+            string username = "dor";
             User actual;
             actual = target.GetUser(username);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            Assert.IsNotNull(actual);
         }
 
         /// <summary>
         ///A test for SetModerators
         ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        //[HostType("ASP.NET")]
-        //[AspNetDevelopmentServerHost("C:\\Users\\dleitman\\Documents\\Git\\forum\\ForumServer", "/")]
-        //[UrlToTest("http://localhost:52644/")]
         public void SetModeratorsServerTests()
         {
-            DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
-            string subforum = string.Empty; // TODO: Initialize to an appropriate value
-            bool expected = false; // TODO: Initialize to an appropriate value
-            bool actual;
-            List<string> moderators = null;
-            actual = target.SetModerators(subforum, moderators);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            DataManager target = new DataManager();
+            string subforum = "subforum";
+            List<string> actual;
+            target.AddSubforum(new Subforum(subforum));
+            List<string> moderators = new List<string>();
+            moderators.Add("dagan");
+            moderators.Add("sagi");
+            moderators.Add("romi");
+            target.SetModerators(subforum, moderators);
+            actual = target.GetModerators(subforum);
+            Assert.AreEqual(moderators, actual);
         }
 
         /// <summary>
         ///A test for UpdateUser
         ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        //[HostType("ASP.NET")]
-        //[AspNetDevelopmentServerHost("C:\\Users\\dleitman\\Documents\\Git\\forum\\ForumServer", "/")]
-        //[UrlToTest("http://localhost:52644/")]
         public void UpdateUserServerTests()
         {
-            DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
-            User user = null; // TODO: Initialize to an appropriate value
-            bool expected = false; // TODO: Initialize to an appropriate value
+            DataManager target = new DataManager();
+            User user = new User("dor", "dor");
+            target.AddUser(user);
+            user.Level = AuthorizationLevel.ADMIN;
+            user.Password = "bla";
             bool actual;
             actual = target.UpdateUser(user);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            Assert.AreEqual(user, target.GetUser("dor"));
+        }
+
+        /// <summary>
+        ///A test for GetUserPosts
+        ///</summary>
+        [TestMethod()]
+        public void GetUserPostsServerTests()
+        {
+            DataManager target = new DataManager();
+            string username = "dor";
+            Subforum subforum = new Subforum("subforum1");
+            target.AddSubforum(subforum);
+            Postkey pk = new Postkey("dor", DateTime.Now);
+            target.AddPost(new Post(pk, "post1", null, null), "subforum1");
+            target.AddPost(new Post(new Postkey("dor", DateTime.Now), "post2", null, null), "subforum1");
+            target.AddPost(new Post(new Postkey("dor2", DateTime.Now), "post3", null, null), "subforum1");
+            target.AddReply(new Post(new Postkey("dor", DateTime.Now), "reply1 to post1", null, null), pk);
+            List<Post> actual;
+            actual = target.GetUserPosts(username);
+            Assert.IsNotNull(actual);
+        }
+
+        /// <summary>
+        ///A test for RemovePost
+        ///</summary>
+        [TestMethod()]
+        public void RemovePostServerTests()
+        {
+            DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
+            Subforum subforum = new Subforum("subforum1");
+            target.AddSubforum(subforum);
+            Postkey pk = new Postkey("dor", DateTime.Now);
+            Postkey pk2 = new Postkey("dor", DateTime.Now);
+            target.AddPost(new Post(pk, "post1", null, null), "subforum1");
+            target.AddPost(new Post(new Postkey("dor", DateTime.Now), "post2", null, null), "subforum1");
+            target.AddPost(new Post(new Postkey("dor2", DateTime.Now), "post3", null, null), "subforum1");
+            target.AddReply(new Post(pk2, "reply1 to post1", null, null), pk);
+            bool actual;
+            actual = target.RemovePost(pk2);
+            Assert.IsTrue(actual);
         }
     }
 }

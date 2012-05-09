@@ -66,7 +66,7 @@ namespace ForumServer
             return controller.Reply(currentKey, toAdd);
         }
 
-        public bool EditPost(string postToUpdate, string originalPost, string username, string password)
+        public bool EditPost(string postToUpdate, string originalPost, string password)
         {
             Postkey originalPostKey = serializer.DeserializePostkey(originalPost);
             Post toUpdate = serializer.DeserializePost(postToUpdate);
@@ -74,7 +74,7 @@ namespace ForumServer
         }
 
 
-        public bool RemovePost(string postkey, string username, string password)
+        public bool RemovePost(string postkey, string password)
         {
             Postkey originalPostKey = serializer.DeserializePostkey(postkey);
             return controller.RemovePost(originalPostKey, password);

@@ -6,7 +6,7 @@ using ForumServer.DataTypes;
 
 namespace ForumServer.NetworkLayer
 {
-    interface ISerializer
+    public interface ISerializer
     {
         string SerializeSubforum(Subforum toSerialize);
 
