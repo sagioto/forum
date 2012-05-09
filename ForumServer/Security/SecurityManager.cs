@@ -13,12 +13,16 @@ namespace ForumServer.Security
         public SecurityManager(DataLayer.DataManager dataManager)
         {
             this.dataManager = dataManager;
-            
-            string adminName = System.Web.Configuration.WebConfigurationManager.AppSettings["adminName"];
-            string adminPassword = System.Web.Configuration.WebConfigurationManager.AppSettings["adminPassword"];
-            User admin = new User(adminName, adminPassword);
-            admin.Level = AuthorizationLevel.ADMIN;
-            dataManager.SetAdmin(admin);
+
+            User admin = dataManager.GetAdmin();
+            if (admin == null)
+            {
+                string adminName = System.Web.Configuration.WebConfigurationManager.AppSettings["adminName"];
+                string adminPassword = System.Web.Configuration.WebConfigurationManager.AppSettings["adminPassword"];
+                admin = new User(adminName, adminPassword);
+                admin.Level = AuthorizationLevel.ADMIN;
+                dataManager.SetAdmin(admin);
+            }
         }
 
 
