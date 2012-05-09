@@ -375,5 +375,11 @@ namespace ForumServer.DataLayer
         {
             throw new NotImplementedException();
         }
+
+
+        void IDataManager.SetAdmin(User admin)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
