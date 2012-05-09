@@ -137,16 +137,7 @@ namespace ForumServer.DataLayer
             return allPosts;
         }
 
-        private List<Post> GetAllReplyOfPost(Post post)
-        {
-            List<Post> allReplies = new List<Post>();
-            allReplies.Union(post.Replies.Values);
-            foreach (Post p in post.Replies.Values)
-            {
-                allReplies.Union(GetAllReplyOfPost(p));
-            }
-            return allReplies;
-        }
+        
 
         #endregion
 
@@ -436,6 +427,16 @@ namespace ForumServer.DataLayer
             }
         }
 
+        private List<Post> GetAllReplyOfPost(Post post)
+        {
+            List<Post> allReplies = new List<Post>();
+            allReplies.Union(post.Replies.Values);
+            foreach (Post p in post.Replies.Values)
+            {
+                allReplies.Union(GetAllReplyOfPost(p));
+            }
+            return allReplies;
+        }
         #endregion
 
 
