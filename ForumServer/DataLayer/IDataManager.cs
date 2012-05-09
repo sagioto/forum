@@ -14,9 +14,9 @@ namespace ForumServer.DataLayer
         bool AddReply(Post reply, Postkey originalPost);
 
         /// <summary>
-        /// Changing title & content of postKey. Not changing post`s TimeStamp (keypost)
+        /// Changing title & content of postKey. Not changing oldPost`s TimeStamp (keypost)
         /// </summary>
-        /// <param name="postToUpdate"></param>
+        /// <param name="oldPost"></param>
         /// <param name="postKey"></param>
         /// <returns></returns>
         bool EditPost(Post postToUpdate, Postkey originalPost);
@@ -24,10 +24,10 @@ namespace ForumServer.DataLayer
         Subforum GetSubforum(string subforum);
 
         /// <summary>
-        /// returns all sub forms sorted by title
+        /// Returns all sub forms sorted by title
         /// </summary>
         /// <returns></returns>
-        Subforum[] GetSubforums();
+        List<Subforum> GetSubforums();
 
         User GetUser(string username);
 
@@ -37,7 +37,16 @@ namespace ForumServer.DataLayer
 
         List<string> GetModerators(string subforum);
 
-        bool SetModerators(string subforum);
+        bool SetModerators(string subforum, List<string> moderatorsList);
 
+        bool SetUserState(string username, UserState state);
+
+        List<Post> GetUserPosts(string username);
+
+        bool RemoveSubforum(string subforum);
+
+        bool RemovePost(Postkey postkey);
+
+        bool addSubforum(Subforum subforum);
     }
 }

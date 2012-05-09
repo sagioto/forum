@@ -9,17 +9,20 @@ namespace ForumServer.DataTypes
     {
         private Postkey key;
         private string title;
-        private Post parentPost;
+        private Postkey parentPost;
         private string body;
         private Dictionary<Postkey, Post> replies;
         private Subforum subforum;
 
-        public Post(Postkey postKey, string title, Post parentPost, Subforum subforum)
+
+        //TODO - Why Subforum needed? (To Sagi)
+        public Post(Postkey postKey, string title, Postkey parentPost, Subforum subforum)
         {
             this.key = postKey;
             this.title = title;
             this.parentPost = parentPost;
             this.subforum = subforum;
+            this.replies = new Dictionary<Postkey, Post>();
         }
 
         #region Fields Properties
@@ -36,9 +39,9 @@ namespace ForumServer.DataTypes
                 key = value;
             }
         }
-        
 
-        public Post ParentPost
+
+        public Postkey ParentPost
         {
             get
             {
@@ -91,14 +94,20 @@ namespace ForumServer.DataTypes
 
         public Subforum Subforum
         {
-            get { return subforum; }
-            set { subforum = value; }
+            get
+            {
+                return subforum;
+            }
+            set
+            {
+                subforum = value;
+            }
         }
 
 
 
 
-#endregion
+        #endregion
 
         #region Public methods
 

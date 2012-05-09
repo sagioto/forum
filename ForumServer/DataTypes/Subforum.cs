@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ForumServer.DataTypes
 {
-    public class Subforum
+    public class Subforum : IComparable
     {
         private string name;
         private List<string> moderatorsList;
@@ -14,6 +14,9 @@ namespace ForumServer.DataTypes
         public Subforum(string name)
         {
             this.name = name;
+            moderatorsList = new List<string>();
+            posts = new Dictionary<Postkey, Post>();
+
         }
 
         #region Parameters Properties
@@ -74,5 +77,10 @@ namespace ForumServer.DataTypes
         }
 
         #endregion
+
+        public int CompareTo(object subforum)
+        {
+            return this.name.CompareTo(((Subforum)subforum).Name);
+        }
     }
 }

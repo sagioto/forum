@@ -7,9 +7,9 @@ namespace ForumServer.DataTypes
 {
     public enum AuthorizationLevel
     {
-        GUEST,
-        MEMBER,
-        MODERATOR,
-        ADMIN
+        GUEST,      /*Not Registered*/
+        MEMBER,     /*Registeres*/
+        MODERATOR,  /*Subforum admin*/
+        ADMIN       /*Forum admin*/
     }
 }

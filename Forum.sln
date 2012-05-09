@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumClientCore", "ForumCli
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C8BCFA8B-B789-414C-BA68-D2D9CDCEB304}"
+	ProjectSection(SolutionItems) = preProject
+		Forum.vsmdi = Forum.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumServer", "ForumServer\ForumServer.csproj", "{A27A133F-3BE9-4869-B21E-045605A58827}"
 EndProject
@@ -21,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumClientConsole", "Forum
 	ProjectSection(ProjectDependencies) = postProject
 		{A27A133F-3BE9-4869-B21E-045605A58827} = {A27A133F-3BE9-4869-B21E-045605A58827}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerTests", "ServerTests\ServerTests.csproj", "{97883F45-BCDE-47BE-8EFF-82B318BE22D9}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -85,6 +92,16 @@ Global
 		{3FD9B9D9-D1F4-4D88-A4E2-78398712084D}.Release|Mixed Platforms.Build.0 = Release|x86
 		{3FD9B9D9-D1F4-4D88-A4E2-78398712084D}.Release|x86.ActiveCfg = Release|x86
 		{3FD9B9D9-D1F4-4D88-A4E2-78398712084D}.Release|x86.Build.0 = Release|x86
+		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

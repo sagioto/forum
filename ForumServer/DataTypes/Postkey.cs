@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Collections;
 
 namespace ForumServer.DataTypes
 {
-    public class Postkey : IComparable
+    public class Postkey : IComparable, IComparer //IEqualityComparer
     {
         private string username;
         private DateTime time;
@@ -60,10 +61,40 @@ namespace ForumServer.DataTypes
                 }
                 else    //this.time == postkey.Time
                 {
-                    return this.time.CompareTo(postkey.Time);
+                    return this.username.CompareTo(postkey.Username);
                 }
             }
         }
         #endregion
+
+        public bool Equals(Postkey otherPk)
+        {
+            return (this.username == otherPk.Username && this.time.ToString() == otherPk.Time.ToString());
+        }
+
+        public bool Equals(object x, object y)
+        {
+            Postkey pk1 = (Postkey)x;
+            Postkey pk2 = (Postkey)y;
+            return (pk1.username == pk2.Username && pk1.time.ToString() == pk2.Time.ToString());
+        }
+
+        public int GetHashCode(object obj)
+        {
+            return ((Postkey)obj).Time.Minute;  //TODO Think about it again
+        }
+
+        //TODO - Only for test
+        public int Compare(object x, object y)
+        {
+            Postkey pk1 = (Postkey)x;
+            Postkey pk2 = (Postkey)y;
+            if (pk1.username == pk2.Username && pk1.time.ToString() == pk2.Time.ToString())
+                return 0;
+            else
+            {
+                return 1;
+            }
+        }
     }
 }

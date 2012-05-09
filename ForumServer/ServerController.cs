@@ -25,7 +25,7 @@ namespace ForumServer
 
         public Subforum[] Enter()
         {
-            return dataManager.GetSubforums();
+            return dataManager.GetSubforums().ToArray<Subforum>();
         }
 
         public bool Register(string username, string password)

@@ -20,7 +20,7 @@ namespace ForumServer
         /// <summary>
         /// Returns subforums list
         /// </summary>
-        /// <param name="subforum"></param>
+        /// <param name="subforumName"></param>
         /// <returns>returns a json of an array of the sub forum</returns>
         [OperationContract]
         string Enter();
@@ -38,7 +38,7 @@ namespace ForumServer
         /// <summary>
         /// Returns subforums list
         /// </summary>
-        /// <param name="subforum"></param>
+        /// <param name="subforumName"></param>
         /// <returns>returns a json of an array of the sub forum</returns>
         [OperationContract]
         string GetSubforumsList(string subforum);
@@ -46,13 +46,13 @@ namespace ForumServer
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="subforum"></param>
+        /// <param name="subforumName"></param>
         /// <returns>returns a json of the requested sub-forum</returns>
         [OperationContract]
         string GetSubforum(string subforum);
 
         /// <summary>
-        /// postkey contains of username + timestamp 
+        /// postkey contains of user + timestamp 
         /// </summary>
         /// <param name="postkey"></param>
         /// <returns></returns>
@@ -60,19 +60,19 @@ namespace ForumServer
         string GetPost(string postkey);
 
         /// <summary>
-        /// add a post to a sub forum
+        /// add a oldPost to a sub forum
         /// </summary>
         /// <param name="current">the sub forum json</param>
-        /// <param name="toPost">the post to add json</param>
+        /// <param name="toPost">the oldPost to add json</param>
         /// <returns></returns>
         [OperationContract]
         bool Post(string current, string toPost);
 
         /// <summary>
-        /// add post as reply to current post
+        /// add oldPost as reply to current oldPost
         /// </summary>
-        /// <param name="current">the current post postkey json</param>
-        /// <param name="toPost">the post to add json</param>
+        /// <param name="current">the current oldPost postkey json</param>
+        /// <param name="toPost">the oldPost to add json</param>
         /// <returns></returns>
         [OperationContract]
         bool Reply(string current, string toPost);
@@ -80,7 +80,7 @@ namespace ForumServer
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="postToUpdate">json of the post</param>
+        /// <param name="oldPost">json of the oldPost</param>
         /// <param name="originalPost">json of the current postkey</param>
         /// <returns></returns>
         bool EditPost(string postToUpdate, string originalPost);
