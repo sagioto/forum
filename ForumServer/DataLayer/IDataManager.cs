@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -56,6 +56,11 @@ namespace ForumServer.DataLayer
         /// <remarks>Tests in ServerTests project</remarks>
         bool EditPost(Post postToUpdate, Postkey oldPostKey);
 
+        /// <summary>
+        /// Returns a list of all posts & replies in forum
+        /// </summary>
+        /// <returns></returns>
+        List<Post> GetAllPosts();
         #endregion
 
         #region Subforms Getters & Setters
@@ -165,6 +170,19 @@ namespace ForumServer.DataLayer
         /// <remarks>Tests in ServerTests project</remarks>
         List<Post> GetUserPosts(string username);
 
+        /// <summary>
+        /// Add admin to users, sets its AuthenticationLevel to ADMIN, update adminName in dataManager
+        /// </summary>
+        /// <param name="admin">User to be admin</param>
+        /// <exception cref="Exception"></exception>
+        bool SetAdmin(User admin);
+
+        /// <summary>
+        /// Returns the admin of forum
+        /// </summary>
+        /// <returns>admin</returns>
+        /// <exception cref="UserNotFoundException"></exception>
+        User GetAdmin();
 
         #endregion
 

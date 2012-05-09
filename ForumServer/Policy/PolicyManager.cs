@@ -19,24 +19,31 @@ namespace ForumServer.Policy
         {  
             Subforum forum = dataManager.GetSubforum(subforum);
             User user = dataManager.GetUser(username);
-            //TODO completeSreturn user != null && user.
             if(user != null && forum != null)
             {
-              
+            int numOfPublishedPosts = dataManager.GetAllPosts()
+                .Where(post => post.Key.Username.Equals(username) && post.Subforum.Name.Equals(subforum)).Distinct().Count();
+                if(numOfPublishedPosts >= 5)
+                    return true;
             }
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool RemoveModerator(string username, string subforum)
         {
             Subforum forum = dataManager.GetSubforum(subforum);
             User user = dataManager.GetUser(username);
-            //TODO completeSreturn user != null && user.
+            
             if (user != null && forum != null)
             {
-
+                int numOfPublishedPostsInLastHour = dataManager.GetAllPosts()
+                .Where(post => post.Key.Username.Equals(username) && post.Subforum.Name.Equals(subforum)
+                    && DateTime.Now.Subtract(post.Key.Time) < TimeSpan.FromHours(1)).Distinct().Count();
+                if (numOfPublishedPostsInLastHour == 0)
+                    return true;
+                return true;
             }
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool ChangeModerator(string oldUsername, string newUsername, string subforum)
@@ -44,7 +51,7 @@ namespace ForumServer.Policy
             return true;
         }
 
-        internal bool IsAuthorizedToEdit(DataTypes.Postkey originalPostKey, string p)
+        public bool IsAuthorizedToEdit(Postkey originalPostKey, string username)
         {
             return true;
         }

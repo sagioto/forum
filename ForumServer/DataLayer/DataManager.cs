@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ForumServer.DataTypes;
 using System.Collections.Concurrent;
+using System.Configuration;
 
 namespace ForumServer.DataLayer
 {
@@ -12,12 +13,16 @@ namespace ForumServer.DataLayer
         // Data structurs:
         private ConcurrentDictionary<string, User> users;
         private ConcurrentDictionary<string, Subforum> subforumsList;
-
+        private string adminName;
 
         public DataManager()
         {
             users = new ConcurrentDictionary<string, User>();
             subforumsList = new ConcurrentDictionary<string, Subforum>();
+            string adminName = ConfigurationManager.AppSettings["adminName"];
+            string adminPass = ConfigurationManager.AppSettings["adminPassword"];
+            User admin = new User(adminName, adminPass);
+            SetAdmin(admin);
         }
 
         #region IDataManager methods
@@ -110,6 +115,29 @@ namespace ForumServer.DataLayer
                 throw ex;
             }
         }
+
+        public List<Post> GetAllPosts()
+        {
+            List<Post> allPosts = new List<Post>();
+            foreach (KeyValuePair<string, Subforum> subforumEntry in subforumsList)
+            {
+                try
+                {
+                    allPosts.Union(subforumEntry.Value.Posts.Values.ToList<Post>());
+                    foreach (Post post in subforumEntry.Value.Posts.Values)
+                    {
+                        allPosts.Union(GetAllReplyOfPost(post));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            return allPosts;
+        }
+
+        
 
         #endregion
 
@@ -248,6 +276,33 @@ namespace ForumServer.DataLayer
             return postsOfUser;
         }
 
+        public bool SetAdmin(User admin)
+        {
+            try
+            {
+                admin.Level = AuthorizationLevel.ADMIN;
+                users.TryAdd(admin.Username, admin);
+                this.adminName = admin.Username;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public User GetAdmin()
+        {
+            try
+            {
+                return users[adminName];
+            }
+            catch (Exception)
+            {
+                throw new UserNotFoundException();
+            }
+        }
+
         #endregion
 
         #endregion //IDataManager methods
@@ -372,7 +427,21 @@ namespace ForumServer.DataLayer
             }
         }
 
+        private List<Post> GetAllReplyOfPost(Post post)
+        {
+            List<Post> allReplies = new List<Post>();
+            allReplies.Union(post.Replies.Values);
+            foreach (Post p in post.Replies.Values)
+            {
+                allReplies.Union(GetAllReplyOfPost(p));
+            }
+            return allReplies;
+        }
         #endregion
+
+
+
+
 
     }
 }

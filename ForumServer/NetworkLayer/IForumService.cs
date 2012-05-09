@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -37,33 +37,32 @@ namespace ForumServer
 
         /// <summary>
         /// Returns subforums list
-        /// </summary>
-        /// <param name="subforumName"></param>
+        /// </summary>s
         /// <returns>returns a json of an array of the sub forum</returns>
         [OperationContract]
-        string GetSubforumsList(string subforum);
+        string GetSubforumsList();
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="subforumName"></param>
+        /// <param name="subforumName">just the name - no json!</param>
         /// <returns>returns a json of the requested sub-forum</returns>
         [OperationContract]
         string GetSubforum(string subforum);
 
         /// <summary>
-        /// postkey contains of user + timestamp 
+        /// postkey contains of user + timestamp in json form
         /// </summary>
         /// <param name="postkey"></param>
-        /// <returns></returns>
+        /// <returns>post json</returns>
         [OperationContract]
         string GetPost(string postkey);
 
         /// <summary>
-        /// add a oldPost to a sub forum
+        /// add toPost to a sub forum
         /// </summary>
-        /// <param name="current">the sub forum json</param>
-        /// <param name="toPost">the oldPost to add json</param>
+        /// <param name="current">the sub forum name - no json!</param>
+        /// <param name="toPost">the post to add json</param>
         /// <returns></returns>
         [OperationContract]
         bool Post(string current, string toPost);
@@ -71,24 +70,28 @@ namespace ForumServer
         /// <summary>
         /// add oldPost as reply to current oldPost
         /// </summary>
-        /// <param name="current">the current oldPost postkey json</param>
-        /// <param name="toPost">the oldPost to add json</param>
+        /// <param name="current">the postkey json of the post to reply to</param>
+        /// <param name="toPost">the reply post in json form</param>
         /// <returns></returns>
         [OperationContract]
         bool Reply(string current, string toPost);
 
-
-
-
-
+        /// <summary>
+        /// 
         /// </summary>
-        /// <param name="postToUpdate">json of new post</param>
-        /// <param name="originalPost">json of the current postkey</param>
+        /// <param name="postToUpdate">json of the new post</param>
+        /// <param name="originalPost">json of the original postkey</param>
+        /// <returns></returns>
+        bool EditPost(string postToUpdate, string originalPost,string usrname, string password);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="postkey"></param>
+        /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        bool EditPost(string postToUpdate, string originalPost, string password);
-
-        bool RemovePost(string postkey, string password);
+        bool RemovePost(string postkey,string username, string password);
 
         #region admin functions
 

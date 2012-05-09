@@ -94,9 +94,8 @@ namespace ServerTests
         [TestMethod()]
         public void AddReplyServerTests()
         {
-            DataManager target = new DataManager();
-
-            target.AddSubforum(new Subforum("subforumName"));
+            DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
+            target.AddSubforum(new Subforum("subforum"));
             Postkey pk = new Postkey("dor", DateTime.Now);
             target.AddPost(new Post(pk, "Post", null, null), "subforumName");
             //Post reply = new Post(new Postkey("dor", DateTime.Now), "Reply", null, null);
