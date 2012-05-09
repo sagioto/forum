@@ -51,6 +51,8 @@ namespace ForumServer.DataLayer
 
         void SetAdmin(User admin);
 
+        User GetAdmin();
+
         List<Post> GetAllPosts();
     }
 }

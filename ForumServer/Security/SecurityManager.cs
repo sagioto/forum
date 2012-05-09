@@ -18,9 +18,7 @@ namespace ForumServer.Security
             string adminPassword = System.Web.Configuration.WebConfigurationManager.AppSettings["adminPassword"];
             User admin = new User(adminName, adminPassword);
             admin.Level = AuthorizationLevel.ADMIN;
-
-            dataManager.UpdateUser(admin);
-            //TODO replace eith dataManager.Admin = admin;
+            dataManager.SetAdmin(admin);
         }
 
 
@@ -98,10 +96,8 @@ namespace ForumServer.Security
 
         public bool AuthenticateAdmin(string username, string password)
         {
-            //User admin = dataManager.GetAdmin();
-            //return admin.Password.Equals(password) && admin.Username.Equals(password);
-            //TODO remove comment
-            throw new NotImplementedException();
+            User admin = dataManager.GetAdmin();
+            return admin.Password.Equals(password) && admin.Username.Equals(password);
         }
 
         private static bool IsUserLoggendIn(User user)

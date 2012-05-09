@@ -370,5 +370,10 @@ namespace ForumServer.DataLayer
         {
             throw new NotImplementedException();
         }
+
+        public User GetAdmin()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

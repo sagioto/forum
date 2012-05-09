@@ -102,12 +102,7 @@ namespace ForumServer
                 && policyManager.RemoveModerator(usernameToRemove, subforum))
             {
                 dataManager.GetSubforum(subforum).ModeratorsList.Remove(usernameToRemove);
-                bool moderator = false;
-                foreach (Subforum sub in dataManager.GetSubforums())
-                {
-                    if (sub.ModeratorsList.Contains(usernameToRemove))
-                        moderator = true;
-                }
+                bool moderator = CheckIfModerator(usernameToRemove);
                 if (!moderator)
                 {
                     User user = dataManager.GetUser(usernameToRemove);
@@ -117,6 +112,17 @@ namespace ForumServer
                 return true;
             }
             else return false;
+        }
+
+        private bool CheckIfModerator(string usernameToRemove)
+        {
+            bool moderator = false;
+            foreach (Subforum sub in dataManager.GetSubforums())
+            {
+                if (sub.ModeratorsList.Contains(usernameToRemove))
+                    moderator = true;
+            }
+            return moderator;
         }
 
         public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
@@ -140,8 +146,18 @@ namespace ForumServer
 
         public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
         {
-            return securityManager.AuthenticateAdmin(oldAdminUsername, oldAdminPassword)
-                    && dataManager.SetAdmin(new User(newAdminUsername, newAdminPassword));
+            if (securityManager.AuthenticateAdmin(oldAdminUsername, oldAdminPassword))
+            {
+                User newAdmin = new User(newAdminUsername, newAdminPassword);
+                User oldAdmin = dataManager.GetAdmin();
+                if (CheckIfModerator(oldAdminUsername))
+                    oldAdmin.Level = AuthorizationLevel.MODERATOR;
+                else
+                    oldAdmin.Level = AuthorizationLevel.MEMBER;
+                newAdmin.Level = AuthorizationLevel.ADMIN;
+                return dataManager.SetAdmin(newAdmin);
+            }
+            else return false;
         }
 
         public int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName)
