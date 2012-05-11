@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using ForumServer.DataTypes;
 
-namespace ForumServer.NetworkLayer
+namespace ForumUtils.NetworkLayer
 {
     public class JsonSerializer : ISerializer
     {
@@ -26,6 +26,11 @@ namespace ForumServer.NetworkLayer
         public Subforum DeserializeSubforum(string toDeserialize)
         {
             return serializer.Deserialize(toDeserialize, typeof(Subforum)) as Subforum;
+        }
+
+        public Subforum[] DeserializeSubforumArray(string toDeserialize)
+        {
+            return serializer.Deserialize(toDeserialize, typeof(Subforum[])) as Subforum[];
         }
 
         public string SerializePost(Post toSerialize)

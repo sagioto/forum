@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using ForumUtils.NetworkLayer;
 using ForumServer.NetworkLayer;
 using ForumServer.DataTypes;
 
