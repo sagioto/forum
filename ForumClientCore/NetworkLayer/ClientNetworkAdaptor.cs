@@ -5,7 +5,7 @@ using System.Text;
 using ForumClientCore.ForumService;
 using System.ServiceModel;
 using ForumUtils.NetworkLayer;
-using ForumServer.DataTypes;
+using ForumUtils.SharedDataTypes;
 
 namespace ForumClientCore.NetworkLayer
 {

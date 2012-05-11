@@ -78,6 +78,66 @@ namespace ForumClientCore.ForumService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ForumService.IForumService", CallbackContract=typeof(ForumClientCore.ForumService.IForumServiceCallback))]
     public interface IForumService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Enter", ReplyAction="http://tempuri.org/IForumService/EnterResponse")]
+        string Enter();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Register", ReplyAction="http://tempuri.org/IForumService/RegisterResponse")]
+        bool Register(string username, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Login", ReplyAction="http://tempuri.org/IForumService/LoginResponse")]
+        bool Login(string username, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Logout", ReplyAction="http://tempuri.org/IForumService/LogoutResponse")]
+        bool Logout(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetSubforumsList", ReplyAction="http://tempuri.org/IForumService/GetSubforumsListResponse")]
+        string GetSubforumsList();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetSubforum", ReplyAction="http://tempuri.org/IForumService/GetSubforumResponse")]
+        string GetSubforum(string subforum);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetPost", ReplyAction="http://tempuri.org/IForumService/GetPostResponse")]
+        string GetPost(string postkey);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Post", ReplyAction="http://tempuri.org/IForumService/PostResponse")]
+        bool Post(string current, string toPost);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Reply", ReplyAction="http://tempuri.org/IForumService/ReplyResponse")]
+        bool Reply(string current, string toPost);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/EditPost", ReplyAction="http://tempuri.org/IForumService/EditPostResponse")]
+        bool EditPost(string postToUpdate, string originalPost, string usrname, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/RemovePost", ReplyAction="http://tempuri.org/IForumService/RemovePostResponse")]
+        bool RemovePost(string postkey, string username, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/AddModerator", ReplyAction="http://tempuri.org/IForumService/AddModeratorResponse")]
+        bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/RemoveModerator", ReplyAction="http://tempuri.org/IForumService/RemoveModeratorResponse")]
+        bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReplaceModerator", ReplyAction="http://tempuri.org/IForumService/ReplaceModeratorResponse")]
+        bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/AddSubforum", ReplyAction="http://tempuri.org/IForumService/AddSubforumResponse")]
+        bool AddSubforum(string adminUsername, string adminPassword, string subforumName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/RemoveSubforum", ReplyAction="http://tempuri.org/IForumService/RemoveSubforumResponse")]
+        bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReportSubForumTotalPosts", ReplyAction="http://tempuri.org/IForumService/ReportSubForumTotalPostsResponse")]
+        int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReportUserTotalPosts", ReplyAction="http://tempuri.org/IForumService/ReportUserTotalPostsResponse")]
+        int ReportUserTotalPosts(string adminUsername, string adminPassword, string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReplaceAdmin", ReplyAction="http://tempuri.org/IForumService/ReplaceAdminResponse")]
+        bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Subscribe", ReplyAction="http://tempuri.org/IForumService/SubscribeResponse")]
+        string Subscribe();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/AddMessage", ReplyAction="http://tempuri.org/IForumService/AddMessageResponse")]
         bool AddMessage(string message);
         
@@ -127,6 +187,86 @@ namespace ForumClientCore.ForumService {
         
         public ForumServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public string Enter() {
+            return base.Channel.Enter();
+        }
+        
+        public bool Register(string username, string password) {
+            return base.Channel.Register(username, password);
+        }
+        
+        public bool Login(string username, string password) {
+            return base.Channel.Login(username, password);
+        }
+        
+        public bool Logout(string username) {
+            return base.Channel.Logout(username);
+        }
+        
+        public string GetSubforumsList() {
+            return base.Channel.GetSubforumsList();
+        }
+        
+        public string GetSubforum(string subforum) {
+            return base.Channel.GetSubforum(subforum);
+        }
+        
+        public string GetPost(string postkey) {
+            return base.Channel.GetPost(postkey);
+        }
+        
+        public bool Post(string current, string toPost) {
+            return base.Channel.Post(current, toPost);
+        }
+        
+        public bool Reply(string current, string toPost) {
+            return base.Channel.Reply(current, toPost);
+        }
+        
+        public bool EditPost(string postToUpdate, string originalPost, string usrname, string password) {
+            return base.Channel.EditPost(postToUpdate, originalPost, usrname, password);
+        }
+        
+        public bool RemovePost(string postkey, string username, string password) {
+            return base.Channel.RemovePost(postkey, username, password);
+        }
+        
+        public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum) {
+            return base.Channel.AddModerator(adminUsername, adminPassword, usernameToAdd, subforum);
+        }
+        
+        public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum) {
+            return base.Channel.RemoveModerator(adminUsername, adminPassword, usernameToRemove, subforum);
+        }
+        
+        public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum) {
+            return base.Channel.ReplaceModerator(adminUsername, adminPassword, usernameToAdd, usernameToRemove, subforum);
+        }
+        
+        public bool AddSubforum(string adminUsername, string adminPassword, string subforumName) {
+            return base.Channel.AddSubforum(adminUsername, adminPassword, subforumName);
+        }
+        
+        public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName) {
+            return base.Channel.RemoveSubforum(adminUsername, adminPassword, subforumName);
+        }
+        
+        public int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName) {
+            return base.Channel.ReportSubForumTotalPosts(adminUsername, adminPassword, subforumName);
+        }
+        
+        public int ReportUserTotalPosts(string adminUsername, string adminPassword, string username) {
+            return base.Channel.ReportUserTotalPosts(adminUsername, adminPassword, username);
+        }
+        
+        public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword) {
+            return base.Channel.ReplaceAdmin(oldAdminUsername, oldAdminPassword, newAdminUsername, newAdminPassword);
+        }
+        
+        public string Subscribe() {
+            return base.Channel.Subscribe();
         }
         
         public bool AddMessage(string message) {

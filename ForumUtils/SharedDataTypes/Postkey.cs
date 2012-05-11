@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Collections;
 
-namespace ForumServer.DataTypes
+namespace ForumUtils.SharedDataTypes
 {
     public class Postkey : IEquatable<Postkey>//IComparer //IEqualityComparer
     {

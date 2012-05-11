@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using ForumServer.DataTypes;
 using System.Threading.Tasks;
+using ForumUtils.SharedDataTypes;
 
 namespace ForumServer.Policy
 {

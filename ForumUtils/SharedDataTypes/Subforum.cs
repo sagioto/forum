@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ForumServer.DataTypes
+namespace ForumUtils.SharedDataTypes
 {
     public class Subforum : IComparable
     {

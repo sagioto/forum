@@ -82,6 +82,7 @@ namespace ForumServer
         /// <param name="postToUpdate">json of the new post</param>
         /// <param name="originalPost">json of the original postkey</param>
         /// <returns></returns>
+        [OperationContract]
         bool EditPost(string postToUpdate, string originalPost,string usrname, string password);
 
         /// <summary>
@@ -91,24 +92,33 @@ namespace ForumServer
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
+        [OperationContract]
         bool RemovePost(string postkey,string username, string password);
 
         #region admin functions
-
+        
+        [OperationContract]
         bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum);
 
+        [OperationContract]
         bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum);
 
+        [OperationContract]
         bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum);
 
+        [OperationContract]
         bool AddSubforum(string adminUsername, string adminPassword, string subforumName);
 
+        [OperationContract]
         bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName);
 
+        [OperationContract]
         int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName);
 
+        [OperationContract]
         int ReportUserTotalPosts(string adminUsername, string adminPassword, string username);
 
+        [OperationContract]
         bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword);
 
         #endregion

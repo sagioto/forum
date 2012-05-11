@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting.Web;
 using ForumServer.DataTypes;
+using ForumUtils.SharedDataTypes;
 
 namespace ServerTests
 {
