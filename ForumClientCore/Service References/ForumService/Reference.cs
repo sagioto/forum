@@ -104,9 +104,7 @@ namespace ForumClientCore.ForumService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Reply", ReplyAction="http://tempuri.org/IForumService/ReplyResponse")]
         bool Reply(string current, string toPost);
-        
-<<<<<<< HEAD
-=======
+
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/EditPost", ReplyAction="http://tempuri.org/IForumService/EditPostResponse")]
         bool EditPost(string postToUpdate, string originalPost, string usrname, string password);
         
@@ -137,7 +135,6 @@ namespace ForumClientCore.ForumService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReplaceAdmin", ReplyAction="http://tempuri.org/IForumService/ReplaceAdminResponse")]
         bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword);
         
->>>>>>> origin/HEAD
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Subscribe", ReplyAction="http://tempuri.org/IForumService/SubscribeResponse")]
         string Subscribe();
         
@@ -228,8 +225,6 @@ namespace ForumClientCore.ForumService {
             return base.Channel.Reply(current, toPost);
         }
         
-<<<<<<< HEAD
-=======
         public bool EditPost(string postToUpdate, string originalPost, string usrname, string password) {
             return base.Channel.EditPost(postToUpdate, originalPost, usrname, password);
         }
@@ -270,7 +265,6 @@ namespace ForumClientCore.ForumService {
             return base.Channel.ReplaceAdmin(oldAdminUsername, oldAdminPassword, newAdminUsername, newAdminPassword);
         }
         
->>>>>>> origin/HEAD
         public string Subscribe() {
             return base.Channel.Subscribe();
         }
