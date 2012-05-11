@@ -127,6 +127,175 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+<<<<<<< HEAD
+=======
+  <xs:element name="EditPost">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="postToUpdate" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="originalPost" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="usrname" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditPostResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EditPostResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemovePost">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="postkey" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemovePostResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RemovePostResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddModerator">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="adminUsername" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="adminPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="usernameToAdd" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="subforum" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddModeratorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddModeratorResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveModerator">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="adminUsername" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="adminPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="usernameToRemove" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="subforum" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveModeratorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RemoveModeratorResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReplaceModerator">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="adminUsername" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="adminPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="usernameToAdd" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="usernameToRemove" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="subforum" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReplaceModeratorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReplaceModeratorResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddSubforum">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="adminUsername" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="adminPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="subforumName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddSubforumResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddSubforumResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveSubforum">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="adminUsername" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="adminPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="subforumName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveSubforumResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RemoveSubforumResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReportSubForumTotalPosts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="adminUsername" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="adminPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="subforumName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReportSubForumTotalPostsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReportSubForumTotalPostsResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReportUserTotalPosts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="adminUsername" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="adminPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReportUserTotalPostsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReportUserTotalPostsResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReplaceAdmin">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="oldAdminUsername" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="oldAdminPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="newAdminUsername" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="newAdminPassword" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReplaceAdminResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReplaceAdminResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+>>>>>>> origin/HEAD
   <xs:element name="Subscribe">
     <xs:complexType>
       <xs:sequence />

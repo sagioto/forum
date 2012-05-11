@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ForumServer.DataTypes;
+using ForumUtils.SharedDataTypes;
 
 namespace ForumServer.Security
 {

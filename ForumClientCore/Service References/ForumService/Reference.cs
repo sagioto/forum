@@ -105,6 +105,39 @@ namespace ForumClientCore.ForumService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Reply", ReplyAction="http://tempuri.org/IForumService/ReplyResponse")]
         bool Reply(string current, string toPost);
         
+<<<<<<< HEAD
+=======
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/EditPost", ReplyAction="http://tempuri.org/IForumService/EditPostResponse")]
+        bool EditPost(string postToUpdate, string originalPost, string usrname, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/RemovePost", ReplyAction="http://tempuri.org/IForumService/RemovePostResponse")]
+        bool RemovePost(string postkey, string username, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/AddModerator", ReplyAction="http://tempuri.org/IForumService/AddModeratorResponse")]
+        bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/RemoveModerator", ReplyAction="http://tempuri.org/IForumService/RemoveModeratorResponse")]
+        bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReplaceModerator", ReplyAction="http://tempuri.org/IForumService/ReplaceModeratorResponse")]
+        bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/AddSubforum", ReplyAction="http://tempuri.org/IForumService/AddSubforumResponse")]
+        bool AddSubforum(string adminUsername, string adminPassword, string subforumName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/RemoveSubforum", ReplyAction="http://tempuri.org/IForumService/RemoveSubforumResponse")]
+        bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReportSubForumTotalPosts", ReplyAction="http://tempuri.org/IForumService/ReportSubForumTotalPostsResponse")]
+        int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReportUserTotalPosts", ReplyAction="http://tempuri.org/IForumService/ReportUserTotalPostsResponse")]
+        int ReportUserTotalPosts(string adminUsername, string adminPassword, string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReplaceAdmin", ReplyAction="http://tempuri.org/IForumService/ReplaceAdminResponse")]
+        bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword);
+        
+>>>>>>> origin/HEAD
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Subscribe", ReplyAction="http://tempuri.org/IForumService/SubscribeResponse")]
         string Subscribe();
         
@@ -195,6 +228,49 @@ namespace ForumClientCore.ForumService {
             return base.Channel.Reply(current, toPost);
         }
         
+<<<<<<< HEAD
+=======
+        public bool EditPost(string postToUpdate, string originalPost, string usrname, string password) {
+            return base.Channel.EditPost(postToUpdate, originalPost, usrname, password);
+        }
+        
+        public bool RemovePost(string postkey, string username, string password) {
+            return base.Channel.RemovePost(postkey, username, password);
+        }
+        
+        public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum) {
+            return base.Channel.AddModerator(adminUsername, adminPassword, usernameToAdd, subforum);
+        }
+        
+        public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum) {
+            return base.Channel.RemoveModerator(adminUsername, adminPassword, usernameToRemove, subforum);
+        }
+        
+        public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum) {
+            return base.Channel.ReplaceModerator(adminUsername, adminPassword, usernameToAdd, usernameToRemove, subforum);
+        }
+        
+        public bool AddSubforum(string adminUsername, string adminPassword, string subforumName) {
+            return base.Channel.AddSubforum(adminUsername, adminPassword, subforumName);
+        }
+        
+        public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName) {
+            return base.Channel.RemoveSubforum(adminUsername, adminPassword, subforumName);
+        }
+        
+        public int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName) {
+            return base.Channel.ReportSubForumTotalPosts(adminUsername, adminPassword, subforumName);
+        }
+        
+        public int ReportUserTotalPosts(string adminUsername, string adminPassword, string username) {
+            return base.Channel.ReportUserTotalPosts(adminUsername, adminPassword, username);
+        }
+        
+        public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword) {
+            return base.Channel.ReplaceAdmin(oldAdminUsername, oldAdminPassword, newAdminUsername, newAdminPassword);
+        }
+        
+>>>>>>> origin/HEAD
         public string Subscribe() {
             return base.Channel.Subscribe();
         }

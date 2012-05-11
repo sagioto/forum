@@ -8,6 +8,7 @@ using System.Text;
 using ForumUtils.NetworkLayer;
 using ForumServer.NetworkLayer;
 using ForumServer.DataTypes;
+using ForumUtils.SharedDataTypes;
 
 namespace ForumServer
 {

@@ -5,12 +5,13 @@ using System.Web;
 using ForumServer.DataTypes;
 using System.Collections.Concurrent;
 using System.Configuration;
+using ForumUtils.SharedDataTypes;
 
 namespace ForumServer.DataLayer
 {
     public class DataManager : IDataManager
     {
-        // Data structurs:
+        // Data structures:
         private ConcurrentDictionary<string, User> users;
         private ConcurrentDictionary<string, Subforum> subforumsList;
         private string adminName;

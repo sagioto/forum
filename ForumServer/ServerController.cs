@@ -4,6 +4,7 @@ using ForumServer.DataLayer;
 using ForumServer.DataTypes;
 using ForumServer.Policy;
 using ForumServer.Security;
+using ForumUtils.SharedDataTypes;
 
 namespace ForumServer
 {
