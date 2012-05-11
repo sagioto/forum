@@ -49,5 +49,7 @@ namespace ForumClientCore
             netAdaptor.addMessage(s);
         }
 
+
+
     }
 }
