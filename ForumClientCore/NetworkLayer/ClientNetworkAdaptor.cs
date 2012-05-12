@@ -78,7 +78,7 @@ namespace ForumClientCore.NetworkLayer
         /// Enter the server.
         /// </summary>
         /// <returns>Returns an array of the sub forum (the main forum list?)</returns>
-        Subforum[] Enter()
+        internal Subforum[] Enter()
         {
             return serializer.DeserializeSubforumArray(webService.Enter());
         }
@@ -89,7 +89,7 @@ namespace ForumClientCore.NetworkLayer
         /// <param name="usename"></param>
         /// <param name="password"></param>
         /// <returns>Returns true if registration succeeded, false otherwise.</returns>
-        bool Register(String usename, String password)
+        internal bool Register(String usename, String password)
         {
             return webService.Register(usename, password);
         }
@@ -100,7 +100,7 @@ namespace ForumClientCore.NetworkLayer
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns>Returns true if login succeeded, false otherwise</returns>
-        bool Login(String username, String password)
+        internal bool Login(String username, String password)
         {
             return webService.Login(username, password);
         }
@@ -110,7 +110,7 @@ namespace ForumClientCore.NetworkLayer
         /// </summary>
         /// <param name="username"></param>
         /// <returns>Returns true if logged out successfully, false otherwise.</returns>
-        bool Logout(String username)
+        internal bool Logout(String username)
         {
             return webService.Logout(username);
         }
@@ -119,7 +119,7 @@ namespace ForumClientCore.NetworkLayer
         /// Gets the list of sub forums from the server.
         /// </summary>
         /// <returns>Returns an array of Subforums. (The main forum).</returns>
-        Subforum[] GetSubforumsList()
+        internal Subforum[] GetSubforumsList()
         {
             return serializer.DeserializeSubforumArray(webService.GetSubforumsList());
         }
@@ -129,7 +129,7 @@ namespace ForumClientCore.NetworkLayer
         /// </summary>
         /// <param name="subforumname"></param>
         /// <returns>Returns a Subforum</returns>
-        Subforum GetSubforum(String subforumname)
+        internal Subforum GetSubforum(String subforumname)
         {
             return serializer.DeserializeSubforum(webService.GetSubforum(subforumname));
         }
@@ -139,7 +139,7 @@ namespace ForumClientCore.NetworkLayer
         /// </summary>
         /// <param name="postkey">A post key consisting of the user + timestamp</param>
         /// <returns>The required Post</returns>
-        Post GetPost(Postkey postkey)
+        internal Post GetPost(Postkey postkey)
         {
             return serializer.DeserializePost(webService.GetPost(serializer.SerializePostkey(postkey)));
         }
@@ -147,10 +147,10 @@ namespace ForumClientCore.NetworkLayer
         /// <summary>
         /// Add a post to a sub forum.
         /// </summary>
-        /// <param name="forumToPostIn">The sub forum to post in</param>
+        /// <param name="forumToPostIn">The name sub forum to post in</param>
         /// <param name="postToAdd">The new post to be posted</param>
         /// <returns>Returns true if posting is successful.</returns>
-        bool Post(String forumToPostIn, Post postToAdd)
+        internal bool Post(String forumToPostIn, Post postToAdd)
         {
             return webService.Post(forumToPostIn, serializer.SerializePost(postToAdd));
         }
@@ -161,7 +161,7 @@ namespace ForumClientCore.NetworkLayer
         /// <param name="originalPost">The post being replied</param>
         /// <param name="newReply">The new reply post</param>
         /// <returns>Returns true if reply succeeded, false otherwise</returns>
-        bool Reply(Postkey originalPost, Post newReply)
+        internal bool Reply(Postkey originalPost, Post newReply)
         {
             return webService.Reply(serializer.SerializePostkey(originalPost), serializer.SerializePost(newReply));
         }
