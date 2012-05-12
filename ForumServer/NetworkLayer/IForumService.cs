@@ -7,6 +7,7 @@ using System.ServiceModel.Web;
 using System.Text;
 using ForumServer.NetworkLayer;
 using System.Web.Script.Serialization;
+using ForumUtils.SharedDataTypes;
 
 namespace ForumServer
 {
@@ -32,19 +33,19 @@ namespace ForumServer
         /// <summary>
         /// Returns subforums list
         /// </summary>s
-        /// <returns>returns a json of an array of the sub forum</returns>
+        /// <returns>returns array of the sub forum</returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        string GetSubforumsList();
+        string[] GetSubforumsList();
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="subforumName">just the name - no json!</param>
-        /// <returns>returns a json of the requested sub-forum</returns>
+        /// <returns>returns the posts of the requested sub forum</returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        string GetSubforum(string subforum);
+        Post[] GetSubforum(string subforum);
 
         /// <summary>
         /// postkey contains of user + timestamp in json form
@@ -53,7 +54,7 @@ namespace ForumServer
         /// <returns>post json</returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        string GetPost(string postkey);
+        Post[] GetReplies(Postkey postkey);
 
         /// <summary>
         /// add toPost to a sub forum
@@ -63,7 +64,7 @@ namespace ForumServer
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool Post(string current, string toPost);
+        bool Post(Postkey current, Post toPost);
 
         /// <summary>
         /// add oldPost as reply to current oldPost
@@ -73,17 +74,17 @@ namespace ForumServer
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool Reply(string current, string toPost);
+        bool Reply(Postkey current, Post toPost);
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="postToUpdate">json of the new post</param>
+        /// <param name="postToUpdate">post key to update</param>
         /// <param name="originalPost">json of the original postkey</param>
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool EditPost(string postToUpdate, string originalPost,string usrname, string password);
+        bool EditPost(Postkey oldPost, Post newPost, string usrname, string password);
 
         /// <summary>
         /// 
@@ -94,7 +95,7 @@ namespace ForumServer
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool RemovePost(string postkey,string username, string password);
+        bool RemovePost(Postkey postkey,string username, string password);
 
         #region admin functions
         
