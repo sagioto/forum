@@ -54,7 +54,10 @@ namespace ForumClientConsole
                         break;
                     case "list-forums":
                         Console.WriteLine("Here is the list of forums:");
-                        Console.WriteLine(controller.GetSubforumsList());
+                        foreach (String subforum in controller.GetSubforumsList())
+                        {
+                            Console.WriteLine(subforum);
+                        }
                         break;
                     case "register":
                         Register();
@@ -127,11 +130,11 @@ namespace ForumClientConsole
             password = ReadPassword();
             if (controller.Login(userName, password))
             {
-                Console.WriteLine("\nLogin Successful. Hello " + userName + "!");
+                Console.WriteLine("Login Successful. Hello " + userName + "!");
             }
             else
             {
-                Console.WriteLine("\nLogin Failed. Please check your user name and/or password.");
+                Console.WriteLine("Login Failed. Please check your user name and/or password.");
             }
         }
 
@@ -150,11 +153,11 @@ namespace ForumClientConsole
             password = ReadPassword();
             if (controller.Register(userName, password))
             {
-                Console.WriteLine("\nRegistration Successful. You can now login to your account");
+                Console.WriteLine("Registration Successful. You can now login to your account");
             }
             else
             {
-                Console.WriteLine("\nRegistration Failed! Please try again...");
+                Console.WriteLine("Registration Failed! Please try again...");
             }
         }
 

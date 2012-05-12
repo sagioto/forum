@@ -83,6 +83,10 @@ namespace ForumClientCore
 
         public bool Logout()
         {
+            if (!loggedIn)
+            {
+                return true;
+            }
             if (netAdaptor.Logout(loggedAs))
             {
                 loggedAs = "";
