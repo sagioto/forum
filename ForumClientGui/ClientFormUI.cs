@@ -20,10 +20,14 @@ namespace ForumClientGui
         Post currentPost;
         string currentSubforum;
         List<Post> currentSubforumPosts;
+        List<string> subforumsList;
 
         public ClientFormUI()
         {
             InitializeComponent();
+
+            controller = new ClientController();
+            controller.OnUpdateFromController += new ForumClientCore.NetworkLayer.ClientNetworkAdaptor.OnUpdate(controller_OnUpdateFromServer);
 
             currentPost = null;
             currentSubforumPosts = new List<Post>();
@@ -31,9 +35,15 @@ namespace ForumClientGui
             postsGrid.Dock = DockStyle.Fill;
             subforumsGrid.Dock = DockStyle.Fill;
             postPanel.Dock = DockStyle.Fill;
+            newPostPanel.Dock = DockStyle.Fill;
 
-            // controller = new ClientController();
-            // controller.OnUpdateFromController += new ForumClientCore.NetworkLayer.ClientNetworkAdaptor.OnUpdate(controller_OnUpdateFromServer); ;
+
+            subforumsList = controller.GetSubforumsList().ToList<string>();
+            DataTable dt = ArrayToTable(subforumsList);
+            subforumsGrid.DataSource = dt;
+            subforumsComboBox.DataSource = subforumsList;
+
+            
         }
 
         /// <summary>
@@ -72,18 +82,13 @@ namespace ForumClientGui
 
         private void ClientFormUI_Load(object sender, EventArgs e)
         {
-           // DataTable dt = TempGetPosts();
+            // DataTable dt = TempGetPosts();
             //subforumsGrid.DataSource = dt;
 
 
         }
 
-        
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            ShowPostsGrid(subforumsGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
-        }
 
 
         private void ShowPost(Post p)
@@ -94,6 +99,7 @@ namespace ForumClientGui
             postsGrid.Visible = false;
             subforumsGrid.Visible = false;
             postPanel.Visible = true;
+            newPostPanel.Visible = false;
 
             // Update panel data:
             repliesIndicator.Visible = true;
@@ -102,8 +108,47 @@ namespace ForumClientGui
             postDateLabel.Text = p.Key.Time.ToShortDateString();
             postBody.Text = p.Body;
             ShowRepliesIndicator(p.HasReplies);
-            
 
+
+        }
+
+
+        private void ShowNewPost(string title, bool reply)
+        {
+            // Switch Panels
+            postsGrid.Visible = false;
+            subforumsGrid.Visible = false;
+            postPanel.Visible = false;
+            newPostPanel.Visible = true;
+
+            // Update panel data:
+            postBodyTextBox.Text = "";
+            if (currentSubforum != null)
+            {
+
+                //List<string> ls = (List<string>)subforumsComboBox.DataSource;
+                
+                subforumsComboBox.SelectedText = currentSubforum;
+            }
+            else
+            {
+                //subforumsComboBox.SelectedValue = 0;
+            }
+            
+            if (reply)
+            {
+                subforumsComboBox.Enabled = false;
+                postTitleTextBox.Text = "RE: " + title;
+                replyToTitle.Visible = true;
+                backPostLabel.Text = currentPost.Title;
+            }
+            else
+            {
+                subforumsComboBox.Enabled = true;
+                postTitleTextBox.Text = title;
+                replyToTitle.Visible = false;
+                backPostLabel.Text = "Back";
+            }
         }
 
 
@@ -126,8 +171,9 @@ namespace ForumClientGui
             if (currentPost.HasReplies)
             {
                 repliesIndicator.Text = "Loading...";
-                
+
                 //controller.getReplies(currentPost);
+                //controller.get
                 repliesGrid.DataSource = TempGetPosts();    //TODO DELETE
                 repliesIndicator.Visible = false;
                 repliesGrid.Visible = true;
@@ -163,11 +209,11 @@ namespace ForumClientGui
             postsGrid.BringToFront();
             subforumsGrid.Visible = false;
             postPanel.Visible = false;
+            newPostPanel.Visible = false;
 
             DisplayLoading(true);
-            //currentSubforumPosts = controller.getPostsOfSubforum(subforum);
-            currentSubforumPosts = TempGetPosts();
-            postsGrid.DataSource = ListToTable(TempGetPosts());    //TODO DELETE
+            currentSubforumPosts = controller.GetSubforum(subforum).ToList<Post>();
+            postsGrid.DataSource = ListToTable(currentSubforumPosts);
             DisplayLoading(false);
 
         }
@@ -191,13 +237,26 @@ namespace ForumClientGui
             postsGrid.Visible = false;
             subforumsGrid.Visible = true;
             postPanel.Visible = false;
+            newPostPanel.Visible = false;
 
             DisplayLoading(true);
-            //controller.getAllSubforum(currentPost);
-            subforumsGrid.DataSource = TempGetSubforums();    //TODO DELETE
+            
+            
+            //subforumsGrid.DataSource = TempGetSubforums();    //TODO DELETE
             DisplayLoading(false);
 
 
+        }
+
+        private DataTable ArrayToTable(List<string> p)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add();
+            foreach (string s in p.ToList<string>())
+            {
+                dt.Rows.Add(s);
+            }
+            return dt;
         }
 
         private object TempGetSubforums()
@@ -223,7 +282,7 @@ namespace ForumClientGui
         private void DisplayLoading(bool p)
         {
             //TODO
-            
+
         }
 
         private void ClientFormUI_Load_1(object sender, EventArgs e)
@@ -233,9 +292,132 @@ namespace ForumClientGui
 
         private void postsGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //TODO
-            
-            //ShowPost(subforumsGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+            ShowPost(currentSubforumPosts[e.RowIndex]);
+        }
+
+        private void subforumsGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            currentSubforum = subforumsGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            ShowPostsGrid(currentSubforum);
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            ShowMainScreen();
+        }
+
+        private void addReply_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ShowNewPost(currentPost.Title, true);
+        }
+
+        private void backPostLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (replyToTitle.Visible == true)
+            {
+                ShowPost(currentPost);
+            }
+            else
+            {
+                ShowMainScreen();
+            }
+        }
+
+        private void sendPostButton_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                bool res;
+                if (replyToTitle.Visible == false)
+                {
+                    res = controller.Post(currentSubforum, postTitleTextBox.Text, postBodyTextBox.Text);
+                }
+                else
+                {
+                    //TODO ADD REPLY
+                    res = controller.Post(currentSubforum, postTitleTextBox.Text, postBodyTextBox.Text);
+                }
+                if (!res)
+                {
+                    MessageBox.Show("Only logged in users are allowed to add posts !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                backPostLabel_LinkClicked(null, null);
+                
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+        }
+
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ShowNewPost("", false);
+        }
+
+        private void registerLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                bool res = controller.Register(usernameTextBox.Text, passTextBox.Text);
+                if (!res)
+                {
+                    MessageBox.Show("Username is already registered", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    linkLabel1_LinkClicked(null, null);
+                    loginPanel.Visible = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                bool res = controller.Login(usernameTextBox.Text, passTextBox.Text);
+                if (!res)
+                {
+                    MessageBox.Show("Username is not registered", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    loginPanel.Visible = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                bool res = controller.Logout();
+                if (!res)
+                {
+                    MessageBox.Show("Bad username or password", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    loginPanel.Visible = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
