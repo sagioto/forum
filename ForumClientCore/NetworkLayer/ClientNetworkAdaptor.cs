@@ -9,7 +9,7 @@ using ForumUtils.SharedDataTypes;
 
 namespace ForumClientCore.NetworkLayer
 {
-    public class ClientNetworkAdaptor
+    public class ClientNetworkAdaptor : IForumService
     {
         IForumService webService;
         ClientNetworkListener netListener;
@@ -158,25 +158,15 @@ namespace ForumClientCore.NetworkLayer
 
         internal Post GetPost(Postkey postkey)
         {
-            throw new NotImplementedException();
+            return webService.GetPost(postkey);
         }
 
-        public bool Post(string current, string toPost)
+        public bool EditPost(Postkey oldPost, Post newPost, string username, string password)
         {
-            throw new NotImplementedException();
+            return webService.EditPost(oldPost, newPost, username, password);
         }
 
-        public bool Reply(string current, string toPost)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool EditPost(string postToUpdate, string originalPost, string usrname, string password)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool RemovePost(string postkey, string username, string password)
+        public bool RemovePost(Postkey postkey, string username, string password)
         {
             throw new NotImplementedException();
         }

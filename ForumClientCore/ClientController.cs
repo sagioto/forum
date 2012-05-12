@@ -12,7 +12,8 @@ namespace ForumClientCore
     {
         ClientNetworkAdaptor netAdaptor;
         private bool loggedIn = false;
-        private string loggedAs = null;
+        private string loggedAs = "";
+        private string loggedPassword = "";
         private Post currentPost = null;
         private string currentSubForum = "";
 
@@ -63,6 +64,7 @@ namespace ForumClientCore
             if (netAdaptor.Login(userName, password))
             {
                 loggedAs = userName;
+                loggedPassword = password;
                 loggedIn = true;
                 return true;
             }
@@ -79,7 +81,14 @@ namespace ForumClientCore
 
         public bool Register(string userName, string password)
         {
-            return netAdaptor.Register(userName, password);
+            if (password.Length == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return netAdaptor.Register(userName, password);
+            }
         }
 
 
@@ -92,6 +101,7 @@ namespace ForumClientCore
             if (netAdaptor.Logout(loggedAs))
             {
                 loggedAs = "";
+                loggedPassword = "";
                 loggedIn = false;
                 return true;
             }
@@ -149,13 +159,67 @@ namespace ForumClientCore
             return netAdaptor.GetReplies(postkey);
         }
 
-        bool Reply(Postkey originalPost, string title, string body)
+        public bool Reply(Postkey originalPost, string title, string body)
         {
             Post newReply = new Post(new Postkey(loggedAs, DateTime.Now), title, body, originalPost, currentSubForum);
             return netAdaptor.Reply(originalPost, newReply);
         }
-        
 
+        public bool EditPost(Postkey oldPost, string title, string body)
+        {
+            Post newPost = new Post(oldPost, title, body, currentPost.Key, currentSubForum);
+            return netAdaptor.EditPost(oldPost, newPost, loggedAs, loggedPassword);
+        }
+
+        public bool RemovePost(Postkey postkey)
+        {
+            return netAdaptor.RemovePost(postkey, loggedAs, loggedPassword);
+        }
+
+        public bool AddModerator(string usernameToAdd, string subforum)
+        {
+            return netAdaptor.AddModerator(loggedAs, loggedPassword, usernameToAdd, subforum);
+        }
+
+        public bool RemoveModerator(string usernameToRemove, string subforum)
+        {
+            return netAdaptor.RemoveModerator(loggedAs, loggedPassword, usernameToRemove, subforum);
+        }
+
+        public bool ReplaceModerator(string usernameToAdd, string usernameToRemove, string subforum)
+        {
+            return netAdaptor.ReplaceModerator(loggedAs, loggedPassword, usernameToAdd, usernameToRemove, subforum);
+        }
+
+        public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
+        {
+            return netAdaptor.AddSubforum(loggedAs, loggedPassword, subforumName);
+        }
+
+        public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
+        {
+            return netAdaptor.RemoveSubforum(loggedAs, loggedPassword, subforumName);
+        }
+
+        public int ReportSubForumTotalPosts(string subforumName)
+        {
+            return netAdaptor.ReportSubForumTotalPosts(loggedAs, loggedPassword, subforumName);
+        }
+
+        public int ReportUserTotalPosts(string adminUsername, string adminPassword, string username)
+        {
+            return netAdaptor.ReportUserTotalPosts(loggedAs, loggedPassword, username);
+        }
+
+        public bool ReplaceAdmin(string newAdminUsername, string newAdminPassword)
+        {
+            return netAdaptor.ReplaceAdmin(loggedAs, loggedPassword, newAdminUsername, newAdminPassword);
+        }
+
+        public string Subscribe()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
