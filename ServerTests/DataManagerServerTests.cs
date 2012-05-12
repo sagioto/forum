@@ -202,6 +202,8 @@ namespace ServerTests
             User actual;
             actual = target.GetUser(username);
             Assert.IsNotNull(actual);
+            actual = target.GetUser("bla");
+            Assert.IsNull(actual);
         }
 
         /// <summary>
@@ -338,5 +340,6 @@ namespace ServerTests
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("Verify the correctness of this test method.");
         }
+
     }
 }

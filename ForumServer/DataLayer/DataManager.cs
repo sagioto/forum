@@ -266,7 +266,14 @@ namespace ForumServer.DataLayer
         {
             try
             {
-                return users[username];
+                if (users.ContainsKey(username))
+                {
+                    return users[username];
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception)
             {
