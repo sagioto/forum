@@ -15,6 +15,8 @@ namespace ForumUtils.SharedDataTypes
         private Post postToUpdate;
         private bool hasReplies;
 
+        
+
         [NonSerialized]
         private Dictionary<Postkey, Post> replies;
 
@@ -116,8 +118,11 @@ namespace ForumUtils.SharedDataTypes
         {
             get
             {
-                this.hasReplies = this.replies.Count != 0;
-                return this.hasReplies;
+                return hasReplies;
+            }
+            set
+            {
+                hasReplies = value;
             }
         }
 
