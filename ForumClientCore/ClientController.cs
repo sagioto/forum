@@ -176,6 +176,50 @@ namespace ForumClientCore
             return netAdaptor.RemovePost(postkey, loggedAs, loggedPassword);
         }
 
+        public bool AddModerator(string usernameToAdd, string subforum)
+        {
+            return netAdaptor.AddModerator(loggedAs, loggedPassword, usernameToAdd, subforum);
+        }
+
+        public bool RemoveModerator(string usernameToRemove, string subforum)
+        {
+            return netAdaptor.RemoveModerator(loggedAs, loggedPassword, usernameToRemove, subforum);
+        }
+
+        public bool ReplaceModerator(string usernameToAdd, string usernameToRemove, string subforum)
+        {
+            return netAdaptor.ReplaceModerator(loggedAs, loggedPassword, usernameToAdd, usernameToRemove, subforum);
+        }
+
+        public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
+        {
+            return netAdaptor.AddSubforum(loggedAs, loggedPassword, subforumName);
+        }
+
+        public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
+        {
+            return netAdaptor.RemoveSubforum(loggedAs, loggedPassword, subforumName);
+        }
+
+        public int ReportSubForumTotalPosts(string subforumName)
+        {
+            return netAdaptor.ReportSubForumTotalPosts(loggedAs, loggedPassword, subforumName);
+        }
+
+        public int ReportUserTotalPosts(string adminUsername, string adminPassword, string username)
+        {
+            return netAdaptor.ReportUserTotalPosts(loggedAs, loggedPassword, username);
+        }
+
+        public bool ReplaceAdmin(string newAdminUsername, string newAdminPassword)
+        {
+            return netAdaptor.ReplaceAdmin(loggedAs, loggedPassword, newAdminUsername, newAdminPassword);
+        }
+
+        public string Subscribe()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
