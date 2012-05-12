@@ -21,10 +21,10 @@
     <MetadataSource Address="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ServerNetworkAdaptor34.xsd" MetadataType="Schema" ID="fbf20f3c-67ca-43c8-b701-ffd115bf7229" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd6" />
-    <MetadataFile FileName="ServerNetworkAdaptor35.xsd" MetadataType="Schema" ID="dfbb454b-a08c-4a13-bd28-bbe38d2cde3f" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd5" />
-    <MetadataFile FileName="ServerNetworkAdaptor36.xsd" MetadataType="Schema" ID="cadb2afc-8c3b-4bb2-bcf2-e7bd78a46350" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd4" />
-    <MetadataFile FileName="ServerNetworkAdaptor37.xsd" MetadataType="Schema" ID="2672ba44-8433-4bc9-a7f2-a8ad38a9d2eb" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd3" />
+    <MetadataFile FileName="ServerNetworkAdaptor34.xsd" MetadataType="Schema" ID="a248d4a8-84a4-46b6-8ad2-e514f72e9ba6" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd6" />
+    <MetadataFile FileName="ServerNetworkAdaptor35.xsd" MetadataType="Schema" ID="fb110825-10c5-4639-9e88-fc9d4ad6f19e" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd5" />
+    <MetadataFile FileName="ServerNetworkAdaptor36.xsd" MetadataType="Schema" ID="5a9b84d8-8bc5-4067-a5d6-219b487e4f35" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd4" />
+    <MetadataFile FileName="ServerNetworkAdaptor37.xsd" MetadataType="Schema" ID="250e4d81-75be-4116-82cf-19a1dafcc179" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd3" />
     <MetadataFile FileName="ServerNetworkAdaptor1.xsd" MetadataType="Schema" ID="06fa296c-97e3-4f58-a365-5a1d3b6dd503" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd2" />
     <MetadataFile FileName="ServerNetworkAdaptor.xsd" MetadataType="Schema" ID="e4dc8863-f840-4c53-a475-236ce63e5724" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd1" />
     <MetadataFile FileName="ServerNetworkAdaptor2.xsd" MetadataType="Schema" ID="2385aa9e-8374-4b66-9ee1-8e69a03d8b2e" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd0" />

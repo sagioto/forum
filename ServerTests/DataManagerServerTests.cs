@@ -85,7 +85,7 @@ namespace ServerTests
             DataManager target = new DataManager();
             target.AddSubforum(new Subforum("subforumName"));
             Postkey pk = new Postkey("dor", DateTime.Now);
-            bool actual = target.AddPost(new Post(pk, "Post", null, null), "subforumName");
+            bool actual = target.AddPost(new Post(pk, "Post", "", null, null), "subforumName");
             Assert.AreEqual(target.GetSubforum("subforumName")!=null, actual);
         }
 
@@ -98,13 +98,13 @@ namespace ServerTests
             DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
             target.AddSubforum(new Subforum("subforum"));
             Postkey pk = new Postkey("dor", DateTime.Now);
-            target.AddPost(new Post(pk, "Post", null, null), "subforumName");
+            target.AddPost(new Post(pk, "Post","", null, null), "subforumName");
             //Post reply = new Post(new Postkey("dor", DateTime.Now), "Reply", null, null);
-            Post reply = new Post(new Postkey("dor222", pk.Time), "Reply", null, null);
+            Post reply = new Post(new Postkey("dor222", pk.Time), "Reply", "", null, null);
             reply.Body = "reply body";
             bool ans = target.AddReply(reply, pk);
             //Post reply2 = new Post(new Postkey("dor", DateTime.Now), "Reply2 - new Update", null, null);
-            Post reply2 = new Post(new Postkey("dor222", pk.Time), "Reply2 - new Update", null, null);
+            Post reply2 = new Post(new Postkey("dor222", pk.Time), "Reply2 - new Update", "", null, null);
             reply2.Body = " reply 2 body";
             //ans = target.AddReply(reply2, reply.Key);
             //reply.Replies.Add(reply2.Key, reply2);
@@ -123,13 +123,13 @@ namespace ServerTests
             DataManager target = new DataManager();
             target.AddSubforum(new Subforum("subforumName"));
             Postkey pk = new Postkey("dor", DateTime.Now);
-            target.AddPost(new Post(pk, "Post", null, null), "subforumName");
+            target.AddPost(new Post(pk, "Post", "", null, null), "subforumName");
             //Post reply = new Post(new Postkey("dor", DateTime.Now), "Reply", null, null);
-            Post reply = new Post(new Postkey("dor222", pk.Time), "Reply", null, null);
+            Post reply = new Post(new Postkey("dor222", pk.Time), "Reply", "", null, null);
             reply.Body = "reply body";
             bool ans = target.AddReply(reply, pk);
             //Post reply2 = new Post(new Postkey("dor", DateTime.Now), "Reply2 - new Update", null, null);
-            Post reply2 = new Post(new Postkey("dor222", pk.Time), "Reply2 - new Update", null, null);
+            Post reply2 = new Post(new Postkey("dor222", pk.Time), "Reply2 - new Update", "", null, null);
             reply2.Body = " reply 2 body";
             bool ans2 = target.EditPost(reply2, reply.Key);
             Assert.IsTrue(ans2); // Need to check with debugger the content of reply
@@ -163,7 +163,7 @@ namespace ServerTests
             DataManager_Accessor target = new DataManager_Accessor();
             target.AddSubforum(new Subforum("subforumName"));
             Postkey pk = new Postkey("dor", DateTime.Now);
-            target.AddPost(new Post(pk, "Post", null, null), "subforumName");
+            target.AddPost(new Post(pk, "Post", "", null, null), "subforumName");
             Post p = target.GetPost(pk);
             Assert.IsNotNull(p);
         }
@@ -252,10 +252,10 @@ namespace ServerTests
             Subforum subforum = new Subforum("subforum1");
             target.AddSubforum(subforum);
             Postkey pk = new Postkey("dor", DateTime.Now);
-            target.AddPost(new Post(pk, "post1", null, null), "subforum1");
-            target.AddPost(new Post(new Postkey("dor", DateTime.Now), "post2", null, null), "subforum1");
-            target.AddPost(new Post(new Postkey("dor2", DateTime.Now), "post3", null, null), "subforum1");
-            target.AddReply(new Post(new Postkey("dor", DateTime.Now), "reply1 to post1", null, null), pk);
+            target.AddPost(new Post(pk, "post1", "", null, null), "subforum1");
+            target.AddPost(new Post(new Postkey("dor", DateTime.Now), "post2", "", null, null), "subforum1");
+            target.AddPost(new Post(new Postkey("dor2", DateTime.Now), "post3", "", null, null), "subforum1");
+            target.AddReply(new Post(new Postkey("dor", DateTime.Now), "reply1 to post1", "", null, null), pk);
             List<Post> actual;
             actual = target.GetUserPosts(username);
             Assert.IsNotNull(actual);
@@ -272,10 +272,10 @@ namespace ServerTests
             target.AddSubforum(subforum);
             Postkey pk = new Postkey("dor", DateTime.Now);
             Postkey pk2 = new Postkey("dor", DateTime.Now);
-            target.AddPost(new Post(pk, "post1", null, null), "subforum1");
-            target.AddPost(new Post(new Postkey("dor", DateTime.Now), "post2", null, null), "subforum1");
-            target.AddPost(new Post(new Postkey("dor2", DateTime.Now), "post3", null, null), "subforum1");
-            target.AddReply(new Post(pk2, "reply1 to post1", null, null), pk);
+            target.AddPost(new Post(pk, "post1", "", null, null), "subforum1");
+            target.AddPost(new Post(new Postkey("dor", DateTime.Now), "post2", "", null, null), "subforum1");
+            target.AddPost(new Post(new Postkey("dor2", DateTime.Now), "post3", "", null, null), "subforum1");
+            target.AddReply(new Post(pk2, "reply1 to post1", "", null, null), pk);
             bool actual;
             actual = target.RemovePost(pk2);
             Assert.IsTrue(actual);
@@ -303,10 +303,10 @@ namespace ServerTests
             target.AddSubforum(subforum);
             Postkey pk = new Postkey("dor", DateTime.Now);
             Postkey pk2 = new Postkey("dor", DateTime.Now);
-            target.AddPost(new Post(pk, "post1", null, null), "subforum1");
-            target.AddPost(new Post(new Postkey("dor", DateTime.Now), "post2", null, null), "subforum1");
-            target.AddPost(new Post(new Postkey("dor2", DateTime.Now), "post3", null, null), "subforum1");
-            target.AddReply(new Post(pk2, "reply1 to post1", null, null), pk);
+            target.AddPost(new Post(pk, "post1", "", null, null), "subforum1");
+            target.AddPost(new Post(new Postkey("dor", DateTime.Now), "post2", "", null, null), "subforum1");
+            target.AddPost(new Post(new Postkey("dor2", DateTime.Now), "post3", "", null, null), "subforum1");
+            target.AddReply(new Post(pk2, "reply1 to post1", "", null, null), pk);
             List<Post> actual;
             actual = target.GetAllPosts();
             Assert.IsNotNull(actual);
