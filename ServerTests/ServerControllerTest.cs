@@ -73,9 +73,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void ReportUserTotalPostsTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -96,10 +93,7 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
-        public void ReportSubForumTotalPostsTest()
+       public void ReportSubForumTotalPostsTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
             string adminUsername = string.Empty; // TODO: Initialize to an appropriate value
@@ -119,10 +113,7 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
-        public void ReplyTest()
+       public void ReplyTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
             Postkey currPost = null; // TODO: Initialize to an appropriate value
@@ -141,9 +132,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void ReplaceModeratorTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -166,10 +154,7 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
-        public void ReplaceAdminTest()
+       public void ReplaceAdminTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
             string oldAdminUsername = string.Empty; // TODO: Initialize to an appropriate value
@@ -190,9 +175,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void RemoveSubforumTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -213,9 +195,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void RemovePostTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -236,10 +215,7 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
-        public void RemoveModeratorTest()
+       public void RemoveModeratorTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
             string adminUsername = string.Empty; // TODO: Initialize to an appropriate value
@@ -260,9 +236,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void RegisterTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
