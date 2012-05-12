@@ -54,6 +54,10 @@ namespace ForumClientCore
 
         public bool Login(string userName, string password)
         {
+            if (loggedIn)
+            {
+                return false;
+            }
             if (netAdaptor.Login(userName, password))
             {
                 loggedAs = userName;
@@ -66,13 +70,13 @@ namespace ForumClientCore
             }
         }
 
-        public string GetSubforumsList()
+        public string[] GetSubforumsList()
         {
-            string forumsList = "";
             Subforum[] forumsArray = netAdaptor.GetSubforumsList();
-            foreach (Subforum forum in forumsArray)
+            string[] forumsList = new string[forumsArray.Length];
+            for (int i = 0; i < forumsList.Length; i++)
             {
-                forumsList = forumsList + forum.Name;
+                forumsList[i] = forumsArray[i].Name;
             }
             return forumsList;
         }
@@ -85,7 +89,17 @@ namespace ForumClientCore
 
         public bool Logout()
         {
-            return netAdaptor.Logout(loggedAs);
+            if (netAdaptor.Logout(loggedAs))
+            {
+                loggedAs = "";
+                loggedIn = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
         public bool Post(string title, string subForumName)
