@@ -23,12 +23,12 @@ namespace ForumUtils.SharedDataTypes
         private Dictionary<Postkey, Post> replies;
 
 
-        public Post(Postkey postKey, string title, Postkey parentPost, Subforum subforum)
+        public Post(Postkey postKey, string title, Postkey parentPost, string subforum)
         {
             this.key = postKey;
             this.title = title;
             this.parentPost = parentPost;
-            this.subforum = subforum.Name;
+            this.subforum = subforum;
             this.replies = new Dictionary<Postkey, Post>();
         }
 
