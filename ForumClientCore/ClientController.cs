@@ -142,11 +142,16 @@ namespace ForumClientCore
             return subForum;
         }
 
-        ////public Post[] GetReplies(Postkey postkey)
-        ////{
+        public Post[] GetReplies(Postkey postkey)
+        {
+            return netAdaptor.GetReplies(postkey);
+        }
 
-        //}
-
+        bool Reply(Postkey originalPost, string title, string body)
+        {
+            Post newReply = new Post(new Postkey(loggedAs, DateTime.Now), title, body, originalPost, currentSubForum);
+            return netAdaptor.Reply(originalPost, newReply);
+        }
     }
 }
 
