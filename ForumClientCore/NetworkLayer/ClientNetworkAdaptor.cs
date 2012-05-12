@@ -13,7 +13,6 @@ namespace ForumClientCore.NetworkLayer
     {
         IForumService webService;
         ClientNetworkListener netListener;
-        private ISerializer serializer = new JsonSerializer();
 
         // Event setting:
         public delegate void OnUpdate(string text);
@@ -69,18 +68,8 @@ namespace ForumClientCore.NetworkLayer
             }
             catch (Exception)
             {
-                
                 throw;
             }
-        }
-        
-        /// <summary>
-        /// Enter the server.
-        /// </summary>
-        /// <returns>Returns an array of the sub forum (the main forum list?)</returns>
-        internal Subforum[] Enter()
-        {
-            return serializer.DeserializeSubforumArray(webService.Enter());
         }
 
         /// <summary>
@@ -88,7 +77,7 @@ namespace ForumClientCore.NetworkLayer
         /// </summary>
         /// <param name="usename"></param>
         /// <param name="password"></param>
-        /// <returns>Returns true if registration succeeded, false otherwise.</returns>
+        /// <returns>Returns true if registration succeeded, false if user is already registered.</returns>
         internal bool Register(String usename, String password)
         {
             return webService.Register(usename, password);
@@ -99,7 +88,7 @@ namespace ForumClientCore.NetworkLayer
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        /// <returns>Returns true if login succeeded, false otherwise</returns>
+        /// <returns>Returns true if login succeeded, false if User/Password are incorrect.</returns>
         internal bool Login(String username, String password)
         {
             return webService.Login(username, password);
@@ -119,9 +108,9 @@ namespace ForumClientCore.NetworkLayer
         /// Gets the list of sub forums from the server.
         /// </summary>
         /// <returns>Returns an array of Subforums. (The main forum).</returns>
-        internal Subforum[] GetSubforumsList()
+        internal string[] GetSubforumsList()
         {
-            return serializer.DeserializeSubforumArray(webService.GetSubforumsList());
+            return webService.GetSubforumsList();
         }
 
         /// <summary>
@@ -131,7 +120,7 @@ namespace ForumClientCore.NetworkLayer
         /// <returns>Returns a Subforum</returns>
         internal Subforum GetSubforum(String subforumname)
         {
-            return serializer.DeserializeSubforum(webService.GetSubforum(subforumname));
+            return webService.GetSubforum(subforumname);
         }
 
         /// <summary>
@@ -139,9 +128,9 @@ namespace ForumClientCore.NetworkLayer
         /// </summary>
         /// <param name="postkey">A post key consisting of the user + timestamp</param>
         /// <returns>The required Post</returns>
-        internal Post GetPost(Postkey postkey)
+        internal Post[] GetReplies(Postkey postkey)
         {
-            return serializer.DeserializePost(webService.GetPost(serializer.SerializePostkey(postkey)));
+            return webService.GetReplies(postkey);
         }
 
         /// <summary>

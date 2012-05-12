@@ -72,13 +72,7 @@ namespace ForumClientCore
 
         public string[] GetSubforumsList()
         {
-            Subforum[] forumsArray = netAdaptor.GetSubforumsList();
-            string[] forumsList = new string[forumsArray.Length];
-            for (int i = 0; i < forumsList.Length; i++)
-            {
-                forumsList[i] = forumsArray[i].Name;
-            }
-            return forumsList;
+            return netAdaptor.GetSubforumsList();
         }
 
         public bool Register(string userName, string password)
