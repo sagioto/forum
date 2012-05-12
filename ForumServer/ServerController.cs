@@ -51,7 +51,9 @@ namespace ForumServer
                 {
                     names.Add(sub.Name);
                 }
-                return names.ToArray();
+                string[] sorted = names.ToArray();
+                Array.Sort<string>(sorted);
+                return sorted; 
             }
             catch (Exception e)
             {
