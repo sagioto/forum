@@ -448,6 +448,75 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IForumService_GetPost_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IForumService_GetPost_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IForumService_GetPost_FaultExceptionFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="WSDualHttpBinding_IForumService_GetReplies_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -1838,6 +1907,15 @@
   <wsdl:message name="IForumService_GetSubforum_FaultExceptionFault_FaultMessage">
     <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q5:FaultException" />
   </wsdl:message>
+  <wsdl:message name="IForumService_GetPost_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPost" />
+  </wsdl:message>
+  <wsdl:message name="IForumService_GetPost_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPostResponse" />
+  </wsdl:message>
+  <wsdl:message name="IForumService_GetPost_FaultExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q6:FaultException" />
+  </wsdl:message>
   <wsdl:message name="IForumService_GetReplies_InputMessage">
     <wsdl:part name="parameters" element="tns:GetReplies" />
   </wsdl:message>
@@ -1845,7 +1923,7 @@
     <wsdl:part name="parameters" element="tns:GetRepliesResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_GetReplies_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q6:FaultException" />
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q7:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_Post_InputMessage">
     <wsdl:part name="parameters" element="tns:Post" />
@@ -1854,7 +1932,7 @@
     <wsdl:part name="parameters" element="tns:PostResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_Post_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q7:FaultException" />
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q8:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_Reply_InputMessage">
     <wsdl:part name="parameters" element="tns:Reply" />
@@ -1863,7 +1941,7 @@
     <wsdl:part name="parameters" element="tns:ReplyResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_Reply_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q8:FaultException" />
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q9:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_EditPost_InputMessage">
     <wsdl:part name="parameters" element="tns:EditPost" />
@@ -1872,7 +1950,7 @@
     <wsdl:part name="parameters" element="tns:EditPostResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_EditPost_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q9:FaultException" />
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q10:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_RemovePost_InputMessage">
     <wsdl:part name="parameters" element="tns:RemovePost" />
@@ -1881,7 +1959,7 @@
     <wsdl:part name="parameters" element="tns:RemovePostResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_RemovePost_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q10:FaultException" />
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q11:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_AddModerator_InputMessage">
     <wsdl:part name="parameters" element="tns:AddModerator" />
@@ -1890,7 +1968,7 @@
     <wsdl:part name="parameters" element="tns:AddModeratorResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_AddModerator_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q11:FaultException" />
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q12:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_RemoveModerator_InputMessage">
     <wsdl:part name="parameters" element="tns:RemoveModerator" />
@@ -1899,7 +1977,7 @@
     <wsdl:part name="parameters" element="tns:RemoveModeratorResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_RemoveModerator_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q12:FaultException" />
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q13:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_ReplaceModerator_InputMessage">
     <wsdl:part name="parameters" element="tns:ReplaceModerator" />
@@ -1908,7 +1986,7 @@
     <wsdl:part name="parameters" element="tns:ReplaceModeratorResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_ReplaceModerator_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q13:FaultException" />
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q14:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_AddSubforum_InputMessage">
     <wsdl:part name="parameters" element="tns:AddSubforum" />
@@ -1917,7 +1995,7 @@
     <wsdl:part name="parameters" element="tns:AddSubforumResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_AddSubforum_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q14:FaultException" />
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q15:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_RemoveSubforum_InputMessage">
     <wsdl:part name="parameters" element="tns:RemoveSubforum" />
@@ -1926,7 +2004,7 @@
     <wsdl:part name="parameters" element="tns:RemoveSubforumResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_RemoveSubforum_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q15:FaultException" />
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q16:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_ReportSubForumTotalPosts_InputMessage">
     <wsdl:part name="parameters" element="tns:ReportSubForumTotalPosts" />
@@ -1935,7 +2013,7 @@
     <wsdl:part name="parameters" element="tns:ReportSubForumTotalPostsResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_ReportSubForumTotalPosts_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q16:FaultException" />
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q17:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_ReportUserTotalPosts_InputMessage">
     <wsdl:part name="parameters" element="tns:ReportUserTotalPosts" />
@@ -1944,7 +2022,7 @@
     <wsdl:part name="parameters" element="tns:ReportUserTotalPostsResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_ReportUserTotalPosts_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q17:FaultException" />
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q18:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_ReplaceAdmin_InputMessage">
     <wsdl:part name="parameters" element="tns:ReplaceAdmin" />
@@ -1953,7 +2031,7 @@
     <wsdl:part name="parameters" element="tns:ReplaceAdminResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_ReplaceAdmin_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q18:FaultException" />
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q19:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_Subscribe_InputMessage">
     <wsdl:part name="parameters" element="tns:Subscribe" />
@@ -1962,7 +2040,7 @@
     <wsdl:part name="parameters" element="tns:SubscribeResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_Subscribe_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q19:FaultException" />
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q20:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_AddMessage_InputMessage">
     <wsdl:part name="parameters" element="tns:AddMessage" />
@@ -1971,7 +2049,7 @@
     <wsdl:part name="parameters" element="tns:AddMessageResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_AddMessage_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q20:FaultException" />
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q21:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_SubscribeToForum_InputMessage">
     <wsdl:part name="parameters" element="tns:SubscribeToForum" />
@@ -1980,7 +2058,7 @@
     <wsdl:part name="parameters" element="tns:SubscribeToForumResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_SubscribeToForum_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q21:FaultException" />
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q22:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_UnsubscribeFromForum_InputMessage">
     <wsdl:part name="parameters" element="tns:UnsubscribeFromForum" />
@@ -1989,7 +2067,7 @@
     <wsdl:part name="parameters" element="tns:UnsubscribeFromForumResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_UnsubscribeFromForum_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q22:FaultException" />
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q23:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_GetData_InputMessage">
     <wsdl:part name="parameters" element="tns:GetData" />
@@ -1998,7 +2076,7 @@
     <wsdl:part name="parameters" element="tns:GetDataResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_GetData_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q23:FaultException" />
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q24:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_GetDataUsingDataContract_InputMessage">
     <wsdl:part name="parameters" element="tns:GetDataUsingDataContract" />
@@ -2007,7 +2085,7 @@
     <wsdl:part name="parameters" element="tns:GetDataUsingDataContractResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_GetDataUsingDataContract_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q24:FaultException" />
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q25:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_onUpdate_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:onUpdate" />
@@ -2037,6 +2115,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IForumService/GetSubforum" message="tns:IForumService_GetSubforum_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IForumService/GetSubforumResponse" message="tns:IForumService_GetSubforum_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IForumService/GetSubforumFaultExceptionFault" name="FaultExceptionFault" message="tns:IForumService_GetSubforum_FaultExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPost">
+      <wsdl:input wsaw:Action="http://tempuri.org/IForumService/GetPost" message="tns:IForumService_GetPost_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IForumService/GetPostResponse" message="tns:IForumService_GetPost_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IForumService/GetPostFaultExceptionFault" name="FaultExceptionFault" message="tns:IForumService_GetPost_FaultExceptionFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetReplies">
       <wsdl:input wsaw:Action="http://tempuri.org/IForumService/GetReplies" message="tns:IForumService_GetReplies_InputMessage" />
@@ -2212,6 +2295,21 @@
       </wsdl:output>
       <wsdl:fault name="FaultExceptionFault">
         <wsp:PolicyReference URI="#WSDualHttpBinding_IForumService_GetSubforum_FaultExceptionFault_Fault" />
+        <soap12:fault use="literal" name="FaultExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetPost">
+      <soap12:operation soapAction="http://tempuri.org/IForumService/GetPost" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IForumService_GetPost_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IForumService_GetPost_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultExceptionFault">
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IForumService_GetPost_FaultExceptionFault_Fault" />
         <soap12:fault use="literal" name="FaultExceptionFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>

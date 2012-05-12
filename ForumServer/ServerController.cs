@@ -51,7 +51,9 @@ namespace ForumServer
                 {
                     names.Add(sub.Name);
                 }
-                return names.ToArray();
+                string[] sorted = names.ToArray();
+                Array.Sort<string>(sorted);
+                return sorted; 
             }
             catch (Exception e)
             {
@@ -120,6 +122,23 @@ namespace ForumServer
 
         }
 
+        public Post GetPost(Postkey postkey)
+        {
+            try
+            {
+                log.Info("got request to get post");
+
+                return dataManager.GetPost(postkey);
+
+            }
+            catch (Exception e)
+            {
+                log.Error("failed to get post", e);
+                throw e;
+            }
+
+        }
+
         public Post[] GetReplies(Postkey key)
         {
             try
@@ -139,8 +158,16 @@ namespace ForumServer
             try
             {
                 log.Info("got request to post in sub forum: " + subforum);
-                return securityManager.IsAuthorizedToPost(post.Key.Username, subforum)
-               && dataManager.AddPost(post, subforum.ToString());
+                try
+                {
+                    return CheckPost(post)
+                        && securityManager.IsAuthorizedToPost(post.Key.Username, subforum)
+                        && dataManager.AddPost(post, subforum.ToString());
+                }
+                catch (SubforumNotFoundException)
+                {
+                    return false;
+                }
             }
             catch (Exception e)
             {
@@ -150,13 +177,15 @@ namespace ForumServer
 
         }
 
+       
         public bool Reply(Postkey currPost, Post post)
         {
             try
             {
                 log.Info("got request to reply to post " + currPost);
-                return securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum)
-                && dataManager.AddReply(post, currPost);
+                return CheckPost(post)
+                        && securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum)
+                        && dataManager.AddReply(post, currPost);
             }
             catch (Exception e)
             {
@@ -171,8 +200,9 @@ namespace ForumServer
             try
             {
                 log.Info("got request to edit post " + currPost);
-                return securityManager.IsAuthorizedToEdit(username, currPost, password)
-                && dataManager.EditPost(post, currPost);
+                return CheckPost(post)
+                    && securityManager.IsAuthorizedToEdit(username, currPost, password)
+                    && dataManager.EditPost(post, currPost);
             }
             catch (Exception e)
             {
@@ -410,5 +440,12 @@ namespace ForumServer
             }
 
         }
+
+        private bool CheckPost(ForumUtils.SharedDataTypes.Post post)
+        {
+            return ((post.Body != null && post.Body.Length != 0)
+                   || (post.Title != null && post.Title.Length != 0));
+        }
+
     }
 }

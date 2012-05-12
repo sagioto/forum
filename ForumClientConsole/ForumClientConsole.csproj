@@ -47,16 +47,15 @@
     <Compile Include="ClientConsole.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\ForumService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ForumClientCore\ForumClientCore.csproj">
       <Project>{EE409FC7-F8B3-430D-8C3A-277FB90A0349}</Project>
       <Name>ForumClientCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ForumUtils\ForumUtils.csproj">
+      <Project>{8E463DBF-841C-4989-9219-A0AE255F58F9}</Project>
+      <Name>ForumUtils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -65,34 +64,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Properties\DataSources\ForumClientCore.ForumService.CompositeType.datasource" />
-    <None Include="Service References\ForumService\ServerNetworkAdaptor.wsdl" />
-    <None Include="Service References\ForumService\ServerNetworkAdaptor.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\ForumService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ForumService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ForumService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ForumService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -22,8 +22,8 @@ namespace ForumServer.Policy
             User user = dataManager.GetUser(username);
             if(user != null && forum != null)
             {
-            int numOfPublishedPosts = dataManager.GetAllPosts()
-                .Where(post => post.Key.Username.Equals(username) && post.Subforum.Equals(subforum)).Distinct().Count();
+                int numOfPublishedPosts = dataManager.GetSubforum(subforum).Posts.Keys.
+                    Select(key => key.Username.Equals(username) && key.Equals(subforum)).Count();
                 if(numOfPublishedPosts >= 5)
                     return true;
             }

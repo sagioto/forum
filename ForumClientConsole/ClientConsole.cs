@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ForumClientCore;
 using System.Text.RegularExpressions;
+using ForumUtils.SharedDataTypes;
 
 namespace ForumClientConsole
 {
@@ -50,11 +51,23 @@ namespace ForumClientConsole
                 {
                     case "menu":
                         Console.WriteLine("\nThe available commands are:");
-                        Console.WriteLine("\n\tlist-forums\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tquit\n");
+                        Console.WriteLine("\n\tlist-forums\n\tshow [forum number]\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tquit\n");
                         break;
                     case "list-forums":
-                        Console.WriteLine("Here is the list of forums:");
-                        Console.WriteLine(controller.GetSubforumsList());
+                        Console.WriteLine("Here is the list of sub-forums:");
+                        int i = 0;
+                        foreach (String subforum in controller.GetSubforumsList())
+                        {
+                            Console.WriteLine(i + ") " + subforum);
+                        }
+                        break;
+                    case "show":
+                        if (command.Length < 2)
+                        {
+                            Console.WriteLine("Usage: show [forum number]");
+                            break;
+                        }
+                        GetSubforum(command[1]);
                         break;
                     case "register":
                         Register();
@@ -81,6 +94,18 @@ namespace ForumClientConsole
         }
 
         #region Console Operations
+
+        private void GetSubforum(string p)
+        {
+            string subforumname = controller.GetSubforumsList()[Convert.ToInt32(p)];
+            Post[] subForumPosts = controller.GetSubforum(subforumname);
+            PrintPostList(subForumPosts);
+        }
+
+        private void PrintPostList(ForumUtils.SharedDataTypes.Post[] subForumPosts)
+        {
+            throw new NotImplementedException();
+        }
 
         private void Post()
         {
@@ -127,11 +152,11 @@ namespace ForumClientConsole
             password = ReadPassword();
             if (controller.Login(userName, password))
             {
-                Console.WriteLine("\nLogin Successful. Hello " + userName + "!");
+                Console.WriteLine("Login Successful. Hello " + userName + "!");
             }
             else
             {
-                Console.WriteLine("\nLogin Failed. Please check your user name and/or password.");
+                Console.WriteLine("Login Failed. Please check your user name and/or password.");
             }
         }
 
@@ -150,11 +175,11 @@ namespace ForumClientConsole
             password = ReadPassword();
             if (controller.Register(userName, password))
             {
-                Console.WriteLine("\nRegistration Successful. You can now login to your account");
+                Console.WriteLine("Registration Successful. You can now login to your account");
             }
             else
             {
-                Console.WriteLine("\nRegistration Failed! Please try again...");
+                Console.WriteLine("Registration Failed! Please try again...");
             }
         }
 

@@ -75,21 +75,17 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
-        public void AuthorizedLoginTest()
+        public void AuthorizedLoginFalseTest()
         {
-            DataManager dataManager = null; // TODO: Initialize to an appropriate value
+            DataManager dataManager = new DataManager(); // TODO: Initialize to an appropriate value
             SecurityManager target = new SecurityManager(dataManager); // TODO: Initialize to an appropriate value
-            string username = string.Empty; // TODO: Initialize to an appropriate value
-            string password = string.Empty; // TODO: Initialize to an appropriate value
+            string username = "some"; // TODO: Initialize to an appropriate value
+            string password = "some"; // TODO: Initialize to an appropriate value
             bool expected = false; // TODO: Initialize to an appropriate value
             bool actual;
             actual = target.AuthorizedLogin(username, password);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
+         }
 
         /// <summary>
         ///A test for AuthenticateAdmin
@@ -98,20 +94,16 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void AuthenticateAdminTest()
         {
-            DataManager dataManager = null; // TODO: Initialize to an appropriate value
+            DataManager dataManager = new DataManager(); // TODO: Initialize to an appropriate value
             SecurityManager target = new SecurityManager(dataManager); // TODO: Initialize to an appropriate value
-            string username = string.Empty; // TODO: Initialize to an appropriate value
-            string password = string.Empty; // TODO: Initialize to an appropriate value
+            string username = "some"; // TODO: Initialize to an appropriate value
+            string password = "one"; // TODO: Initialize to an appropriate value
             bool expected = false; // TODO: Initialize to an appropriate value
             bool actual;
             actual = target.AuthenticateAdmin(username, password);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -121,14 +113,15 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void SecurityManagerConstructorTest()
         {
-            DataManager dataManager = null; // TODO: Initialize to an appropriate value
+            DataManager dataManager = new DataManager(); // TODO: Initialize to an appropriate value
             SecurityManager target = new SecurityManager(dataManager);
-            Assert.Inconclusive("TODO: Implement code to verify target");
+            Assert.IsNotNull(dataManager.GetAdmin());
+            Assert.AreEqual("admin", dataManager.GetAdmin().Username);
+            Assert.AreEqual("admin", dataManager.GetAdmin().Password);
+            Assert.AreEqual(AuthorizationLevel.ADMIN, dataManager.GetAdmin().Level);
+            
         }
 
         /// <summary>
@@ -138,19 +131,14 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
-        public void AuthorizedLogoutTest()
+        public void AuthorizedLogoutFalseTest()
         {
-            DataManager dataManager = null; // TODO: Initialize to an appropriate value
-            SecurityManager target = new SecurityManager(dataManager); // TODO: Initialize to an appropriate value
+            SecurityManager target = new SecurityManager(new DataManager()); // TODO: Initialize to an appropriate value
             string username = string.Empty; // TODO: Initialize to an appropriate value
             bool expected = false; // TODO: Initialize to an appropriate value
             bool actual;
             actual = target.AuthorizedLogout(username);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -160,20 +148,15 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void AuthorizedRegisterTest()
         {
-            DataManager dataManager = null; // TODO: Initialize to an appropriate value
-            SecurityManager target = new SecurityManager(dataManager); // TODO: Initialize to an appropriate value
-            string username = string.Empty; // TODO: Initialize to an appropriate value
-            string password = string.Empty; // TODO: Initialize to an appropriate value
-            bool expected = false; // TODO: Initialize to an appropriate value
+            SecurityManager target = new SecurityManager(new DataManager()); // TODO: Initialize to an appropriate value
+            string username = "some"; // TODO: Initialize to an appropriate value
+            string password = "some"; // TODO: Initialize to an appropriate value
+            bool expected = true; // TODO: Initialize to an appropriate value
             bool actual;
             actual = target.AuthorizedRegister(username, password);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -183,21 +166,16 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
-        public void IsAuthorizedToEditTest()
+        [ExpectedException(typeof(PostNotFoundException), "no postkey found")]
+        public void IsAuthorizedToEditFalseTest()
         {
-            DataManager dataManager = null; // TODO: Initialize to an appropriate value
-            SecurityManager target = new SecurityManager(dataManager); // TODO: Initialize to an appropriate value
-            string username = string.Empty; // TODO: Initialize to an appropriate value
-            Postkey postkey = null; // TODO: Initialize to an appropriate value
-            string password = string.Empty; // TODO: Initialize to an appropriate value
+            SecurityManager target = new SecurityManager(new DataManager()); // TODO: Initialize to an appropriate value
+            string username = "some"; // TODO: Initialize to an appropriate value
+            Postkey postkey = new Postkey("", DateTime.Now); // TODO: Initialize to an appropriate value
+            string password = "some"; // TODO: Initialize to an appropriate value
             bool expected = false; // TODO: Initialize to an appropriate value
-            bool actual;
-            actual = target.IsAuthorizedToEdit(username, postkey, password);
+            bool actual = target.IsAuthorizedToEdit(username, postkey, password);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -207,19 +185,32 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void IsAuthorizedToEditSubforumsTest()
         {
-            DataManager dataManager = null; // TODO: Initialize to an appropriate value
-            SecurityManager target = new SecurityManager(dataManager); // TODO: Initialize to an appropriate value
+            DataManager dataManager = new DataManager(); // TODO: Initialize to an appropriate value
+            SecurityManager target = new SecurityManager(dataManager);
+            bool expected = true; // TODO: Initialize to an appropriate value
+            bool actual;
+            actual = target.IsAuthorizedToEditSubforums(dataManager.GetAdmin().Username);
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        ///A test for IsAuthorizedToEditSubforums
+        ///</summary>
+        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
+        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
+        // whether you are testing a page, web service, or a WCF service.
+        [TestMethod()]
+        public void IsAuthorizedToEditSubforumsFalseTest()
+        {
+            SecurityManager target = new SecurityManager(new DataManager()); // TODO: Initialize to an appropriate value
             string username = string.Empty; // TODO: Initialize to an appropriate value
             bool expected = false; // TODO: Initialize to an appropriate value
             bool actual;
             actual = target.IsAuthorizedToEditSubforums(username);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+ 
         }
 
         /// <summary>
@@ -229,20 +220,15 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void IsAuthorizedToPostTest()
         {
-            DataManager dataManager = null; // TODO: Initialize to an appropriate value
-            SecurityManager target = new SecurityManager(dataManager); // TODO: Initialize to an appropriate value
+            SecurityManager target = new SecurityManager(new DataManager()); // TODO: Initialize to an appropriate value
             string username = string.Empty; // TODO: Initialize to an appropriate value
             string subforum = string.Empty; // TODO: Initialize to an appropriate value
             bool expected = false; // TODO: Initialize to an appropriate value
             bool actual;
             actual = target.IsAuthorizedToPost(username, subforum);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -252,19 +238,14 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void IsLoggedinTest()
         {
-            DataManager dataManager = null; // TODO: Initialize to an appropriate value
-            SecurityManager target = new SecurityManager(dataManager); // TODO: Initialize to an appropriate value
+            SecurityManager target = new SecurityManager(new DataManager()); // TODO: Initialize to an appropriate value
             string username = string.Empty; // TODO: Initialize to an appropriate value
             bool expected = false; // TODO: Initialize to an appropriate value
             bool actual;
             actual = target.IsLoggedin(username);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -274,10 +255,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
-        [DeploymentItem("ForumServer.dll")]
         public void IsUserLoggendInTest()
         {
             User user = null; // TODO: Initialize to an appropriate value
@@ -285,7 +262,6 @@ namespace ServerTests
             bool actual;
             actual = SecurityManager_Accessor.IsUserLoggendIn(user);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
     }
 }

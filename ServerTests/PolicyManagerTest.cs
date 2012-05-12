@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting.Web;
 using ForumServer.DataLayer;
 using ForumServer.DataTypes;
 using ForumUtils.SharedDataTypes;
+using System.Threading;
 
 namespace ServerTests
 {
@@ -75,14 +76,33 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void PolicyManagerConstructorTest()
         {
-            DataManager dataManager = null; // TODO: Initialize to an appropriate value
+            PolicyManager target = new PolicyManager(new DataManager());
+        }
+
+
+        /// <summary>
+        ///A test for AddModerator
+        ///</summary>
+        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
+        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
+        // whether you are testing a page, web service, or a WCF service.
+        [TestMethod()]
+        public void AddModeratorFalseTest()
+        {
+            DataManager dataManager = new DataManager();
             PolicyManager target = new PolicyManager(dataManager);
-            Assert.Inconclusive("TODO: Implement code to verify target");
+            string subName = "subforum";
+            dataManager.AddSubforum(new Subforum(subName));
+            User user = new User("some", "some");
+            dataManager.AddUser(user);
+            for (int i = 0; i < 4; i++)
+            {
+                dataManager.AddPost(new Post(new Postkey("some", DateTime.Now), "", "", null, subName), subName);
+            }
+            bool actual = target.AddModerator(user.Username, subName);
+            Assert.AreEqual(false, actual);
         }
 
         /// <summary>
@@ -92,20 +112,21 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void AddModeratorTest()
         {
-            DataManager dataManager = null; // TODO: Initialize to an appropriate value
-            PolicyManager target = new PolicyManager(dataManager); // TODO: Initialize to an appropriate value
-            string username = string.Empty; // TODO: Initialize to an appropriate value
-            string subforum = string.Empty; // TODO: Initialize to an appropriate value
-            bool expected = false; // TODO: Initialize to an appropriate value
-            bool actual;
-            actual = target.AddModerator(username, subforum);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            DataManager dataManager = new DataManager();
+            PolicyManager target = new PolicyManager(dataManager);
+            string subName = "subforum";
+            dataManager.AddSubforum(new Subforum(subName));
+            User user = new User("some", "some");
+            dataManager.AddUser(user);
+            for (int i = 0; i < 5; i++)
+            {
+                dataManager.AddPost(new Post(new Postkey("some", DateTime.Now), "", "" , null, subName), subName);
+                Thread.Sleep(1);
+            }
+            bool actual = target.AddModerator(user.Username, subName);
+            Assert.AreEqual(true, actual);
         }
 
         /// <summary>
@@ -115,9 +136,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void ChangeModeratorTest()
         {
             DataManager dataManager = null; // TODO: Initialize to an appropriate value
@@ -139,9 +157,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void IsAuthorizedToEditTest()
         {
             DataManager dataManager = null; // TODO: Initialize to an appropriate value
@@ -162,9 +177,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void RemoveModeratorTest()
         {
             DataManager dataManager = null; // TODO: Initialize to an appropriate value
