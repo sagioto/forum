@@ -84,10 +84,12 @@ namespace ForumServer.Security
         {
             User user = dataManager.GetUser(username);
             Post post = dataManager.GetPost(postkey);
+            Subforum sub = dataManager.GetSubforums().Find(subforum => subforum.Name.Equals(post.Subforum));
             return user != null && post != null
                 && user.Password.Equals(password)
                 && (post.Key.Username.Equals(username)
-                    || (user.Level.Equals(AuthorizationLevel.MODERATOR) && post.Subforum.ModeratorsList.Contains(username))
+                    || (user.Level.Equals(AuthorizationLevel.MODERATOR)
+                        && sub != null && sub.ModeratorsList.Contains(username))
                     || (user.Level.Equals(AuthorizationLevel.ADMIN)));                
         }
 

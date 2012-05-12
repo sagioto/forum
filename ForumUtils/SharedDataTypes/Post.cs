@@ -11,18 +11,20 @@ namespace ForumUtils.SharedDataTypes
         private string title;
         private Postkey parentPost;
         private string body;
-        private Dictionary<Postkey, Post> replies;
-        private Subforum subforum;
+        private string subforum;
         private Post postToUpdate;
+        private bool hasReplies;
+
+        [NonSerialized]
+        private Dictionary<Postkey, Post> replies;
 
 
-        //TODO - Why Subforum needed? (To Sagi)
         public Post(Postkey postKey, string title, Postkey parentPost, Subforum subforum)
         {
             this.key = postKey;
             this.title = title;
             this.parentPost = parentPost;
-            this.subforum = subforum;
+            this.subforum = subforum.Name;
             this.replies = new Dictionary<Postkey, Post>();
         }
 
@@ -98,7 +100,7 @@ namespace ForumUtils.SharedDataTypes
             }
         }
 
-        public Subforum Subforum
+        public string Subforum
         {
             get
             {
@@ -110,7 +112,14 @@ namespace ForumUtils.SharedDataTypes
             }
         }
 
-
+        public bool HasReplies
+        {
+            get
+            {
+                this.hasReplies = this.replies.Count != 0;
+                return this.hasReplies;
+            }
+        }
 
 
         #endregion
