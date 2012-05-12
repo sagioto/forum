@@ -19,104 +19,263 @@ namespace ForumServer
         
         public bool Register(String username, String password)
         {
-            return controller.Register(username, password);
+            try
+            {
+                return controller.Register(username, password);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "couldn't register");
+            }
+
         }
 
         public bool Login(String username, String password)
         {
-            return controller.Login(username, password);
+
+            try
+            {
+                return controller.Login(username, password);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "couldn't login");
+            }
+
         }
 
         public bool Logout(String username)
         {
-            return controller.Logout(username);
+
+            try
+            {
+                return controller.Logout(username);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "couldn't logout");
+            }
+
         }
 
         public string GetSubforumsList()
         {
-            return serializer.Serialize(controller.GetSubforumsList());
+
+            try
+            {
+                return serializer.Serialize(controller.GetSubforumsList());
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "couldn't get sub forums list");
+            }
+
         }
 
         public string GetSubforum(string subforum)
         {
-            return serializer.SerializeSubforum(controller.GetSubForum(subforum));
+            try
+            {
+                return serializer.SerializeSubforum(controller.GetSubForum(subforum));
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "couldn't get sub forum");
+            }
         }
 
 
         public string GetPost(string postkey)
         {
-            Postkey toGet = serializer.DeserializePostkey(postkey);
-            return serializer.SerializePost(controller.GetPost(toGet));
+
+            try
+            {
+                Postkey toGet = serializer.DeserializePostkey(postkey);
+                return serializer.SerializePost(controller.GetPost(toGet));
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "couldn't get post");
+            }
+
         }
 
 
         public bool Post(string currentSubforum, string toPost)
         {
-            Post toAdd = serializer.DeserializePost(toPost);
-            return controller.Post(currentSubforum, toAdd);
+
+            try
+            {
+                Post toAdd = serializer.DeserializePost(toPost);
+                return controller.Post(currentSubforum, toAdd);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "somthing went wrong with post");
+            }
+
         }
 
         public bool Reply(string current, string toPost)
         {
-            Postkey currentKey = serializer.DeserializePostkey(current);
-            Post toAdd= serializer.DeserializePost(toPost);
-            return controller.Reply(currentKey, toAdd);
+
+            try
+            {
+                Postkey currentKey = serializer.DeserializePostkey(current);
+                Post toAdd = serializer.DeserializePost(toPost);
+                return controller.Reply(currentKey, toAdd);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "somthing went wrong with reply");
+            }
+
         }
 
         public bool EditPost(string postToUpdate, string originalPost, string password)
         {
-            Postkey originalPostKey = serializer.DeserializePostkey(originalPost);
-            Post toUpdate = serializer.DeserializePost(postToUpdate);
-            return controller.EditPost(originalPostKey, toUpdate, originalPostKey.Username, password);
+
+            try
+            {
+                Postkey originalPostKey = serializer.DeserializePostkey(originalPost);
+                Post toUpdate = serializer.DeserializePost(postToUpdate);
+                return controller.EditPost(originalPostKey, toUpdate, originalPostKey.Username, password);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "somthing went wrong with edit");
+            }
+
         }
 
 
         public bool RemovePost(string postkey, string password)
         {
-            Postkey originalPostKey = serializer.DeserializePostkey(postkey);
-            return controller.RemovePost(originalPostKey, originalPostKey.Username , password);
+
+            try
+            {
+                Postkey originalPostKey = serializer.DeserializePostkey(postkey);
+                return controller.RemovePost(originalPostKey, originalPostKey.Username, password);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "somthing went wrong with remove");
+            }
+
         }
 
         #region admin functions
 
         public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
         {
-            return controller.AddModerator(adminUsername, adminPassword, usernameToAdd, subforum);
+
+            try
+            {
+                return controller.AddModerator(adminUsername, adminPassword, usernameToAdd, subforum);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "couldn't add moderator");
+            }
+
         }
 
         public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
         {
-            return controller.RemoveModerator(adminUsername, adminPassword, usernameToRemove, subforum);
+
+            try
+            {
+                return controller.RemoveModerator(adminUsername, adminPassword, usernameToRemove, subforum);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "couldn't remove moderator");
+            }
+
         }
 
         public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
         {
-            return controller.ReplaceModerator(adminUsername, adminPassword, usernameToAdd, usernameToRemove, subforum);
+
+            try
+            {
+                return controller.ReplaceModerator(adminUsername, adminPassword, usernameToAdd, usernameToRemove, subforum);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "couldn't replace moderator");
+            }
+
         }
 
         public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
         {
-            return controller.AddSubforum(adminUsername, adminPassword, subforumName);
+
+            try
+            {
+                return controller.AddSubforum(adminUsername, adminPassword, subforumName);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "couldn't add sub forum");
+            }
+
         }
 
         public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
         {
-            return controller.RemoveSubforum(adminUsername, adminPassword, subforumName);
+
+            try
+            {
+                return controller.RemoveSubforum(adminUsername, adminPassword, subforumName);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "couldn't remove sub forum");
+            }
+
         }
 
         public int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName)
         {
-            return controller.ReportSubForumTotalPosts(adminUsername, adminPassword, subforumName);
+
+            try
+            {
+                return controller.ReportSubForumTotalPosts(adminUsername, adminPassword, subforumName);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "couldn't get report");
+            }
+
         }
 
         public int ReportUserTotalPosts(string adminUsername, string adminPassword, string username)
         {
-            return controller.ReportUserTotalPosts(adminUsername, adminPassword, username);
+
+            try
+            {
+                return controller.ReportUserTotalPosts(adminUsername, adminPassword, username);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "couldn't get report");
+            }
+
         }
 
         public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
         {
-            return controller.ReplaceAdmin(oldAdminUsername, oldAdminPassword, newAdminUsername, newAdminPassword);
+
+            try
+            {
+                return controller.ReplaceAdmin(oldAdminUsername, oldAdminPassword, newAdminUsername, newAdminPassword);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "couldn't replace admin");
+            }
+
         }
 
         #endregion
