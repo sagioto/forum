@@ -50,7 +50,7 @@ namespace ForumClientConsole
                 {
                     case "menu":
                         Console.WriteLine("\nThe available commands are:");
-                        Console.WriteLine("\tlist-forums\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tquit\n");
+                        Console.WriteLine("\n\tlist-forums\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tquit\n");
                         break;
                     case "list-forums":
                         Console.WriteLine("Here is the list of forums:");
