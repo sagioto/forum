@@ -156,7 +156,7 @@ namespace ForumClientCore.NetworkLayer
             return webService.Reply(originalPost, newReply);
         }
 
-        public string GetPost(string postkey)
+        internal Post GetPost(Postkey postkey)
         {
             throw new NotImplementedException();
         }

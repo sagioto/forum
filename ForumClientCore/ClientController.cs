@@ -127,7 +127,9 @@ namespace ForumClientCore
             }
             else
             {
-                return null;// TODO should call GetPost(parentPostkey) and return its replies
+                Post parent = netAdaptor.GetPost(currentPost.ParentPost);
+                currentPost = parent;
+                return netAdaptor.GetReplies(currentPost.Key);
             }
 
         }
@@ -152,6 +154,8 @@ namespace ForumClientCore
             Post newReply = new Post(new Postkey(loggedAs, DateTime.Now), title, body, originalPost, currentSubForum);
             return netAdaptor.Reply(originalPost, newReply);
         }
+        
+
     }
 }
 
