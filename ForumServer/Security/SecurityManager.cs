@@ -44,7 +44,8 @@ namespace ForumServer.Security
         public bool AuthorizedLogin(string username, string password)
         {
             User user = dataManager.GetUser(username);
-            if (user != null && user.Password.Equals(password))
+            if (user != null && user.Password.Equals(password)
+                && user.CurrentState == UserState.Logout)
             {
                 user.CurrentState = UserState.Login;
                 dataManager.UpdateUser(user);
