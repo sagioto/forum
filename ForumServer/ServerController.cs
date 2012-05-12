@@ -144,7 +144,7 @@ namespace ForumServer
             try
             {
                 log.Info("got request to reply to post " + currPost);
-                return securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum.Name)
+                return securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum)
                 && dataManager.AddReply(post, currPost);
             }
             catch (Exception e)
