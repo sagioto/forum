@@ -14,6 +14,7 @@ namespace ForumClientCore.NetworkLayer
         IForumService webService;
         ClientNetworkListener netListener;
 
+
         // Event setting:
         public delegate void OnUpdate(string text);
         public event OnUpdate OnUpdateFromServer;
