@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ForumClientCore;
 
@@ -61,24 +64,24 @@ namespace ForumTests
         public void LoginRegisterTests()
         {
             ClientController cc = new ClientController();
-            Assert.IsFalse(cc.Login("user1", "123456"));
+
+            Assert.IsFalse(cc.Login("user1", "123456"));//login before register
+
             Assert.IsTrue(cc.Register("alice", "123456"));
 
             //login tests
             for (int i = 0; i < 100; i++){
-
+                // try to register twice with same userName
                 Assert.IsTrue(cc.Register("alice" + i, "123456"));
                 Assert.IsFalse(cc.Register("alice" + i, "123456"));
 
-                Assert.IsTrue(cc.Login("alice" + i, "123456"));
                 //failed: try to login twice with same userName return true , should return false.
-            //    Assert.IsFalse(cc.Login("alice" + i, "123456"));
+                Assert.IsTrue(cc.Login("alice" + i, "123456"));
+                Assert.IsFalse(cc.Login("alice" + i, "123456"));
 
-                Assert.IsFalse(cc.Login("bob" + i, "123456"));
-                Assert.IsFalse(cc.Login("alice" + i, "123456"+i));
+                Assert.IsFalse(cc.Login("bob" + i, "123456"));//try to login with bad unknown user
+                Assert.IsFalse(cc.Login("alice" + i, "123456"+i));//try to login with bad password
             }
-
-            
         }
 
         [TestMethod]
@@ -90,6 +93,9 @@ namespace ForumTests
 
             cc2.Register("alice", "123456");
             Assert.IsTrue(cc2.Logout());//try to logout without login
+
+            cc2.Login("alice", "123456");
+            Assert.IsTrue(cc2.Logout());//try to logout after login
         }
 
         [TestMethod]
@@ -99,18 +105,31 @@ namespace ForumTests
             cc.Register("test1","123456");
             cc.Login("test1","123456");
 
-            Assert.IsInstanceOfType(cc.GetSubforumsList(), typeof(String[]));
+         //   Assert.IsInstanceOfType(cc.GetSubforumsList(), typeof(String[]));
 
-           // String[] SubForumArray = cc.GetSubforumsList();
+            String[] SubForumArray = cc.GetSubforumsList();
 
-
-          //  for (int i = 0; i < SubForumArray.Length; i++)
+            Console.WriteLine("start");
+            for (int i = 0; i < SubForumArray.Length; i++)
             {
-              //  Assert.IsTrue(cc.Post(SubForumArray[i],"title"+i,"body"+i)); //post message in all sub forums
+                Assert.IsTrue(cc.Post(SubForumArray[i],"title"+i,"body"+i)); //post message in all sub forums
+                Console.WriteLine(SubForumArray[i]);
             }
+            Console.WriteLine("end");
+            Assert.IsFalse(cc.Post("XXXYYYZZZ","badTitle","badBody"));//post message in sub forum that isn"t exists
 
-            //Assert.IsFalse(cc.Post("XXXYYYZZZ","badTitle","badBody"));//post message in sub forum that isn"t exists
+        }
 
+        [TestMethod]
+        public void UserIntegration()
+        {
+            ClientController cc1 = new ClientController();
+            cc1.Register("test1", "123456");
+            cc1.Login("test1", "123456");
+
+            ClientController cc2 = new ClientController();
+            cc2.Register("test2", "123456");
+            cc2.Login("test2", "123456");
 
         }
 
