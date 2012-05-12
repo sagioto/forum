@@ -64,7 +64,7 @@ namespace ForumServer
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool Post(Postkey current, Post toPost);
+        bool Post(string current, Post toPost);
 
         /// <summary>
         /// add oldPost as reply to current oldPost
@@ -95,7 +95,7 @@ namespace ForumServer
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool RemovePost(Postkey postkey,string username, string password);
+        bool RemovePost(Postkey postkey, string username, string password);
 
         #region admin functions
         
