@@ -122,6 +122,23 @@ namespace ForumServer
 
         }
 
+        public Post GetPost(Postkey postkey)
+        {
+            try
+            {
+                log.Info("got request to get post");
+
+                return dataManager.GetPost(postkey);
+
+            }
+            catch (Exception e)
+            {
+                log.Error("failed to get post", e);
+                throw e;
+            }
+
+        }
+
         public Post[] GetReplies(Postkey key)
         {
             try
@@ -141,7 +158,7 @@ namespace ForumServer
             try
             {
                 log.Info("got request to post in sub forum: " + subforum);
-                return checkPost(post)
+                return CheckPost(post)
                     && securityManager.IsAuthorizedToPost(post.Key.Username, subforum)
                     && dataManager.AddPost(post, subforum.ToString());
             }
@@ -159,7 +176,7 @@ namespace ForumServer
             try
             {
                 log.Info("got request to reply to post " + currPost);
-                return checkPost(post)
+                return CheckPost(post)
                         && securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum)
                         && dataManager.AddReply(post, currPost);
             }
@@ -176,7 +193,7 @@ namespace ForumServer
             try
             {
                 log.Info("got request to edit post " + currPost);
-                return checkPost(post)
+                return CheckPost(post)
                     && securityManager.IsAuthorizedToEdit(username, currPost, password)
                     && dataManager.EditPost(post, currPost);
             }
@@ -417,10 +434,11 @@ namespace ForumServer
 
         }
 
-        private bool checkPost(ForumUtils.SharedDataTypes.Post post)
+        private bool CheckPost(ForumUtils.SharedDataTypes.Post post)
         {
             return ((post.Body != null && post.Body.Length != 0)
                    || (post.Title != null && post.Title.Length != 0));
         }
+
     }
 }
