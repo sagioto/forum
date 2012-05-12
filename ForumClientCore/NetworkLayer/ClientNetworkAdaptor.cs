@@ -156,69 +156,59 @@ namespace ForumClientCore.NetworkLayer
             return webService.Reply(originalPost, newReply);
         }
 
-        public string GetPost(string postkey)
+        internal Post GetPost(Postkey postkey)
         {
-            throw new NotImplementedException();
+            return webService.GetPost(postkey);
         }
 
-        public bool Post(string current, string toPost)
+        public bool EditPost(Postkey oldPost, Post newPost, string username, string password)
         {
-            throw new NotImplementedException();
+            return webService.EditPost(oldPost, newPost, username, password);
         }
 
-        public bool Reply(string current, string toPost)
+        public bool RemovePost(Postkey postkey, string username, string password)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool EditPost(string postToUpdate, string originalPost, string usrname, string password)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool RemovePost(string postkey, string username, string password)
-        {
-            throw new NotImplementedException();
+            return webService.RemovePost(postkey, username, password);
         }
 
         public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
         {
-            throw new NotImplementedException();
+            return webService.AddModerator(adminUsername, adminPassword, usernameToAdd, subforum);
         }
 
         public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
         {
-            throw new NotImplementedException();
+            return webService.RemoveModerator(adminUsername, adminPassword, usernameToRemove, subforum);
         }
 
         public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
         {
-            throw new NotImplementedException();
+            return webService.ReplaceModerator(adminUsername, adminPassword, usernameToAdd, usernameToRemove, subforum);
         }
 
         public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
         {
-            throw new NotImplementedException();
+            return webService.AddSubforum(adminUsername, adminPassword, subforumName);
         }
 
         public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
         {
-            throw new NotImplementedException();
+            return webService.RemoveSubforum(adminUsername, adminPassword, subforumName);
         }
 
         public int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName)
         {
-            throw new NotImplementedException();
+            return webService.ReportSubForumTotalPosts(adminUsername, adminPassword, subforumName);
         }
 
         public int ReportUserTotalPosts(string adminUsername, string adminPassword, string username)
         {
-            throw new NotImplementedException();
+            return webService.ReportUserTotalPosts(adminUsername, adminPassword, username);
         }
 
         public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
         {
-            throw new NotImplementedException();
+            return ReplaceAdmin(oldAdminUsername, oldAdminPassword, newAdminUsername, newAdminPassword);
         }
 
         public string Subscribe()

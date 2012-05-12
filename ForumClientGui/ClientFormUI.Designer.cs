@@ -31,7 +31,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
-            this.label2 = new System.Windows.Forms.Label();
+            this.loggedInTitle = new System.Windows.Forms.Label();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.registerLinkLabel = new System.Windows.Forms.LinkLabel();
@@ -114,7 +114,7 @@
             // 
             this.splitContainer1.Panel1.Controls.Add(this.loginPanel);
             this.splitContainer1.Panel1.Controls.Add(this.linkLabel3);
-            this.splitContainer1.Panel1.Controls.Add(this.label2);
+            this.splitContainer1.Panel1.Controls.Add(this.loggedInTitle);
             this.splitContainer1.Panel1.Controls.Add(this.linkLabel2);
             this.splitContainer1.Panel1.Controls.Add(this.linkLabel1);
             this.splitContainer1.Panel1.Controls.Add(this.registerLinkLabel);
@@ -142,16 +142,16 @@
             this.linkLabel3.Text = "New Message";
             this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked);
             // 
-            // label2
+            // loggedInTitle
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.loggedInTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(623, 32);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Logged in as:";
+            this.loggedInTitle.AutoSize = true;
+            this.loggedInTitle.Location = new System.Drawing.Point(623, 32);
+            this.loggedInTitle.Name = "loggedInTitle";
+            this.loggedInTitle.Size = new System.Drawing.Size(71, 13);
+            this.loggedInTitle.TabIndex = 4;
+            this.loggedInTitle.Text = "Logged in as:";
             // 
             // linkLabel2
             // 
@@ -490,7 +490,7 @@
             this.loginPanel.Controls.Add(this.usernameTextBox);
             this.loginPanel.Controls.Add(this.label6);
             this.loginPanel.Controls.Add(this.label5);
-            this.loginPanel.Location = new System.Drawing.Point(625, 26);
+            this.loginPanel.Location = new System.Drawing.Point(624, 26);
             this.loginPanel.Name = "loginPanel";
             this.loginPanel.Size = new System.Drawing.Size(166, 54);
             this.loginPanel.TabIndex = 6;
@@ -591,7 +591,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label loggedInTitle;
         private System.Windows.Forms.LinkLabel linkLabel2;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.LinkLabel registerLinkLabel;

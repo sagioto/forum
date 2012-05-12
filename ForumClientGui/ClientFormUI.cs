@@ -391,6 +391,7 @@ namespace ForumClientGui
                 }
                 else
                 {
+                    loggedInTitle.Text = "Logged in as: " + usernameTextBox.Text;
                     loginPanel.Visible = false;
                 }
             }

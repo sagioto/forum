@@ -84,6 +84,18 @@ namespace ForumServer
             }
         }
 
+        public Post GetPost(Postkey postkey)
+        {
+            try
+            {
+                return controller.GetPost(postkey);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "couldn't get post");
+            }
+        }
+
 
         public Post[] GetReplies(Postkey postkey)
         {
@@ -365,20 +377,5 @@ namespace ForumServer
         }
 
         #endregion
-
-
-
-
-
-
-        public bool EditPost(string postToUpdate, string originalPost, string usrname, string password)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool RemovePost(string postkey, string username, string password)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

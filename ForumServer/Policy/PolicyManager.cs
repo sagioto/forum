@@ -22,8 +22,8 @@ namespace ForumServer.Policy
             User user = dataManager.GetUser(username);
             if(user != null && forum != null)
             {
-            int numOfPublishedPosts = dataManager.GetAllPosts()
-                .Where(post => post.Key.Username.Equals(username) && post.Subforum.Equals(subforum)).Distinct().Count();
+                int numOfPublishedPosts = dataManager.GetSubforum(subforum).Posts.Keys.
+                    Select(key => key.Username.Equals(username) && key.Equals(subforum)).Count();
                 if(numOfPublishedPosts >= 5)
                     return true;
             }
@@ -37,9 +37,10 @@ namespace ForumServer.Policy
             
             if (user != null && forum != null)
             {
-                int numOfPublishedPostsInLastHour = dataManager.GetAllPosts()
-                .Where(post => post.Key.Username.Equals(username) && post.Subforum.Equals(subforum)
-                    && DateTime.Now.Subtract(post.Key.Time) < TimeSpan.FromHours(1)).Distinct().Count();
+                int numOfPublishedPostsInLastHour = dataManager.GetSubforum(subforum).Posts.Values
+                    .Select(post => post.Key.Username.Equals(username)
+                    && post.Subforum.Equals(subforum)
+                    && DateTime.Now.Subtract(post.Key.Time) < TimeSpan.FromHours(1)).Count();
                 if (numOfPublishedPostsInLastHour == 0)
                     return true;
                 return true;
