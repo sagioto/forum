@@ -109,10 +109,10 @@ namespace ForumTests
 
             for (int i = 0; i < SubForumArray.Length; i++)
             {
-                Assert.IsTrue(cc.Post("testMSG", SubForumArray[i])); //post message in all sub forums
+                Assert.IsTrue(cc.Post(SubForumArray[i],"title"+i,"body"+i)); //post message in all sub forums
             }
 
-            Assert.IsFalse(cc.Post("testMSG", "XXXYYYZZZ"));//post message in sub forum that isn"t exists
+            Assert.IsFalse(cc.Post("XXXYYYZZZ","badTitle","badBody"));//post message in sub forum that isn"t exists
 
 
         }

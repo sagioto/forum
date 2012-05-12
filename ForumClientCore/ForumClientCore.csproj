@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ForumUtils.SharedDataTypes.Post.datasource" />
     <None Include="Service References\ForumService\ForumClientCore.ForumService.CompositeType.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -75,6 +76,18 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ForumService\ServerNetworkAdaptor2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ForumService\ServerNetworkAdaptor34.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ForumService\ServerNetworkAdaptor35.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ForumService\ServerNetworkAdaptor36.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ForumService\ServerNetworkAdaptor37.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
