@@ -70,7 +70,7 @@ namespace ForumClientCore
             }
         }
 
-        public string[] GetSubforumsList()
+        public String[] GetSubforumsList()
         {
             return netAdaptor.GetSubforumsList();
         }

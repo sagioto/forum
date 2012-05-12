@@ -118,7 +118,7 @@ namespace ForumClientCore.NetworkLayer
         /// </summary>
         /// <param name="subforumname"></param>
         /// <returns>Returns a Subforum</returns>
-        internal Subforum GetSubforum(String subforumname)
+        internal Post[] GetSubforum(String subforumname)
         {
             return webService.GetSubforum(subforumname);
         }
@@ -141,7 +141,7 @@ namespace ForumClientCore.NetworkLayer
         /// <returns>Returns true if posting is successful.</returns>
         internal bool Post(String forumToPostIn, Post postToAdd)
         {
-            return webService.Post(forumToPostIn, serializer.SerializePost(postToAdd));
+            return false;
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace ForumClientCore.NetworkLayer
         /// <returns>Returns true if reply succeeded, false otherwise</returns>
         internal bool Reply(Postkey originalPost, Post newReply)
         {
-            return webService.Reply(serializer.SerializePostkey(originalPost), serializer.SerializePost(newReply));
+            return false;
         }
 
         /// <summary>
@@ -164,5 +164,99 @@ namespace ForumClientCore.NetworkLayer
             OnUpdateFromServer(message);    // Invoke event OnUpdateFronServer - will be notify controller
         }
 
+        public string GetPost(string postkey)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Post(string current, string toPost)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Reply(string current, string toPost)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool EditPost(string postToUpdate, string originalPost, string usrname, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemovePost(string postkey, string username, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int ReportUserTotalPosts(string adminUsername, string adminPassword, string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string Subscribe()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AddMessage(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SubscribeToForum()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UnsubscribeFromForum()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetData(int value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public CompositeType GetDataUsingDataContract(CompositeType composite)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
