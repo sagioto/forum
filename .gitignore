@@ -3,3 +3,5 @@
 **/obj
 TestResults/*
 **/Logs/*
+ForumClientCore/Service References/ForumService/Reference.svcmap.orig
+ForumClientCore/Service References/ForumService/ServerNetworkAdaptor1.xsd.orig

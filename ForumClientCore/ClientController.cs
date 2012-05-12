@@ -13,6 +13,8 @@ namespace ForumClientCore
         ClientNetworkAdaptor netAdaptor;
         private bool loggedIn = false;
         private string loggedAs = null;
+        private Post currentPost = null;
+        private string currentSubForum = "";
 
         public event ClientNetworkAdaptor.OnUpdate OnUpdateFromController;  //Event to be invoked when getting a notify by NetworkAdaptor
 
@@ -110,5 +112,41 @@ namespace ForumClientCore
             Post newPost = new Post(newKey, title, body, null, subForumName);
             return netAdaptor.Post(subForumName, newPost);
         }
+
+        public Post[] Back()
+        {
+            if (currentPost == null)
+            {
+                currentSubForum = "";
+                return null;
+            }
+            else if (currentPost.ParentPost == null)
+            {
+                currentPost = null;
+                return netAdaptor.GetSubforum(currentSubForum);
+            }
+            else
+            {
+                return null;// TODO should call GetPost(parentPostkey) and return its replies
+            }
+
+        }
+
+        public Post[] GetSubforum(String subforumname)
+        {
+            Post[] subForum = netAdaptor.GetSubforum(subforumname);
+            if (subForum != null)
+            {
+                currentSubForum = subforumname;
+            }
+            return subForum;
+        }
+
+        ////public Post[] GetReplies(Postkey postkey)
+        ////{
+
+        //}
+
     }
 }
+
