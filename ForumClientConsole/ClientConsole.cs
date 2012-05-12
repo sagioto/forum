@@ -69,6 +69,7 @@ namespace ForumClientConsole
                         Post();  //TODO Need to support more args - change to Post method
                         break;
                     case "quit":
+                        Logout();
                         freeConsole();
                         return;
                     default:
@@ -177,7 +178,7 @@ namespace ForumClientConsole
                     }
                 }
             } while (key.Key != ConsoleKey.Enter);
-
+            Console.WriteLine();
             return pass;
         }
 
