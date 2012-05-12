@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Collections;
+using System.Runtime.Serialization;
 
 namespace ForumUtils.SharedDataTypes
 {
+    [DataContract]
     public class Postkey : IEquatable<Postkey>//IComparer //IEqualityComparer
     {
         private string username;
@@ -19,6 +21,7 @@ namespace ForumUtils.SharedDataTypes
 
         #region Parameter Properties
 
+        [DataMember]
         public string Username
         {
             get
@@ -31,6 +34,7 @@ namespace ForumUtils.SharedDataTypes
             }
         }
 
+        [DataMember]
         public DateTime Time
         {
             get

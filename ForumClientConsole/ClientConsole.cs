@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ForumClientCore;
 using System.Text.RegularExpressions;
+using ForumUtils.SharedDataTypes;
 
 namespace ForumClientConsole
 {
@@ -50,11 +51,23 @@ namespace ForumClientConsole
                 {
                     case "menu":
                         Console.WriteLine("\nThe available commands are:");
-                        Console.WriteLine("\n\tlist-forums\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tquit\n");
+                        Console.WriteLine("\n\tlist-forums\n\tshow [forum number]\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tquit\n");
                         break;
                     case "list-forums":
-                        Console.WriteLine("Here is the list of forums:");
-                        Console.WriteLine(controller.GetSubforumsList());
+                        Console.WriteLine("Here is the list of sub-forums:");
+                        int i = 0;
+                        foreach (String subforum in controller.GetSubforumsList())
+                        {
+                            Console.WriteLine(i + ") " + subforum);
+                        }
+                        break;
+                    case "show":
+                        if (command.Length < 2)
+                        {
+                            Console.WriteLine("Usage: show [forum number]");
+                            break;
+                        }
+                        GetSubforum(command[1]);
                         break;
                     case "register":
                         Register();
@@ -69,6 +82,7 @@ namespace ForumClientConsole
                         Post();  //TODO Need to support more args - change to Post method
                         break;
                     case "quit":
+                        Logout();
                         freeConsole();
                         return;
                     default:
@@ -81,13 +95,27 @@ namespace ForumClientConsole
 
         #region Console Operations
 
+        private void GetSubforum(string p)
+        {
+            string subforumname = controller.GetSubforumsList()[Convert.ToInt32(p)];
+            Post[] subForumPosts = controller.GetSubforum(subforumname);
+            PrintPostList(subForumPosts);
+        }
+
+        private void PrintPostList(ForumUtils.SharedDataTypes.Post[] subForumPosts)
+        {
+            throw new NotImplementedException();
+        }
+
         private void Post()
         {
-            Console.WriteLine("Please enter a title to your post");
-            string title = Console.ReadLine();
             Console.WriteLine("Enter the name of the forum you want to post in");
             string subForum = Console.ReadLine();
-            if (controller.Post(title, subForum))
+            Console.WriteLine("Please enter a title to your post");
+            string title = Console.ReadLine();
+            Console.WriteLine("Enter the body of your post");
+            string body = Console.ReadLine();
+            if (controller.Post(subForum, title, body))
             {
                 Console.WriteLine("Posted successfully!");
             }
@@ -124,11 +152,11 @@ namespace ForumClientConsole
             password = ReadPassword();
             if (controller.Login(userName, password))
             {
-                Console.WriteLine("\nLogin Successful. Hello " + userName + "!");
+                Console.WriteLine("Login Successful. Hello " + userName + "!");
             }
             else
             {
-                Console.WriteLine("\nLogin Failed. Please check your user name and/or password.");
+                Console.WriteLine("Login Failed. Please check your user name and/or password.");
             }
         }
 
@@ -147,11 +175,11 @@ namespace ForumClientConsole
             password = ReadPassword();
             if (controller.Register(userName, password))
             {
-                Console.WriteLine("\nRegistration Successful. You can now login to your account");
+                Console.WriteLine("Registration Successful. You can now login to your account");
             }
             else
             {
-                Console.WriteLine("\nRegistration Failed! Please try again...");
+                Console.WriteLine("Registration Failed! Please try again...");
             }
         }
 
@@ -177,7 +205,7 @@ namespace ForumClientConsole
                     }
                 }
             } while (key.Key != ConsoleKey.Enter);
-
+            Console.WriteLine();
             return pass;
         }
 

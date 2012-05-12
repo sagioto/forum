@@ -6,13 +6,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumClientCore", "ForumCli
 		{A27A133F-3BE9-4869-B21E-045605A58827} = {A27A133F-3BE9-4869-B21E-045605A58827}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C8BCFA8B-B789-414C-BA68-D2D9CDCEB304}"
-	ProjectSection(SolutionItems) = preProject
-		Forum.vsmdi = Forum.vsmdi
-		Local.testsettings = Local.testsettings
-		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumServer", "ForumServer\ForumServer.csproj", "{A27A133F-3BE9-4869-B21E-045605A58827}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumUtils", "ForumUtils\ForumUtils.csproj", "{8E463DBF-841C-4989-9219-A0AE255F58F9}"
@@ -29,10 +22,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumClientConsole", "Forum
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerTests", "ServerTests\ServerTests.csproj", "{97883F45-BCDE-47BE-8EFF-82B318BE22D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumTests", "ForumTests\ForumTests.csproj", "{EB180CBD-3F47-45AB-A956-871DBD23CE9E}"
+EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = Forum.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -95,13 +87,22 @@ Global
 		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{97883F45-BCDE-47BE-8EFF-82B318BE22D9}.Release|x86.ActiveCfg = Release|Any CPU
+		{EB180CBD-3F47-45AB-A956-871DBD23CE9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB180CBD-3F47-45AB-A956-871DBD23CE9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB180CBD-3F47-45AB-A956-871DBD23CE9E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EB180CBD-3F47-45AB-A956-871DBD23CE9E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{EB180CBD-3F47-45AB-A956-871DBD23CE9E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EB180CBD-3F47-45AB-A956-871DBD23CE9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB180CBD-3F47-45AB-A956-871DBD23CE9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB180CBD-3F47-45AB-A956-871DBD23CE9E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{EB180CBD-3F47-45AB-A956-871DBD23CE9E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{EB180CBD-3F47-45AB-A956-871DBD23CE9E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

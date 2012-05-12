@@ -28,6 +28,8 @@ namespace ForumServer
                 securityManager = new SecurityManager(dataManager);
                 policyManager = new PolicyManager(dataManager);
 
+                dataManager.InitForumData();
+
             }
             catch (Exception e)
             {
@@ -49,7 +51,9 @@ namespace ForumServer
                 {
                     names.Add(sub.Name);
                 }
-                return names.ToArray();
+                string[] sorted = names.ToArray();
+                Array.Sort<string>(sorted);
+                return sorted; 
             }
             catch (Exception e)
             {
@@ -137,8 +141,9 @@ namespace ForumServer
             try
             {
                 log.Info("got request to post in sub forum: " + subforum);
-                return securityManager.IsAuthorizedToPost(post.Key.Username, subforum)
-               && dataManager.AddPost(post, subforum.ToString());
+                return checkPost(post)
+                    && securityManager.IsAuthorizedToPost(post.Key.Username, subforum)
+                    && dataManager.AddPost(post, subforum.ToString());
             }
             catch (Exception e)
             {
@@ -148,13 +153,15 @@ namespace ForumServer
 
         }
 
+       
         public bool Reply(Postkey currPost, Post post)
         {
             try
             {
                 log.Info("got request to reply to post " + currPost);
-                return securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum)
-                && dataManager.AddReply(post, currPost);
+                return checkPost(post)
+                        && securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum)
+                        && dataManager.AddReply(post, currPost);
             }
             catch (Exception e)
             {
@@ -169,8 +176,9 @@ namespace ForumServer
             try
             {
                 log.Info("got request to edit post " + currPost);
-                return securityManager.IsAuthorizedToEdit(username, currPost, password)
-                && dataManager.EditPost(post, currPost);
+                return checkPost(post)
+                    && securityManager.IsAuthorizedToEdit(username, currPost, password)
+                    && dataManager.EditPost(post, currPost);
             }
             catch (Exception e)
             {
@@ -407,6 +415,12 @@ namespace ForumServer
                 throw e;
             }
 
+        }
+
+        private bool checkPost(ForumUtils.SharedDataTypes.Post post)
+        {
+            return ((post.Body != null && post.Body.Length != 0)
+                   || (post.Title != null && post.Title.Length != 0));
         }
     }
 }

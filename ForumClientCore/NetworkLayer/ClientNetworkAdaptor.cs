@@ -13,7 +13,7 @@ namespace ForumClientCore.NetworkLayer
     {
         IForumService webService;
         ClientNetworkListener netListener;
-        private ISerializer serializer = new JsonSerializer();
+
 
         // Event setting:
         public delegate void OnUpdate(string text);
@@ -69,18 +69,8 @@ namespace ForumClientCore.NetworkLayer
             }
             catch (Exception)
             {
-                
                 throw;
             }
-        }
-        
-        /// <summary>
-        /// Enter the server.
-        /// </summary>
-        /// <returns>Returns an array of the sub forum (the main forum list?)</returns>
-        internal Subforum[] Enter()
-        {
-            return serializer.DeserializeSubforumArray(webService.Enter());
         }
 
         /// <summary>
@@ -88,7 +78,7 @@ namespace ForumClientCore.NetworkLayer
         /// </summary>
         /// <param name="usename"></param>
         /// <param name="password"></param>
-        /// <returns>Returns true if registration succeeded, false otherwise.</returns>
+        /// <returns>Returns true if registration succeeded, false if user is already registered.</returns>
         internal bool Register(String usename, String password)
         {
             return webService.Register(usename, password);
@@ -99,7 +89,7 @@ namespace ForumClientCore.NetworkLayer
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        /// <returns>Returns true if login succeeded, false otherwise</returns>
+        /// <returns>Returns true if login succeeded, false if User/Password are incorrect.</returns>
         internal bool Login(String username, String password)
         {
             return webService.Login(username, password);
@@ -119,9 +109,9 @@ namespace ForumClientCore.NetworkLayer
         /// Gets the list of sub forums from the server.
         /// </summary>
         /// <returns>Returns an array of Subforums. (The main forum).</returns>
-        internal Subforum[] GetSubforumsList()
+        internal string[] GetSubforumsList()
         {
-            return serializer.DeserializeSubforumArray(webService.GetSubforumsList());
+            return webService.GetSubforumsList();
         }
 
         /// <summary>
@@ -129,9 +119,9 @@ namespace ForumClientCore.NetworkLayer
         /// </summary>
         /// <param name="subforumname"></param>
         /// <returns>Returns a Subforum</returns>
-        internal Subforum GetSubforum(String subforumname)
+        internal Post[] GetSubforum(String subforumname)
         {
-            return serializer.DeserializeSubforum(webService.GetSubforum(subforumname));
+            return webService.GetSubforum(subforumname);
         }
 
         /// <summary>
@@ -139,20 +129,20 @@ namespace ForumClientCore.NetworkLayer
         /// </summary>
         /// <param name="postkey">A post key consisting of the user + timestamp</param>
         /// <returns>The required Post</returns>
-        internal Post GetPost(Postkey postkey)
+        internal Post[] GetReplies(Postkey postkey)
         {
-            return serializer.DeserializePost(webService.GetPost(serializer.SerializePostkey(postkey)));
+            return webService.GetReplies(postkey);
         }
 
         /// <summary>
         /// Add a post to a sub forum.
         /// </summary>
-        /// <param name="forumToPostIn">The name sub forum to post in</param>
+        /// <param name="subForumName">The name sub forum to post in</param>
         /// <param name="postToAdd">The new post to be posted</param>
         /// <returns>Returns true if posting is successful.</returns>
-        internal bool Post(String forumToPostIn, Post postToAdd)
+        internal bool Post(String subForumName, Post postToAdd)
         {
-            return webService.Post(forumToPostIn, serializer.SerializePost(postToAdd));
+            return webService.Post(subForumName, postToAdd);
         }
 
         /// <summary>
@@ -163,7 +153,102 @@ namespace ForumClientCore.NetworkLayer
         /// <returns>Returns true if reply succeeded, false otherwise</returns>
         internal bool Reply(Postkey originalPost, Post newReply)
         {
-            return webService.Reply(serializer.SerializePostkey(originalPost), serializer.SerializePost(newReply));
+            return webService.Reply(originalPost, newReply);
+        }
+
+        public string GetPost(string postkey)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Post(string current, string toPost)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Reply(string current, string toPost)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool EditPost(string postToUpdate, string originalPost, string usrname, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemovePost(string postkey, string username, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int ReportUserTotalPosts(string adminUsername, string adminPassword, string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string Subscribe()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AddMessage(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SubscribeToForum()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UnsubscribeFromForum()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetData(int value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public CompositeType GetDataUsingDataContract(CompositeType composite)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -174,6 +259,6 @@ namespace ForumClientCore.NetworkLayer
         {
             OnUpdateFromServer(message);    // Invoke event OnUpdateFronServer - will be notify controller
         }
-
     }
+
 }

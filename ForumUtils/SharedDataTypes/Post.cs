@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Runtime.Serialization;
 
 namespace ForumUtils.SharedDataTypes
 {
+    [DataContract]
     public class Post : IComparable
     {
         private Postkey key;
@@ -21,13 +23,14 @@ namespace ForumUtils.SharedDataTypes
         private Dictionary<Postkey, Post> replies;
 
 
-        public Post(Postkey postKey, string title, Postkey parentPost, Subforum subforum)
+        public Post(Postkey postKey, string title, string body, Postkey parentPost, string subforum)
         {
             this.key = postKey;
             this.title = title;
             this.parentPost = parentPost;
-            this.subforum = subforum.Name;
+            this.subforum = subforum;
             this.replies = new Dictionary<Postkey, Post>();
+            this.body = body;
         }
 
         public Post(Post postToCopy)
@@ -37,7 +40,7 @@ namespace ForumUtils.SharedDataTypes
 
         #region Fields Properties
 
-
+        [DataMember]
         public Postkey Key
         {
             get
@@ -50,7 +53,7 @@ namespace ForumUtils.SharedDataTypes
             }
         }
 
-
+        [DataMember]
         public Postkey ParentPost
         {
             get
@@ -63,7 +66,7 @@ namespace ForumUtils.SharedDataTypes
             }
         }
 
-
+        [DataMember]
         public String Title
         {
             get
@@ -76,6 +79,7 @@ namespace ForumUtils.SharedDataTypes
             }
         }
 
+        [DataMember]
         public String Body
         {
             get
@@ -102,6 +106,7 @@ namespace ForumUtils.SharedDataTypes
             }
         }
 
+        [DataMember]
         public string Subforum
         {
             get
@@ -114,6 +119,7 @@ namespace ForumUtils.SharedDataTypes
             }
         }
 
+        [DataMember]
         public bool HasReplies
         {
             get
