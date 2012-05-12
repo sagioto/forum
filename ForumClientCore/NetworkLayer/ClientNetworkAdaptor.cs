@@ -136,12 +136,12 @@ namespace ForumClientCore.NetworkLayer
         /// <summary>
         /// Add a post to a sub forum.
         /// </summary>
-        /// <param name="forumToPostIn">The name sub forum to post in</param>
+        /// <param name="subForumName">The name sub forum to post in</param>
         /// <param name="postToAdd">The new post to be posted</param>
         /// <returns>Returns true if posting is successful.</returns>
-        internal bool Post(String forumToPostIn, Post postToAdd)
+        internal bool Post(String subForumName, Post postToAdd)
         {
-            return false;
+            return webService.Post(subForumName, postToAdd);
         }
 
         /// <summary>
@@ -152,16 +152,7 @@ namespace ForumClientCore.NetworkLayer
         /// <returns>Returns true if reply succeeded, false otherwise</returns>
         internal bool Reply(Postkey originalPost, Post newReply)
         {
-            return false;
-        }
-
-        /// <summary>
-        /// Will be called when netListener will invoke its update event
-        /// </summary>
-        /// <param name="message"></param>
-        public void netListener_OnUpdateFromServer(string message)
-        {
-            OnUpdateFromServer(message);    // Invoke event OnUpdateFronServer - will be notify controller
+            return webService.Reply(originalPost, newReply);
         }
 
         public string GetPost(string postkey)
@@ -258,5 +249,15 @@ namespace ForumClientCore.NetworkLayer
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Will be called when netListener will invoke its update event
+        /// </summary>
+        /// <param name="message"></param>
+        public void netListener_OnUpdateFromServer(string message)
+        {
+            OnUpdateFromServer(message);    // Invoke event OnUpdateFronServer - will be notify controller
+        }
     }
+
 }

@@ -96,14 +96,14 @@ namespace ForumClientCore
 
         }
 
-        public bool Post(string title, string subForumName)
+        public bool Post(string subForumName, string title, string body)
         {
             if (!loggedIn)
             {
                 return false;
             }
             Postkey newKey = new Postkey(loggedAs, DateTime.Now);
-            Post newPost = new Post(newKey, title, null, netAdaptor.GetSubforum(subForumName));
+            Post newPost = new Post(newKey, title, body, null, subForumName);
             return netAdaptor.Post(subForumName, newPost);
         }
     }
