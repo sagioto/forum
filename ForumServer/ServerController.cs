@@ -158,9 +158,16 @@ namespace ForumServer
             try
             {
                 log.Info("got request to post in sub forum: " + subforum);
-                return CheckPost(post)
-                    && securityManager.IsAuthorizedToPost(post.Key.Username, subforum)
-                    && dataManager.AddPost(post, subforum.ToString());
+                try
+                {
+                    return CheckPost(post)
+                        && securityManager.IsAuthorizedToPost(post.Key.Username, subforum)
+                        && dataManager.AddPost(post, subforum.ToString());
+                }
+                catch (SubforumNotFoundException)
+                {
+                    return false;
+                }
             }
             catch (Exception e)
             {
