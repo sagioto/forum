@@ -56,6 +56,7 @@ namespace ForumServer.DataLayer
                 throw;
             }
         }
+
         #endregion
 
         #region Posts & Reply methods
@@ -78,6 +79,7 @@ namespace ForumServer.DataLayer
         {
             try
             {
+                subforumsList[subforum].TotalPosts++;
                 return subforumsList[subforum].AddPost(post);
             }
             catch (Exception)
@@ -95,6 +97,7 @@ namespace ForumServer.DataLayer
                     if (subforumEntry.Value.Posts.ContainsKey(postkey))
                     {
                         subforumsList[subforumEntry.Key].Posts.Remove(postkey);
+                        subforumsList[subforumEntry.Key].TotalPosts--;
                         return true;
                     }
                     else
@@ -118,6 +121,8 @@ namespace ForumServer.DataLayer
                 throw new PostNotFoundException();
             try
             {
+                post.HasReplies = true;
+                subforumsList[post.Subforum].TotalPosts++;
                 post.Replies.Add(reply.Key, reply);
                 return true;
                 //return UpdatePost(oldPost);
@@ -415,6 +420,8 @@ namespace ForumServer.DataLayer
                 if (reply.Replies.ContainsKey(postkey))
                 {
                     reply.Replies.Remove(postkey);
+                    subforumsList[reply.Subforum].TotalPosts--;
+                    reply.HasReplies = !(reply.Replies.Values.Count == 0); // If reply.Replies.Values.Count > 0 then HasReplies==true;
                     return true;
                 }
                 else
@@ -424,8 +431,6 @@ namespace ForumServer.DataLayer
             }
             return false;
         }
-
-
 
         private void GetReply(Postkey postkey, Dictionary<Postkey, Post> postsList, out Post returnedPost)
         {
