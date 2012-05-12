@@ -82,7 +82,7 @@ namespace ServerTests
             Postkey postKey = new Postkey("dor", DateTime.Now);
             string title = "New Post";
             Postkey parentPost = null;
-            Subforum subforum = null;
+            string subforum = "";
             Post target = new Post(postKey, title, parentPost, subforum);
             Assert.IsNotNull(target);
         }
@@ -102,7 +102,7 @@ namespace ServerTests
             Postkey postKey = null; // TODO: Initialize to an appropriate value
             string title = string.Empty; // TODO: Initialize to an appropriate value
             Postkey parentPost = null; // TODO: Initialize to an appropriate value
-            Subforum subforum = null;
+            string subforum = "";
             Post target = new Post(postKey, title, parentPost, subforum); // TODO: Initialize to an appropriate value
             Post reply = null; // TODO: Initialize to an appropriate value
             bool expected = false; // TODO: Initialize to an appropriate value
@@ -127,7 +127,7 @@ namespace ServerTests
             Postkey postKey = null; // TODO: Initialize to an appropriate value
             string title = string.Empty; // TODO: Initialize to an appropriate value
             Postkey parentPost = null; // TODO: Initialize to an appropriate value
-            Subforum subforum = null;
+            string subforum = "";
             Post target = new Post(postKey, title, parentPost, subforum); // TODO: Initialize to an appropriate value
             object p = null; // TODO: Initialize to an appropriate value
             int expected = 0; // TODO: Initialize to an appropriate value
@@ -152,7 +152,7 @@ namespace ServerTests
             Postkey postKey = null; // TODO: Initialize to an appropriate value
             string title = string.Empty; // TODO: Initialize to an appropriate value
             Postkey parentPost = null; // TODO: Initialize to an appropriate value
-            Subforum subforum = null;
+            string subforum = "";
             Post target = new Post(postKey, title, parentPost,subforum); // TODO: Initialize to an appropriate value
             string expected = string.Empty; // TODO: Initialize to an appropriate value
             string actual;
@@ -177,7 +177,7 @@ namespace ServerTests
             Postkey postKey = null; // TODO: Initialize to an appropriate value
             string title = string.Empty; // TODO: Initialize to an appropriate value
             Postkey parentPost = null; // TODO: Initialize to an appropriate value
-            Subforum subforum = null;
+            string subforum = "";
             Post target = new Post(postKey, title, parentPost, subforum); // TODO: Initialize to an appropriate value
             Postkey expected = null; // TODO: Initialize to an appropriate value
             Postkey actual;
@@ -202,7 +202,7 @@ namespace ServerTests
             Postkey postKey = null; // TODO: Initialize to an appropriate value
             string title = string.Empty; // TODO: Initialize to an appropriate value
             Postkey parentPost = null; // TODO: Initialize to an appropriate value
-            Subforum subforum = null;
+            string subforum = "";
             Post target = new Post(postKey, title, parentPost, subforum); 
             Postkey expected = null; // TODO: Initialize to an appropriate value
             Postkey actual;
@@ -227,7 +227,7 @@ namespace ServerTests
             Postkey postKey = null; // TODO: Initialize to an appropriate value
             string title = string.Empty; // TODO: Initialize to an appropriate value
             Postkey parentPost = null; // TODO: Initialize to an appropriate value
-            Subforum subforum = null;
+            string subforum = "";
             Post target = new Post(postKey, title, parentPost, subforum); // TODO: Initialize to an appropriate value
             Dictionary<Postkey, Post> expected = null; // TODO: Initialize to an appropriate value
             Dictionary<Postkey, Post> actual;
@@ -252,7 +252,7 @@ namespace ServerTests
             Postkey postKey = null; // TODO: Initialize to an appropriate value
             string title = string.Empty; // TODO: Initialize to an appropriate value
             Postkey parentPost = null; // TODO: Initialize to an appropriate value
-            Subforum subforum = null;
+            string subforum = "";
             Post target = new Post(postKey, title, parentPost, subforum); // TODO: Initialize to an appropriate value
             string expected = string.Empty; // TODO: Initialize to an appropriate value
             string actual;

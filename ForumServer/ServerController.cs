@@ -28,6 +28,8 @@ namespace ForumServer
                 securityManager = new SecurityManager(dataManager);
                 policyManager = new PolicyManager(dataManager);
 
+                dataManager.InitForumData();
+
             }
             catch (Exception e)
             {

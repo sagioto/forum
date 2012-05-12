@@ -46,7 +46,7 @@ namespace ForumServer.DataLayer
                     for (int j = 0 ; j < numberOfPosts ; j++)
                     {
                         this.AddPost(new Post(new Postkey(adminName, DateTime.Now),
-                            "Post" + j + " in Subforum: " + s.Name, null, s), s.Name);
+                            "Post" + j + " in Subforum: " + s.Name, null, s.Name), s.Name);
                     }
                 }
             }
