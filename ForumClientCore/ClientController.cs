@@ -54,6 +54,10 @@ namespace ForumClientCore
 
         public bool Login(string userName, string password)
         {
+            if (loggedIn)
+            {
+                return false;
+            }
             if (netAdaptor.Login(userName, password))
             {
                 loggedAs = userName;
@@ -66,15 +70,9 @@ namespace ForumClientCore
             }
         }
 
-        public string GetSubforumsList()
+        public String[] GetSubforumsList()
         {
-            string forumsList = "";
-            Subforum[] forumsArray = netAdaptor.GetSubforumsList();
-            foreach (Subforum forum in forumsArray)
-            {
-                forumsList = forumsList + forum.Name;
-            }
-            return forumsList;
+            return netAdaptor.GetSubforumsList();
         }
 
         public bool Register(string userName, string password)
@@ -85,17 +83,27 @@ namespace ForumClientCore
 
         public bool Logout()
         {
-            return netAdaptor.Logout(loggedAs);
+            if (netAdaptor.Logout(loggedAs))
+            {
+                loggedAs = "";
+                loggedIn = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
-        public bool Post(string title, string subForumName)
+        public bool Post(string subForumName, string title, string body)
         {
             if (!loggedIn)
             {
                 return false;
             }
             Postkey newKey = new Postkey(loggedAs, DateTime.Now);
-            Post newPost = new Post(newKey, title, null, netAdaptor.GetSubforum(subForumName));
+            Post newPost = new Post(newKey, title, body, null, subForumName);
             return netAdaptor.Post(subForumName, newPost);
         }
     }

@@ -5,6 +5,8 @@ using ForumServer.DataTypes;
 using ForumServer.Policy;
 using ForumServer.Security;
 using ForumUtils.SharedDataTypes;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace ForumServer
 {
@@ -26,6 +28,8 @@ namespace ForumServer
                 securityManager = new SecurityManager(dataManager);
                 policyManager = new PolicyManager(dataManager);
 
+                dataManager.InitForumData();
+
             }
             catch (Exception e)
             {
@@ -35,12 +39,19 @@ namespace ForumServer
 
         }
 
-        public Subforum[] GetSubforumsList()
+        public string[] GetSubforumsList()
         {
             try
             {
                 log.Info("got request to enter");
-                return dataManager.GetSubforums().ToArray<Subforum>();
+                
+                Subforum[] subs = dataManager.GetSubforums().ToArray<Subforum>();
+                List<string> names = new List<string>();
+                foreach(Subforum sub in subs)
+                {
+                    names.Add(sub.Name);
+                }
+                return names.ToArray();
             }
             catch (Exception e)
             {
@@ -94,12 +105,12 @@ namespace ForumServer
 
         }
 
-        public Subforum GetSubForum(string subforum)
+        public Post[] GetSubForum(string subforum)
         {
             try
             {
                 log.Info("got request for sub forum " + subforum);
-                return dataManager.GetSubforum(subforum);
+                return dataManager.GetSubforum(subforum).Posts.Values.ToArray().OrderBy(post => post.Key.Time).ToArray();
             }
             catch (Exception e)
             {
@@ -109,12 +120,12 @@ namespace ForumServer
 
         }
 
-        public Post GetPost(Postkey key)
+        public Post[] GetReplies(Postkey key)
         {
             try
             {
                 log.Info("got request for post " + key);
-                return dataManager.GetPost(key);
+                return dataManager.GetPost(key).Replies.Values.ToArray().OrderBy(post => post.Key.Time).ToArray();
             }
             catch (Exception e)
             {

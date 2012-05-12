@@ -58,12 +58,12 @@ namespace ForumServer
 
         }
 
-        public string GetSubforumsList()
+        public string[] GetSubforumsList()
         {
 
             try
             {
-                return serializer.Serialize(controller.GetSubforumsList());
+                return controller.GetSubforumsList();
             }
             catch (Exception e)
             {
@@ -72,11 +72,11 @@ namespace ForumServer
 
         }
 
-        public string GetSubforum(string subforum)
+        public Post[] GetSubforum(string subforum)
         {
             try
             {
-                return serializer.SerializeSubforum(controller.GetSubForum(subforum));
+                return controller.GetSubForum(subforum);
             }
             catch (Exception e)
             {
@@ -85,13 +85,11 @@ namespace ForumServer
         }
 
 
-        public string GetPost(string postkey)
+        public Post[] GetReplies(Postkey postkey)
         {
-
             try
             {
-                Postkey toGet = serializer.DeserializePostkey(postkey);
-                return serializer.SerializePost(controller.GetPost(toGet));
+                return controller.GetReplies(postkey);
             }
             catch (Exception e)
             {
@@ -101,13 +99,11 @@ namespace ForumServer
         }
 
 
-        public bool Post(string currentSubforum, string toPost)
+        public bool Post(string currentSubforum, Post toPost)
         {
-
             try
             {
-                Post toAdd = serializer.DeserializePost(toPost);
-                return controller.Post(currentSubforum, toAdd);
+                return controller.Post(currentSubforum, toPost);
             }
             catch (Exception e)
             {
@@ -116,14 +112,11 @@ namespace ForumServer
 
         }
 
-        public bool Reply(string current, string toPost)
+        public bool Reply(Postkey current, Post toPost)
         {
-
             try
             {
-                Postkey currentKey = serializer.DeserializePostkey(current);
-                Post toAdd = serializer.DeserializePost(toPost);
-                return controller.Reply(currentKey, toAdd);
+                return controller.Reply(current, toPost);
             }
             catch (Exception e)
             {
@@ -132,14 +125,11 @@ namespace ForumServer
 
         }
 
-        public bool EditPost(string postToUpdate, string originalPost, string password)
+        public bool EditPost(Postkey postToUpdate, Post originalPost, string username, string password)
         {
-
             try
             {
-                Postkey originalPostKey = serializer.DeserializePostkey(originalPost);
-                Post toUpdate = serializer.DeserializePost(postToUpdate);
-                return controller.EditPost(originalPostKey, toUpdate, originalPostKey.Username, password);
+                return controller.EditPost(postToUpdate, originalPost, username, password);
             }
             catch (Exception e)
             {
@@ -149,13 +139,12 @@ namespace ForumServer
         }
 
 
-        public bool RemovePost(string postkey, string password)
+        public bool RemovePost(Postkey postkey, string username, string password)
         {
 
             try
             {
-                Postkey originalPostKey = serializer.DeserializePostkey(postkey);
-                return controller.RemovePost(originalPostKey, originalPostKey.Username, password);
+                return controller.RemovePost(postkey, username, password);
             }
             catch (Exception e)
             {

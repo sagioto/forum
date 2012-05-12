@@ -69,6 +69,7 @@ namespace ForumClientConsole
                         Post();  //TODO Need to support more args - change to Post method
                         break;
                     case "quit":
+                        Logout();
                         freeConsole();
                         return;
                     default:
@@ -83,11 +84,13 @@ namespace ForumClientConsole
 
         private void Post()
         {
-            Console.WriteLine("Please enter a title to your post");
-            string title = Console.ReadLine();
             Console.WriteLine("Enter the name of the forum you want to post in");
             string subForum = Console.ReadLine();
-            if (controller.Post(title, subForum))
+            Console.WriteLine("Please enter a title to your post");
+            string title = Console.ReadLine();
+            Console.WriteLine("Enter the body of your post");
+            string body = Console.ReadLine();
+            if (controller.Post(subForum, title, body))
             {
                 Console.WriteLine("Posted successfully!");
             }
@@ -177,7 +180,7 @@ namespace ForumClientConsole
                     }
                 }
             } while (key.Key != ConsoleKey.Enter);
-
+            Console.WriteLine();
             return pass;
         }
 
