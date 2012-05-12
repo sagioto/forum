@@ -8,170 +8,86 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ForumClientCore.ForumService {
-    using System.Runtime.Serialization;
-    using System;
+namespace ForumTests.ForumService {
     
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CompositeType", Namespace="http://schemas.datacontract.org/2004/07/ForumServer")]
-    [System.SerializableAttribute()]
-    public partial class CompositeType : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool BoolValueField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string StringValueField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool BoolValue {
-            get {
-                return this.BoolValueField;
-            }
-            set {
-                if ((this.BoolValueField.Equals(value) != true)) {
-                    this.BoolValueField = value;
-                    this.RaisePropertyChanged("BoolValue");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string StringValue {
-            get {
-                return this.StringValueField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.StringValueField, value) != true)) {
-                    this.StringValueField = value;
-                    this.RaisePropertyChanged("StringValue");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ForumService.IForumService", CallbackContract=typeof(ForumClientCore.ForumService.IForumServiceCallback))]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ForumService.IForumService", CallbackContract=typeof(ForumTests.ForumService.IForumServiceCallback))]
     public interface IForumService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Enter", ReplyAction="http://tempuri.org/IForumService/EnterResponse")]
+        string Enter();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Register", ReplyAction="http://tempuri.org/IForumService/RegisterResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/RegisterFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         bool Register(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Login", ReplyAction="http://tempuri.org/IForumService/LoginResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/LoginFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         bool Login(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Logout", ReplyAction="http://tempuri.org/IForumService/LogoutResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/LogoutFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         bool Logout(string username);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetSubforumsList", ReplyAction="http://tempuri.org/IForumService/GetSubforumsListResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/GetSubforumsListFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        string[] GetSubforumsList();
+        string GetSubforumsList();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetSubforum", ReplyAction="http://tempuri.org/IForumService/GetSubforumResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/GetSubforumFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        ForumUtils.SharedDataTypes.Post[] GetSubforum(string subforum);
+        string GetSubforum(string subforum);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetReplies", ReplyAction="http://tempuri.org/IForumService/GetRepliesResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/GetRepliesFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        ForumUtils.SharedDataTypes.Post[] GetReplies(ForumUtils.SharedDataTypes.Postkey postkey);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetPost", ReplyAction="http://tempuri.org/IForumService/GetPostResponse")]
+        string GetPost(string postkey);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Post", ReplyAction="http://tempuri.org/IForumService/PostResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/PostFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool Post(string current, ForumUtils.SharedDataTypes.Post toPost);
+        bool Post(string current, string toPost);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Reply", ReplyAction="http://tempuri.org/IForumService/ReplyResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/ReplyFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool Reply(ForumUtils.SharedDataTypes.Postkey current, ForumUtils.SharedDataTypes.Post toPost);
+        bool Reply(string current, string toPost);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/EditPost", ReplyAction="http://tempuri.org/IForumService/EditPostResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/EditPostFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool EditPost(ForumUtils.SharedDataTypes.Postkey oldPost, ForumUtils.SharedDataTypes.Post newPost, string usrname, string password);
+        bool EditPost(string postToUpdate, string originalPost, string usrname, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/RemovePost", ReplyAction="http://tempuri.org/IForumService/RemovePostResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/RemovePostFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool RemovePost(ForumUtils.SharedDataTypes.Postkey postkey, string username, string password);
+        bool RemovePost(string postkey, string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/AddModerator", ReplyAction="http://tempuri.org/IForumService/AddModeratorResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/AddModeratorFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/RemoveModerator", ReplyAction="http://tempuri.org/IForumService/RemoveModeratorResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/RemoveModeratorFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReplaceModerator", ReplyAction="http://tempuri.org/IForumService/ReplaceModeratorResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/ReplaceModeratorFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/AddSubforum", ReplyAction="http://tempuri.org/IForumService/AddSubforumResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/AddSubforumFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         bool AddSubforum(string adminUsername, string adminPassword, string subforumName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/RemoveSubforum", ReplyAction="http://tempuri.org/IForumService/RemoveSubforumResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/RemoveSubforumFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReportSubForumTotalPosts", ReplyAction="http://tempuri.org/IForumService/ReportSubForumTotalPostsResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/ReportSubForumTotalPostsFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReportUserTotalPosts", ReplyAction="http://tempuri.org/IForumService/ReportUserTotalPostsResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/ReportUserTotalPostsFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         int ReportUserTotalPosts(string adminUsername, string adminPassword, string username);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReplaceAdmin", ReplyAction="http://tempuri.org/IForumService/ReplaceAdminResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/ReplaceAdminFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Subscribe", ReplyAction="http://tempuri.org/IForumService/SubscribeResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/SubscribeFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         string Subscribe();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/AddMessage", ReplyAction="http://tempuri.org/IForumService/AddMessageResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/AddMessageFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         bool AddMessage(string message);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/SubscribeToForum", ReplyAction="http://tempuri.org/IForumService/SubscribeToForumResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/SubscribeToForumFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         bool SubscribeToForum();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/UnsubscribeFromForum", ReplyAction="http://tempuri.org/IForumService/UnsubscribeFromForumResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/UnsubscribeFromForumFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         bool UnsubscribeFromForum();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetData", ReplyAction="http://tempuri.org/IForumService/GetDataResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/GetDataFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         string GetData(int value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IForumService/GetDataUsingDataContractResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/GetDataUsingDataContractFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         ForumClientCore.ForumService.CompositeType GetDataUsingDataContract(ForumClientCore.ForumService.CompositeType composite);
     }
     
@@ -183,12 +99,12 @@ namespace ForumClientCore.ForumService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IForumServiceChannel : ForumClientCore.ForumService.IForumService, System.ServiceModel.IClientChannel {
+    public interface IForumServiceChannel : ForumTests.ForumService.IForumService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ForumServiceClient : System.ServiceModel.DuplexClientBase<ForumClientCore.ForumService.IForumService>, ForumClientCore.ForumService.IForumService {
+    public partial class ForumServiceClient : System.ServiceModel.DuplexClientBase<ForumTests.ForumService.IForumService>, ForumTests.ForumService.IForumService {
         
         public ForumServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {
@@ -210,6 +126,10 @@ namespace ForumClientCore.ForumService {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
+        public string Enter() {
+            return base.Channel.Enter();
+        }
+        
         public bool Register(string username, string password) {
             return base.Channel.Register(username, password);
         }
@@ -222,31 +142,31 @@ namespace ForumClientCore.ForumService {
             return base.Channel.Logout(username);
         }
         
-        public string[] GetSubforumsList() {
+        public string GetSubforumsList() {
             return base.Channel.GetSubforumsList();
         }
         
-        public ForumUtils.SharedDataTypes.Post[] GetSubforum(string subforum) {
+        public string GetSubforum(string subforum) {
             return base.Channel.GetSubforum(subforum);
         }
         
-        public ForumUtils.SharedDataTypes.Post[] GetReplies(ForumUtils.SharedDataTypes.Postkey postkey) {
-            return base.Channel.GetReplies(postkey);
+        public string GetPost(string postkey) {
+            return base.Channel.GetPost(postkey);
         }
         
-        public bool Post(string current, ForumUtils.SharedDataTypes.Post toPost) {
+        public bool Post(string current, string toPost) {
             return base.Channel.Post(current, toPost);
         }
         
-        public bool Reply(ForumUtils.SharedDataTypes.Postkey current, ForumUtils.SharedDataTypes.Post toPost) {
+        public bool Reply(string current, string toPost) {
             return base.Channel.Reply(current, toPost);
         }
         
-        public bool EditPost(ForumUtils.SharedDataTypes.Postkey oldPost, ForumUtils.SharedDataTypes.Post newPost, string usrname, string password) {
-            return base.Channel.EditPost(oldPost, newPost, usrname, password);
+        public bool EditPost(string postToUpdate, string originalPost, string usrname, string password) {
+            return base.Channel.EditPost(postToUpdate, originalPost, usrname, password);
         }
         
-        public bool RemovePost(ForumUtils.SharedDataTypes.Postkey postkey, string username, string password) {
+        public bool RemovePost(string postkey, string username, string password) {
             return base.Channel.RemovePost(postkey, username, password);
         }
         

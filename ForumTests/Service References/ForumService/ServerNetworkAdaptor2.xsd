@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-  <xs:import schemaLocation="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/ForumUtils.SharedDataTypes" />
-  <xs:import schemaLocation="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/ForumServer" />
+  <xs:import schemaLocation="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ForumServer" />
+  <xs:element name="Enter">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EnterResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EnterResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="Register">
     <xs:complexType>
       <xs:sequence>
@@ -55,7 +65,7 @@
   <xs:element name="GetSubforumsListResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetSubforumsListResult" nillable="true" type="q1:ArrayOfstring" />
+        <xs:element minOccurs="0" name="GetSubforumsListResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -69,21 +79,21 @@
   <xs:element name="GetSubforumResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ForumUtils.SharedDataTypes" minOccurs="0" name="GetSubforumResult" nillable="true" type="q2:ArrayOfPost" />
+        <xs:element minOccurs="0" name="GetSubforumResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetReplies">
+  <xs:element name="GetPost">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/ForumUtils.SharedDataTypes" minOccurs="0" name="postkey" nillable="true" type="q3:Postkey" />
+        <xs:element minOccurs="0" name="postkey" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetRepliesResponse">
+  <xs:element name="GetPostResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/ForumUtils.SharedDataTypes" minOccurs="0" name="GetRepliesResult" nillable="true" type="q4:ArrayOfPost" />
+        <xs:element minOccurs="0" name="GetPostResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -91,7 +101,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="current" nillable="true" type="xs:string" />
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/ForumUtils.SharedDataTypes" minOccurs="0" name="toPost" nillable="true" type="q5:Post" />
+        <xs:element minOccurs="0" name="toPost" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -105,8 +115,8 @@
   <xs:element name="Reply">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/ForumUtils.SharedDataTypes" minOccurs="0" name="current" nillable="true" type="q6:Postkey" />
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/ForumUtils.SharedDataTypes" minOccurs="0" name="toPost" nillable="true" type="q7:Post" />
+        <xs:element minOccurs="0" name="current" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="toPost" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -120,8 +130,8 @@
   <xs:element name="EditPost">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/ForumUtils.SharedDataTypes" minOccurs="0" name="oldPost" nillable="true" type="q8:Postkey" />
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/ForumUtils.SharedDataTypes" minOccurs="0" name="newPost" nillable="true" type="q9:Post" />
+        <xs:element minOccurs="0" name="postToUpdate" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="originalPost" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="usrname" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
       </xs:sequence>
@@ -137,7 +147,7 @@
   <xs:element name="RemovePost">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/ForumUtils.SharedDataTypes" minOccurs="0" name="postkey" nillable="true" type="q10:Postkey" />
+        <xs:element minOccurs="0" name="postkey" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
       </xs:sequence>
@@ -350,14 +360,14 @@
   <xs:element name="GetDataUsingDataContract">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/ForumServer" minOccurs="0" name="composite" nillable="true" type="q11:CompositeType" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ForumServer" minOccurs="0" name="composite" nillable="true" type="q1:CompositeType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetDataUsingDataContractResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/ForumServer" minOccurs="0" name="GetDataUsingDataContractResult" nillable="true" type="q12:CompositeType" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ForumServer" minOccurs="0" name="GetDataUsingDataContractResult" nillable="true" type="q2:CompositeType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
