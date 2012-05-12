@@ -58,7 +58,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="log4net.dll" />
+    <Content Include="Lib\log4net.dll" />
     <Content Include="NetworkLayer\ServerNetworkAdaptor.svc" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
