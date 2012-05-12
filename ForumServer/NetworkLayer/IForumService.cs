@@ -41,17 +41,27 @@ namespace ForumServer
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="subforumName">just the name - no json!</param>
+        /// <param name="subforumName">just the name</param>
         /// <returns>returns the posts of the requested sub forum</returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
         Post[] GetSubforum(string subforum);
 
+
         /// <summary>
-        /// postkey contains of user + timestamp in json form
+        /// postkey contains of user + timestamp in  form
         /// </summary>
         /// <param name="postkey"></param>
-        /// <returns>post json</returns>
+        /// <returns>post </returns>
+        [OperationContract]
+        [FaultContract(typeof(FaultException))]
+        Post GetPost(Postkey postkey);
+
+        /// <summary>
+        /// postkey contains of user + timestamp in  form
+        /// </summary>
+        /// <param name="postkey"></param>
+        /// <returns>post </returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
         Post[] GetReplies(Postkey postkey);
@@ -59,8 +69,8 @@ namespace ForumServer
         /// <summary>
         /// add toPost to a sub forum
         /// </summary>
-        /// <param name="current">the sub forum name - no json!</param>
-        /// <param name="toPost">the post to add json</param>
+        /// <param name="current">the sub forum name</param>
+        /// <param name="toPost">the post to add </param>
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
@@ -69,8 +79,8 @@ namespace ForumServer
         /// <summary>
         /// add oldPost as reply to current oldPost
         /// </summary>
-        /// <param name="current">the postkey json of the post to reply to</param>
-        /// <param name="toPost">the reply post in json form</param>
+        /// <param name="current">the postkey  of the post to reply to</param>
+        /// <param name="toPost">the reply post in  form</param>
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
@@ -80,7 +90,7 @@ namespace ForumServer
         /// 
         /// </summary>
         /// <param name="postToUpdate">post key to update</param>
-        /// <param name="originalPost">json of the original postkey</param>
+        /// <param name="originalPost"> of the original postkey</param>
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
