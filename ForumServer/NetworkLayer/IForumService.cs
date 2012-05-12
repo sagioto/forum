@@ -17,22 +17,16 @@ namespace ForumServer
     public interface IForumService
     {
 
-        /// <summary>
-        /// Returns subforums list
-        /// </summary>
-        /// <param name="subforumName"></param>
-        /// <returns>returns a json of an array of the sub forum</returns>
         [OperationContract]
-        string Enter();
-
-
-        [OperationContract]
+        [FaultContract(typeof(Exception))]
         bool Register(String username, String password);
 
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         bool Login(String username, String password);
 
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         bool Logout(String username);
 
         /// <summary>
@@ -40,6 +34,7 @@ namespace ForumServer
         /// </summary>s
         /// <returns>returns a json of an array of the sub forum</returns>
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         string GetSubforumsList();
 
         /// <summary>
@@ -48,6 +43,7 @@ namespace ForumServer
         /// <param name="subforumName">just the name - no json!</param>
         /// <returns>returns a json of the requested sub-forum</returns>
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         string GetSubforum(string subforum);
 
         /// <summary>
@@ -56,6 +52,7 @@ namespace ForumServer
         /// <param name="postkey"></param>
         /// <returns>post json</returns>
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         string GetPost(string postkey);
 
         /// <summary>
@@ -65,6 +62,7 @@ namespace ForumServer
         /// <param name="toPost">the post to add json</param>
         /// <returns></returns>
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         bool Post(string current, string toPost);
 
         /// <summary>
@@ -74,6 +72,7 @@ namespace ForumServer
         /// <param name="toPost">the reply post in json form</param>
         /// <returns></returns>
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         bool Reply(string current, string toPost);
 
         /// <summary>
@@ -83,6 +82,7 @@ namespace ForumServer
         /// <param name="originalPost">json of the original postkey</param>
         /// <returns></returns>
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         bool EditPost(string postToUpdate, string originalPost,string usrname, string password);
 
         /// <summary>
@@ -93,32 +93,41 @@ namespace ForumServer
         /// <param name="password"></param>
         /// <returns></returns>
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         bool RemovePost(string postkey,string username, string password);
 
         #region admin functions
         
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum);
 
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum);
 
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum);
 
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         bool AddSubforum(string adminUsername, string adminPassword, string subforumName);
 
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName);
 
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName);
 
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         int ReportUserTotalPosts(string adminUsername, string adminPassword, string username);
 
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword);
 
         #endregion
@@ -129,6 +138,7 @@ namespace ForumServer
         /// </summary>
         /// <returns></returns>
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         string Subscribe();
 
         /// <summary>
@@ -137,6 +147,7 @@ namespace ForumServer
         /// <param name="message"></param>
         /// <returns></returns>
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         bool AddMessage(string message);
 
         /// <summary>
@@ -144,6 +155,7 @@ namespace ForumServer
         /// </summary>
         /// <returns></returns>
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         bool SubscribeToForum();
 
         /// <summary>
@@ -151,15 +163,18 @@ namespace ForumServer
         /// </summary>
         /// <returns></returns>
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         bool UnsubscribeFromForum();
 
 
 
         // The following methods are only for debugg:
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         string GetData(int value);
 
         [OperationContract]
+        [FaultContract(typeof(Exception))]
         CompositeType GetDataUsingDataContract(CompositeType composite);
 
         #endregion

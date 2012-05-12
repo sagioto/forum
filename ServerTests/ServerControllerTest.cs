@@ -191,7 +191,7 @@ namespace ServerTests
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
             Subforum[] expected = null; // TODO: Initialize to an appropriate value
             Subforum[] actual;
-            actual = target.Enter();
+            actual = target.GetSubforumsList();
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("Verify the correctness of this test method.");
         }

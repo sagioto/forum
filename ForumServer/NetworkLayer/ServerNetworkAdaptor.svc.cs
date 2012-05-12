@@ -17,11 +17,6 @@ namespace ForumServer
         private static ServerController controller = new ServerController();
         private ISerializer serializer = new JsonSerializer();
         
-        public string Enter()
-        {
-            return serializer.Serialize(controller.Enter());
-        }
-
         public bool Register(String username, String password)
         {
             return controller.Register(username, password);
@@ -39,7 +34,7 @@ namespace ForumServer
 
         public string GetSubforumsList()
         {
-            return serializer.Serialize(controller.Enter());
+            return serializer.Serialize(controller.GetSubforumsList());
         }
 
         public string GetSubforum(string subforum)

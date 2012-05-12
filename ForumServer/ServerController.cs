@@ -35,7 +35,7 @@ namespace ForumServer
 
         }
 
-        public Subforum[] Enter()
+        public Subforum[] GetSubforumsList()
         {
             try
             {
