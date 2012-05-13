@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ClientCoreClassDiagram.cd" />
     <None Include="ForumUtils.SharedDataTypes.Post.datasource" />
     <None Include="Service References\ForumService\ForumClientCore.ForumService.CompositeType.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>

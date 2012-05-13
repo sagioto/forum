@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ForumServer.DataLayer.DataBaseAdaptor" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataLayer\DataBaseAdaptor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ForumServer.DataLayer.DataManager" BaseTypeListCollapsed="true">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>IAAhEBAAAAUBABAAAAPAIIEQAQAAADQgECECAgAAAAA=</HashCode>
+      <FileName>DataLayer\DataManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ForumServer.DataLayer.SubforumNotFoundException" Collapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataTypes\Exceptions\SubforumNotFoundException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ForumServer.DataLayer.UserNotFoundException" Collapsed="true">
+    <Position X="5.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataTypes\Exceptions\UserNotFoundException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ForumServer.DataTypes.PostNotFoundException" Collapsed="true">
+    <Position X="5.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataTypes\Exceptions\PostNotFoundException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ForumServer.DataTypes.User">
+    <Position X="13.25" Y="1.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAEAAAABAAAAAAAIQAAACEAAAEAAAADAAAAAgAAAAA=</HashCode>
+      <FileName>DataTypes\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ForumServer.ServerController">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QIBAAAABAAAAKQAAAIAIKIMACQABIAQAAQAyAAACgAA=</HashCode>
+      <FileName>Lib\ServerController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ForumServer.ServerNetworkAdaptor" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>QIECAAABMAAACQEAAEAAIIMECQABACQBAQASABACgAA=</HashCode>
+      <FileName>NetworkLayer\ServerNetworkAdaptor.svc.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.174" Collapsed="true" />
+  </Class>
+  <Class Name="ForumServer.Policy.PolicyManager" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="2.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ABAAAAABAAAAAAAAAAAAAAAAAAAAIAAAAAAACAACAAA=</HashCode>
+      <FileName>Policy\PolicyManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.221" Collapsed="true" />
+  </Class>
+  <Class Name="ForumServer.Security.SecurityManager" BaseTypeListCollapsed="true">
+    <Position X="9.75" Y="2.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AQABFAAAAQAAAAAAIAAAAAAAAACAIAAAAAACCAAAAAA=</HashCode>
+      <FileName>Security\SecurityManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="ForumServer.DataLayer.IDataBaseAdaptor" Collapsed="true">
+    <Position X="11.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataLayer\IDataBaseAdaptor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ForumServer.DataLayer.IDataManager" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAhABAAAAQAABAAAAKAIIEAAQAAADQgECACAgAAAAA=</HashCode>
+      <FileName>DataLayer\IDataManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ForumServer.IForumService" Collapsed="true">
+    <Position X="5.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QIACAAABEAAACQAAAAAAIIMECQABACQAAQASABACgAA=</HashCode>
+      <FileName>NetworkLayer\IForumService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ForumServer.Policy.IPolicyManager" Collapsed="true">
+    <Position X="11.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Policy\IPolicyManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ForumServer.Security.ISecurityManager" Collapsed="true">
+    <Position X="9.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABFAAAAQAAAAAAIAAAAAAAAACAAAAAAAACCAAAAAA=</HashCode>
+      <FileName>Security\ISecurityManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="ForumServer.DataTypes.AuthorizationLevel" Collapsed="true">
+    <Position X="13.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAACAAAAAAAAAAAAAAAAAAAQAAABAAAAAAAAA=</HashCode>
+      <FileName>DataTypes\AuthorizationLevel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ForumServer.DataTypes.UserState" Collapsed="true">
+    <Position X="13.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>DataTypes\UserState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -17,15 +17,31 @@ namespace ForumServer
     [ServiceContract(CallbackContract = typeof(IForumListener))]
     public interface IForumService
     {
-
+        /// <summary>
+        /// register the user to the system
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
         bool Register(String username, String password);
 
+        /// <summary>
+        /// login the user to the system
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
         bool Login(String username, String password);
 
+        /// <summary>
+        /// logout the user to the system
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
         bool Logout(String username);
@@ -39,7 +55,7 @@ namespace ForumServer
         string[] GetSubforumsList();
 
         /// <summary>
-        /// 
+        /// get the posts of the requsted sub forum
         /// </summary>
         /// <param name="subforumName">just the name</param>
         /// <returns>returns the posts of the requested sub forum</returns>
@@ -49,7 +65,7 @@ namespace ForumServer
 
 
         /// <summary>
-        /// postkey contains of user + timestamp in  form
+        /// get post object of the provided postkey
         /// </summary>
         /// <param name="postkey"></param>
         /// <returns>post </returns>
@@ -58,7 +74,7 @@ namespace ForumServer
         Post GetPost(Postkey postkey);
 
         /// <summary>
-        /// postkey contains of user + timestamp in  form
+        /// get the replies of the post with postkey
         /// </summary>
         /// <param name="postkey"></param>
         /// <returns>post </returns>
@@ -67,7 +83,7 @@ namespace ForumServer
         Post[] GetReplies(Postkey postkey);
 
         /// <summary>
-        /// add toPost to a sub forum
+        /// post the provieded post on the sub forum
         /// </summary>
         /// <param name="current">the sub forum name</param>
         /// <param name="toPost">the post to add </param>
@@ -77,7 +93,7 @@ namespace ForumServer
         bool Post(string current, Post toPost);
 
         /// <summary>
-        /// add oldPost as reply to current oldPost
+        /// post the provieded post as a reply on the current post
         /// </summary>
         /// <param name="current">the postkey  of the post to reply to</param>
         /// <param name="toPost">the reply post in  form</param>
@@ -87,7 +103,7 @@ namespace ForumServer
         bool Reply(Postkey current, Post toPost);
 
         /// <summary>
-        /// 
+        /// edit the post
         /// </summary>
         /// <param name="postToUpdate">post key to update</param>
         /// <param name="originalPost"> of the original postkey</param>
@@ -97,7 +113,7 @@ namespace ForumServer
         bool EditPost(Postkey oldPost, Post newPost, string usrname, string password);
 
         /// <summary>
-        /// 
+        /// remove the post
         /// </summary>
         /// <param name="postkey"></param>
         /// <param name="username"></param>
@@ -108,35 +124,96 @@ namespace ForumServer
         bool RemovePost(Postkey postkey, string username, string password);
 
         #region admin functions
-        
+        /// <summary>
+        /// add a moderator to a sub forum
+        /// </summary>
+        /// <param name="adminUsername"></param>
+        /// <param name="adminPassword"></param>
+        /// <param name="usernameToAdd"></param>
+        /// <param name="subforum"></param>
+        /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
         bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum);
 
+        /// <summary>
+        /// remove a moderator to a sub forum
+        /// </summary>
+        /// <param name="adminUsername"></param>
+        /// <param name="adminPassword"></param>
+        /// <param name="usernameToRemove"></param>
+        /// <param name="subforum"></param>
+        /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
         bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum);
 
+        /// <summary>
+        /// replace a moderator to a sub forum
+        /// </summary>
+        /// <param name="adminUsername"></param>
+        /// <param name="adminPassword"></param>
+        /// <param name="usernameToAdd"></param>
+        /// <param name="usernameToRemove"></param>
+        /// <param name="subforum"></param>
+        /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
         bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum);
-
+      
+        /// <summary>
+        /// add a subforum
+        /// </summary>
+        /// <param name="adminUsername"></param>
+        /// <param name="adminPassword"></param>
+        /// <param name="subforumName"></param>
+        /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
         bool AddSubforum(string adminUsername, string adminPassword, string subforumName);
 
+
+        /// <summary>
+        /// remove a sub forum
+        /// </summary>
+        /// <param name="adminUsername"></param>
+        /// <param name="adminPassword"></param>
+        /// <param name="subforumName"></param>
+        /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
         bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName);
 
+        /// <summary>
+        /// report total messages in sub forums
+        /// </summary>
+        /// <param name="adminUsername"></param>
+        /// <param name="adminPassword"></param>
+        /// <param name="subforumName"></param>
+        /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
         int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName);
 
+        /// <summary>
+        /// report the total posts of a user
+        /// </summary>
+        /// <param name="adminUsername"></param>
+        /// <param name="adminPassword"></param>
+        /// <param name="username"></param>
+        /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
         int ReportUserTotalPosts(string adminUsername, string adminPassword, string username);
 
+        /// <summary>
+        /// relace the current admin
+        /// </summary>
+        /// <param name="oldAdminUsername"></param>
+        /// <param name="oldAdminPassword"></param>
+        /// <param name="newAdminUsername"></param>
+        /// <param name="newAdminPassword"></param>
+        /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
         bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword);
