@@ -286,8 +286,9 @@ namespace ForumServer
             {
                 log.Info("got request to add moderator " + usernameToAdd + " to " + subforum);
 
-                if (securityManager.AuthenticateAdmin(adminUsername, adminPassword)
-                && policyManager.AddModerator(usernameToAdd, subforum))
+                Result res = securityManager.AuthenticateAdmin(adminUsername, adminPassword)
+                             | policyManager.AddModerator(usernameToAdd, subforum);
+                if (res == Result.OK)
                 {
                     dataManager.GetSubforum(subforum).ModeratorsList.Add(usernameToAdd);
                     User user = dataManager.GetUser(usernameToAdd);
@@ -296,9 +297,9 @@ namespace ForumServer
                         user.Level = AuthorizationLevel.MODERATOR;
                         dataManager.UpdateUser(user);
                     }
-                    return true;
+                    return Result.OK;
                 }
-                else return false;
+                else return res;
 
             }
             catch (Exception e)
@@ -314,9 +315,9 @@ namespace ForumServer
             try
             {
                 log.Info("got request to remove moderator " + usernameToRemove + " to " + subforum);
-
-                if ((securityManager.AuthenticateAdmin(adminUsername, adminPassword)
-                    | policyManager.RemoveModerator(usernameToRemove, subforum)) == Result.OK)
+                Result res = securityManager.AuthenticateAdmin(adminUsername, adminPassword)
+                                | policyManager.RemoveModerator(usernameToRemove, subforum);
+                if (res == Result.OK)
                 {
                     dataManager.GetSubforum(subforum).ModeratorsList.Remove(usernameToRemove);
                     bool moderator = CheckIfModerator(usernameToRemove);
@@ -326,9 +327,9 @@ namespace ForumServer
                         user.Level = AuthorizationLevel.MEMBER;
                         dataManager.UpdateUser(user);
                     }
-                    return true;
+                    return Result.OK;
                 }
-                else return false;
+                else return res;
             }
             catch (Exception e)
             {
@@ -373,8 +374,8 @@ namespace ForumServer
                 log.Info("got request to replace moderator" + usernameToRemove + " with " + usernameToAdd);
 
                 return policyManager.ChangeModerator(usernameToRemove, usernameToAdd, subforum)
-        && RemoveModerator(adminUsername, adminPassword, usernameToRemove, subforum)
-        && AddModerator(adminUsername, adminPassword, usernameToAdd, subforum);
+                        | RemoveModerator(adminUsername, adminPassword, usernameToRemove, subforum)
+                        | AddModerator(adminUsername, adminPassword, usernameToAdd, subforum);
 
             }
             catch (Exception e)
@@ -392,8 +393,12 @@ namespace ForumServer
             {
                 log.Info("got request to add sub forum " + subforumName);
 
-                return securityManager.AuthenticateAdmin(adminUsername, adminPassword)
-            && dataManager.AddSubforum(new Subforum(subforumName));     //TODO - Its better that you will build the Subforum. No more required fields (like at least one Moderator?)
+                Result res = securityManager.AuthenticateAdmin(adminUsername, adminPassword);
+                if (res == Result.OK)
+                    if (dataManager.AddSubforum(new Subforum(subforumName)))
+                        return Result.OK;
+                    else return Result.ENTRY_EXISTS;
+                else return res;
 
             }
             catch (Exception e)
@@ -411,8 +416,12 @@ namespace ForumServer
             {
                 log.Info("got request add sub forum " + subforumName);
 
-                return securityManager.AuthenticateAdmin(adminUsername, adminPassword)
-                    && dataManager.RemoveSubforum(subforumName);
+                Result res = securityManager.AuthenticateAdmin(adminUsername, adminPassword);
+                if (res == Result.OK)
+                    if (dataManager.RemoveSubforum(subforumName))
+                        return Result.OK;
+                    else return Result.SUB_FORUM_NOT_FOUND;
+                else return res;
 
             }
             catch (Exception e)
@@ -430,7 +439,8 @@ namespace ForumServer
             {
                 log.Info("got request to replace admin");
 
-                if (securityManager.AuthenticateAdmin(oldAdminUsername, oldAdminPassword))
+                Result res = securityManager.AuthenticateAdmin(oldAdminUsername, oldAdminPassword);
+                if (res == Result.OK)
                 {
                     User newAdmin;
                     try
@@ -449,9 +459,11 @@ namespace ForumServer
                     else
                         oldAdmin.Level = AuthorizationLevel.MEMBER;
                     newAdmin.Level = AuthorizationLevel.ADMIN;
-                    return dataManager.SetAdmin(newAdmin);
+                    if (dataManager.SetAdmin(newAdmin))
+                        return Result.OK;
+                    else return Result.ENTRY_EXISTS;
                 }
-                else return false;
+                else return res;
 
             }
             catch (Exception e)
@@ -469,7 +481,7 @@ namespace ForumServer
             {
                 log.Info("got request to report sub forum total posts on " + subforumName);
 
-                if (securityManager.AuthenticateAdmin(adminUsername, adminPassword))
+                if (securityManager.AuthenticateAdmin(adminUsername, adminPassword) == Result.OK)
                     return dataManager.GetSubforum(subforumName).TotalPosts;
                 return -1;
 
@@ -489,7 +501,7 @@ namespace ForumServer
             {
                 log.Info("got request to report total posts of user " + username);
 
-                if (securityManager.AuthenticateAdmin(adminUsername, adminPassword))
+                if (securityManager.AuthenticateAdmin(adminUsername, adminPassword) == Result.OK)
                     return dataManager.GetAllPosts().Where(post => post.Key.Username.Equals(username)).Count();
                 return -1;
 
