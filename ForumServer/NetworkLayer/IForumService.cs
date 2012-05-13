@@ -17,6 +17,7 @@ namespace ForumServer
     [ServiceContract(CallbackContract = typeof(IForumListener))]
     public interface IForumService
     {
+ 
         #region user functions
         /// <summary>
         /// register the user to the system
@@ -240,8 +241,6 @@ namespace ForumServer
 
         #endregion
 
-
- 
     }
 
     [DataContract]
@@ -254,7 +253,9 @@ namespace ForumServer
         POST_NOT_FOUND = 0x04,
         SUB_FORUM_NOT_FOUND = 0x08,
         INSUFFICENT_PERMISSIONS = 0x16,
-        ADMIN_PERMISSIONS_NEEDED = 0x32
+        ADMIN_PERMISSIONS_NEEDED = 0x32,
+        SECURITY_ERROR = 0x64,
+        POLICY_REJECTED = 0x128
     }
 
 }

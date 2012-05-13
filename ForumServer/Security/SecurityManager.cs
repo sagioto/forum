@@ -27,7 +27,7 @@ namespace ForumServer.Security
         }
 
 
-        public bool AuthorizedRegister(string username, string password)
+        public Result AuthorizedRegister(string username, string password)
         {
             User user = dataManager.GetUser(username);
             if (user != null)
@@ -37,11 +37,11 @@ namespace ForumServer.Security
                 user = new User(username, password);
                 user.Level = AuthorizationLevel.MEMBER;
                 dataManager.UpdateUser(user);
-                return true;
+                return Result.OK;
             }
         }
 
-        public bool AuthorizedLogin(string username, string password)
+        public Result AuthorizedLogin(string username, string password)
         {
             User user = dataManager.GetUser(username);
             if (user != null && user.Password.Equals(password)
@@ -49,31 +49,31 @@ namespace ForumServer.Security
             {
                 user.CurrentState = UserState.Login;
                 dataManager.UpdateUser(user);
-                return true;
+                return Result.OK;
             }
             else return false;
         }
 
-        public bool AuthorizedLogout(string username)
+        public Result AuthorizedLogout(string username)
         {
             User user = dataManager.GetUser(username);
             if (IsUserLoggendIn(user))
             {
                 user.CurrentState = UserState.Logout;
                 dataManager.UpdateUser(user);
-                return true;
+                return Result.OK;
             }
             else return false;
         }
 
-        public bool IsLoggedin(string username)
+        public Result IsLoggedin(string username)
         {
             User user = dataManager.GetUser(username);
             return (IsUserLoggendIn(user));
         }
 
-        
-        public bool IsAuthorizedToPost(string username, string subforum)
+
+        public Result IsAuthorizedToPost(string username, string subforum)
         {
             //TODO check if sub forum should be considered
             User user = dataManager.GetUser(username);
@@ -81,7 +81,7 @@ namespace ForumServer.Security
                 && IsUserLoggendIn(user));
         }
 
-        public bool IsAuthorizedToEdit(string username, Postkey postkey, string password)
+        public Result IsAuthorizedToEdit(string username, Postkey postkey, string password)
         {
             User user = dataManager.GetUser(username);
             Post post = dataManager.GetPost(postkey);
@@ -94,7 +94,7 @@ namespace ForumServer.Security
                     || (user.Level.Equals(AuthorizationLevel.ADMIN)));                
         }
 
-        public bool IsAuthorizedToEditSubforums(string username)
+        public Result IsAuthorizedToEditSubforums(string username)
         {
             //TODO check if this is the right condition
             User user = dataManager.GetUser(username);
@@ -102,13 +102,13 @@ namespace ForumServer.Security
         }
 
 
-        public bool AuthenticateAdmin(string username, string password)
+        public Result AuthenticateAdmin(string username, string password)
         {
             User admin = dataManager.GetAdmin();
             return admin.Password.Equals(password) && admin.Username.Equals(password);
         }
 
-        private static bool IsUserLoggendIn(User user)
+        private static Result IsUserLoggendIn(User user)
         {
             return user != null && user.CurrentState.Equals(UserState.Login);
         }
