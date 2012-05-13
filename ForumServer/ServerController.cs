@@ -186,16 +186,14 @@ namespace ForumServer
             try
             {
                 log.Info("got request to post in sub forum: " + subforum);
-                try
-                {
-                    return CheckPost(post)
-                        && securityManager.IsAuthorizedToPost(post.Key.Username, subforum)
-                        && dataManager.AddPost(post, subforum.ToString());
-                }
-                catch (SubforumNotFoundException)
-                {
-                    return false;
-                }
+                if (!CheckPost(post))
+                    return Result.ILLEGAL_POST;
+                Result res = securityManager.IsAuthorizedToPost(post.Key.Username, subforum);
+                if (res == Result.OK)
+                    if (dataManager.AddPost(post, subforum.ToString()))
+                        return Result.OK;
+                    else return Result.SUB_FORUM_NOT_FOUND;
+                else return res;
             }
             catch (Exception e)
             {
@@ -211,9 +209,14 @@ namespace ForumServer
             try
             {
                 log.Info("got request to reply to post " + currPost);
-                return CheckPost(post)
-                        && securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum)
-                        && dataManager.AddReply(post, currPost);
+                if (!CheckPost(post))
+                    return Result.ILLEGAL_POST;
+                Result res = securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum);
+                if (res == Result.OK)
+                    if (dataManager.AddReply(post, currPost))
+                        return Result.OK;
+                    else return Result.POST_NOT_FOUND;
+                else return res;
             }
             catch (Exception e)
             {
@@ -228,16 +231,20 @@ namespace ForumServer
             try
             {
                 log.Info("got request to edit post " + currPost);
-                return CheckPost(post)
-                    && securityManager.IsAuthorizedToEdit(username, currPost, password)
-                    && dataManager.EditPost(post, currPost);
+                if (!CheckPost(post))
+                    return Result.ILLEGAL_POST;
+                Result res = securityManager.IsAuthorizedToEdit(username, currPost, password);
+                if (res == Result.OK)
+                    if (dataManager.EditPost(post, currPost))
+                        return Result.OK;
+                    else return Result.POST_NOT_FOUND;
+                else return res;
             }
             catch (Exception e)
             {
                 log.Error("failed to edit post " + currPost, e);
                 throw e;
             }
-
         }
 
         public Result RemovePost(Postkey originalPostKey, string username, string password)
@@ -245,9 +252,14 @@ namespace ForumServer
             try
             {
                 log.Info("got request to remove post " + originalPostKey);
-                return securityManager.IsAuthorizedToEdit(username, originalPostKey, password)
-                && policyManager.IsAuthorizedToEdit(originalPostKey, username)
-                && dataManager.RemovePost(originalPostKey);
+                Result res = securityManager.IsAuthorizedToEdit(username, originalPostKey, password)
+                                | policyManager.IsAuthorizedToEdit(originalPostKey, username);
+
+                if (res == Result.OK)
+                    if (dataManager.RemovePost(originalPostKey))
+                        return Result.OK;
+                    else return Result.POST_NOT_FOUND;
+                else return res;
             }
             catch (Exception e)
             {
@@ -257,7 +269,7 @@ namespace ForumServer
 
         }
 
-        private Result CheckPost(ForumUtils.SharedDataTypes.Post post)
+        private bool CheckPost(ForumUtils.SharedDataTypes.Post post)
         {
             return ((post.Body != null && post.Body.Length != 0)
                    || (post.Title != null && post.Title.Length != 0));
@@ -303,8 +315,8 @@ namespace ForumServer
             {
                 log.Info("got request to remove moderator " + usernameToRemove + " to " + subforum);
 
-                if (securityManager.AuthenticateAdmin(adminUsername, adminPassword)
-                 && policyManager.RemoveModerator(usernameToRemove, subforum))
+                if ((securityManager.AuthenticateAdmin(adminUsername, adminPassword)
+                    | policyManager.RemoveModerator(usernameToRemove, subforum)) == Result.OK)
                 {
                     dataManager.GetSubforum(subforum).ModeratorsList.Remove(usernameToRemove);
                     bool moderator = CheckIfModerator(usernameToRemove);
@@ -329,7 +341,7 @@ namespace ForumServer
 
         }
 
-        private Result CheckIfModerator(string usernameToRemove)
+        private bool CheckIfModerator(string usernameToRemove)
         {
 
             try
@@ -430,7 +442,7 @@ namespace ForumServer
                         newAdmin = new User(newAdminUsername, newAdminPassword);
                         dataManager.AddUser(newAdmin);
                     }
-                    
+
                     User oldAdmin = dataManager.GetAdmin();
                     if (CheckIfModerator(oldAdminUsername))
                         oldAdmin.Level = AuthorizationLevel.MODERATOR;
@@ -492,7 +504,7 @@ namespace ForumServer
 
         #endregion
 
-       
+
 
     }
 }
