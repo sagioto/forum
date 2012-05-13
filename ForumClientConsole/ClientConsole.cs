@@ -24,7 +24,7 @@ namespace ForumClientConsole
         /// </summary>
         public ClientConsole()
         {
-            controller = new ClientController();
+            controller = new ClientController(false);
             controller.OnUpdateFromController += new ForumClientCore.NetworkLayer.ClientNetworkAdaptor.OnUpdate(controller_OnUpdateFromServer);
         }
 

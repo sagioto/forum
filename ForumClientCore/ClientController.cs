@@ -46,9 +46,9 @@ namespace ForumClientCore
         /// <summary>
         /// Constructor
         /// </summary>
-        public ClientController()
+        public ClientController(bool GetCallBack)
         {
-            netAdaptor = new ClientNetworkAdaptor();
+            netAdaptor = new ClientNetworkAdaptor(GetCallBack);
             netAdaptor.OnUpdateFromServer += new ClientNetworkAdaptor.OnUpdate(netAdaptor_OnUpdateFromServer);
         }
 
