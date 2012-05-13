@@ -15,6 +15,7 @@ namespace ForumClientCore
         private string loggedAs = "";
         private string loggedPassword = "";
         private Post currentPost = null;
+        private string currentSubForum = "";
 
         public Post CurrentPost
         {
@@ -27,7 +28,7 @@ namespace ForumClientCore
                 currentPost = value;
             }
         }
-        private string currentSubForum = "";
+       
 
         public string CurrentSubForum
         {
@@ -156,23 +157,27 @@ namespace ForumClientCore
 
         public Post[] Back()
         {
-            if (currentPost == null)
-            {
-                currentSubForum = "";
-                return null;
-            }
-            else if (currentPost.ParentPost == null)
-            {
-                currentPost = null;
-                return netAdaptor.GetSubforum(currentSubForum);
-            }
-            else
-            {
-                Post parent = netAdaptor.GetPost(currentPost.ParentPost);
-                currentPost = parent;
-                return netAdaptor.GetReplies(currentPost.Key);
-            }
+                if (currentPost == null)
+                {
+                    currentSubForum = "";
+                    return null;
+                }
+                else if (currentPost.ParentPost == null)
+                {
+                    currentPost = null;
+                    Post[] toReturn = netAdaptor.GetSubforum(currentSubForum);
 
+                    if(toReturn == null)
+                        return new Post[0];
+                    else
+                        return toReturn;
+                }
+                else
+                {
+                    Post parent = netAdaptor.GetPost(currentPost.ParentPost);
+                    currentPost = parent;
+                    return netAdaptor.GetReplies(currentPost.Key);
+                }
         }
 
         public Post[] GetSubforum(String subforumname)
@@ -205,6 +210,13 @@ namespace ForumClientCore
             return netAdaptor.Reply(originalPost, newReply);
         }
 
+        //overload - no need the argument originalPost (can get this info from the field currentPost)
+        public bool Reply(string title, string body)
+        {
+            Post newReply = new Post(new Postkey(loggedAs, DateTime.Now), title, body, currentPost.Key, currentSubForum);
+            return netAdaptor.Reply(currentPost.Key, newReply);
+        }
+
         public bool EditPost(string title, string body)
         {
             Post newPost = new Post(currentPost.Key, title, body, currentPost.ParentPost, currentSubForum);
@@ -213,9 +225,26 @@ namespace ForumClientCore
 
         public bool RemovePost(Postkey postkey)
         {
-            return netAdaptor.RemovePost(postkey, loggedAs, loggedPassword);
+            if (loggedIn)
+                return netAdaptor.RemovePost(postkey, loggedAs, loggedPassword);
+            else
+                return false;
         }
 
+        //overload
+        public bool RemovePost()
+        {
+            if (loggedIn)
+            {
+                Post parentPost = netAdaptor.GetPost(currentPost.ParentPost);
+                bool adapterAnswer =  netAdaptor.RemovePost(currentPost.Key, loggedAs, loggedPassword);
+                currentPost = parentPost;
+                return adapterAnswer;
+            }
+            else
+                return false;
+        }
+        
         public bool AddModerator(string usernameToAdd, string subforum)
         {
             return netAdaptor.AddModerator(loggedAs, loggedPassword, usernameToAdd, subforum);
