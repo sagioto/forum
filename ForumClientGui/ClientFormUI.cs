@@ -22,6 +22,7 @@ namespace ForumClientGui
         List<Post> currentSubforumPosts;
         List<string> subforumsList;
         Post updatedPost;
+        List<Post> currentReplies;
 
         public ClientFormUI()
         {
@@ -164,9 +165,11 @@ namespace ForumClientGui
 
         private void ShowRepliesIndicator(bool p)
         {
+            repliesGrid.Visible = false;
             if (p)
             {
                 repliesIndicator.Text = "Show Replies";
+                repliesIndicator.Enabled = true;
             }
             else
             {
@@ -180,8 +183,8 @@ namespace ForumClientGui
             if (currentPost.HasReplies)
             {
                 repliesIndicator.Text = "Loading...";
-
-                repliesGrid.DataSource = ListToTable(controller.GetReplies(currentPost.Key).ToList<Post>());
+                currentReplies = controller.GetReplies(currentPost.Key).ToList<Post>();
+                repliesGrid.DataSource = ListToTable(currentReplies);
 
                 repliesIndicator.Visible = false;
                 repliesGrid.Visible = true;
@@ -365,8 +368,6 @@ namespace ForumClientGui
                 {
                     e.Result = controller.Reply(currentPost.Key,  ps.Title, ps.Body);
                 }
-                
-
 
             }
             catch (Exception ex)
@@ -478,6 +479,15 @@ namespace ForumClientGui
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             ShowNewPost("", false);
+        }
+
+        private void repliesGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (currentReplies != null)
+            {
+                //List<Post> l = currentPost.Replies.Values.ToList();
+                ShowPost(currentReplies[e.RowIndex]);
+            }
         }
     }
 }

@@ -25,6 +25,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "couldn't register");
             }
 
@@ -39,6 +40,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "couldn't login");
             }
 
@@ -53,6 +55,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "couldn't logout");
             }
 
@@ -67,6 +70,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return null;
                 throw new FaultException<Exception>(e, "couldn't get sub forums list");
             }
 
@@ -80,6 +84,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return null;
                 throw new FaultException<Exception>(e, "couldn't get sub forum");
             }
         }
@@ -92,6 +97,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return null;
                 throw new FaultException<Exception>(e, "couldn't get post");
             }
         }
@@ -105,6 +111,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return null;
                 throw new FaultException<Exception>(e, "couldn't get post");
             }
 
@@ -124,6 +131,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "something went wrong with post");
             }
 
@@ -142,6 +150,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "something went wrong with reply");
             }
 
@@ -155,6 +164,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "somthing went wrong with edit");
             }
 
@@ -170,6 +180,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "somthing went wrong with remove");
             }
 
@@ -186,6 +197,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "couldn't add moderator");
             }
 
@@ -200,6 +212,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "couldn't remove moderator");
             }
 
@@ -214,6 +227,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "couldn't replace moderator");
             }
 
@@ -228,6 +242,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "couldn't add sub forum");
             }
 
@@ -242,6 +257,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "couldn't remove sub forum");
             }
 
@@ -256,6 +272,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return -1;
                 throw new FaultException<Exception>(e, "couldn't get report");
             }
 
@@ -270,6 +287,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return -1;
                 throw new FaultException<Exception>(e, "couldn't get report");
             }
 
@@ -284,6 +302,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "couldn't replace admin");
             }
 
@@ -291,7 +310,7 @@ namespace ForumServer
 
         #endregion
 
-        
+
         private static List<IForumListener> subscribers = new List<IForumListener>();
 
         /// <summary>

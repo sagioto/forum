@@ -6,6 +6,7 @@ using ForumServer.DataTypes;
 using System.Collections.Concurrent;
 using System.Configuration;
 using ForumUtils.SharedDataTypes;
+using System.Threading;
 
 namespace ForumServer.DataLayer
 {
@@ -45,6 +46,7 @@ namespace ForumServer.DataLayer
                     this.AddSubforum(s);
                     for (int j = 0 ; j < numberOfPosts ; j++)
                     {
+                        Thread.Sleep(100);
                         this.AddPost(new Post(new Postkey(adminName, DateTime.Now),
                             "Post" + j + " in Subforum: " + s.Name,"content", null, s.Name), s.Name);
                     }
@@ -359,12 +361,32 @@ namespace ForumServer.DataLayer
             {
                 try
                 {
-                    if (subforumEntry.Value.Posts.ContainsKey(postkey))    // If oldPost is main oldPost in subforumName
+                    foreach (Post p in subforumEntry.Value.Posts.Values)
                     {
-                        returnedPost = subforumsList[subforumEntry.Key].Posts[postkey];
+                        if (p.Key.CompareTo(postkey) == 0)
+                        {
+                            returnedPost = p;
+                            break;
+
+                        }
                     }
-                    else    // If oldPost is not main oldPost, search oldPost in replies & update
+                    if (returnedPost != null)
                     {
+                        break;
+                    }
+                    else
+                    {
+
+                    
+                       
+                    //if (subforumEntry.Value.Posts.ContainsKey(postkey))    // If oldPost is main oldPost in subforumName
+                    //{
+                    //    returnedPost = subforumsList[subforumEntry.Key].Posts[postkey];
+                    //    break;
+                    //}
+                    //else    // If oldPost is not main oldPost, search oldPost in replies & update
+
+                    //{
                         GetReply(postkey, subforumsList[subforumEntry.Key].Posts, out returnedPost);
                     }
                 }
@@ -438,6 +460,7 @@ namespace ForumServer.DataLayer
             if (postsList.ContainsKey(postkey))
             {
                 returnedPost = postsList[postkey];
+                return;
             }
             else
             {

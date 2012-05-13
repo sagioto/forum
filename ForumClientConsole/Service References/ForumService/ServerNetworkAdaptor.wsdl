@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ServerNetworkAdaptor" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ServerNetworkAdaptor" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsp:Policy wsu:Id="WSDualHttpBinding_IForumService_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -1414,75 +1414,6 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IForumService_Subscribe_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IForumService_Subscribe_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IForumService_Subscribe_FaultExceptionFault_Fault">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
   <wsp:Policy wsu:Id="WSDualHttpBinding_IForumService_SubscribeToForum_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -1964,15 +1895,6 @@
   <wsdl:message name="IForumService_ReplaceAdmin_FaultExceptionFault_FaultMessage">
     <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q19:FaultException" />
   </wsdl:message>
-  <wsdl:message name="IForumService_Subscribe_InputMessage">
-    <wsdl:part name="parameters" element="tns:Subscribe" />
-  </wsdl:message>
-  <wsdl:message name="IForumService_Subscribe_OutputMessage">
-    <wsdl:part name="parameters" element="tns:SubscribeResponse" />
-  </wsdl:message>
-  <wsdl:message name="IForumService_Subscribe_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q20:FaultException" />
-  </wsdl:message>
   <wsdl:message name="IForumService_SubscribeToForum_InputMessage">
     <wsdl:part name="parameters" element="tns:SubscribeToForum" />
   </wsdl:message>
@@ -1980,7 +1902,7 @@
     <wsdl:part name="parameters" element="tns:SubscribeToForumResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_SubscribeToForum_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q21:FaultException" />
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q20:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_UnsubscribeFromForum_InputMessage">
     <wsdl:part name="parameters" element="tns:UnsubscribeFromForum" />
@@ -1989,7 +1911,7 @@
     <wsdl:part name="parameters" element="tns:UnsubscribeFromForumResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_UnsubscribeFromForum_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q22:FaultException" />
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q21:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_GetData_InputMessage">
     <wsdl:part name="parameters" element="tns:GetData" />
@@ -1998,7 +1920,7 @@
     <wsdl:part name="parameters" element="tns:GetDataResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_GetData_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q23:FaultException" />
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q22:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_GetDataUsingDataContract_InputMessage">
     <wsdl:part name="parameters" element="tns:GetDataUsingDataContract" />
@@ -2007,7 +1929,7 @@
     <wsdl:part name="parameters" element="tns:GetDataUsingDataContractResponse" />
   </wsdl:message>
   <wsdl:message name="IForumService_GetDataUsingDataContract_FaultExceptionFault_FaultMessage">
-    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q24:FaultException" />
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q23:FaultException" />
   </wsdl:message>
   <wsdl:message name="IForumService_onUpdate_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:onUpdate" />
@@ -2107,11 +2029,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IForumService/ReplaceAdmin" message="tns:IForumService_ReplaceAdmin_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IForumService/ReplaceAdminResponse" message="tns:IForumService_ReplaceAdmin_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IForumService/ReplaceAdminFaultExceptionFault" name="FaultExceptionFault" message="tns:IForumService_ReplaceAdmin_FaultExceptionFault_FaultMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="Subscribe">
-      <wsdl:input wsaw:Action="http://tempuri.org/IForumService/Subscribe" message="tns:IForumService_Subscribe_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IForumService/SubscribeResponse" message="tns:IForumService_Subscribe_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IForumService/SubscribeFaultExceptionFault" name="FaultExceptionFault" message="tns:IForumService_Subscribe_FaultExceptionFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="SubscribeToForum">
       <wsdl:input wsaw:Action="http://tempuri.org/IForumService/SubscribeToForum" message="tns:IForumService_SubscribeToForum_InputMessage" />
@@ -2422,21 +2339,6 @@
       </wsdl:output>
       <wsdl:fault name="FaultExceptionFault">
         <wsp:PolicyReference URI="#WSDualHttpBinding_IForumService_ReplaceAdmin_FaultExceptionFault_Fault" />
-        <soap12:fault use="literal" name="FaultExceptionFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="Subscribe">
-      <soap12:operation soapAction="http://tempuri.org/IForumService/Subscribe" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IForumService_Subscribe_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IForumService_Subscribe_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="FaultExceptionFault">
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IForumService_Subscribe_FaultExceptionFault_Fault" />
         <soap12:fault use="literal" name="FaultExceptionFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
