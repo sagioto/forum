@@ -439,7 +439,7 @@ namespace ForumServer
                 log.Info("got request to report total posts of user " + username);
 
                 if (securityManager.AuthenticateAdmin(adminUsername, adminPassword))
-                    return dataManager.GetAllPosts().Select(post => post.Key.Username.Equals(username)).Count(); ;
+                    return dataManager.GetAllPosts().Where(post => post.Key.Username.Equals(username)).Count();
                 return -1;
 
             }
