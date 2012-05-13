@@ -69,7 +69,7 @@ namespace ForumTests
 
             Assert.IsTrue(cc.Register("alice", "123456"));
 
-            //login tests
+            //login tests - torture test
             for (int i = 0; i < 100; i++)
             {
                 // try to register twice with same userName
@@ -106,24 +106,30 @@ namespace ForumTests
             cc.Register("test1", "123456");
             cc.Login("test1", "123456");
 
-            Assert.IsInstanceOfType(cc.GetSubforumsList(), typeof(String[]));
+            //Assert.IsInstanceOfType(cc.GetSubforumsList(), typeof(String[]));
 
-            //string[] SubForumArray = cc.GetSubforumsList();
+            string[] SubForumArray = cc.GetSubforumsList();
 
-            //Console.WriteLine("start");
-            //for (int i = 0; i < SubForumArray.Length; i++)
-            //{
-            //    Assert.IsTrue(cc.Post(SubForumArray[i], "title" + i, "body" + i)); //post message in all sub forums
-            //    Console.WriteLine(SubForumArray[i]);
-            //}
-            //Console.WriteLine("end");
-            //Assert.IsFalse(cc.Post("XXXYYYZZZ", "badTitle", "badBody"));//post message in sub forum that isn"t exists
+            for (int i = 0; i < SubForumArray.Length; i++)
+            {
+                Assert.IsTrue(cc.Post(SubForumArray[i], "title" + i, "body" + i)); //post message in all sub forums
+            }
 
+            Assert.IsFalse(cc.Post("XXXYYYZZZ", "badTitle", "badBody"));//post message in sub forum that isn"t exists
+
+        }
+        [TestMethod]
+        public void UserIntegration2()
+        {
+            //edit by th writer
+            //edit by admin
+            //edit by moderator
         }
 
         [TestMethod]
         public void UserIntegration1()
         {
+
             ClientController cc1 = new ClientController();
       
             cc1.Login("admin", "admin");
@@ -136,7 +142,6 @@ namespace ForumTests
             ClientController cc3 = new ClientController();
             cc2.Register("test3", "123456");
             cc2.Login("test3", "123456");
-
 
             //try to add moderator by non-admin
             Assert.IsFalse(cc2.AddModerator("test2", "Woman"));
@@ -155,15 +160,16 @@ namespace ForumTests
             cc1.ReplaceModerator("test3", "test2", "Woman");
 
             //try to edit message by non-moderator
-            Assert.IsFalse(cc2.EditPost(null, "hehe", "bebe"), "hellow evil world");
+            Assert.IsFalse(cc2.EditPost("hehe", "bebe"), "hellow evil world");
 
             //try to add subform by non-admin
-            Assert.IsFalse(cc2.AddSubforum(null, null, "badSubForum"));
+            Assert.IsFalse(cc2.AddSubforum("badSubForum"));
 
             //try to add subform by admin
-            Assert.IsTrue(cc1.AddSubforum(null, null, "bestFrum"));
+            Assert.IsTrue(cc1.AddSubforum("bestFrum"));
 
         }
+
         [TestMethod]
         public void UserIntegration2()
         {
@@ -182,10 +188,10 @@ namespace ForumTests
             cc2.Post("Woman", "title1", "body1");
             
             //try to edit message not by the writer, admin or moderator
-            Assert.IsFalse(cc3.EditPost(null, "BadTitle", "BadBody"));
+            Assert.IsFalse(cc3.EditPost("BadTitle", "BadBody"));
 
             //try to edit message by admin
-            Assert.IsTrue(cc1.EditPost(null, "GoodTitle", "GoodBody"));
+            Assert.IsTrue(cc1.EditPost("GoodTitle", "GoodBody"));
 
             ClientController cc4 = new ClientController();
             cc1.ReplaceAdmin("newAdmin", "newAdmin"); //the newAdmin will create at the server
@@ -200,16 +206,16 @@ namespace ForumTests
             //      then he will be just the relevant forum moderator (and no admin).
 
             //try to create subform by non-admin
-            Assert.IsFalse(cc1.AddSubforum(null, null, "badbadForum"));
+            Assert.IsFalse(cc1.AddSubforum("badbadForum"));
             
-            //try to moderate message by non-admin or non moderator
-            Assert.IsFalse(cc1.EditPost(null, "xxx", "yyy"));
+            //try to edit message by non-admin or non moderator
+            Assert.IsFalse(cc1.EditPost("xxx", "yyy"));
             
             //try to remove non existing subforum (by admin)
-            Assert.IsFalse(cc4.RemoveSubforum(null, null, "Forums"));
+            Assert.IsFalse(cc4.RemoveSubforum("Forums"));
 
             //try to remove subforum by non-admin
-            Assert.IsFalse(cc1.RemoveSubforum(null, null, "Woman"));
+            Assert.IsFalse(cc1.RemoveSubforum("Woman"));
         }
 
     }

@@ -52,6 +52,12 @@ namespace ForumClientCore
             netAdaptor.OnUpdateFromServer += new ClientNetworkAdaptor.OnUpdate(netAdaptor_OnUpdateFromServer);
         }
 
+        public ClientController()
+        {
+            netAdaptor = new ClientNetworkAdaptor();
+            netAdaptor.OnUpdateFromServer += new ClientNetworkAdaptor.OnUpdate(netAdaptor_OnUpdateFromServer);
+        }
+
 
         /// <summary>
         /// This method is an example of using NetworkAdaptor
@@ -138,7 +144,14 @@ namespace ForumClientCore
             }
             Postkey newKey = new Postkey(loggedAs, DateTime.Now);
             Post newPost = new Post(newKey, title, body, null, subForumName);
-            return netAdaptor.Post(subForumName, newPost);
+            try
+            {
+                return netAdaptor.Post(subForumName, newPost);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public Post[] Back()
@@ -168,14 +181,22 @@ namespace ForumClientCore
             if (subForum != null)
             {
                 currentSubForum = subforumname;
+                currentPost = null;
             }
             return subForum;
         }
 
         public Post[] GetReplies(Postkey postkey)
         {
-            currentPost = netAdaptor.GetPost(postkey);
-            return netAdaptor.GetReplies(postkey);
+            try
+            {
+                currentPost = netAdaptor.GetPost(postkey);
+                return netAdaptor.GetReplies(postkey);
+            }
+            catch (FaultException e)
+            {
+                throw e;
+            }
         }
 
         public bool Reply(Postkey originalPost, string title, string body)
