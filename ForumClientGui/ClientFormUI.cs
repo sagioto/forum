@@ -27,7 +27,7 @@ namespace ForumClientGui
         {
             InitializeComponent();
 
-            controller = new ClientController();
+            controller = new ClientController(true);
             controller.OnUpdateFromController += new ForumClientCore.NetworkLayer.ClientNetworkAdaptor.OnUpdate(controller_OnUpdateFromServer);
 
             currentPost = null;

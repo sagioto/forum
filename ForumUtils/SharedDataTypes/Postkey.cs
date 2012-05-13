@@ -71,39 +71,10 @@ namespace ForumUtils.SharedDataTypes
         }
         #endregion
 
-        //public bool Equals(Postkey otherPk)
-        //{
-        //    return (this.username == otherPk.Username && this.time.ToString() == otherPk.Time.ToString());
-        //}
-
-        //public bool Equals(object x, object y)
-        //{
-        //    Postkey pk1 = (Postkey)x;
-        //    Postkey pk2 = (Postkey)y;
-        //    return (pk1.username == pk2.Username && pk1.time.ToString() == pk2.Time.ToString());
-        //}
-
-        //public int GetHashCode(object obj)
-        //{
-        //    return ((Postkey)obj).Time.Minute;  //TODO Think about it again
-        //}
-
-        ////TODO - Only for test
-        //public int Compare(object x, object y)
-        //{
-        //    Postkey pk1 = (Postkey)x;
-        //    Postkey pk2 = (Postkey)y;
-        //    if (pk1.username == pk2.Username && pk1.time.ToString() == pk2.Time.ToString())
-        //        return 0;
-        //    else
-        //    {
-        //        return 1;
-        //    }
-        //}
 
         public bool Equals(Postkey otherPk)
         {
-            return (this.username == otherPk.Username && this.time.ToString() == otherPk.Time.ToString());
+            return ((this.username == otherPk.Username) && (this.time.CompareTo(otherPk.Time) == 0));
         }
     }
 }

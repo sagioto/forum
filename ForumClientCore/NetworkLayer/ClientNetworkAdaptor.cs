@@ -22,7 +22,7 @@ namespace ForumClientCore.NetworkLayer
         /// <summary>
         /// Constructor
         /// </summary>
-        public ClientNetworkAdaptor()
+        public ClientNetworkAdaptor(bool GetCallBack)
         {
             // Network listener settings
             netListener = new ClientNetworkListener();
@@ -31,8 +31,10 @@ namespace ForumClientCore.NetworkLayer
             // Web Service settings
             InstanceContext context = new InstanceContext(netListener);     // Sending IntanceContex to Server that it will be able to make callbacks
             webService = new ForumServiceClient(context);
-            
-            webService.SubscribeToForum();  // Subscribing to Forum in order to get callbacks
+            if (GetCallBack)
+            {
+                webService.SubscribeToForum();  // Subscribing to Forum in order to get callbacks
+            }
         }
 
         /// <summary>

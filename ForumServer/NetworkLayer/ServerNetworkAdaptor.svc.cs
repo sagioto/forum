@@ -142,7 +142,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "somthing went wrong with reply");
+                throw new FaultException<Exception>(e, "something went wrong with reply");
             }
 
         }

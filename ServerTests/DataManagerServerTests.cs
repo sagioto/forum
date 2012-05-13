@@ -98,7 +98,7 @@ namespace ServerTests
             DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
             target.AddSubforum(new Subforum("subforum"));
             Postkey pk = new Postkey("dor", DateTime.Now);
-            target.AddPost(new Post(pk, "Post","", null, null), "subforumName");
+            target.AddPost(new Post(pk, "Post", "", null, "subforum"), "subforum");
             //Post reply = new Post(new Postkey("dor", DateTime.Now), "Reply", null, null);
             Post reply = new Post(new Postkey("dor222", pk.Time), "Reply", "", null, null);
             reply.Body = "reply body";
