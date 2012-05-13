@@ -359,6 +359,10 @@ namespace ForumServer.DataLayer
             returnedPost = null;
             foreach (KeyValuePair<string, Subforum> subforumEntry in subforumsList)
             {
+                if (returnedPost != null)
+                {
+                    break;
+                }
                 try
                 {
                     foreach (Post p in subforumEntry.Value.Posts.Values)
@@ -388,6 +392,8 @@ namespace ForumServer.DataLayer
 
                     //{
                         GetReply(postkey, subforumsList[subforumEntry.Key].Posts, out returnedPost);
+                        if (returnedPost != null)
+                            break;
                     }
                 }
                 catch (Exception ex)
@@ -457,18 +463,33 @@ namespace ForumServer.DataLayer
         private void GetReply(Postkey postkey, Dictionary<Postkey, Post> postsList, out Post returnedPost)
         {
             returnedPost = null;
-            if (postsList.ContainsKey(postkey))
+            foreach (Post p in postsList.Values)
             {
-                returnedPost = postsList[postkey];
-                return;
-            }
-            else
-            {
-                foreach (Post reply in postsList.Values)
+                if (p.Key.CompareTo(postkey) == 0)
                 {
-                    GetReply(postkey, reply.Replies, out returnedPost);
+                    returnedPost = p;
+                    break;
                 }
             }
+            if (returnedPost != null)
+            {
+                return;
+            }
+            //if (postsList.ContainsKey(postkey))
+            //{
+            //    returnedPost = postsList[postkey];
+            //    return;
+            //}
+            //else
+            //{
+                foreach (Post reply in postsList.Values)
+                {
+                    if (returnedPost == null)
+                    {
+                        GetReply(postkey, reply.Replies, out returnedPost);
+                    }
+                }
+            //}
         }
 
         private bool UpdateReply(Post replyToUpdate, Dictionary<Postkey, Post> postsList)

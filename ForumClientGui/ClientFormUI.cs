@@ -183,7 +183,16 @@ namespace ForumClientGui
             if (currentPost.HasReplies)
             {
                 repliesIndicator.Text = "Loading...";
-                currentReplies = controller.GetReplies(currentPost.Key).ToList<Post>();
+                try
+                {
+                    currentReplies = controller.GetReplies(currentPost.Key).ToList<Post>();
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+                
                 repliesGrid.DataSource = ListToTable(currentReplies);
 
                 repliesIndicator.Visible = false;
