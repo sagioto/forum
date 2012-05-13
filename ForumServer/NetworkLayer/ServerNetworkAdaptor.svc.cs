@@ -124,7 +124,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "somthing went wrong with post");
+                throw new FaultException<Exception>(e, "something went wrong with post");
             }
 
         }
@@ -142,7 +142,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "somthing went wrong with reply");
+                throw new FaultException<Exception>(e, "something went wrong with reply");
             }
 
         }
@@ -291,11 +291,7 @@ namespace ForumServer
 
         #endregion
 
-        public string Subscribe()
-        {
-            throw new NotImplementedException();
-        }
-
+        
         private static List<IForumListener> subscribers = new List<IForumListener>();
 
         /// <summary>

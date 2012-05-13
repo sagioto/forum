@@ -59,5 +59,19 @@ namespace ForumClientGui.Properties {
                 resourceCulture = value;
             }
         }
+        
+        internal static System.Drawing.Bitmap newPost {
+            get {
+                object obj = ResourceManager.GetObject("newPost", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap onUpdate {
+            get {
+                object obj = ResourceManager.GetObject("onUpdate", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

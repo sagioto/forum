@@ -3,6 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting.Web;
 using ForumUtils.SharedDataTypes;
+using System.Threading;
+using ForumServer.DataLayer;
 
 namespace ServerTests
 {
@@ -73,18 +75,64 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
+        public void ReportUserTotalPostsFalseTest()
+        {
+            ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
+            string adminUsername = "admin"; // TODO: Initialize to an appropriate value
+            string adminPassword = "admin"; // TODO: Initialize to an appropriate value
+            string username = "some1111"; // TODO: Initialize to an appropriate value
+            target.Register(username, username);
+            target.Login(username, username);
+            int expected = 0; // TODO: Initialize to an appropriate value
+            int actual;
+            actual = target.ReportUserTotalPosts(adminUsername, adminPassword, username);
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        /// <summary>
+        ///A test for ReportUserTotalPosts
+        ///</summary>
+        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
+        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
+        // whether you are testing a page, web service, or a WCF service.
+        [TestMethod()]
         public void ReportUserTotalPostsTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
             string adminUsername = "admin"; // TODO: Initialize to an appropriate value
             string adminPassword = "admin"; // TODO: Initialize to an appropriate value
-            string username = "some"; // TODO: Initialize to an appropriate value
+            string username = "some1111"; // TODO: Initialize to an appropriate value
             target.Register(username, username);
             target.Login(username, username);
-
-            int expected = 0; // TODO: Initialize to an appropriate value
+            for (int i = 0; i < 5; i++)
+            {
+                target.Post("Cars", new Post(new Postkey(username, DateTime.Now), "dlasjf", "asdfad", null, "Cars"));
+                Thread.Sleep(1);
+            }
+            int expected = 5; // TODO: Initialize to an appropriate value
             int actual;
             actual = target.ReportUserTotalPosts(adminUsername, adminPassword, username);
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        ///A test for ReportSubForumTotalPosts
+        ///</summary>
+        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
+        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
+        // whether you are testing a page, web service, or a WCF service.
+        [TestMethod()]
+        [ExpectedException(typeof(SubforumNotFoundException), "no sub forum found")]
+        public void ReportSubForumTotalPostsFalseTest()
+        {
+            ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
+            string adminUsername = "admin"; // TODO: Initialize to an appropriate value
+            string adminPassword = "admin"; // TODO: Initialize to an appropriate value
+            string subforumName = "Cats"; // TODO: Initialize to an appropriate value
+            int expected = 0; // TODO: Initialize to an appropriate value
+            int actual;
+            actual = target.ReportSubForumTotalPosts(adminUsername, adminPassword, subforumName);
             Assert.AreEqual(expected, actual);
         }
 
@@ -98,10 +146,10 @@ namespace ServerTests
         public void ReportSubForumTotalPostsTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
-            string adminUsername = string.Empty; // TODO: Initialize to an appropriate value
-            string adminPassword = string.Empty; // TODO: Initialize to an appropriate value
-            string subforumName = string.Empty; // TODO: Initialize to an appropriate value
-            int expected = 0; // TODO: Initialize to an appropriate value
+            string adminUsername = "admin"; // TODO: Initialize to an appropriate value
+            string adminPassword = "admin"; // TODO: Initialize to an appropriate value
+            string subforumName = "Cars"; // TODO: Initialize to an appropriate value
+            int expected = 5; // TODO: Initialize to an appropriate value
             int actual;
             actual = target.ReportSubForumTotalPosts(adminUsername, adminPassword, subforumName);
             Assert.AreEqual(expected, actual);

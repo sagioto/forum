@@ -15,13 +15,43 @@ namespace ForumClientCore
         private string loggedAs = "";
         private string loggedPassword = "";
         private Post currentPost = null;
+
+        public Post CurrentPost
+        {
+            get
+            {
+                return currentPost;
+            }
+            set
+            {
+                currentPost = value;
+            }
+        }
         private string currentSubForum = "";
+
+        public string CurrentSubForum
+        {
+            get
+            {
+                return currentSubForum;
+            }
+            set
+            {
+                currentSubForum = value;
+            }
+        }
 
         public event ClientNetworkAdaptor.OnUpdate OnUpdateFromController;  //Event to be invoked when getting a notify by NetworkAdaptor
 
         /// <summary>
         /// Constructor
         /// </summary>
+        public ClientController(bool GetCallBack)
+        {
+            netAdaptor = new ClientNetworkAdaptor(GetCallBack);
+            netAdaptor.OnUpdateFromServer += new ClientNetworkAdaptor.OnUpdate(netAdaptor_OnUpdateFromServer);
+        }
+
         public ClientController()
         {
             netAdaptor = new ClientNetworkAdaptor();
@@ -114,7 +144,14 @@ namespace ForumClientCore
             }
             Postkey newKey = new Postkey(loggedAs, DateTime.Now);
             Post newPost = new Post(newKey, title, body, null, subForumName);
-            return netAdaptor.Post(subForumName, newPost);
+            try
+            {
+                return netAdaptor.Post(subForumName, newPost);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public Post[] Back()
@@ -144,13 +181,22 @@ namespace ForumClientCore
             if (subForum != null)
             {
                 currentSubForum = subforumname;
+                currentPost = null;
             }
             return subForum;
         }
 
         public Post[] GetReplies(Postkey postkey)
         {
-            return netAdaptor.GetReplies(postkey);
+            try
+            {
+                currentPost = netAdaptor.GetPost(postkey);
+                return netAdaptor.GetReplies(postkey);
+            }
+            catch (FaultException e)
+            {
+                throw e;
+            }
         }
 
         public bool Reply(Postkey originalPost, string title, string body)
@@ -216,4 +262,3 @@ namespace ForumClientCore
         }
     }
 }
-

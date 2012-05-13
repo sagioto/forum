@@ -64,6 +64,7 @@
     <Compile Include="ClientFormUI.Designer.cs">
       <DependentUpon>ClientFormUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="PostSend.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\ForumService\Reference.cs">
@@ -150,6 +151,12 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\onUpdate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\newPost.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -144,13 +144,6 @@ namespace ForumServer
         #endregion
 
         #region not used
-        /// <summary>
-        /// Not used in Version 2.0.
-        /// </summary>
-        /// <returns></returns>
-        [OperationContract]
-        [FaultContract(typeof(FaultException))]
-        string Subscribe();
 
         /// <summary>
         /// Not used

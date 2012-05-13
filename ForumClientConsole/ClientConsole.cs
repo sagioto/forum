@@ -24,7 +24,7 @@ namespace ForumClientConsole
         /// </summary>
         public ClientConsole()
         {
-            controller = new ClientController();
+            controller = new ClientController(false);
             controller.OnUpdateFromController += new ForumClientCore.NetworkLayer.ClientNetworkAdaptor.OnUpdate(controller_OnUpdateFromServer);
         }
 
@@ -52,7 +52,10 @@ namespace ForumClientConsole
                 {
                     case "menu":
                         Console.WriteLine("\nThe available commands are:");
-                        Console.WriteLine("\n\tlist-forums\n\tshow [forum name]\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tquit\n");
+                        Console.WriteLine("\n\tlist-forums\n\tshow-forum [forum name]\n\tshow-replies [post title]\n\tback\n\tedit [post title]\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tremove-post\n\tquit\n\tadmin-menu\n");
+                        break;
+                    case "admin-menu": // TODO add report commands
+                        Console.WriteLine("\n\tadd-moderator\n\tremove-moderator\n\treplace-moderator\n\treplace-admin\n\tadd-forum\n\tremove-forum\n\t");
                         break;
                     case "list-forums":
                         Console.WriteLine("Here is the list of sub-forums:");
@@ -63,7 +66,42 @@ namespace ForumClientConsole
                             i++;
                         }
                         break;
-                    case "show":
+                    case "show-replies":
+                        if (command.Length < 2)
+                        {
+                            Console.WriteLine("show-replies [post title]");
+                            break;
+                        }
+                        Post[] posts;
+                        if (controller.CurrentPost != null)
+                        {
+                            posts = controller.GetReplies(controller.CurrentPost.Key);
+                        }
+                        else
+                        {
+                            posts = controller.GetSubforum(controller.CurrentSubForum);
+                        }
+                        foreach (Post p in posts)
+                        {
+                            if (p.Title.Equals(command[1]))
+                            {
+                                try
+                                {
+                                    Post[] replies = controller.GetReplies(p.Key);
+                                    PrintPostList(replies);
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine("Sorry, can't get the post right now...");
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    case "reply":
+                        Reply();
+                        break;
+                    case "show-forum":
                         if (command.Length < 2)
                         {
                             Console.WriteLine("Usage: show [forum name]");
@@ -81,7 +119,7 @@ namespace ForumClientConsole
                         Logout();
                         break;
                     case "post":
-                        Post();  //TODO Need to support more args - change to Post method
+                        Post();
                         break;
                     case "quit":
                         Logout();
@@ -105,7 +143,46 @@ namespace ForumClientConsole
 
         private void PrintPostList(ForumUtils.SharedDataTypes.Post[] subForumPosts)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+            foreach (Post p in subForumPosts)
+            {
+                sb.Append("***********************************************************************************************\n");
+                sb.Append("*                                                                                             *\n");
+                string empty = "*                                                                                             *\n";
+                string title = empty.Substring(0, empty.Length / 2 - p.Title.Length / 2) + p.Title + empty.Substring((empty.Length / 2) + (p.Title.Length / 2) + 1);
+                sb.Append(title);
+                sb.Append("*                                                                                             *\n");
+                sb.Append("*---------------------------------------------------------------------------------------------*\n");
+                sb.Append("*                                                                                             *\n");
+                string body = empty.Substring(0, empty.Length / 2 - p.Body.Length / 2) + p.Body + empty.Substring((empty.Length / 2) + (p.Body.Length / 2) + 1);
+                sb.Append(body);
+                sb.Append("*                                                                                             *\n");
+            }
+            sb.Append("***********************************************************************************************\n");
+            Console.WriteLine(sb);
+        }
+
+        private void Reply()
+        {
+            Console.WriteLine("Please enter a title to your post");
+            string title = Console.ReadLine();
+            Console.WriteLine("Enter the body of your post");
+            string body = Console.ReadLine();
+            if (controller.CurrentPost == null)
+            {
+                Console.WriteLine("Sorry, you can only reply inside a sub-forum");
+            }
+            else
+            {
+                if(controller.Reply(controller.CurrentPost.Key, title, body))
+                {
+                    Console.WriteLine("Replied to the post successfully!");
+                }
+                else
+                {
+                    Console.WriteLine("Sorry, could not reply. Are you logged in?");
+                }
+            }
         }
 
         private void Post()
@@ -116,13 +193,20 @@ namespace ForumClientConsole
             string title = Console.ReadLine();
             Console.WriteLine("Enter the body of your post");
             string body = Console.ReadLine();
-            if (controller.Post(subForum, title, body))
+            try
             {
-                Console.WriteLine("Posted successfully!");
+                if (controller.Post(subForum, title, body))
+                {
+                    Console.WriteLine("Posted successfully!");
+                }
+                else
+                {
+                    Console.WriteLine("Sorry, could not post. Are you logged in?");
+                }
             }
-            else
+            catch (Exception e)
             {
-                Console.WriteLine("Sorry, could not post. Are you logged in?");
+                Console.WriteLine("Got response from server: " + e.Message);
             }
         }
 

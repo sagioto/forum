@@ -18,7 +18,7 @@ namespace ForumClientCore.NetworkLayer
 
 
         /// <summary>
-        /// This methos is called by Server
+        /// This method is called by Server
         /// </summary>
         /// <param name="message"></param>
         /// <param name="timestamp"></param>

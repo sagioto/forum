@@ -30,11 +30,29 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.linkLabel3 = new System.Windows.Forms.LinkLabel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.onUpdatePictureBox = new System.Windows.Forms.PictureBox();
+            this.loginPanel = new System.Windows.Forms.Panel();
+            this.passTextBox = new System.Windows.Forms.TextBox();
+            this.usernameTextBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.loggedInTitle = new System.Windows.Forms.Label();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.registerLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.newPostPanel = new System.Windows.Forms.Panel();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.label8 = new System.Windows.Forms.Label();
+            this.subforumsComboBox = new System.Windows.Forms.ComboBox();
+            this.sendPostButton = new System.Windows.Forms.LinkLabel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.postTitleTextBox = new System.Windows.Forms.TextBox();
+            this.postBodyTextBox = new System.Windows.Forms.RichTextBox();
+            this.replyToTitle = new System.Windows.Forms.Label();
+            this.backPostLabel = new System.Windows.Forms.LinkLabel();
             this.postsGrid = new System.Windows.Forms.DataGridView();
             this.postPanel = new System.Windows.Forms.Panel();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -48,35 +66,13 @@
             this.repliesIndicator = new System.Windows.Forms.LinkLabel();
             this.repliesGrid = new System.Windows.Forms.DataGridView();
             this.subforumsGrid = new System.Windows.Forms.DataGridView();
-            this.newPostPanel = new System.Windows.Forms.Panel();
-            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.backPostLabel = new System.Windows.Forms.LinkLabel();
-            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-            this.postBodyTextBox = new System.Windows.Forms.RichTextBox();
-            this.postTitleTextBox = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.replyToTitle = new System.Windows.Forms.Label();
-            this.sendPostButton = new System.Windows.Forms.LinkLabel();
-            this.loginPanel = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.usernameTextBox = new System.Windows.Forms.TextBox();
-            this.passTextBox = new System.Windows.Forms.TextBox();
-            this.subforumsComboBox = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.postsGrid)).BeginInit();
-            this.postPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
-            this.splitContainer2.Panel1.SuspendLayout();
-            this.splitContainer2.Panel2.SuspendLayout();
-            this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.repliesGrid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.subforumsGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.onUpdatePictureBox)).BeginInit();
+            this.loginPanel.SuspendLayout();
             this.newPostPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
@@ -86,7 +82,14 @@
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
-            this.loginPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.postsGrid)).BeginInit();
+            this.postPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.repliesGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.subforumsGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -112,8 +115,9 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.pictureBox1);
+            this.splitContainer1.Panel1.Controls.Add(this.onUpdatePictureBox);
             this.splitContainer1.Panel1.Controls.Add(this.loginPanel);
-            this.splitContainer1.Panel1.Controls.Add(this.linkLabel3);
             this.splitContainer1.Panel1.Controls.Add(this.loggedInTitle);
             this.splitContainer1.Panel1.Controls.Add(this.linkLabel2);
             this.splitContainer1.Panel1.Controls.Add(this.linkLabel1);
@@ -130,17 +134,73 @@
             this.splitContainer1.SplitterDistance = 83;
             this.splitContainer1.TabIndex = 4;
             // 
-            // linkLabel3
+            // pictureBox1
             // 
-            this.linkLabel3.AutoSize = true;
-            this.linkLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel3.Location = new System.Drawing.Point(12, 47);
-            this.linkLabel3.Name = "linkLabel3";
-            this.linkLabel3.Size = new System.Drawing.Size(97, 15);
-            this.linkLabel3.TabIndex = 5;
-            this.linkLabel3.TabStop = true;
-            this.linkLabel3.Text = "New Message";
-            this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked);
+            this.pictureBox1.Image = global::ForumClientGui.Properties.Resources.newPost;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 39);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(45, 41);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 8;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
+            // onUpdatePictureBox
+            // 
+            this.onUpdatePictureBox.Image = global::ForumClientGui.Properties.Resources.onUpdate;
+            this.onUpdatePictureBox.Location = new System.Drawing.Point(99, 26);
+            this.onUpdatePictureBox.Name = "onUpdatePictureBox";
+            this.onUpdatePictureBox.Size = new System.Drawing.Size(53, 48);
+            this.onUpdatePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.onUpdatePictureBox.TabIndex = 7;
+            this.onUpdatePictureBox.TabStop = false;
+            this.onUpdatePictureBox.Visible = false;
+            this.onUpdatePictureBox.Click += new System.EventHandler(this.onUpdatePictureBox_Click);
+            // 
+            // loginPanel
+            // 
+            this.loginPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.loginPanel.Controls.Add(this.passTextBox);
+            this.loginPanel.Controls.Add(this.usernameTextBox);
+            this.loginPanel.Controls.Add(this.label6);
+            this.loginPanel.Controls.Add(this.label5);
+            this.loginPanel.Location = new System.Drawing.Point(624, 26);
+            this.loginPanel.Name = "loginPanel";
+            this.loginPanel.Size = new System.Drawing.Size(166, 54);
+            this.loginPanel.TabIndex = 6;
+            // 
+            // passTextBox
+            // 
+            this.passTextBox.Location = new System.Drawing.Point(66, 30);
+            this.passTextBox.Name = "passTextBox";
+            this.passTextBox.PasswordChar = '*';
+            this.passTextBox.Size = new System.Drawing.Size(97, 20);
+            this.passTextBox.TabIndex = 7;
+            // 
+            // usernameTextBox
+            // 
+            this.usernameTextBox.Location = new System.Drawing.Point(66, 5);
+            this.usernameTextBox.Name = "usernameTextBox";
+            this.usernameTextBox.Size = new System.Drawing.Size(97, 20);
+            this.usernameTextBox.TabIndex = 6;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 35);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(56, 13);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "Password:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(3, 8);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(60, 13);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "UserName:";
             // 
             // loggedInTitle
             // 
@@ -155,13 +215,12 @@
             // 
             // linkLabel2
             // 
-            this.linkLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel2.Location = new System.Drawing.Point(739, 10);
+            this.linkLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel2.Location = new System.Drawing.Point(741, 10);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(53, 15);
+            this.linkLabel2.Size = new System.Drawing.Size(47, 15);
             this.linkLabel2.TabIndex = 3;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "LogOut";
@@ -169,13 +228,12 @@
             // 
             // linkLabel1
             // 
-            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel1.Location = new System.Drawing.Point(688, 9);
+            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel1.Location = new System.Drawing.Point(690, 9);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(43, 15);
+            this.linkLabel1.Size = new System.Drawing.Size(38, 15);
             this.linkLabel1.TabIndex = 2;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "LogIn";
@@ -183,17 +241,154 @@
             // 
             // registerLinkLabel
             // 
-            this.registerLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.registerLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.registerLinkLabel.AutoSize = true;
-            this.registerLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.registerLinkLabel.Location = new System.Drawing.Point(621, 9);
+            this.registerLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.registerLinkLabel.Location = new System.Drawing.Point(623, 9);
             this.registerLinkLabel.Name = "registerLinkLabel";
-            this.registerLinkLabel.Size = new System.Drawing.Size(61, 15);
+            this.registerLinkLabel.Size = new System.Drawing.Size(53, 15);
             this.registerLinkLabel.TabIndex = 1;
             this.registerLinkLabel.TabStop = true;
             this.registerLinkLabel.Text = "Register";
             this.registerLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.registerLinkLabel_LinkClicked);
+            // 
+            // newPostPanel
+            // 
+            this.newPostPanel.Controls.Add(this.splitContainer3);
+            this.newPostPanel.Location = new System.Drawing.Point(61, 34);
+            this.newPostPanel.Name = "newPostPanel";
+            this.newPostPanel.Size = new System.Drawing.Size(337, 287);
+            this.newPostPanel.TabIndex = 3;
+            // 
+            // splitContainer3
+            // 
+            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer3.Name = "splitContainer3";
+            this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.splitContainer4);
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.replyToTitle);
+            this.splitContainer3.Panel2.Controls.Add(this.backPostLabel);
+            this.splitContainer3.Size = new System.Drawing.Size(337, 287);
+            this.splitContainer3.SplitterDistance = 253;
+            this.splitContainer3.TabIndex = 0;
+            // 
+            // splitContainer4
+            // 
+            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer4.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer4.Name = "splitContainer4";
+            this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer4.Panel1
+            // 
+            this.splitContainer4.Panel1.Controls.Add(this.label8);
+            this.splitContainer4.Panel1.Controls.Add(this.subforumsComboBox);
+            this.splitContainer4.Panel1.Controls.Add(this.sendPostButton);
+            this.splitContainer4.Panel1.Controls.Add(this.label4);
+            this.splitContainer4.Panel1.Controls.Add(this.label7);
+            this.splitContainer4.Panel1.Controls.Add(this.postTitleTextBox);
+            // 
+            // splitContainer4.Panel2
+            // 
+            this.splitContainer4.Panel2.Controls.Add(this.postBodyTextBox);
+            this.splitContainer4.Size = new System.Drawing.Size(337, 253);
+            this.splitContainer4.SplitterDistance = 78;
+            this.splitContainer4.TabIndex = 11;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(151, 58);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(55, 13);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "Subforum:";
+            // 
+            // subforumsComboBox
+            // 
+            this.subforumsComboBox.FormattingEnabled = true;
+            this.subforumsComboBox.Location = new System.Drawing.Point(210, 55);
+            this.subforumsComboBox.Name = "subforumsComboBox";
+            this.subforumsComboBox.Size = new System.Drawing.Size(121, 21);
+            this.subforumsComboBox.TabIndex = 14;
+            // 
+            // sendPostButton
+            // 
+            this.sendPostButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.sendPostButton.AutoSize = true;
+            this.sendPostButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sendPostButton.Location = new System.Drawing.Point(262, 4);
+            this.sendPostButton.Name = "sendPostButton";
+            this.sendPostButton.Size = new System.Drawing.Size(72, 15);
+            this.sendPostButton.TabIndex = 4;
+            this.sendPostButton.TabStop = true;
+            this.sendPostButton.Text = "Send Post";
+            this.sendPostButton.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.sendPostButton_LinkClicked);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(4, 56);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 13);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Message:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(4, 6);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(30, 13);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Title:";
+            // 
+            // postTitleTextBox
+            // 
+            this.postTitleTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.postTitleTextBox.Location = new System.Drawing.Point(5, 26);
+            this.postTitleTextBox.Name = "postTitleTextBox";
+            this.postTitleTextBox.Size = new System.Drawing.Size(326, 20);
+            this.postTitleTextBox.TabIndex = 12;
+            // 
+            // postBodyTextBox
+            // 
+            this.postBodyTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.postBodyTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.postBodyTextBox.Location = new System.Drawing.Point(0, 0);
+            this.postBodyTextBox.Name = "postBodyTextBox";
+            this.postBodyTextBox.Size = new System.Drawing.Size(337, 171);
+            this.postBodyTextBox.TabIndex = 6;
+            this.postBodyTextBox.Text = "";
+            // 
+            // replyToTitle
+            // 
+            this.replyToTitle.AutoSize = true;
+            this.replyToTitle.Location = new System.Drawing.Point(4, 9);
+            this.replyToTitle.Name = "replyToTitle";
+            this.replyToTitle.Size = new System.Drawing.Size(53, 13);
+            this.replyToTitle.TabIndex = 14;
+            this.replyToTitle.Text = "Reply To:";
+            // 
+            // backPostLabel
+            // 
+            this.backPostLabel.AutoSize = true;
+            this.backPostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.backPostLabel.Location = new System.Drawing.Point(151, 7);
+            this.backPostLabel.Name = "backPostLabel";
+            this.backPostLabel.Size = new System.Drawing.Size(38, 15);
+            this.backPostLabel.TabIndex = 2;
+            this.backPostLabel.TabStop = true;
+            this.backPostLabel.Text = "Back";
+            this.backPostLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.backPostLabel_LinkClicked);
             // 
             // postsGrid
             // 
@@ -363,188 +558,6 @@
             this.subforumsGrid.TabIndex = 0;
             this.subforumsGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.subforumsGrid_CellClick);
             // 
-            // newPostPanel
-            // 
-            this.newPostPanel.Controls.Add(this.splitContainer3);
-            this.newPostPanel.Location = new System.Drawing.Point(61, 34);
-            this.newPostPanel.Name = "newPostPanel";
-            this.newPostPanel.Size = new System.Drawing.Size(337, 287);
-            this.newPostPanel.TabIndex = 3;
-            // 
-            // splitContainer3
-            // 
-            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer3.Name = "splitContainer3";
-            this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer3.Panel1
-            // 
-            this.splitContainer3.Panel1.Controls.Add(this.splitContainer4);
-            // 
-            // splitContainer3.Panel2
-            // 
-            this.splitContainer3.Panel2.Controls.Add(this.replyToTitle);
-            this.splitContainer3.Panel2.Controls.Add(this.backPostLabel);
-            this.splitContainer3.Size = new System.Drawing.Size(337, 287);
-            this.splitContainer3.SplitterDistance = 253;
-            this.splitContainer3.TabIndex = 0;
-            // 
-            // backPostLabel
-            // 
-            this.backPostLabel.AutoSize = true;
-            this.backPostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.backPostLabel.Location = new System.Drawing.Point(151, 7);
-            this.backPostLabel.Name = "backPostLabel";
-            this.backPostLabel.Size = new System.Drawing.Size(38, 15);
-            this.backPostLabel.TabIndex = 2;
-            this.backPostLabel.TabStop = true;
-            this.backPostLabel.Text = "Back";
-            this.backPostLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.backPostLabel_LinkClicked);
-            // 
-            // splitContainer4
-            // 
-            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer4.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer4.Name = "splitContainer4";
-            this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer4.Panel1
-            // 
-            this.splitContainer4.Panel1.Controls.Add(this.label8);
-            this.splitContainer4.Panel1.Controls.Add(this.subforumsComboBox);
-            this.splitContainer4.Panel1.Controls.Add(this.sendPostButton);
-            this.splitContainer4.Panel1.Controls.Add(this.label4);
-            this.splitContainer4.Panel1.Controls.Add(this.label7);
-            this.splitContainer4.Panel1.Controls.Add(this.postTitleTextBox);
-            // 
-            // splitContainer4.Panel2
-            // 
-            this.splitContainer4.Panel2.Controls.Add(this.postBodyTextBox);
-            this.splitContainer4.Size = new System.Drawing.Size(337, 253);
-            this.splitContainer4.SplitterDistance = 78;
-            this.splitContainer4.TabIndex = 11;
-            // 
-            // postBodyTextBox
-            // 
-            this.postBodyTextBox.BackColor = System.Drawing.SystemColors.Window;
-            this.postBodyTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.postBodyTextBox.Location = new System.Drawing.Point(0, 0);
-            this.postBodyTextBox.Name = "postBodyTextBox";
-            this.postBodyTextBox.Size = new System.Drawing.Size(337, 171);
-            this.postBodyTextBox.TabIndex = 6;
-            this.postBodyTextBox.Text = "";
-            // 
-            // postTitleTextBox
-            // 
-            this.postTitleTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.postTitleTextBox.Location = new System.Drawing.Point(5, 26);
-            this.postTitleTextBox.Name = "postTitleTextBox";
-            this.postTitleTextBox.Size = new System.Drawing.Size(326, 20);
-            this.postTitleTextBox.TabIndex = 12;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(4, 6);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(30, 13);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Title:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(4, 56);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 13);
-            this.label4.TabIndex = 13;
-            this.label4.Text = "Message:";
-            // 
-            // replyToTitle
-            // 
-            this.replyToTitle.AutoSize = true;
-            this.replyToTitle.Location = new System.Drawing.Point(4, 9);
-            this.replyToTitle.Name = "replyToTitle";
-            this.replyToTitle.Size = new System.Drawing.Size(53, 13);
-            this.replyToTitle.TabIndex = 14;
-            this.replyToTitle.Text = "Reply To:";
-            // 
-            // sendPostButton
-            // 
-            this.sendPostButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.sendPostButton.AutoSize = true;
-            this.sendPostButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sendPostButton.Location = new System.Drawing.Point(262, 4);
-            this.sendPostButton.Name = "sendPostButton";
-            this.sendPostButton.Size = new System.Drawing.Size(72, 15);
-            this.sendPostButton.TabIndex = 4;
-            this.sendPostButton.TabStop = true;
-            this.sendPostButton.Text = "Send Post";
-            this.sendPostButton.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.sendPostButton_LinkClicked);
-            // 
-            // loginPanel
-            // 
-            this.loginPanel.Controls.Add(this.passTextBox);
-            this.loginPanel.Controls.Add(this.usernameTextBox);
-            this.loginPanel.Controls.Add(this.label6);
-            this.loginPanel.Controls.Add(this.label5);
-            this.loginPanel.Location = new System.Drawing.Point(624, 26);
-            this.loginPanel.Name = "loginPanel";
-            this.loginPanel.Size = new System.Drawing.Size(166, 54);
-            this.loginPanel.TabIndex = 6;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 8);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(60, 13);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "UserName:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 35);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(56, 13);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Password:";
-            // 
-            // usernameTextBox
-            // 
-            this.usernameTextBox.Location = new System.Drawing.Point(66, 5);
-            this.usernameTextBox.Name = "usernameTextBox";
-            this.usernameTextBox.Size = new System.Drawing.Size(97, 20);
-            this.usernameTextBox.TabIndex = 6;
-            // 
-            // passTextBox
-            // 
-            this.passTextBox.Location = new System.Drawing.Point(66, 30);
-            this.passTextBox.Name = "passTextBox";
-            this.passTextBox.PasswordChar = '*';
-            this.passTextBox.Size = new System.Drawing.Size(97, 20);
-            this.passTextBox.TabIndex = 7;
-            // 
-            // subforumsComboBox
-            // 
-            this.subforumsComboBox.FormattingEnabled = true;
-            this.subforumsComboBox.Location = new System.Drawing.Point(210, 55);
-            this.subforumsComboBox.Name = "subforumsComboBox";
-            this.subforumsComboBox.Size = new System.Drawing.Size(121, 21);
-            this.subforumsComboBox.TabIndex = 14;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(151, 58);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(55, 13);
-            this.label8.TabIndex = 15;
-            this.label8.Text = "Subforum:";
-            // 
             // ClientFormUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -560,16 +573,10 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.postsGrid)).EndInit();
-            this.postPanel.ResumeLayout(false);
-            this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel1.PerformLayout();
-            this.splitContainer2.Panel2.ResumeLayout(false);
-            this.splitContainer2.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-            this.splitContainer2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.repliesGrid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.subforumsGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.onUpdatePictureBox)).EndInit();
+            this.loginPanel.ResumeLayout(false);
+            this.loginPanel.PerformLayout();
             this.newPostPanel.ResumeLayout(false);
             this.splitContainer3.Panel1.ResumeLayout(false);
             this.splitContainer3.Panel2.ResumeLayout(false);
@@ -581,8 +588,16 @@
             this.splitContainer4.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
-            this.loginPanel.ResumeLayout(false);
-            this.loginPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.postsGrid)).EndInit();
+            this.postPanel.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel1.PerformLayout();
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            this.splitContainer2.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.repliesGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.subforumsGrid)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -608,7 +623,6 @@
         private System.Windows.Forms.DataGridView postsGrid;
         private System.Windows.Forms.DataGridView repliesGrid;
         private System.Windows.Forms.LinkLabel addReply;
-        private System.Windows.Forms.LinkLabel linkLabel3;
         private System.Windows.Forms.Panel newPostPanel;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.LinkLabel backPostLabel;
@@ -626,5 +640,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox subforumsComboBox;
+        private System.Windows.Forms.PictureBox onUpdatePictureBox;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
