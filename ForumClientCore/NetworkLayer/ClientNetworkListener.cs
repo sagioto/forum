@@ -27,6 +27,5 @@ namespace ForumClientCore.NetworkLayer
             // Invoking OnUpdateFromController event - ClientNetworkAdaptor will be notified
             OnUpdateFromServer(message);
         }
-
     }
 }

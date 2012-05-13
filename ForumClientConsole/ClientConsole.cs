@@ -50,9 +50,12 @@ namespace ForumClientConsole
 
                 switch (command[0])
                 {
-                    case "menu":
+                    case "menu": // TODO add remove-post
                         Console.WriteLine("\nThe available commands are:");
-                        Console.WriteLine("\n\tlist-forums\n\tshow [forum name]\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tquit\n");
+                        Console.WriteLine("\n\tlist-forums\n\tshow-forum [forum name]\n\tshow-post [post title]\n\tback\n\tedit [post title]\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tquit\n\tadmin-menu\n");
+                        break;
+                    case "admin-menu": // TODO add report commands
+                        Console.WriteLine("\n\tadd-moderator\n\tremove-moderator\n\treplace-moderator\n\treplace-admin\n\tadd-forum\n\tremove-forum\n\t");
                         break;
                     case "list-forums":
                         Console.WriteLine("Here is the list of sub-forums:");
@@ -63,7 +66,31 @@ namespace ForumClientConsole
                             i++;
                         }
                         break;
-                    case "show":
+                    case "show-post":
+                        if (command.Length < 2)
+                        {
+                            Console.WriteLine("show-post [post title]");
+                            break;
+                        }
+                        Post[] posts;
+                        if (controller.CurrentPost != null)
+                        {
+                            posts = controller.GetReplies(controller.CurrentPost.Key);
+                        }
+                        else
+                        {
+                            posts = controller.GetSubforum(controller.CurrentSubForum);
+                        }
+                        foreach (Post p in posts)
+                        {
+                            if (p.Title == command[1])
+                            {
+                                PrintPostList(controller.GetReplies(p.Key));
+                                break;
+                            }
+                        }
+                        break;
+                    case "show-forum":
                         if (command.Length < 2)
                         {
                             Console.WriteLine("Usage: show [forum name]");
@@ -105,7 +132,11 @@ namespace ForumClientConsole
 
         private void PrintPostList(ForumUtils.SharedDataTypes.Post[] subForumPosts)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+            foreach (Post p in subForumPosts)
+            {
+                Console.WriteLine(p.Title);
+            }
         }
 
         private void Post()

@@ -381,7 +381,17 @@ namespace ForumServer
 
                 if (securityManager.AuthenticateAdmin(oldAdminUsername, oldAdminPassword))
                 {
-                    User newAdmin = new User(newAdminUsername, newAdminPassword);
+                    User newAdmin;
+                    try
+                    {
+                        newAdmin = dataManager.GetUser(newAdminUsername);
+                    }
+                    catch (UserNotFoundException)
+                    {
+                        newAdmin = new User(newAdminUsername, newAdminPassword);
+                        dataManager.AddUser(newAdmin);
+                    }
+                    
                     User oldAdmin = dataManager.GetAdmin();
                     if (CheckIfModerator(oldAdminUsername))
                         oldAdmin.Level = AuthorizationLevel.MODERATOR;
@@ -429,7 +439,7 @@ namespace ForumServer
                 log.Info("got request to report total posts of user " + username);
 
                 if (securityManager.AuthenticateAdmin(adminUsername, adminPassword))
-                    return dataManager.GetAllPosts().Select(post => post.Key.Username.Equals(username)).Count(); ;
+                    return dataManager.GetAllPosts().Where(post => post.Key.Username.Equals(username)).Count();
                 return -1;
 
             }
