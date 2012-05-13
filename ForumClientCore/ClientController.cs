@@ -15,7 +15,31 @@ namespace ForumClientCore
         private string loggedAs = "";
         private string loggedPassword = "";
         private Post currentPost = null;
+
+        public Post CurrentPost
+        {
+            get
+            {
+                return currentPost;
+            }
+            set
+            {
+                currentPost = value;
+            }
+        }
         private string currentSubForum = "";
+
+        public string CurrentSubForum
+        {
+            get
+            {
+                return currentSubForum;
+            }
+            set
+            {
+                currentSubForum = value;
+            }
+        }
 
         public event ClientNetworkAdaptor.OnUpdate OnUpdateFromController;  //Event to be invoked when getting a notify by NetworkAdaptor
 
@@ -46,7 +70,7 @@ namespace ForumClientCore
         /// <param name="message"></param>
         public void netAdaptor_OnUpdateFromServer(Post message)
         {
-            OnUpdateFromController(message);    // Invoking an event - will notify everyone who sleep on it
+            OnUpdateFromController(message);    // Invoking an event - will notify evryone who sleep on it
         }
 
         public bool Login(string userName, string password)
@@ -150,6 +174,7 @@ namespace ForumClientCore
 
         public Post[] GetReplies(Postkey postkey)
         {
+            currentPost = netAdaptor.GetPost(postkey);
             return netAdaptor.GetReplies(postkey);
         }
 
@@ -216,4 +241,3 @@ namespace ForumClientCore
         }
     }
 }
-

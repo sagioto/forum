@@ -137,7 +137,7 @@ namespace ForumClientGui
 
                 //List<string> ls = (List<string>)subforumsComboBox.DataSource;
 
-                subforumsComboBox.SelectedText = currentSubforum;
+                subforumsComboBox.SelectedItem = currentSubforum;
             }
             else
             {
@@ -363,15 +363,15 @@ namespace ForumClientGui
                 }
                 else
                 {
-                    e.Result = controller.Reply(currentPost.Key, postTitleTextBox.Text, postBodyTextBox.Text);
+                    e.Result = controller.Reply(currentPost.Key,  ps.Title, ps.Body);
                 }
                 
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message);
                 throw;
             }
         }
@@ -430,6 +430,8 @@ namespace ForumClientGui
                 {
                     loggedInTitle.Text = "Logged in as: " + usernameTextBox.Text;
                     loginPanel.Visible = false;
+                    usernameTextBox.Text = "";
+                    passTextBox.Text = "";
                 }
             }
             catch (Exception ex)
