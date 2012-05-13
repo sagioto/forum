@@ -21,6 +21,7 @@ namespace ForumClientGui
         string currentSubforum;
         List<Post> currentSubforumPosts;
         List<string> subforumsList;
+        Post updatedPost;
 
         public ClientFormUI()
         {
@@ -38,20 +39,27 @@ namespace ForumClientGui
             newPostPanel.Dock = DockStyle.Fill;
 
 
+            GetSubforums();
+
+            
+        }
+
+        private void GetSubforums()
+        {
             subforumsList = controller.GetSubforumsList().ToList<string>();
             DataTable dt = ArrayToTable(subforumsList);
             subforumsGrid.DataSource = dt;
             subforumsComboBox.DataSource = subforumsList;
-
-            
         }
 
         /// <summary>
         /// Will be called when controller will invoke update event
         /// </summary>
         /// <param name="text"></param>
-        public void controller_OnUpdateFromServer(string text)
+        public void controller_OnUpdateFromServer(Post postUpdated)
         {
+            onUpdatePictureBox.Visible = true;
+            updatedPost = postUpdated;
             //richTextBox1.Text = richTextBox1.Text + text + '\n';    // Update textBox with the message from server
         }
 
@@ -172,9 +180,8 @@ namespace ForumClientGui
             {
                 repliesIndicator.Text = "Loading...";
 
-                //controller.getReplies(currentPost);
-                //controller.get
-                repliesGrid.DataSource = TempGetPosts();    //TODO DELETE
+                repliesGrid.DataSource = ListToTable(controller.GetReplies(currentPost.Key).ToList<Post>());
+                
                 repliesIndicator.Visible = false;
                 repliesGrid.Visible = true;
             }
@@ -259,6 +266,7 @@ namespace ForumClientGui
             return dt;
         }
 
+
         private object TempGetSubforums()
         {
             DataTable dt = new DataTable();
@@ -334,8 +342,7 @@ namespace ForumClientGui
                 }
                 else
                 {
-                    //TODO ADD REPLY
-                    res = controller.Post(currentSubforum, postTitleTextBox.Text, postBodyTextBox.Text);
+                    res = controller.Reply(currentPost.Key, postTitleTextBox.Text, postBodyTextBox.Text);
                 }
                 if (!res)
                 {
@@ -419,6 +426,20 @@ namespace ForumClientGui
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void onUpdatePictureBox_Click(object sender, EventArgs e)
+        {
+            if (subforumsGrid.Visible == true)
+            {
+                GetSubforums();
+                ShowMainScreen();
+            }
+            if (postsGrid.Visible == true && updatedPost.Subforum == currentSubforum)
+            {
+                ShowPostsGrid(currentSubforum);
+            }
+
         }
     }
 }

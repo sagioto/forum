@@ -65,6 +65,7 @@
             this.passTextBox = new System.Windows.Forms.TextBox();
             this.subforumsComboBox = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.onUpdatePictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -87,6 +88,7 @@
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
             this.loginPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.onUpdatePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -112,6 +114,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.onUpdatePictureBox);
             this.splitContainer1.Panel1.Controls.Add(this.loginPanel);
             this.splitContainer1.Panel1.Controls.Add(this.linkLabel3);
             this.splitContainer1.Panel1.Controls.Add(this.loggedInTitle);
@@ -134,7 +137,7 @@
             // 
             this.linkLabel3.AutoSize = true;
             this.linkLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel3.Location = new System.Drawing.Point(12, 47);
+            this.linkLabel3.Location = new System.Drawing.Point(12, 61);
             this.linkLabel3.Name = "linkLabel3";
             this.linkLabel3.Size = new System.Drawing.Size(97, 15);
             this.linkLabel3.TabIndex = 5;
@@ -545,6 +548,18 @@
             this.label8.TabIndex = 15;
             this.label8.Text = "Subforum:";
             // 
+            // onUpdatePictureBox
+            // 
+            this.onUpdatePictureBox.Image = global::ForumClientGui.Properties.Resources.onUpdate;
+            this.onUpdatePictureBox.Location = new System.Drawing.Point(26, 8);
+            this.onUpdatePictureBox.Name = "onUpdatePictureBox";
+            this.onUpdatePictureBox.Size = new System.Drawing.Size(68, 54);
+            this.onUpdatePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.onUpdatePictureBox.TabIndex = 7;
+            this.onUpdatePictureBox.TabStop = false;
+            this.onUpdatePictureBox.Visible = false;
+            this.onUpdatePictureBox.Click += new System.EventHandler(this.onUpdatePictureBox_Click);
+            // 
             // ClientFormUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -583,6 +598,7 @@
             this.splitContainer4.ResumeLayout(false);
             this.loginPanel.ResumeLayout(false);
             this.loginPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.onUpdatePictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -626,5 +642,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox subforumsComboBox;
+        private System.Windows.Forms.PictureBox onUpdatePictureBox;
     }
 }
