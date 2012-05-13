@@ -17,6 +17,7 @@ namespace ForumServer
     [ServiceContract(CallbackContract = typeof(IForumListener))]
     public interface IForumService
     {
+        #region user functions
         /// <summary>
         /// register the user to the system
         /// </summary>
@@ -25,7 +26,7 @@ namespace ForumServer
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool Register(String username, String password);
+        Result Register(String username, String password);
 
         /// <summary>
         /// login the user to the system
@@ -35,7 +36,7 @@ namespace ForumServer
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool Login(String username, String password);
+        Result Login(String username, String password);
 
         /// <summary>
         /// logout the user to the system
@@ -44,8 +45,21 @@ namespace ForumServer
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool Logout(String username);
+        Result Logout(String username);
 
+        /// <summary>
+        /// subscribe the user for notifications
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(FaultException))]
+        Post Subscribe(String username);
+
+
+        #endregion
+
+        #region viewing functions
         /// <summary>
         /// Returns subforums list
         /// </summary>s
@@ -82,6 +96,10 @@ namespace ForumServer
         [FaultContract(typeof(FaultException))]
         Post[] GetReplies(Postkey postkey);
 
+        #endregion
+
+        #region posting functions
+
         /// <summary>
         /// post the provieded post on the sub forum
         /// </summary>
@@ -90,7 +108,7 @@ namespace ForumServer
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool Post(string current, Post toPost);
+        Result Post(string current, Post toPost);
 
         /// <summary>
         /// post the provieded post as a reply on the current post
@@ -100,7 +118,7 @@ namespace ForumServer
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool Reply(Postkey current, Post toPost);
+        Result Reply(Postkey current, Post toPost);
 
         /// <summary>
         /// edit the post
@@ -110,7 +128,7 @@ namespace ForumServer
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool EditPost(Postkey oldPost, Post newPost, string usrname, string password);
+        Result EditPost(Postkey oldPost, Post newPost, string usrname, string password);
 
         /// <summary>
         /// remove the post
@@ -121,7 +139,9 @@ namespace ForumServer
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool RemovePost(Postkey postkey, string username, string password);
+        Result RemovePost(Postkey postkey, string username, string password);
+
+        #endregion
 
         #region admin functions
         /// <summary>
@@ -134,7 +154,7 @@ namespace ForumServer
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum);
+        Result AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum);
 
         /// <summary>
         /// remove a moderator to a sub forum
@@ -146,7 +166,7 @@ namespace ForumServer
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum);
+        Result RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum);
 
         /// <summary>
         /// replace a moderator to a sub forum
@@ -159,8 +179,8 @@ namespace ForumServer
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum);
-      
+        Result ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum);
+
         /// <summary>
         /// add a subforum
         /// </summary>
@@ -170,7 +190,7 @@ namespace ForumServer
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool AddSubforum(string adminUsername, string adminPassword, string subforumName);
+        Result AddSubforum(string adminUsername, string adminPassword, string subforumName);
 
 
         /// <summary>
@@ -182,7 +202,7 @@ namespace ForumServer
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName);
+        Result RemoveSubforum(string adminUsername, string adminPassword, string subforumName);
 
         /// <summary>
         /// report total messages in sub forums
@@ -220,70 +240,20 @@ namespace ForumServer
 
         #endregion
 
-        #region not used
 
-        /// <summary>
-        /// Not used
-        /// </summary>
-        /// <returns></returns>
-        [OperationContract]
-        [FaultContract(typeof(FaultException))]
-        bool SubscribeToForum();
-
-        /// <summary>
-        /// Not used
-        /// </summary>
-        /// <returns></returns>
-        [OperationContract]
-        [FaultContract(typeof(FaultException))]
-        bool UnsubscribeFromForum();
-
-
-
-        // The following methods are only for debugg:
-        [OperationContract]
-        [FaultContract(typeof(FaultException))]
-        string GetData(int value);
-
-        [OperationContract]
-        [FaultContract(typeof(FaultException))]
-        CompositeType GetDataUsingDataContract(CompositeType composite);
-
-        #endregion
+ 
     }
 
-
-    // Use a data contract as illustrated in the sample below to add composite types to service operations.
     [DataContract]
-    public class CompositeType
+    [Flags]
+    enum Result : byte 
     {
-        bool boolValue = true;
-        string stringValue = "Hello ";
-
-        [DataMember]
-        public bool BoolValue
-        {
-            get
-            {
-                return boolValue;
-            }
-            set
-            {
-                boolValue = value;
-            }
-        }
-
-        [DataMember]
-        public string StringValue
-        {
-            get
-            {
-                return stringValue;
-            }
-            set
-            {
-                stringValue = value;
-            }
-        }
+        NULL = 0x00,
+        USER_NOT_FOUND = 0x01,
+        POST_NOT_FOUND = 0x02,
+        SUB_FORUM_NOT_FOUND = 0x04,
+        INSUFFICENT_PERMISSIONS = 0x08,
+        ADMIN_PERMISSIONS_NEEDED = 0x16
     }
+
 }
