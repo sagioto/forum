@@ -87,6 +87,7 @@
     </Compile>
     <None Include="app.config" />
     <None Include="Properties\DataSources\ForumClientCore.ForumService.CompositeType.datasource" />
+    <None Include="Properties\DataSources\ForumUtils.SharedDataTypes.Post.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -104,6 +105,18 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ForumService\ServerNetworkAdaptor2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ForumService\ServerNetworkAdaptor3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ForumService\ServerNetworkAdaptor31.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ForumService\ServerNetworkAdaptor32.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ForumService\ServerNetworkAdaptor33.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
