@@ -106,7 +106,7 @@ namespace ServerTests
             target.Login(username, username);
             for (int i = 0; i < 5; i++)
             {
-                target.Post("Cars", new Post(new Postkey("some", DateTime.Now), "", "", null, "Cars"));
+                target.Post("Cars", new Post(new Postkey(username, DateTime.Now), "dlasjf", "asdfad", null, "Cars"));
                 Thread.Sleep(1);
             }
             int expected = 5; // TODO: Initialize to an appropriate value
