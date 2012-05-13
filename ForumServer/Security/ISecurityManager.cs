@@ -16,7 +16,7 @@ namespace ForumServer.Security
 
         Result AuthorizedLogout(string username);
 
-        Result IsLoggedin(string username);
+        bool IsLoggedin(string username);
 
         Result IsAuthorizedToPost(string username, string subforum);
 

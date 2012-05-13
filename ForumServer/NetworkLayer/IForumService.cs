@@ -245,7 +245,7 @@ namespace ForumServer
 
     [DataContract]
     [Flags]
-    public enum Result : byte 
+    public enum Result 
     {
         NULL = 0x00,
         OK = 0x01,
