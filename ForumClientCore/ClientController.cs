@@ -54,7 +54,8 @@ namespace ForumClientCore
 
         public ClientController()
         {
-            netAdaptor = new ClientNetworkAdaptor();
+            //Default behaviour is without callback
+            netAdaptor = new ClientNetworkAdaptor(false);
             netAdaptor.OnUpdateFromServer += new ClientNetworkAdaptor.OnUpdate(netAdaptor_OnUpdateFromServer);
         }
 

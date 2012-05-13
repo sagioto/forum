@@ -52,10 +52,34 @@ namespace ForumClientConsole
                 {
                     case "menu":
                         Console.WriteLine("\nThe available commands are:");
-                        Console.WriteLine("\n\tlist-forums\n\tshow-forum [forum name]\n\tshow-replies [post title]\n\tback\n\tedit [post title]\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tremove-post\n\tquit\n\tadmin-menu\n");
+                        Console.WriteLine("\n\tlist-forums\n\tshow-forum [forum name]\n\tshow-replies [post title]\n\trefresh\n\tback\n\tedit [post title]\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tremove-post\n\tquit\n\tadmin-menu\n");
                         break;
                     case "admin-menu": // TODO add report commands
                         Console.WriteLine("\n\tadd-moderator\n\tremove-moderator\n\treplace-moderator\n\treplace-admin\n\tadd-forum\n\tremove-forum\n\t");
+                        break;
+                    case "refresh":
+                        if (controller.CurrentPost == null)
+                        {
+                            PrintPostList(controller.GetSubforum(controller.CurrentSubForum));
+                        }
+                        else
+                        {
+                            PrintPostList(controller.GetReplies(controller.CurrentPost.Key));
+                        }
+                        break;
+                    case "remove-post":
+                        RemovePost();
+                        break;
+                    case "edit":
+                        if (command.Length < 2)
+                        {
+                            Console.WriteLine("Usage: edit [post title]");
+                            break;
+                        }
+                        EditPost(command);
+                        break;
+                    case "back":
+                        Back();
                         break;
                     case "list-forums":
                         Console.WriteLine("Here is the list of sub-forums:");
@@ -69,34 +93,10 @@ namespace ForumClientConsole
                     case "show-replies":
                         if (command.Length < 2)
                         {
-                            Console.WriteLine("show-replies [post title]");
+                            Console.WriteLine("Usage: show-replies [post title]");
                             break;
                         }
-                        Post[] posts;
-                        if (controller.CurrentPost != null)
-                        {
-                            posts = controller.GetReplies(controller.CurrentPost.Key);
-                        }
-                        else
-                        {
-                            posts = controller.GetSubforum(controller.CurrentSubForum);
-                        }
-                        foreach (Post p in posts)
-                        {
-                            if (p.Title.Equals(command[1]))
-                            {
-                                try
-                                {
-                                    Post[] replies = controller.GetReplies(p.Key);
-                                    PrintPostList(replies);
-                                }
-                                catch (Exception e)
-                                {
-                                    Console.WriteLine("Sorry, can't get the post right now...");
-                                }
-                                break;
-                            }
-                        }
+                        ShowReplies(command);
                         break;
                     case "reply":
                         Reply();
@@ -133,7 +133,96 @@ namespace ForumClientConsole
 
         }
 
+        private void RemovePost()
+        {
+            if (controller.RemovePost(controller.CurrentPost.Key))
+            {
+                PrintPostList(controller.GetReplies(controller.CurrentPost.Key));
+                Console.WriteLine("Post removed successfully.");
+            }
+            else
+            {
+                PrintPostList(controller.GetReplies(controller.CurrentPost.Key));
+                Console.WriteLine("Post was not removed.");
+            }
+        }
+
+        private void EditPost(string[] command)
+        {
+            Post[] posts;
+            if (controller.CurrentPost != null)
+            {
+                posts = controller.GetReplies(controller.CurrentPost.Key);
+            }
+            else
+            {
+                posts = controller.GetSubforum(controller.CurrentSubForum);
+            }
+            foreach (Post p in posts)
+            {
+                if (p.Title.Equals(command[1]))
+                {
+                    try
+                    {
+                        Console.WriteLine("Please enter a new title to your post");
+                        string title = Console.ReadLine();
+                        Console.WriteLine("Enter the new body of your post");
+                        string body = Console.ReadLine();
+                        if (controller.EditPost(title, body))
+                        {
+                            Console.WriteLine("Post was edited successfully");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Post could not be edited. Sorry.");
+                        }
+
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Sorry, can't get the post right now...");
+                    }
+                    break;
+                }
+            }
+        }
+
         #region Console Operations
+
+        private void Back()
+        {
+            Post[] posts = controller.Back();
+            PrintPostList(posts);
+        }
+
+        private void ShowReplies(string[] command)
+        {
+            Post[] posts;
+            if (controller.CurrentPost != null)
+            {
+                posts = controller.GetReplies(controller.CurrentPost.Key);
+            }
+            else
+            {
+                posts = controller.GetSubforum(controller.CurrentSubForum);
+            }
+            foreach (Post p in posts)
+            {
+                if (p.Title.Equals(command[1]))
+                {
+                    try
+                    {
+                        Post[] replies = controller.GetReplies(p.Key);
+                        PrintPostList(replies);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Sorry, can't get the post right now...");
+                    }
+                    break;
+                }
+            }
+        }
 
         private void GetSubforum(string subforumname)
         {
@@ -143,23 +232,26 @@ namespace ForumClientConsole
 
         private void PrintPostList(ForumUtils.SharedDataTypes.Post[] subForumPosts)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (Post p in subForumPosts)
+            if (subForumPosts != null)
             {
+                StringBuilder sb = new StringBuilder();
+                foreach (Post p in subForumPosts)
+                {
+                    sb.Append("***********************************************************************************************\n");
+                    sb.Append("*                                                                                             *\n");
+                    string empty = "*                                                                                             *\n";
+                    string title = empty.Substring(0, empty.Length / 2 - p.Title.Length / 2) + p.Title + empty.Substring((empty.Length / 2) + (p.Title.Length / 2) + 1);
+                    sb.Append(title);
+                    sb.Append("*                                                                                             *\n");
+                    sb.Append("*---------------------------------------------------------------------------------------------*\n");
+                    sb.Append("*                                                                                             *\n");
+                    string body = empty.Substring(0, empty.Length / 2 - p.Body.Length / 2) + p.Body + empty.Substring((empty.Length / 2) + (p.Body.Length / 2) + 1);
+                    sb.Append(body);
+                    sb.Append("*                                                                                             *\n");
+                }
                 sb.Append("***********************************************************************************************\n");
-                sb.Append("*                                                                                             *\n");
-                string empty = "*                                                                                             *\n";
-                string title = empty.Substring(0, empty.Length / 2 - p.Title.Length / 2) + p.Title + empty.Substring((empty.Length / 2) + (p.Title.Length / 2) + 1);
-                sb.Append(title);
-                sb.Append("*                                                                                             *\n");
-                sb.Append("*---------------------------------------------------------------------------------------------*\n");
-                sb.Append("*                                                                                             *\n");
-                string body = empty.Substring(0, empty.Length / 2 - p.Body.Length / 2) + p.Body + empty.Substring((empty.Length / 2) + (p.Body.Length / 2) + 1);
-                sb.Append(body);
-                sb.Append("*                                                                                             *\n");
+                Console.WriteLine(sb);
             }
-            sb.Append("***********************************************************************************************\n");
-            Console.WriteLine(sb);
         }
 
         private void Reply()
@@ -174,7 +266,7 @@ namespace ForumClientConsole
             }
             else
             {
-                if(controller.Reply(controller.CurrentPost.Key, title, body))
+                if (controller.Reply(controller.CurrentPost.Key, title, body))
                 {
                     Console.WriteLine("Replied to the post successfully!");
                 }
