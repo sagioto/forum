@@ -26,12 +26,12 @@ namespace ForumClientCore.NetworkLayer
         {
             // Network listener settings
             netListener = new ClientNetworkListener();
-            netListener.OnUpdateFromServer +=new ClientNetworkListener.OnUpdate(netListener_OnUpdateFromServer); // Register to the update event of netListener
-            
+            netListener.OnUpdateFromServer += new ClientNetworkListener.OnUpdate(netListener_OnUpdateFromServer); // Register to the update event of netListener
+
             // Web Service settings
             InstanceContext context = new InstanceContext(netListener);     // Sending IntanceContex to Server that it will be able to make callbacks
             webService = new ForumServiceClient(context);
-            
+
             webService.SubscribeToForum();  // Subscribing to Forum in order to get callbacks
         }
 
@@ -56,7 +56,7 @@ namespace ForumClientCore.NetworkLayer
             return webService.GetData(num);
         }
 
-        
+
         /// <summary>
         /// Registers a new user on the server.
         /// </summary>
@@ -115,7 +115,14 @@ namespace ForumClientCore.NetworkLayer
         /// <returns>The required Post</returns>
         internal Post[] GetReplies(Postkey postkey)
         {
-            return webService.GetReplies(postkey);
+            try
+            {
+                return webService.GetReplies(postkey);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         /// <summary>
@@ -126,7 +133,14 @@ namespace ForumClientCore.NetworkLayer
         /// <returns>Returns true if posting is successful.</returns>
         internal bool Post(String subForumName, Post postToAdd)
         {
-            return webService.Post(subForumName, postToAdd);
+            try
+            {
+                return webService.Post(subForumName, postToAdd);
+            }
+            catch (FaultException e)
+            {
+                throw e;
+            }
         }
 
         /// <summary>
@@ -142,7 +156,14 @@ namespace ForumClientCore.NetworkLayer
 
         internal Post GetPost(Postkey postkey)
         {
-            return webService.GetPost(postkey);
+            try
+            {
+                return webService.GetPost(postkey);
+            }
+            catch (FaultException e)
+            {
+                throw e;
+            }
         }
 
         public bool EditPost(Postkey oldPost, Post newPost, string username, string password)
