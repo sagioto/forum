@@ -16,7 +16,7 @@ namespace ForumClientCore.NetworkLayer
 
 
         // Event setting:
-        public delegate void OnUpdate(string text);
+        public delegate void OnUpdate(Post p);
         public event OnUpdate OnUpdateFromServer;
 
         /// <summary>
@@ -54,23 +54,6 @@ namespace ForumClientCore.NetworkLayer
         public string getDataFromServer(int num)
         {
             return webService.GetData(num);
-        }
-
-        
-        /// <summary>
-        /// Need to be changed to 'Post'
-        /// </summary>
-        /// <param name="s"></param>
-        internal void addMessage(string s)
-        {
-            try
-            {
-                webService.AddMessage(s);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
         }
 
         /// <summary>
@@ -168,65 +151,50 @@ namespace ForumClientCore.NetworkLayer
 
         public bool RemovePost(Postkey postkey, string username, string password)
         {
-            throw new NotImplementedException();
+            return webService.RemovePost(postkey, username, password);
         }
 
         public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
         {
-            throw new NotImplementedException();
+            return webService.AddModerator(adminUsername, adminPassword, usernameToAdd, subforum);
         }
 
         public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
         {
-            throw new NotImplementedException();
+            return webService.RemoveModerator(adminUsername, adminPassword, usernameToRemove, subforum);
         }
 
         public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
         {
-            throw new NotImplementedException();
+            return webService.ReplaceModerator(adminUsername, adminPassword, usernameToAdd, usernameToRemove, subforum);
         }
 
         public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
         {
-            throw new NotImplementedException();
+            return webService.AddSubforum(adminUsername, adminPassword, subforumName);
         }
 
         public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
         {
-            throw new NotImplementedException();
+            return webService.RemoveSubforum(adminUsername, adminPassword, subforumName);
         }
 
         public int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName)
         {
-            throw new NotImplementedException();
+            return webService.ReportSubForumTotalPosts(adminUsername, adminPassword, subforumName);
         }
 
         public int ReportUserTotalPosts(string adminUsername, string adminPassword, string username)
         {
-            throw new NotImplementedException();
+            return webService.ReportUserTotalPosts(adminUsername, adminPassword, username);
         }
 
         public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
         {
-            throw new NotImplementedException();
-        }
-
-        public string Subscribe()
-        {
-            throw new NotImplementedException();
+            return ReplaceAdmin(oldAdminUsername, oldAdminPassword, newAdminUsername, newAdminPassword);
         }
 
         public bool AddMessage(string message)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool SubscribeToForum()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool UnsubscribeFromForum()
         {
             throw new NotImplementedException();
         }
@@ -245,7 +213,7 @@ namespace ForumClientCore.NetworkLayer
         /// Will be called when netListener will invoke its update event
         /// </summary>
         /// <param name="message"></param>
-        public void netListener_OnUpdateFromServer(string message)
+        public void netListener_OnUpdateFromServer(Post message)
         {
             OnUpdateFromServer(message);    // Invoke event OnUpdateFronServer - will be notify controller
         }

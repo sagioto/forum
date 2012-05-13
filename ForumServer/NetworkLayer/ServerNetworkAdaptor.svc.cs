@@ -16,7 +16,7 @@ namespace ForumServer
     {
         private static ServerController controller = new ServerController();
         private ISerializer serializer = new JsonSerializer();
-        
+
         public bool Register(String username, String password)
         {
             try
@@ -115,7 +115,12 @@ namespace ForumServer
         {
             try
             {
-                return controller.Post(currentSubforum, toPost);
+                if (controller.Post(currentSubforum, toPost))
+                {
+                    Publish(toPost);
+                    return true;
+                }
+                else return false;
             }
             catch (Exception e)
             {
@@ -128,7 +133,12 @@ namespace ForumServer
         {
             try
             {
-                return controller.Reply(current, toPost);
+                if (controller.Reply(current, toPost))
+                {
+                    Publish(toPost);
+                    return true;
+                }
+                else return false;
             }
             catch (Exception e)
             {
@@ -332,7 +342,7 @@ namespace ForumServer
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public bool AddMessage(string message)
+        public bool AddMessage(Post post)
         {
             foreach (IForumListener listener in subscribers)
             {
@@ -340,7 +350,7 @@ namespace ForumServer
                 {
                     try
                     {
-                        listener.onUpdate("Update From Server: " + message, DateTime.Now);
+                        listener.onUpdate(post);
                     }
                     catch (Exception)
                     {
@@ -354,6 +364,30 @@ namespace ForumServer
             }
             return true;
         }
+
+        public bool Publish(Post post)
+        {
+            foreach (IForumListener listener in subscribers)
+            {
+                if ((((ICommunicationObject)listener).State == CommunicationState.Opened))
+                {
+                    try
+                    {
+                        listener.onUpdate(post);
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                }
+                else
+                {
+                    subscribers.Remove(listener);
+                }
+            }
+            return true;
+        }
+
 
 
         #region Temp methods
@@ -377,5 +411,8 @@ namespace ForumServer
         }
 
         #endregion
+
+
+
     }
 }

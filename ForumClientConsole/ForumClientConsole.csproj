@@ -47,6 +47,11 @@
     <Compile Include="ClientConsole.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\ForumService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ForumClientCore\ForumClientCore.csproj">
@@ -64,6 +69,47 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Properties\DataSources\ForumClientCore.ForumService.CompositeType.datasource" />
+    <None Include="Properties\DataSources\ForumUtils.SharedDataTypes.Post.datasource" />
+    <None Include="Service References\ForumService\ServerNetworkAdaptor.wsdl" />
+    <None Include="Service References\ForumService\ServerNetworkAdaptor.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ForumService\ServerNetworkAdaptor1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ForumService\ServerNetworkAdaptor2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ForumService\ServerNetworkAdaptor3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ForumService\ServerNetworkAdaptor4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ForumService\ServerNetworkAdaptor5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ForumService\ServerNetworkAdaptor6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ForumService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ForumService\ServerNetworkAdaptor.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ForumService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ForumService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ForumService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

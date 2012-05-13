@@ -94,7 +94,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\DataSources\ForumClientCore.ForumService.CompositeType.datasource" />
     <None Include="Service References\ForumService\ServerNetworkAdaptor.wsdl" />
     <None Include="Service References\ForumService\ServerNetworkAdaptor.xsd">

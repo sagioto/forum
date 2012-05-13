@@ -44,15 +44,9 @@ namespace ForumClientCore
         /// When netAdaptor invoked an event OnUpdateFromController it gets to this method
         /// </summary>
         /// <param name="message"></param>
-        public void netAdaptor_OnUpdateFromServer(string message)
+        public void netAdaptor_OnUpdateFromServer(Post message)
         {
             OnUpdateFromController(message);    // Invoking an event - will notify evryone who sleep on it
-        }
-
-
-        public void AddMessage(string s)
-        {
-            netAdaptor.addMessage(s);
         }
 
         public bool Login(string userName, string password)
@@ -165,10 +159,10 @@ namespace ForumClientCore
             return netAdaptor.Reply(originalPost, newReply);
         }
 
-        public bool EditPost(Postkey oldPost, string title, string body)
+        public bool EditPost(string title, string body)
         {
-            Post newPost = new Post(oldPost, title, body, currentPost.Key, currentSubForum);
-            return netAdaptor.EditPost(oldPost, newPost, loggedAs, loggedPassword);
+            Post newPost = new Post(currentPost.Key, title, body, currentPost.ParentPost, currentSubForum);
+            return netAdaptor.EditPost(currentPost.Key, newPost, loggedAs, loggedPassword);
         }
 
         public bool RemovePost(Postkey postkey)
@@ -191,12 +185,12 @@ namespace ForumClientCore
             return netAdaptor.ReplaceModerator(loggedAs, loggedPassword, usernameToAdd, usernameToRemove, subforum);
         }
 
-        public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
+        public bool AddSubforum(string subforumName)
         {
             return netAdaptor.AddSubforum(loggedAs, loggedPassword, subforumName);
         }
 
-        public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
+        public bool RemoveSubforum(string subforumName)
         {
             return netAdaptor.RemoveSubforum(loggedAs, loggedPassword, subforumName);
         }
@@ -206,7 +200,7 @@ namespace ForumClientCore
             return netAdaptor.ReportSubForumTotalPosts(loggedAs, loggedPassword, subforumName);
         }
 
-        public int ReportUserTotalPosts(string adminUsername, string adminPassword, string username)
+        public int ReportUserTotalPosts(string username)
         {
             return netAdaptor.ReportUserTotalPosts(loggedAs, loggedPassword, username);
         }

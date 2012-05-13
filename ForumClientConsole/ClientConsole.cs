@@ -45,13 +45,14 @@ namespace ForumClientConsole
             {
                 line = Console.ReadLine();
 
-                string[] command = line.Split(' ');
+                char[] delimeters = { ' ' };
+                string[] command = line.Split(delimeters, 2);
 
                 switch (command[0])
                 {
                     case "menu":
                         Console.WriteLine("\nThe available commands are:");
-                        Console.WriteLine("\n\tlist-forums\n\tshow [forum number]\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tquit\n");
+                        Console.WriteLine("\n\tlist-forums\n\tshow [forum name]\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tquit\n");
                         break;
                     case "list-forums":
                         Console.WriteLine("Here is the list of sub-forums:");
@@ -59,12 +60,13 @@ namespace ForumClientConsole
                         foreach (String subforum in controller.GetSubforumsList())
                         {
                             Console.WriteLine(i + ") " + subforum);
+                            i++;
                         }
                         break;
                     case "show":
                         if (command.Length < 2)
                         {
-                            Console.WriteLine("Usage: show [forum number]");
+                            Console.WriteLine("Usage: show [forum name]");
                             break;
                         }
                         GetSubforum(command[1]);
@@ -95,9 +97,8 @@ namespace ForumClientConsole
 
         #region Console Operations
 
-        private void GetSubforum(string p)
+        private void GetSubforum(string subforumname)
         {
-            string subforumname = controller.GetSubforumsList()[Convert.ToInt32(p)];
             Post[] subForumPosts = controller.GetSubforum(subforumname);
             PrintPostList(subForumPosts);
         }
@@ -215,12 +216,11 @@ namespace ForumClientConsole
         /// This method is called when controller invoked its OnUpdate event
         /// </summary>
         /// <param name="text"></param>
-        public void controller_OnUpdateFromServer(string text)
+        public void controller_OnUpdateFromServer(Post p)
         {
             try
             {
                 Console.Beep();
-                Console.WriteLine(text);
             }
             catch (Exception)
             {

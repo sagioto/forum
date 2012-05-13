@@ -59,7 +59,7 @@ namespace ForumTests
         // public void MyTestCleanup() { }
         //
         #endregion
-        
+
         [TestMethod]
         public void LoginRegisterTests()
         {
@@ -70,7 +70,8 @@ namespace ForumTests
             Assert.IsTrue(cc.Register("alice", "123456"));
 
             //login tests
-            for (int i = 0; i < 100; i++){
+            for (int i = 0; i < 100; i++)
+            {
                 // try to register twice with same userName
                 Assert.IsTrue(cc.Register("alice" + i, "123456"));
                 Assert.IsFalse(cc.Register("alice" + i, "123456"));
@@ -80,7 +81,7 @@ namespace ForumTests
                 Assert.IsFalse(cc.Login("alice" + i, "123456"));
 
                 Assert.IsFalse(cc.Login("bob" + i, "123456"));//try to login with bad unknown user
-                Assert.IsFalse(cc.Login("alice" + i, "123456"+i));//try to login with bad password
+                Assert.IsFalse(cc.Login("alice" + i, "123456" + i));//try to login with bad password
             }
         }
 
@@ -102,21 +103,21 @@ namespace ForumTests
         public void postTest()
         {
             ClientController cc = new ClientController();
-            cc.Register("test1","123456");
-            cc.Login("test1","123456");
+            cc.Register("test1", "123456");
+            cc.Login("test1", "123456");
 
-         //   Assert.IsInstanceOfType(cc.GetSubforumsList(), typeof(String[]));
+            Assert.IsInstanceOfType(cc.GetSubforumsList(), typeof(String[]));
 
-            String[] SubForumArray = cc.GetSubforumsList();
+            string[] SubForumArray = cc.GetSubforumsList();
 
             Console.WriteLine("start");
             for (int i = 0; i < SubForumArray.Length; i++)
             {
-                Assert.IsTrue(cc.Post(SubForumArray[i],"title"+i,"body"+i)); //post message in all sub forums
+                Assert.IsTrue(cc.Post(SubForumArray[i], "title" + i, "body" + i)); //post message in all sub forums
                 Console.WriteLine(SubForumArray[i]);
             }
             Console.WriteLine("end");
-            Assert.IsFalse(cc.Post("XXXYYYZZZ","badTitle","badBody"));//post message in sub forum that isn"t exists
+            Assert.IsFalse(cc.Post("XXXYYYZZZ", "badTitle", "badBody"));//post message in sub forum that isn"t exists
 
         }
 

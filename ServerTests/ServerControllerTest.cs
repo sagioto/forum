@@ -6,8 +6,8 @@ using ForumUtils.SharedDataTypes;
 
 namespace ServerTests
 {
-    
-    
+
+
     /// <summary>
     ///This is a test class for ServerControllerTest and is intended
     ///to contain all ServerControllerTest Unit Tests
@@ -73,20 +73,19 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void ReportUserTotalPostsTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
-            string adminUsername = string.Empty; // TODO: Initialize to an appropriate value
-            string adminPassword = string.Empty; // TODO: Initialize to an appropriate value
-            string username = string.Empty; // TODO: Initialize to an appropriate value
+            string adminUsername = "admin"; // TODO: Initialize to an appropriate value
+            string adminPassword = "admin"; // TODO: Initialize to an appropriate value
+            string username = "some"; // TODO: Initialize to an appropriate value
+            target.Register(username, username);
+            target.Login(username, username);
+
             int expected = 0; // TODO: Initialize to an appropriate value
             int actual;
             actual = target.ReportUserTotalPosts(adminUsername, adminPassword, username);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -96,9 +95,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void ReportSubForumTotalPostsTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -109,7 +105,6 @@ namespace ServerTests
             int actual;
             actual = target.ReportSubForumTotalPosts(adminUsername, adminPassword, subforumName);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -119,9 +114,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void ReplyTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -131,7 +123,6 @@ namespace ServerTests
             bool actual;
             actual = target.Reply(currPost, post);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -141,9 +132,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void ReplaceModeratorTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -156,7 +144,6 @@ namespace ServerTests
             bool actual;
             actual = target.ReplaceModerator(adminUsername, adminPassword, usernameToAdd, usernameToRemove, subforum);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -166,9 +153,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void ReplaceAdminTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -180,7 +164,6 @@ namespace ServerTests
             bool actual;
             actual = target.ReplaceAdmin(oldAdminUsername, oldAdminPassword, newAdminUsername, newAdminPassword);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -190,9 +173,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void RemoveSubforumTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -203,7 +183,6 @@ namespace ServerTests
             bool actual;
             actual = target.RemoveSubforum(adminUsername, adminPassword, subforumName);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -213,9 +192,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void RemovePostTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -226,7 +202,6 @@ namespace ServerTests
             bool actual;
             actual = target.RemovePost(originalPostKey, username, password);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -236,9 +211,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void RemoveModeratorTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -250,7 +222,6 @@ namespace ServerTests
             bool actual;
             actual = target.RemoveModerator(adminUsername, adminPassword, usernameToRemove, subforum);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -260,9 +231,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void RegisterTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -272,7 +240,6 @@ namespace ServerTests
             bool actual;
             actual = target.Register(username, password);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -282,9 +249,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void PostTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -294,7 +258,6 @@ namespace ServerTests
             bool actual;
             actual = target.Post(subforum, post);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -304,9 +267,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void LogoutTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -315,7 +275,6 @@ namespace ServerTests
             bool actual;
             actual = target.Logout(username);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -325,9 +284,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void LoginTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -337,7 +293,6 @@ namespace ServerTests
             bool actual;
             actual = target.Login(username, password);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -347,9 +302,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void GetSubforumsListTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -357,7 +309,6 @@ namespace ServerTests
             string[] actual;
             actual = target.GetSubforumsList();
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -367,9 +318,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void GetSubForumTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -378,7 +326,6 @@ namespace ServerTests
             Post[] actual;
             actual = target.GetSubForum(subforum);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -388,9 +335,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void GetRepliesTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -399,7 +343,6 @@ namespace ServerTests
             Post[] actual;
             actual = target.GetReplies(key);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -409,9 +352,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void EditPostTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -423,7 +363,6 @@ namespace ServerTests
             bool actual;
             actual = target.EditPost(currPost, post, username, password);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -433,10 +372,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
-        [DeploymentItem("ForumServer.dll")]
         public void CheckIfModeratorTest()
         {
             ServerController_Accessor target = new ServerController_Accessor(); // TODO: Initialize to an appropriate value
@@ -445,7 +380,6 @@ namespace ServerTests
             bool actual;
             actual = target.CheckIfModerator(usernameToRemove);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -455,9 +389,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void AddSubforumTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -468,7 +399,6 @@ namespace ServerTests
             bool actual;
             actual = target.AddSubforum(adminUsername, adminPassword, subforumName);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -478,9 +408,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void AddModeratorTest()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
@@ -492,7 +419,6 @@ namespace ServerTests
             bool actual;
             actual = target.AddModerator(adminUsername, adminPassword, usernameToAdd, subforum);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -502,13 +428,9 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\workspace\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void ServerControllerConstructorTest()
         {
             ServerController target = new ServerController();
-            Assert.Inconclusive("TODO: Implement code to verify target");
         }
     }
 }

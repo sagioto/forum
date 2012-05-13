@@ -140,14 +140,13 @@ namespace ServerTests
         {
             DataManager dataManager = null; // TODO: Initialize to an appropriate value
             PolicyManager target = new PolicyManager(dataManager); // TODO: Initialize to an appropriate value
-            string oldUsername = string.Empty; // TODO: Initialize to an appropriate value
-            string newUsername = string.Empty; // TODO: Initialize to an appropriate value
-            string subforum = string.Empty; // TODO: Initialize to an appropriate value
-            bool expected = false; // TODO: Initialize to an appropriate value
+            string oldUsername = "some1"; // TODO: Initialize to an appropriate value
+            string newUsername = "some2"; // TODO: Initialize to an appropriate value
+            string subforum = "some"; // TODO: Initialize to an appropriate value
+            bool expected = true; // TODO: Initialize to an appropriate value
             bool actual;
             actual = target.ChangeModerator(oldUsername, newUsername, subforum);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -163,12 +162,11 @@ namespace ServerTests
             PolicyManager target = new PolicyManager(dataManager); // TODO: Initialize to an appropriate value
             Postkey originalPostKey = null; // TODO: Initialize to an appropriate value
             string username = string.Empty; // TODO: Initialize to an appropriate value
-            bool expected = false; // TODO: Initialize to an appropriate value
+            bool expected = true; // TODO: Initialize to an appropriate value
             bool actual;
             actual = target.IsAuthorizedToEdit(originalPostKey, username);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
+      }
 
         /// <summary>
         ///A test for RemoveModerator
@@ -179,15 +177,44 @@ namespace ServerTests
         [TestMethod()]
         public void RemoveModeratorTest()
         {
-            DataManager dataManager = null; // TODO: Initialize to an appropriate value
+            DataManager dataManager = new DataManager(); // TODO: Initialize to an appropriate value
             PolicyManager target = new PolicyManager(dataManager); // TODO: Initialize to an appropriate value
-            string username = string.Empty; // TODO: Initialize to an appropriate value
-            string subforum = string.Empty; // TODO: Initialize to an appropriate value
+            string username = "some"; // TODO: Initialize to an appropriate value
+            string subforum = "sub"; // TODO: Initialize to an appropriate value
+            User user = new User(username, username);
+            dataManager.AddUser(user);
+            Subforum sub = new Subforum(subforum);
+            sub.ModeratorsList.Add(user.Username);
+            dataManager.AddSubforum(sub);
+            bool expected = true; // TODO: Initialize to an appropriate value
+            bool actual;
+            actual = target.RemoveModerator(username, subforum);
+            Assert.AreEqual(expected, actual);
+         }
+
+        /// <summary>
+        ///A test for RemoveModerator
+        ///</summary>
+        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
+        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
+        // whether you are testing a page, web service, or a WCF service.
+        [TestMethod()]
+        public void RemoveModeratorFalseTest()
+        {
+            DataManager dataManager = new DataManager(); // TODO: Initialize to an appropriate value
+            PolicyManager target = new PolicyManager(dataManager); // TODO: Initialize to an appropriate value
+            string username = "some"; // TODO: Initialize to an appropriate value
+            string subforum = "sub"; // TODO: Initialize to an appropriate value
+            User user = new User(username, username);
+            dataManager.AddUser(user);
+            Subforum sub = new Subforum(subforum);
+            sub.ModeratorsList.Add(user.Username);
+            dataManager.AddSubforum(sub);
+            dataManager.AddPost(new Post(new Postkey(username, DateTime.Now), "sar","sar",null, subforum ), subforum);
             bool expected = false; // TODO: Initialize to an appropriate value
             bool actual;
             actual = target.RemoveModerator(username, subforum);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
     }
 }
