@@ -95,10 +95,6 @@ namespace ForumClientConsole.ForumService {
         [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/SubscribeFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         string Subscribe();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/AddMessage", ReplyAction="http://tempuri.org/IForumService/AddMessageResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/AddMessageFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool AddMessage(string message);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/SubscribeToForum", ReplyAction="http://tempuri.org/IForumService/SubscribeToForumResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/SubscribeToForumFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         bool SubscribeToForum();
@@ -120,7 +116,7 @@ namespace ForumClientConsole.ForumService {
     public interface IForumServiceCallback {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IForumService/onUpdate")]
-        void onUpdate(string message, System.DateTime timestamp);
+        void onUpdate(ForumUtils.SharedDataTypes.Post message);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -229,10 +225,6 @@ namespace ForumClientConsole.ForumService {
         
         public string Subscribe() {
             return base.Channel.Subscribe();
-        }
-        
-        public bool AddMessage(string message) {
-            return base.Channel.AddMessage(message);
         }
         
         public bool SubscribeToForum() {

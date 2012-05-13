@@ -49,12 +49,6 @@ namespace ForumClientCore
             OnUpdateFromController(message);    // Invoking an event - will notify evryone who sleep on it
         }
 
-
-        public void AddMessage(string s)
-        {
-            netAdaptor.addMessage(s);
-        }
-
         public bool Login(string userName, string password)
         {
             if (loggedIn)

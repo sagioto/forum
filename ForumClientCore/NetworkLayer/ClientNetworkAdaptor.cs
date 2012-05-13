@@ -56,23 +56,6 @@ namespace ForumClientCore.NetworkLayer
             return webService.GetData(num);
         }
 
-        
-        /// <summary>
-        /// Need to be changed to 'Post'
-        /// </summary>
-        /// <param name="s"></param>
-        internal void addMessage(string s)
-        {
-            try
-            {
-                webService.AddMessage(s);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
         /// <summary>
         /// Registers a new user on the server.
         /// </summary>
