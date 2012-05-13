@@ -342,7 +342,7 @@ namespace ForumServer
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public bool AddMessage(string message)
+        public bool AddMessage(Post post)
         {
             foreach (IForumListener listener in subscribers)
             {
@@ -350,7 +350,7 @@ namespace ForumServer
                 {
                     try
                     {
-                        listener.onUpdate("Update From Server: " + message, DateTime.Now);
+                        listener.onUpdate(post);
                     }
                     catch (Exception)
                     {
@@ -373,7 +373,7 @@ namespace ForumServer
                 {
                     try
                     {
-                        listener.onUpdate("Update From Server: " + post, DateTime.Now);
+                        listener.onUpdate(post);
                     }
                     catch (Exception)
                     {
@@ -411,5 +411,8 @@ namespace ForumServer
         }
 
         #endregion
+
+
+
     }
 }

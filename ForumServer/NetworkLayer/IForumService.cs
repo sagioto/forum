@@ -155,15 +155,6 @@ namespace ForumServer
         /// <summary>
         /// Not used
         /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        [OperationContract]
-        [FaultContract(typeof(FaultException))]
-        bool AddMessage(string message);
-
-        /// <summary>
-        /// Not used
-        /// </summary>
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
