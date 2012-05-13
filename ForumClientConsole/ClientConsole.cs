@@ -60,6 +60,7 @@ namespace ForumClientConsole
                         foreach (String subforum in controller.GetSubforumsList())
                         {
                             Console.WriteLine(i + ") " + subforum);
+                            i++;
                         }
                         break;
                     case "show":
@@ -215,12 +216,11 @@ namespace ForumClientConsole
         /// This method is called when controller invoked its OnUpdate event
         /// </summary>
         /// <param name="text"></param>
-        public void controller_OnUpdateFromServer(string text)
+        public void controller_OnUpdateFromServer(Post p)
         {
             try
             {
                 Console.Beep();
-                Console.WriteLine(text);
             }
             catch (Exception)
             {

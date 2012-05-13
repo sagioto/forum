@@ -16,7 +16,7 @@ namespace ForumClientCore.NetworkLayer
 
 
         // Event setting:
-        public delegate void OnUpdate(string text);
+        public delegate void OnUpdate(Post p);
         public event OnUpdate OnUpdateFromServer;
 
         /// <summary>
@@ -211,22 +211,7 @@ namespace ForumClientCore.NetworkLayer
             return ReplaceAdmin(oldAdminUsername, oldAdminPassword, newAdminUsername, newAdminPassword);
         }
 
-        public string Subscribe()
-        {
-            throw new NotImplementedException();
-        }
-
         public bool AddMessage(string message)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool SubscribeToForum()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool UnsubscribeFromForum()
         {
             throw new NotImplementedException();
         }
@@ -245,7 +230,7 @@ namespace ForumClientCore.NetworkLayer
         /// Will be called when netListener will invoke its update event
         /// </summary>
         /// <param name="message"></param>
-        public void netListener_OnUpdateFromServer(string message)
+        public void netListener_OnUpdateFromServer(Post message)
         {
             OnUpdateFromServer(message);    // Invoke event OnUpdateFronServer - will be notify controller
         }
