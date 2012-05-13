@@ -128,12 +128,8 @@ namespace ForumServer
         {
             try
             {
-                if (controller.Post(currentSubforum, toPost))
-                {
-                    Publish(toPost);
-                    return true;
-                }
-                else return false;
+                return controller.Post(currentSubforum, toPost);
+
             }
             catch (Exception e)
             {
@@ -146,12 +142,8 @@ namespace ForumServer
         {
             try
             {
-                if (controller.Reply(current, toPost))
-                {
-                    Publish(toPost);
-                    return true;
-                }
-                else return false;
+                return controller.Reply(current, toPost);
+          
             }
             catch (Exception e)
             {

@@ -181,7 +181,7 @@ namespace ForumServer
 
         #region posting functions
 
-        public bool Post(string subforum, Post post)
+        public Result Post(string subforum, Post post)
         {
             try
             {
@@ -205,8 +205,8 @@ namespace ForumServer
 
         }
 
-       
-        public bool Reply(Postkey currPost, Post post)
+
+        public Result Reply(Postkey currPost, Post post)
         {
             try
             {
@@ -223,7 +223,7 @@ namespace ForumServer
 
         }
 
-        public bool EditPost(Postkey currPost, Post post, string username, string password)
+        public Result EditPost(Postkey currPost, Post post, string username, string password)
         {
             try
             {
@@ -240,7 +240,7 @@ namespace ForumServer
 
         }
 
-        public bool RemovePost(Postkey originalPostKey, string username, string password)
+        public Result RemovePost(Postkey originalPostKey, string username, string password)
         {
             try
             {
@@ -257,7 +257,7 @@ namespace ForumServer
 
         }
 
-        private bool CheckPost(ForumUtils.SharedDataTypes.Post post)
+        private Result CheckPost(ForumUtils.SharedDataTypes.Post post)
         {
             return ((post.Body != null && post.Body.Length != 0)
                    || (post.Title != null && post.Title.Length != 0));
@@ -268,7 +268,7 @@ namespace ForumServer
         #region admin functions
 
 
-        public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
+        public Result AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
         {
             try
             {
@@ -297,7 +297,7 @@ namespace ForumServer
 
         }
 
-        public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
+        public Result RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
         {
             try
             {
@@ -329,7 +329,7 @@ namespace ForumServer
 
         }
 
-        private bool CheckIfModerator(string usernameToRemove)
+        private Result CheckIfModerator(string usernameToRemove)
         {
 
             try
@@ -353,7 +353,7 @@ namespace ForumServer
 
         }
 
-        public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
+        public Result ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
         {
 
             try
@@ -373,7 +373,7 @@ namespace ForumServer
 
         }
 
-        public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
+        public Result AddSubforum(string adminUsername, string adminPassword, string subforumName)
         {
 
             try
@@ -392,7 +392,7 @@ namespace ForumServer
 
         }
 
-        public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
+        public Result RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
         {
 
             try
@@ -411,7 +411,7 @@ namespace ForumServer
 
         }
 
-        public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
+        public Result ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
         {
 
             try
