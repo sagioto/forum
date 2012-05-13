@@ -30,6 +30,8 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.onUpdatePictureBox = new System.Windows.Forms.PictureBox();
             this.loginPanel = new System.Windows.Forms.Panel();
             this.passTextBox = new System.Windows.Forms.TextBox();
             this.usernameTextBox = new System.Windows.Forms.TextBox();
@@ -64,12 +66,12 @@
             this.repliesIndicator = new System.Windows.Forms.LinkLabel();
             this.repliesGrid = new System.Windows.Forms.DataGridView();
             this.subforumsGrid = new System.Windows.Forms.DataGridView();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.onUpdatePictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.onUpdatePictureBox)).BeginInit();
             this.loginPanel.SuspendLayout();
             this.newPostPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
@@ -88,8 +90,6 @@
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.repliesGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.subforumsGrid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.onUpdatePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -133,6 +133,29 @@
             this.splitContainer1.Size = new System.Drawing.Size(805, 451);
             this.splitContainer1.SplitterDistance = 83;
             this.splitContainer1.TabIndex = 4;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::ForumClientGui.Properties.Resources.newPost;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 39);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(45, 41);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 8;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
+            // onUpdatePictureBox
+            // 
+            this.onUpdatePictureBox.Image = global::ForumClientGui.Properties.Resources.onUpdate;
+            this.onUpdatePictureBox.Location = new System.Drawing.Point(99, 26);
+            this.onUpdatePictureBox.Name = "onUpdatePictureBox";
+            this.onUpdatePictureBox.Size = new System.Drawing.Size(53, 48);
+            this.onUpdatePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.onUpdatePictureBox.TabIndex = 7;
+            this.onUpdatePictureBox.TabStop = false;
+            this.onUpdatePictureBox.Visible = false;
+            this.onUpdatePictureBox.Click += new System.EventHandler(this.onUpdatePictureBox_Click);
             // 
             // loginPanel
             // 
@@ -535,29 +558,6 @@
             this.subforumsGrid.TabIndex = 0;
             this.subforumsGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.subforumsGrid_CellClick);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::ForumClientGui.Properties.Resources.newPost;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 39);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(45, 41);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 8;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            // 
-            // onUpdatePictureBox
-            // 
-            this.onUpdatePictureBox.Image = global::ForumClientGui.Properties.Resources.onUpdate;
-            this.onUpdatePictureBox.Location = new System.Drawing.Point(99, 7);
-            this.onUpdatePictureBox.Name = "onUpdatePictureBox";
-            this.onUpdatePictureBox.Size = new System.Drawing.Size(75, 67);
-            this.onUpdatePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.onUpdatePictureBox.TabIndex = 7;
-            this.onUpdatePictureBox.TabStop = false;
-            this.onUpdatePictureBox.Visible = false;
-            this.onUpdatePictureBox.Click += new System.EventHandler(this.onUpdatePictureBox_Click);
-            // 
             // ClientFormUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -573,6 +573,8 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.onUpdatePictureBox)).EndInit();
             this.loginPanel.ResumeLayout(false);
             this.loginPanel.PerformLayout();
             this.newPostPanel.ResumeLayout(false);
@@ -596,8 +598,6 @@
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.repliesGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.subforumsGrid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.onUpdatePictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }

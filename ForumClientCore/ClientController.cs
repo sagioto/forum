@@ -46,13 +46,7 @@ namespace ForumClientCore
         /// <param name="message"></param>
         public void netAdaptor_OnUpdateFromServer(Post message)
         {
-            OnUpdateFromController(message);    // Invoking an event - will notify evryone who sleep on it
-        }
-
-
-        public void AddMessage(string s)
-        {
-            netAdaptor.addMessage(s);
+            OnUpdateFromController(message);    // Invoking an event - will notify everyone who sleep on it
         }
 
         public bool Login(string userName, string password)

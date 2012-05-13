@@ -41,7 +41,7 @@ namespace ForumClientGui
 
             GetSubforums();
 
-            
+
         }
 
         private void GetSubforums()
@@ -50,6 +50,7 @@ namespace ForumClientGui
             DataTable dt = ArrayToTable(subforumsList);
             subforumsGrid.DataSource = dt;
             subforumsComboBox.DataSource = subforumsList;
+            currentSubforum = subforumsList[0];
         }
 
         /// <summary>
@@ -135,14 +136,14 @@ namespace ForumClientGui
             {
 
                 //List<string> ls = (List<string>)subforumsComboBox.DataSource;
-                
+
                 subforumsComboBox.SelectedText = currentSubforum;
             }
             else
             {
                 //subforumsComboBox.SelectedValue = 0;
             }
-            
+
             if (reply)
             {
                 subforumsComboBox.Enabled = false;
@@ -181,7 +182,7 @@ namespace ForumClientGui
                 repliesIndicator.Text = "Loading...";
 
                 repliesGrid.DataSource = ListToTable(controller.GetReplies(currentPost.Key).ToList<Post>());
-                
+
                 repliesIndicator.Visible = false;
                 repliesGrid.Visible = true;
             }
@@ -247,8 +248,8 @@ namespace ForumClientGui
             newPostPanel.Visible = false;
 
             DisplayLoading(true);
-            
-            
+
+
             //subforumsGrid.DataSource = TempGetSubforums();    //TODO DELETE
             DisplayLoading(false);
 
@@ -333,31 +334,60 @@ namespace ForumClientGui
 
         private void sendPostButton_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            if (postTitleTextBox.Text != "")
+            {
+                BackgroundWorker t = new BackgroundWorker();
+                t.DoWork += new DoWorkEventHandler(t_DoWork);
+                t.RunWorkerCompleted += new RunWorkerCompletedEventHandler(t_RunWorkerCompleted);
+                PostSend ps = new PostSend(subforumsComboBox.Text, postTitleTextBox.Text, postBodyTextBox.Text);
+                t.RunWorkerAsync(ps);
+                //Thread SendPost = new Thread(unused => SendPost(postTitleTextBox.Text, postBodyTextBox.Text));
+            }
+            else
+            {
+                MessageBox.Show("Title is a required fields!", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
+        }
+
+
+
+        private void t_DoWork(object sender, DoWorkEventArgs e)
+        {
             try
             {
-                bool res;
+                PostSend ps = e.Argument as PostSend;
                 if (replyToTitle.Visible == false)
                 {
-                    res = controller.Post(currentSubforum, postTitleTextBox.Text, postBodyTextBox.Text);
+                    //controller.Post(currentSubforum,postTitleTextBox.Text, postBodyTextBox.Text)
+                    e.Result = controller.Post(ps.Subforum, ps.Title, ps.Body);
                 }
                 else
                 {
-                    res = controller.Reply(currentPost.Key, postTitleTextBox.Text, postBodyTextBox.Text);
+                    e.Result = controller.Reply(currentPost.Key, postTitleTextBox.Text, postBodyTextBox.Text);
                 }
-                if (!res)
-                {
-                    MessageBox.Show("Only logged in users are allowed to add posts !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                backPostLabel_LinkClicked(null, null);
                 
+
+
             }
             catch (Exception)
             {
 
                 throw;
             }
+        }
 
 
+        private void t_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            bool res = (bool)e.Result;
+            if (res)
+            {
+                backPostLabel_LinkClicked(null, null);
+            }
+            else
+            {
+                MessageBox.Show("Only logged in users are allowed to add posts !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -394,7 +424,7 @@ namespace ForumClientGui
                 bool res = controller.Login(usernameTextBox.Text, passTextBox.Text);
                 if (!res)
                 {
-                    MessageBox.Show("Username is not registered", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Bad username or password", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -415,7 +445,7 @@ namespace ForumClientGui
                 bool res = controller.Logout();
                 if (!res)
                 {
-                    MessageBox.Show("Bad username or password", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Username is not registered", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -439,6 +469,7 @@ namespace ForumClientGui
             {
                 ShowPostsGrid(currentSubforum);
             }
+            onUpdatePictureBox.Visible = false;
 
         }
 

@@ -309,20 +309,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="AddMessage">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="AddMessageResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="AddMessageResult" type="xs:boolean" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="SubscribeToForum">
     <xs:complexType>
       <xs:sequence />
@@ -378,8 +364,7 @@
   <xs:element name="onUpdate">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="timestamp" type="xs:dateTime" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/ForumUtils.SharedDataTypes" minOccurs="0" name="message" nillable="true" type="q15:Post" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
