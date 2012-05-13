@@ -197,6 +197,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "couldn't add moderator");
             }
 
@@ -211,6 +212,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "couldn't remove moderator");
             }
 
@@ -225,6 +227,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "couldn't replace moderator");
             }
 
@@ -239,6 +242,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "couldn't add sub forum");
             }
 
@@ -253,6 +257,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "couldn't remove sub forum");
             }
 
@@ -267,6 +272,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return -1;
                 throw new FaultException<Exception>(e, "couldn't get report");
             }
 
@@ -281,6 +287,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return -1;
                 throw new FaultException<Exception>(e, "couldn't get report");
             }
 
@@ -295,6 +302,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
+                return false;
                 throw new FaultException<Exception>(e, "couldn't replace admin");
             }
 
