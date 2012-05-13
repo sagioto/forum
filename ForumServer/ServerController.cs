@@ -381,7 +381,17 @@ namespace ForumServer
 
                 if (securityManager.AuthenticateAdmin(oldAdminUsername, oldAdminPassword))
                 {
-                    User newAdmin = new User(newAdminUsername, newAdminPassword);
+                    User newAdmin;
+                    try
+                    {
+                        newAdmin = dataManager.GetUser(newAdminUsername);
+                    }
+                    catch (UserNotFoundException)
+                    {
+                        newAdmin = new User(newAdminUsername, newAdminPassword);
+                        dataManager.AddUser(newAdmin);
+                    }
+                    
                     User oldAdmin = dataManager.GetAdmin();
                     if (CheckIfModerator(oldAdminUsername))
                         oldAdmin.Level = AuthorizationLevel.MODERATOR;
