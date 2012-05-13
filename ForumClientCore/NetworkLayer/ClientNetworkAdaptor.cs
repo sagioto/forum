@@ -9,7 +9,7 @@ using ForumUtils.SharedDataTypes;
 
 namespace ForumClientCore.NetworkLayer
 {
-    public class ClientNetworkAdaptor : IForumService
+    public class ClientNetworkAdaptor
     {
         IForumService webService;
         ClientNetworkListener netListener;

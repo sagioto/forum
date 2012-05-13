@@ -121,16 +121,94 @@ namespace ForumTests
         }
 
         [TestMethod]
-        public void UserIntegration()
+        public void UserIntegration1()
         {
             ClientController cc1 = new ClientController();
-            cc1.Register("test1", "123456");
-            cc1.Login("test1", "123456");
+      
+            cc1.Login("admin", "admin");
 
             ClientController cc2 = new ClientController();
             cc2.Register("test2", "123456");
             cc2.Login("test2", "123456");
 
+
+            ClientController cc3 = new ClientController();
+            cc2.Register("test3", "123456");
+            cc2.Login("test3", "123456");
+
+
+            //try to add moderator by non-admin
+            Assert.IsFalse(cc2.AddModerator("test2", "Woman"));
+
+            cc1.AddModerator("test2", "Woman");
+
+            //to this subforum has already moderator
+            Assert.IsTrue(cc1.AddModerator("test2", "Woman"));
+
+            cc2.Post("Woman","msg2","body2");
+            cc3.Post("Woman","msg3","body3");
+
+            //try to replace moderator by non-admin (see: cc2 is the contrller of userName test2)
+            Assert.IsFalse(cc2.ReplaceModerator("test3", "test2", "Woman"));
+
+            cc1.ReplaceModerator("test3", "test2", "Woman");
+
+            //try to edit message by non-moderator
+            Assert.IsFalse(cc2.EditPost(null, "hehe", "bebe"), "hellow evil world");
+
+            //try to add subform by non-admin
+            Assert.IsFalse(cc2.AddSubforum(null, null, "badSubForum"));
+
+            //try to add subform by admin
+            Assert.IsTrue(cc1.AddSubforum(null, null, "bestFrum"));
+
+        }
+        [TestMethod]
+        public void UserIntegration2()
+        {
+            ClientController cc1 = new ClientController();
+
+            cc1.Login("admin", "admin");
+
+            ClientController cc2 = new ClientController();
+            cc2.Register("test2", "123456");
+            cc2.Login("test2", "123456");
+
+            ClientController cc3 = new ClientController();
+            cc2.Register("test3", "123456");
+            cc2.Login("test3", "123456");
+
+            cc2.Post("Woman", "title1", "body1");
+            
+            //try to edit message not by the writer, admin or moderator
+            Assert.IsFalse(cc3.EditPost(null, "BadTitle", "BadBody"));
+
+            //try to edit message by admin
+            Assert.IsTrue(cc1.EditPost(null, "GoodTitle", "GoodBody"));
+
+            ClientController cc4 = new ClientController();
+            cc1.ReplaceAdmin("newAdmin", "newAdmin"); //the newAdmin will create at the server
+
+            //try to login with the new admin (the registeration was at the replaceAdmin)
+            Assert.IsTrue(cc4.Login("newAdmin", "newAdmin"));
+
+            //logic:
+            //  if the old admin was just admin (with out any moderator of any subforum)
+            //      then he will become regular member.
+            //  if the old admin was moderator of any forum
+            //      then he will be just the relevant forum moderator (and no admin).
+
+            //try to create subform by non-admin
+            Assert.IsFalse(cc1.AddSubforum(null, null, "badbadForum"));
+            
+            //try to moderate message by non-admin or non moderator
+            Assert.IsFalse(cc1.EditPost(null, "xxx", "yyy"));
+            
+            //try to remove non existing subforum (by admin)
+            Assert.IsFalse(cc4.RemoveSubforum(null, null, "Forums"));
+
+            //try to remove subforum by non-admin
+            Assert.IsFalse(cc1.RemoveSubforum(null, null, "Woman"));
         }
 
     }
