@@ -52,6 +52,12 @@ namespace ForumClientCore
             netAdaptor.OnUpdateFromServer += new ClientNetworkAdaptor.OnUpdate(netAdaptor_OnUpdateFromServer);
         }
 
+        public ClientController()
+        {
+            netAdaptor = new ClientNetworkAdaptor();
+            netAdaptor.OnUpdateFromServer += new ClientNetworkAdaptor.OnUpdate(netAdaptor_OnUpdateFromServer);
+        }
+
 
         /// <summary>
         /// This method is an example of using NetworkAdaptor
