@@ -39,30 +39,10 @@ namespace ForumServer
 
         }
 
-        public string[] GetSubforumsList()
-        {
-            try
-            {
-                log.Info("got request to enter");
-                
-                Subforum[] subs = dataManager.GetSubforums().ToArray<Subforum>();
-                List<string> names = new List<string>();
-                foreach(Subforum sub in subs)
-                {
-                    names.Add(sub.Name);
-                }
-                string[] sorted = names.ToArray();
-                Array.Sort<string>(sorted);
-                return sorted; 
-            }
-            catch (Exception e)
-            {
-                log.Error("got requset to enter from someone but got error", e);
-                throw e;
-            }
-        }
 
-        public bool Register(string username, string password)
+        #region user functions
+
+        public Result Register(string username, string password)
         {
             try
             {
@@ -77,7 +57,7 @@ namespace ForumServer
         }
 
 
-        public bool Login(string username, string password)
+        public Result Login(string username, string password)
         {
             try
             {
@@ -92,7 +72,7 @@ namespace ForumServer
 
         }
 
-        public bool Logout(string username)
+        public Result Logout(string username)
         {
             try
             {
@@ -106,6 +86,50 @@ namespace ForumServer
             }
 
         }
+
+        public Post Subscribe(String username)
+        {
+            try
+            {
+                log.Info("got request to subscribe frome user " + username);
+
+                throw new NotImplementedException();
+
+            }
+            catch (Exception e)
+            {
+                log.Error("failed to subscribe", e);
+                throw e;
+            }
+        }
+
+        #endregion
+
+        #region viewing functions
+
+        public string[] GetSubforumsList()
+        {
+            try
+            {
+                log.Info("got request to enter");
+
+                Subforum[] subs = dataManager.GetSubforums().ToArray<Subforum>();
+                List<string> names = new List<string>();
+                foreach (Subforum sub in subs)
+                {
+                    names.Add(sub.Name);
+                }
+                string[] sorted = names.ToArray();
+                Array.Sort<string>(sorted);
+                return sorted;
+            }
+            catch (Exception e)
+            {
+                log.Error("got requset to enter from someone but got error", e);
+                throw e;
+            }
+        }
+
 
         public Post[] GetSubForum(string subforum)
         {
@@ -152,6 +176,10 @@ namespace ForumServer
                 throw e;
             }
         }
+
+        #endregion
+
+        #region posting functions
 
         public bool Post(string subforum, Post post)
         {
@@ -228,6 +256,17 @@ namespace ForumServer
             }
 
         }
+
+        private bool CheckPost(ForumUtils.SharedDataTypes.Post post)
+        {
+            return ((post.Body != null && post.Body.Length != 0)
+                   || (post.Title != null && post.Title.Length != 0));
+        }
+
+        #endregion
+
+        #region admin functions
+
 
         public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
         {
@@ -451,11 +490,9 @@ namespace ForumServer
 
         }
 
-        private bool CheckPost(ForumUtils.SharedDataTypes.Post post)
-        {
-            return ((post.Body != null && post.Body.Length != 0)
-                   || (post.Title != null && post.Title.Length != 0));
-        }
+        #endregion
+
+       
 
     }
 }

@@ -236,7 +236,7 @@ namespace ForumServer
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword);
+        Result ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword);
 
         #endregion
 
@@ -246,14 +246,15 @@ namespace ForumServer
 
     [DataContract]
     [Flags]
-    enum Result : byte 
+    public enum Result : byte 
     {
         NULL = 0x00,
-        USER_NOT_FOUND = 0x01,
-        POST_NOT_FOUND = 0x02,
-        SUB_FORUM_NOT_FOUND = 0x04,
-        INSUFFICENT_PERMISSIONS = 0x08,
-        ADMIN_PERMISSIONS_NEEDED = 0x16
+        OK = 0x01,
+        USER_NOT_FOUND = 0x02,
+        POST_NOT_FOUND = 0x04,
+        SUB_FORUM_NOT_FOUND = 0x08,
+        INSUFFICENT_PERMISSIONS = 0x16,
+        ADMIN_PERMISSIONS_NEEDED = 0x32
     }
 
 }

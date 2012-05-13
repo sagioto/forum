@@ -17,6 +17,8 @@ namespace ForumServer
         private static ServerController controller = new ServerController();
         private ISerializer serializer = new JsonSerializer();
 
+
+        #region user functions
         public Result Register(String username, String password)
         {
             try
@@ -57,6 +59,14 @@ namespace ForumServer
             }
 
         }
+
+        public Post Subscribe(string username)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region viewing functions
 
         public string[] GetSubforumsList()
         {
@@ -110,6 +120,9 @@ namespace ForumServer
 
         }
 
+        #endregion
+
+        #region posting functions
 
         public Result Post(string currentSubforum, Post toPost)
         {
@@ -174,6 +187,8 @@ namespace ForumServer
             }
 
         }
+
+        #endregion
 
         #region admin functions
 
@@ -291,5 +306,6 @@ namespace ForumServer
 
         #endregion
 
-    }
+
+       }
 }
