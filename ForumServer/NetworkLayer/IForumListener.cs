@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ServiceModel;
+using ForumUtils.SharedDataTypes;
 
 namespace ForumServer.NetworkLayer
 {
@@ -12,7 +13,7 @@ namespace ForumServer.NetworkLayer
     public interface IForumListener
     {
         [OperationContract(IsOneWay = true)]
-        void onUpdate(string message, DateTime timestamp);
+        void onUpdate(Post message);
         
 
     }
