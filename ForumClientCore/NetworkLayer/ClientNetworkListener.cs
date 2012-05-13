@@ -9,7 +9,7 @@ using ForumUtils.SharedDataTypes;
 namespace ForumClientCore.NetworkLayer
 {
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
-    class ClientNetworkListener 
+    class ClientNetworkListener : ForumService.IForumServiceCallback
     {
 
         // Event setting
