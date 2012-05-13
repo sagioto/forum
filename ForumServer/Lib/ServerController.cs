@@ -144,7 +144,7 @@ namespace ForumServer
             try
             {
                 log.Info("got request for post " + key);
-                return dataManager.GetPost(key).Replies.Values.ToArray().OrderBy(post => post.Key.Time).ToArray();
+                return dataManager.GetPost(key).Replies.Values.ToArray();//.OrderBy(post => post.Key.Time).ToArray();
             }
             catch (Exception e)
             {

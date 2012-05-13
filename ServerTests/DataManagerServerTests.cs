@@ -96,6 +96,16 @@ namespace ServerTests
         public void AddReplyServerTests()
         {
             DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
+            target.InitForumData();
+            List<Subforum> list = target.GetSubforums();
+
+            Post reply8 = new Post(new Postkey("dor", DateTime.Now), "Reply", "", null, "Travel");
+            foreach (Post p in list[0].Posts.Values)
+            {
+                target.AddReply(reply8, p.Key);
+            }
+            
+
             target.AddSubforum(new Subforum("subforum"));
             Postkey pk = new Postkey("dor", DateTime.Now);
             target.AddPost(new Post(pk, "Post", "", null, "subforum"), "subforum");

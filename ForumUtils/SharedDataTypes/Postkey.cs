@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 namespace ForumUtils.SharedDataTypes
 {
     [DataContract]
-    public class Postkey : IEquatable<Postkey>//IComparer //IEqualityComparer
+    public class Postkey : IEqualityComparer<Postkey>// IEquatable<Postkey>//IComparer //IEqualityComparer
     {
         private string username;
         private DateTime time;
@@ -53,13 +53,13 @@ namespace ForumUtils.SharedDataTypes
         public int CompareTo(object pk)
         {
             Postkey postkey = (Postkey)pk;
-            if (this.time.CompareTo(postkey.Time) < 0)  //this.time < postkey.Time
+            if (this.time.Millisecond < postkey.Time.Millisecond)  //this.time < postkey.Time
             {
                 return -1;
             }
             else    //this.time > postkey.Time
             {
-                if (this.time.CompareTo(postkey.Time) > 0)  //this.time > postkey.Time
+                if (this.time.Millisecond > postkey.Time.Millisecond)  //this.time > postkey.Time
                 {
                     return 1;
                 }
@@ -72,9 +72,38 @@ namespace ForumUtils.SharedDataTypes
         #endregion
 
 
-        public bool Equals(Postkey otherPk)
+        //public override bool Equals(Postkey otherPk)
+        //{
+        //    return ((this.username == otherPk.Username) && (this.time.CompareTo(otherPk.Time) == 0));
+        //}
+
+        //public override int GetHashCode()
+        //{
+        //    if (time == null)
+        //        return 0;
+        //    return time.GetHashCode();
+        //}
+
+        public bool Equals(Postkey x, Postkey y)
         {
-            return ((this.username == otherPk.Username) && (this.time.CompareTo(otherPk.Time) == 0));
+
+            if (x.time.CompareTo(y.Time) != 0)
+            {
+                return false;
+            }
+            else
+            {
+                return this.username.Equals(y.Username);
+            }
         }
+
+
+        public int GetHashCode(Postkey obj)
+        {
+            return obj.Time.Millisecond;
+        }
+
+
+
     }
 }

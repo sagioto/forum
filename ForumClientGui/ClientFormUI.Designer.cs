@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -126,10 +127,10 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.subforumsGrid);
             this.splitContainer1.Panel2.Controls.Add(this.newPostPanel);
             this.splitContainer1.Panel2.Controls.Add(this.postsGrid);
             this.splitContainer1.Panel2.Controls.Add(this.postPanel);
-            this.splitContainer1.Panel2.Controls.Add(this.subforumsGrid);
             this.splitContainer1.Size = new System.Drawing.Size(805, 451);
             this.splitContainer1.SplitterDistance = 83;
             this.splitContainer1.TabIndex = 4;
@@ -394,13 +395,14 @@
             // 
             this.postsGrid.AllowUserToAddRows = false;
             this.postsGrid.AllowUserToDeleteRows = false;
-            this.postsGrid.BackgroundColor = System.Drawing.Color.DarkGray;
+            this.postsGrid.BackgroundColor = System.Drawing.Color.White;
             this.postsGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.postsGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.postsGrid.ColumnHeadersVisible = false;
             this.postsGrid.Location = new System.Drawing.Point(12, 166);
             this.postsGrid.Name = "postsGrid";
             this.postsGrid.ReadOnly = true;
+            this.postsGrid.RowHeadersVisible = false;
             this.postsGrid.Size = new System.Drawing.Size(238, 155);
             this.postsGrid.TabIndex = 2;
             this.postsGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.postsGrid_CellContentClick);
@@ -540,21 +542,29 @@
             this.repliesGrid.Location = new System.Drawing.Point(0, 0);
             this.repliesGrid.Name = "repliesGrid";
             this.repliesGrid.ReadOnly = true;
+            this.repliesGrid.RowHeadersVisible = false;
             this.repliesGrid.Size = new System.Drawing.Size(337, 95);
             this.repliesGrid.TabIndex = 3;
+            this.repliesGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.repliesGrid_CellContentClick);
             // 
             // subforumsGrid
             // 
             this.subforumsGrid.AllowUserToAddRows = false;
             this.subforumsGrid.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Red;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Blue;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            this.subforumsGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.subforumsGrid.BackgroundColor = System.Drawing.Color.White;
             this.subforumsGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.subforumsGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.subforumsGrid.ColumnHeadersVisible = false;
-            this.subforumsGrid.Location = new System.Drawing.Point(12, 24);
+            this.subforumsGrid.Location = new System.Drawing.Point(363, 207);
             this.subforumsGrid.Name = "subforumsGrid";
             this.subforumsGrid.ReadOnly = true;
-            this.subforumsGrid.Size = new System.Drawing.Size(244, 129);
+            this.subforumsGrid.RowHeadersVisible = false;
+            this.subforumsGrid.Size = new System.Drawing.Size(137, 139);
             this.subforumsGrid.TabIndex = 0;
             this.subforumsGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.subforumsGrid_CellClick);
             // 
