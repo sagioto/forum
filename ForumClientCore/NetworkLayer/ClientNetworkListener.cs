@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ServiceModel;
 using ForumClientCore.ForumService;
+using ForumUtils.SharedDataTypes;
 
 namespace ForumClientCore.NetworkLayer
 {
@@ -12,7 +13,7 @@ namespace ForumClientCore.NetworkLayer
     {
 
         // Event setting
-        public delegate void OnUpdate(string text);
+        public delegate void OnUpdate(Post p);
         public event OnUpdate OnUpdateFromServer;
 
 
@@ -21,10 +22,10 @@ namespace ForumClientCore.NetworkLayer
         /// </summary>
         /// <param name="message"></param>
         /// <param name="timestamp"></param>
-        public void onUpdate(string message, DateTime timestamp)
+        public void onUpdate(Post message)
         {
             // Invoking OnUpdateFromController event - ClientNetworkAdaptor will be notified
-            OnUpdateFromServer(message + "  ,   " + timestamp.ToShortDateString() + "/" + timestamp.ToLongTimeString());
+            OnUpdateFromServer(message);
         }
 
     }
