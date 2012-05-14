@@ -85,9 +85,9 @@
       <Project>{A27A133F-3BE9-4869-B21E-045605A58827}</Project>
       <Name>ForumServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ForumUtils\ForumUtils.csproj">
+    <ProjectReference Include="..\ForumUtils\ForumShared.csproj">
       <Project>{8E463DBF-841C-4989-9219-A0AE255F58F9}</Project>
-      <Name>ForumUtils</Name>
+      <Name>ForumShared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

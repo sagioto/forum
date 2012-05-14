@@ -8,12 +8,6 @@ namespace ForumUtils.NetworkLayer
 {
     public interface ISerializer
     {
-        string SerializeSubforum(Subforum toSerialize);
-
-        Subforum DeserializeSubforum(string toDeserialize);
-
-        Subforum[] DeserializeSubforumArray(string toDeserialize);
-
         string SerializePost(Post toSerialize);
 
         Post DeserializePost(string toDeserialize);

@@ -50,7 +50,6 @@
     <Compile Include="SharedDataTypes\JsonSerializer.cs" />
     <Compile Include="SharedDataTypes\Post.cs" />
     <Compile Include="SharedDataTypes\Postkey.cs" />
-    <Compile Include="SharedDataTypes\Subforum.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -5,8 +5,6 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
-using ForumUtils.NetworkLayer;
-using ForumServer.NetworkLayer;
 using ForumServer.DataTypes;
 using ForumUtils.SharedDataTypes;
 
@@ -15,8 +13,6 @@ namespace ForumServer
     public class ServerNetworkAdaptor : IForumService
     {
         private static ServerController controller = new ServerController();
-        private ISerializer serializer = new JsonSerializer();
-
 
         #region user functions
         public Result Register(String username, String password)

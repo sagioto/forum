@@ -126,9 +126,9 @@
       <Project>{EE409FC7-F8B3-430D-8C3A-277FB90A0349}</Project>
       <Name>ForumClientCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ForumUtils\ForumUtils.csproj">
+    <ProjectReference Include="..\ForumUtils\ForumShared.csproj">
       <Project>{8E463DBF-841C-4989-9219-A0AE255F58F9}</Project>
-      <Name>ForumUtils</Name>
+      <Name>ForumShared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

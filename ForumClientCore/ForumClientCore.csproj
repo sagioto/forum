@@ -111,9 +111,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ForumUtils\ForumUtils.csproj">
+    <ProjectReference Include="..\ForumUtils\ForumShared.csproj">
       <Project>{8E463DBF-841C-4989-9219-A0AE255F58F9}</Project>
-      <Name>ForumUtils</Name>
+      <Name>ForumShared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

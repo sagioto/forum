@@ -18,21 +18,6 @@ namespace ForumUtils.NetworkLayer
         }
 
 
-        public string SerializeSubforum(Subforum toSerialize)
-        {
-            return serializer.Serialize(toSerialize);
-        }
-
-        public Subforum DeserializeSubforum(string toDeserialize)
-        {
-            return serializer.Deserialize(toDeserialize, typeof(Subforum)) as Subforum;
-        }
-
-        public Subforum[] DeserializeSubforumArray(string toDeserialize)
-        {
-            return serializer.Deserialize(toDeserialize, typeof(Subforum[])) as Subforum[];
-        }
-
         public string SerializePost(Post toSerialize)
         {
             return serializer.Serialize(toSerialize);

@@ -79,9 +79,9 @@
     <Compile Include="DataTypes\Exceptions\UserNotFoundException.cs" />
     <Compile Include="DataTypes\Exceptions\PostNotFoundException.cs" />
     <Compile Include="DataTypes\AuthorizationLevel.cs" />
+    <Compile Include="DataTypes\Subforum.cs" />
     <Compile Include="DataTypes\User.cs" />
     <Compile Include="DataTypes\UserState.cs" />
-    <Compile Include="NetworkLayer\IForumListener.cs" />
     <Compile Include="NetworkLayer\ServerNetworkAdaptor.svc.cs">
       <DependentUpon>ServerNetworkAdaptor.svc</DependentUpon>
     </Compile>
@@ -97,9 +97,9 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ForumUtils\ForumUtils.csproj">
+    <ProjectReference Include="..\ForumUtils\ForumShared.csproj">
       <Project>{8E463DBF-841C-4989-9219-A0AE255F58F9}</Project>
-      <Name>ForumUtils</Name>
+      <Name>ForumShared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
