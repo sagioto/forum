@@ -193,6 +193,12 @@ namespace ForumServer.DataLayer
         /// <exception cref="UserNotFoundException"></exception>
         User GetAdmin();
 
+        /// <summary>
+        /// gets a list of all the logged in users
+        /// </summary>
+        /// <returns></returns>
+        List<User> GetAllLoggedInUsers();
+
         #endregion
 
     }

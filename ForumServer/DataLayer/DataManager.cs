@@ -24,6 +24,7 @@ namespace ForumServer.DataLayer
             string adminName = ConfigurationManager.AppSettings["adminName"];
             string adminPass = ConfigurationManager.AppSettings["adminPassword"];
             User admin = new User(adminName, adminPass);
+            admin.Level = AuthorizationLevel.ADMIN;
             SetAdmin(admin);
         }
 
@@ -348,6 +349,13 @@ namespace ForumServer.DataLayer
             }
         }
 
+        public List<User> GetAllLoggedInUsers()
+        {
+            throw new NotImplementedException();
+        }
+
+
+
         #endregion
 
         #endregion //IDataManager methods
@@ -525,8 +533,6 @@ namespace ForumServer.DataLayer
             return allReplies;
         }
         #endregion
-
-
 
 
 

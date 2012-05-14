@@ -4,26 +4,17 @@ using System.Linq;
 using System.Web;
 using ForumServer.DataTypes;
 using ForumUtils.SharedDataTypes;
+using ForumServer.DataLayer;
 
 namespace ForumServer.Security
 {
     public class SecurityManager : ISecurityManager
     {
-        private DataLayer.DataManager dataManager;
+        private DataManager dataManager;
 
         public SecurityManager(DataLayer.DataManager dataManager)
         {
             this.dataManager = dataManager;
-
-            User admin = dataManager.GetAdmin();
-            if (admin == null)
-            {
-                string adminName = System.Web.Configuration.WebConfigurationManager.AppSettings["adminName"];
-                string adminPassword = System.Web.Configuration.WebConfigurationManager.AppSettings["adminPassword"];
-                admin = new User(adminName, adminPassword);
-                admin.Level = AuthorizationLevel.ADMIN;
-                dataManager.SetAdmin(admin);
-            }
         }
 
 
