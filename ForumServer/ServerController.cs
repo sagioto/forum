@@ -101,20 +101,13 @@ namespace ForumServer
                 User toSubscribe = dataManager.GetUser(username);
                 if (toSubscribe != null)
                 {
-                    Monitor.Enter(toSubscribe);
-                    try
+                    lock(toSubscribe)
                     {
-                        Monitor.Wait(toSubscribe, timeToWait);
+                        if (Monitor.Wait(toSubscribe, timeToWait))
+                            return this.posted;
                     }
-                    catch (ThreadInterruptedException)
-                    {
-                        Monitor.Exit(toSubscribe);
-                        return this.posted;
-                    }
-                    Monitor.Exit(toSubscribe);
                 }
                 return null;
-
             }
             catch (Exception e)
             {
@@ -122,15 +115,32 @@ namespace ForumServer
                 throw e;
             }
         }
+        
 
         private void Notify(Post posted)
         {
-            List<User> toNotify = dataManager.GetAllLoggedInUsers().Where(user => policyManager.ShouldNotify(posted, user.Username)).ToList();
-            this.posted = posted;
-            foreach (User user in toNotify)
+
+            try
             {
-                Monitor.PulseAll(user);
+                log.Info("got request to notify on post");
+
+                List<User> toNotify = dataManager.GetAllLoggedInUsers().Where(user => policyManager.ShouldNotify(posted, user.Username)).ToList();
+                this.posted = posted;
+                foreach (User user in toNotify)
+                {
+                    lock (user)
+                    {
+                        Monitor.Pulse(user);
+                    }
+                }
+
             }
+            catch (Exception e)
+            {
+                log.Error("failed to notify", e);
+                throw e;
+            }
+
         }
 
         #endregion
