@@ -59,7 +59,7 @@ namespace ForumServer.Policy
 
         public bool ShouldNotify(Post post, string username)
         {
-            return true;
+            return (post.Key.Username != username);
         }
 
     }

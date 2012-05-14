@@ -101,7 +101,7 @@ namespace ForumServer
                 User toSubscribe = dataManager.GetUser(username);
                 if (toSubscribe != null)
                 {
-                    lock(toSubscribe)
+                    lock (toSubscribe)
                     {
                         if (Monitor.Wait(toSubscribe, timeToWait))
                             return this.posted;
@@ -115,7 +115,7 @@ namespace ForumServer
                 throw e;
             }
         }
-        
+
 
         private void Notify(Post posted)
         {
@@ -153,15 +153,9 @@ namespace ForumServer
             {
                 log.Info("got request to enter");
 
-                Subforum[] subs = dataManager.GetSubforums().ToArray<Subforum>();
-                List<string> names = new List<string>();
-                foreach (Subforum sub in subs)
-                {
-                    names.Add(sub.Name);
-                }
-                string[] sorted = names.ToArray();
-                Array.Sort<string>(sorted);
-                return sorted;
+                string[] subs = dataManager.GetSubforums().Select(subforum => subforum.Name).ToArray();
+                Array.Sort<string>(subs);
+                return subs;
             }
             catch (Exception e)
             {
@@ -169,7 +163,6 @@ namespace ForumServer
                 throw e;
             }
         }
-
 
         public Post[] GetSubForum(string subforum)
         {

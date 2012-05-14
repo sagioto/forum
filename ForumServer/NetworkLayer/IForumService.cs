@@ -12,9 +12,9 @@ using ForumUtils.SharedDataTypes;
 namespace ForumServer
 {
     /// <summary>
-    /// Server interface
+    /// Service interface
     /// </summary>
-    [ServiceContract(CallbackContract = typeof(IForumListener))]
+    [ServiceContract]
     public interface IForumService
     {
  
