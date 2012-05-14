@@ -12,7 +12,7 @@ namespace ForumServer.DataTypes
         private AuthorizationLevel level;
         private UserState currentState;
 
-        
+
 
         public User(string username, string password)
         {
@@ -90,5 +90,6 @@ namespace ForumServer.DataTypes
 
         #endregion
 
+        }
     }
 }
