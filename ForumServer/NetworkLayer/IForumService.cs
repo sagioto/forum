@@ -245,19 +245,19 @@ namespace ForumServer
 
     [DataContract]
     [Flags]
-    public enum Result : byte
+    public enum Result
     {
-        NULL = 0x00,
-        OK = 0x01,
-        USER_NOT_FOUND = 0x02,
-        POST_NOT_FOUND = 0x04,
-        SUB_FORUM_NOT_FOUND = 0x08,
-        ENTRY_EXISTS = 0xF0,
-        INSUFFICENT_PERMISSIONS = 0x0F,
-        ADMIN_PERMISSIONS_NEEDED = 0x10,
-        SECURITY_ERROR = 0x20,
-        POLICY_REJECTED = 0x40,
-        ILLEGAL_POST = 0x80
+        NULL = 0x0000,
+        OK = 0x0001,
+        USER_NOT_FOUND = 0x0002,
+        POST_NOT_FOUND = 0x0004,
+        SUB_FORUM_NOT_FOUND = 0x0010,
+        ENTRY_EXISTS = 0x0020,
+        INSUFFICENT_PERMISSIONS = 0x0040,
+        ADMIN_PERMISSIONS_NEEDED = 0x0100,
+        SECURITY_ERROR = 0x0200,
+        POLICY_REJECTED = 0x0400,
+        ILLEGAL_POST = 0x1000
     }
 
 }
