@@ -7,6 +7,8 @@ using ForumServer.Security;
 using ForumUtils.SharedDataTypes;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading;
+using System.Configuration;
 
 namespace ForumServer
 {
@@ -15,6 +17,8 @@ namespace ForumServer
         private DataManager dataManager;
         private SecurityManager securityManager;
         private PolicyManager policyManager;
+        private Post posted;
+        private TimeSpan timeToWait;
         private log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
@@ -27,7 +31,8 @@ namespace ForumServer
                 dataManager = new DataManager();
                 securityManager = new SecurityManager(dataManager);
                 policyManager = new PolicyManager(dataManager);
-
+                string time = ConfigurationManager.AppSettings["timeToWaitMinutes"];
+                timeToWait = TimeSpan.FromMinutes(int.Parse(time));
                 dataManager.InitForumData();
 
             }
@@ -93,13 +98,38 @@ namespace ForumServer
             {
                 log.Info("got request to subscribe frome user " + username);
 
-                throw new NotImplementedException();
+                User toSubscribe = dataManager.GetUser(username);
+                if (toSubscribe != null)
+                {
+                    Monitor.Enter(toSubscribe);
+                    try
+                    {
+                        Monitor.Wait(toSubscribe, timeToWait);
+                    }
+                    catch (ThreadInterruptedException)
+                    {
+                        Monitor.Exit(toSubscribe);
+                        return this.posted;
+                    }
+                    Monitor.Exit(toSubscribe);
+                }
+                return null;
 
             }
             catch (Exception e)
             {
                 log.Error("failed to subscribe", e);
                 throw e;
+            }
+        }
+
+        private void Notify(Post posted)
+        {
+            List<User> toNotify = dataManager.GetAllLoggedInUsers().Where(user => policyManager.ShouldNotify(posted, user.Username)).ToList();
+            this.posted = posted;
+            foreach (User user in toNotify)
+            {
+                Monitor.PulseAll(user);
             }
         }
 
@@ -191,7 +221,10 @@ namespace ForumServer
                 Result res = securityManager.IsAuthorizedToPost(post.Key.Username, subforum);
                 if (res == Result.OK)
                     if (dataManager.AddPost(post, subforum.ToString()))
+                    {
+                        Notify(post);
                         return Result.OK;
+                    }
                     else return Result.SUB_FORUM_NOT_FOUND;
                 else return res;
             }
@@ -214,7 +247,10 @@ namespace ForumServer
                 Result res = securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum);
                 if (res == Result.OK)
                     if (dataManager.AddReply(post, currPost))
+                    {
+                        Notify(post);
                         return Result.OK;
+                    }
                     else return Result.POST_NOT_FOUND;
                 else return res;
             }

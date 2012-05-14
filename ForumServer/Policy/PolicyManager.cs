@@ -57,7 +57,7 @@ namespace ForumServer.Policy
             return Result.OK;
         }
 
-        bool ShouldNotify(Post post, string username)
+        public bool ShouldNotify(Post post, string username)
         {
             return true;
         }
