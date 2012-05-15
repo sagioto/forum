@@ -7,9 +7,12 @@ using System.ServiceModel.Web;
 using System.Text;
 using ForumServer.DataTypes;
 using ForumUtils.SharedDataTypes;
+using System.ServiceModel.Activation;
 
 namespace ForumServer
 {
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    [ServiceBehavior(AddressFilterMode = AddressFilterMode.Any)]
     public class ServerNetworkAdaptor : IForumService
     {
         private static ServerController controller = new ServerController();
