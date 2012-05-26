@@ -65,9 +65,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="ClientCoreClassDiagram.cd" />
-    <None Include="Service References\ForumService\ForumClientCore.ForumService.Post.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
+    <None Include="ForumShared.SharedDataTypes.Post.datasource" />
     <None Include="Service References\ForumService\ServerNetworkAdaptor.wsdl" />
     <None Include="Service References\ForumService\ServerNetworkAdaptor.xsd">
       <SubType>Designer</SubType>

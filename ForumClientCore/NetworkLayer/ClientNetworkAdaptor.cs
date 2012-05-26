@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-//using ForumClientCore.ForumService;
+using ForumClientCore.ForumService;
 using ForumShared.ForumAPI;
 using System.ServiceModel;
 using ForumShared.NetworkLayer;
@@ -12,7 +12,7 @@ namespace ForumClientCore.NetworkLayer
 {
     public class ClientNetworkAdaptor
     {
-        ForumShared.ForumAPI.IForumService webService;
+        ForumClientCore.ForumService.IForumService webService;
         ClientNetworkListener netListener;
 
 
@@ -31,10 +31,10 @@ namespace ForumClientCore.NetworkLayer
 
             // Web Service settings
             InstanceContext context = new InstanceContext(netListener);     // Sending IntanceContex to Server that it will be able to make callbacks
-            //   webService = new ForumServiceClient(context); //TODO uncomment
+            //webService = new ForumServiceClient(context); //TODO uncomment
             if (GetCallBack)
             {
-                //   webService.SubscribeToForum();  // Subscribing to Forum in order to get callbacks TODO uncomment
+                //webService.SubscribeToForum();  // Subscribing to Forum in order to get callbacks TODO uncomment
             }
         }
 

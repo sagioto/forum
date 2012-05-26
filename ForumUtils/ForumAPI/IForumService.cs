@@ -281,7 +281,7 @@ namespace ForumShared.ForumAPI
 
     }
 
-    [DataContract]
+/*    [DataContract]
     [Flags]
     public enum Result
     {
@@ -296,6 +296,6 @@ namespace ForumShared.ForumAPI
         SECURITY_ERROR = 0x0200,
         POLICY_REJECTED = 0x0400,
         ILLEGAL_POST = 0x1000
-    }
+    }*/
 
 }
