@@ -64,6 +64,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Properties\DataSources\ForumClientCore.ForumService.CompositeType.datasource" />
+    <None Include="Properties\DataSources\ForumShared.SharedDataTypes.Post.datasource" />
     <None Include="Properties\DataSources\ForumUtils.SharedDataTypes.Post.datasource" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

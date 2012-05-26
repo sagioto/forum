@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using ForumClientCore.ForumService;
-using ForumShared.ForumAPI;
 using System.ServiceModel;
+using System.ServiceModel.Web;
+using System.Text;
+//using ForumClientCore.ForumService;
+using ForumShared.ForumAPI;
 using ForumShared.NetworkLayer;
 using ForumShared.SharedDataTypes;
+using System.ServiceModel.Description;
 
 namespace ForumClientCore.NetworkLayer
 {
+
     public class ClientNetworkAdaptor
     {
-        ForumClientCore.ForumService.IForumService webService;
+        IForumService webService;
         ClientNetworkListener netListener;
 
 
@@ -32,6 +35,9 @@ namespace ForumClientCore.NetworkLayer
             // Web Service settings
             InstanceContext context = new InstanceContext(netListener);     // Sending IntanceContex to Server that it will be able to make callbacks
             //webService = new ForumServiceClient(context); //TODO uncomment
+            ChannelFactory<IForumService> cf = new ChannelFactory<IForumService>(new WebHttpBinding(), "http://localhost:52644");
+            cf.Endpoint.Behaviors.Add(new WebHttpBehavior());
+            webService = cf.CreateChannel();
             if (GetCallBack)
             {
                 //webService.SubscribeToForum();  // Subscribing to Forum in order to get callbacks TODO uncomment
@@ -47,6 +53,7 @@ namespace ForumClientCore.NetworkLayer
             // Web Service settings
             InstanceContext context = new InstanceContext(netListener);     // Sending IntanceContex to Server that it will be able to make callbacks
             //  webService = new ForumServiceClient(context); //TODO uncomment
+           // webService = new ForumServiceClient();
         }
 
         /// <summary>
@@ -109,7 +116,15 @@ namespace ForumClientCore.NetworkLayer
         /// <returns>Returns an array of Subforums. (The main forum).</returns>
         internal string[] GetSubforumsList()
         {
-            return webService.GetSubforumsList();
+            try
+            {
+                return webService.GetSubforumsList();
+            }
+            catch (Exception e)
+            {
+                Console.Write("Bullshit");
+                return null;
+            }
         }
 
         /// <summary>
