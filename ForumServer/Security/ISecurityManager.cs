@@ -5,6 +5,7 @@ using System.Text;
 using ForumServer.DataTypes;
 using ForumUtils.SharedDataTypes;
 using ForumShared.SharedDataTypes;
+using ForumShared.ForumAPI;
 
 namespace ForumServer.Security
 {

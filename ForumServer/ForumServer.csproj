@@ -85,7 +85,6 @@
     <Compile Include="NetworkLayer\ServerNetworkAdaptor.svc.cs">
       <DependentUpon>ServerNetworkAdaptor.svc</DependentUpon>
     </Compile>
-    <Compile Include="NetworkLayer\IForumService.cs" />
     <Compile Include="Policy\IPolicyManager.cs" />
     <Compile Include="Policy\PolicyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

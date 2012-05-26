@@ -5,6 +5,7 @@ using System.Web;
 using ForumServer.DataTypes;
 using ForumUtils.SharedDataTypes;
 using ForumShared.SharedDataTypes;
+using ForumShared.ForumAPI;
 using ForumServer.DataLayer;
 
 namespace ForumServer.Security

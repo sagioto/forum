@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ServiceModel;
 using ForumClientCore.ForumService;
+using ForumShared.SharedDataTypes;
 //using ForumShared.SharedDataTypes;
 
 namespace ForumClientCore.NetworkLayer

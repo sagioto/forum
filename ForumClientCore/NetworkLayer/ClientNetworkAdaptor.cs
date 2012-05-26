@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ForumClientCore.ForumService;
+using ForumShared.ForumAPI;
 using System.ServiceModel;
 using ForumShared.NetworkLayer;
-//using ForumShared.SharedDataTypes;
+using ForumShared.SharedDataTypes;
 
 namespace ForumClientCore.NetworkLayer
 {

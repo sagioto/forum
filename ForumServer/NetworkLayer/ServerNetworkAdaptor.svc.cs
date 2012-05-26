@@ -7,6 +7,7 @@ using System.ServiceModel.Web;
 using System.Text;
 using ForumServer.DataTypes;
 using ForumShared.SharedDataTypes;
+using ForumShared.ForumAPI;
 using System.ServiceModel.Activation;
 
 namespace ForumServer

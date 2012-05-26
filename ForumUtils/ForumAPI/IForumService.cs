@@ -8,7 +8,7 @@ using System.Text;
 using System.Web.Script.Serialization;
 using ForumShared.SharedDataTypes;
 
-namespace ForumServer
+namespace ForumShared.ForumAPI
 {
     /// <summary>
     /// Service interface

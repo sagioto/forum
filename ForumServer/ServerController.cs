@@ -6,6 +6,7 @@ using ForumServer.Policy;
 using ForumServer.Security;
 using ForumShared.SharedDataTypes;
 using ForumUtils.SharedDataTypes;
+using ForumShared.ForumAPI;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Threading;
