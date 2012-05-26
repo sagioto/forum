@@ -78,7 +78,6 @@ namespace ForumClientCore.NetworkLayer
         /// <returns>Returns true if registration succeeded, false if user is already registered.</returns>
         internal bool Register(String usename, String password)
         {
-            RegisterResponse rr = webService.Register(new RegisterRequest(usename, password));
             return false;
         }
 
