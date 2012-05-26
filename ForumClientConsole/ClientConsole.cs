@@ -5,6 +5,7 @@ using System.Text;
 using ForumClientCore;
 using System.Text.RegularExpressions;
 using ForumShared.SharedDataTypes;
+using ForumShared.ForumAPI;
 
 namespace ForumClientConsole
 {
@@ -135,7 +136,7 @@ namespace ForumClientConsole
 
         private void RemovePost()
         {
-            if (controller.RemovePost(controller.CurrentPost.Key))
+            if (controller.RemovePost(controller.CurrentPost.Key) == Result.OK)
             {
                 PrintPostList(controller.GetReplies(controller.CurrentPost.Key));
                 Console.WriteLine("Post removed successfully.");
@@ -168,7 +169,7 @@ namespace ForumClientConsole
                         string title = Console.ReadLine();
                         Console.WriteLine("Enter the new body of your post");
                         string body = Console.ReadLine();
-                        if (controller.EditPost(title, body))
+                        if (controller.EditPost(title, body) == Result.OK)
                         {
                             Console.WriteLine("Post was edited successfully");
                         }
@@ -230,7 +231,7 @@ namespace ForumClientConsole
             PrintPostList(subForumPosts);
         }
 
-        private void PrintPostList(ForumUtils.SharedDataTypes.Post[] subForumPosts)
+        private void PrintPostList(Post[] subForumPosts)
         {
             if (subForumPosts != null)
             {
@@ -266,7 +267,7 @@ namespace ForumClientConsole
             }
             else
             {
-                if (controller.Reply(controller.CurrentPost.Key, title, body))
+                if (controller.Reply(controller.CurrentPost.Key, title, body) == Result.OK)
                 {
                     Console.WriteLine("Replied to the post successfully!");
                 }
@@ -287,7 +288,7 @@ namespace ForumClientConsole
             string body = Console.ReadLine();
             try
             {
-                if (controller.Post(subForum, title, body))
+                if (controller.Post(subForum, title, body) == Result.OK)
                 {
                     Console.WriteLine("Posted successfully!");
                 }
@@ -350,7 +351,7 @@ namespace ForumClientConsole
             }
             Console.WriteLine("Please choose your password");
             password = ReadPassword();
-            if (controller.Register(userName, password))
+            if (controller.Register(userName, password) == Result.OK)
             {
                 Console.WriteLine("Registration Successful. You can now login to your account");
             }
