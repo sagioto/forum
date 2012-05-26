@@ -11,108 +11,1254 @@
 namespace ForumClientConsole.ForumService {
     
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ForumService.IForumService", CallbackContract=typeof(ForumClientConsole.ForumService.IForumServiceCallback))]
-    public interface IForumService {
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.233")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+    public partial class FaultException : CommunicationException {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FaultException))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.233")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+    public partial class CommunicationException : SystemException {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(CommunicationException))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FaultException))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.233")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.datacontract.org/2004/07/System")]
+    public partial class SystemException : Exception {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SystemException))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(CommunicationException))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(FaultException))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.233")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.datacontract.org/2004/07/System")]
+    public partial class Exception : object, System.ComponentModel.INotifyPropertyChanged {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Register", ReplyAction="http://tempuri.org/IForumService/RegisterResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/RegisterFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool Register(string username, string password);
+        private System.Xml.XmlElement[] anyField;
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Login", ReplyAction="http://tempuri.org/IForumService/LoginResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/LoginFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool Login(string username, string password);
+        private System.Xml.XmlQualifiedName factoryTypeField;
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Logout", ReplyAction="http://tempuri.org/IForumService/LogoutResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/LogoutFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool Logout(string username);
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAnyElementAttribute(Namespace="", Order=0)]
+        public System.Xml.XmlElement[] Any {
+            get {
+                return this.anyField;
+            }
+            set {
+                this.anyField = value;
+                this.RaisePropertyChanged("Any");
+            }
+        }
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetSubforumsList", ReplyAction="http://tempuri.org/IForumService/GetSubforumsListResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/GetSubforumsListFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        string[] GetSubforumsList();
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified, Namespace="http://schemas.microsoft.com/2003/10/Serialization/")]
+        public System.Xml.XmlQualifiedName FactoryType {
+            get {
+                return this.factoryTypeField;
+            }
+            set {
+                this.factoryTypeField = value;
+                this.RaisePropertyChanged("FactoryType");
+            }
+        }
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetSubforum", ReplyAction="http://tempuri.org/IForumService/GetSubforumResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/GetSubforumFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        ForumUtils.SharedDataTypes.Post[] GetSubforum(string subforum);
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetPost", ReplyAction="http://tempuri.org/IForumService/GetPostResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/GetPostFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        ForumUtils.SharedDataTypes.Post GetPost(ForumUtils.SharedDataTypes.Postkey postkey);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetReplies", ReplyAction="http://tempuri.org/IForumService/GetRepliesResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/GetRepliesFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        ForumUtils.SharedDataTypes.Post[] GetReplies(ForumUtils.SharedDataTypes.Postkey postkey);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Post", ReplyAction="http://tempuri.org/IForumService/PostResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/PostFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool Post(string current, ForumUtils.SharedDataTypes.Post toPost);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Reply", ReplyAction="http://tempuri.org/IForumService/ReplyResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/ReplyFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool Reply(ForumUtils.SharedDataTypes.Postkey current, ForumUtils.SharedDataTypes.Post toPost);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/EditPost", ReplyAction="http://tempuri.org/IForumService/EditPostResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/EditPostFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool EditPost(ForumUtils.SharedDataTypes.Postkey oldPost, ForumUtils.SharedDataTypes.Post newPost, string usrname, string password);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/RemovePost", ReplyAction="http://tempuri.org/IForumService/RemovePostResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/RemovePostFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool RemovePost(ForumUtils.SharedDataTypes.Postkey postkey, string username, string password);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/AddModerator", ReplyAction="http://tempuri.org/IForumService/AddModeratorResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/AddModeratorFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/RemoveModerator", ReplyAction="http://tempuri.org/IForumService/RemoveModeratorResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/RemoveModeratorFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReplaceModerator", ReplyAction="http://tempuri.org/IForumService/ReplaceModeratorResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/ReplaceModeratorFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/AddSubforum", ReplyAction="http://tempuri.org/IForumService/AddSubforumResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/AddSubforumFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool AddSubforum(string adminUsername, string adminPassword, string subforumName);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/RemoveSubforum", ReplyAction="http://tempuri.org/IForumService/RemoveSubforumResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/RemoveSubforumFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReportSubForumTotalPosts", ReplyAction="http://tempuri.org/IForumService/ReportSubForumTotalPostsResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/ReportSubForumTotalPostsFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReportUserTotalPosts", ReplyAction="http://tempuri.org/IForumService/ReportUserTotalPostsResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/ReportUserTotalPostsFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        int ReportUserTotalPosts(string adminUsername, string adminPassword, string username);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReplaceAdmin", ReplyAction="http://tempuri.org/IForumService/ReplaceAdminResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/ReplaceAdminFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/SubscribeToForum", ReplyAction="http://tempuri.org/IForumService/SubscribeToForumResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/SubscribeToForumFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool SubscribeToForum();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/UnsubscribeFromForum", ReplyAction="http://tempuri.org/IForumService/UnsubscribeFromForumResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/UnsubscribeFromForumFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        bool UnsubscribeFromForum();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetData", ReplyAction="http://tempuri.org/IForumService/GetDataResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/GetDataFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        string GetData(int value);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IForumService/GetDataUsingDataContractResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException), Action="http://tempuri.org/IForumService/GetDataUsingDataContractFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
-        ForumClientCore.ForumService.CompositeType GetDataUsingDataContract(ForumClientCore.ForumService.CompositeType composite);
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IForumServiceCallback {
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ForumService.IForumService")]
+    public interface IForumService {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IForumService/onUpdate")]
-        void onUpdate(ForumUtils.SharedDataTypes.Post message);
+        // CODEGEN: Parameter 'username' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Register", ReplyAction="http://tempuri.org/IForumService/RegisterResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/RegisterFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.RegisterResponse Register(ForumClientConsole.ForumService.RegisterRequest request);
+        
+        // CODEGEN: Parameter 'username' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Login", ReplyAction="http://tempuri.org/IForumService/LoginResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/LoginFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.LoginResponse Login(ForumClientConsole.ForumService.LoginRequest request);
+        
+        // CODEGEN: Parameter 'username' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Logout", ReplyAction="http://tempuri.org/IForumService/LogoutResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/LogoutFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.LogoutResponse Logout(ForumClientConsole.ForumService.LogoutRequest request);
+        
+        // CODEGEN: Parameter 'SubscribeResult' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Subscribe", ReplyAction="http://tempuri.org/IForumService/SubscribeResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/SubscribeFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.SubscribeResponse Subscribe(ForumClientConsole.ForumService.SubscribeRequest request);
+        
+        // CODEGEN: Parameter 'GetSubforumsListResult' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlArrayAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetSubforumsList", ReplyAction="http://tempuri.org/IForumService/GetSubforumsListResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/GetSubforumsListFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.GetSubforumsListResponse GetSubforumsList(ForumClientConsole.ForumService.GetSubforumsListRequest request);
+        
+        // CODEGEN: Parameter 'GetSubforumResult' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlArrayAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetSubforum", ReplyAction="http://tempuri.org/IForumService/GetSubforumResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/GetSubforumFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.GetSubforumResponse GetSubforum(ForumClientConsole.ForumService.GetSubforumRequest request);
+        
+        // CODEGEN: Parameter 'GetPostResult' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetPost", ReplyAction="http://tempuri.org/IForumService/GetPostResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/GetPostFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.GetPostResponse GetPost(ForumClientConsole.ForumService.GetPostRequest request);
+        
+        // CODEGEN: Parameter 'GetRepliesResult' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlArrayAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/GetReplies", ReplyAction="http://tempuri.org/IForumService/GetRepliesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/GetRepliesFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.GetRepliesResponse GetReplies(ForumClientConsole.ForumService.GetRepliesRequest request);
+        
+        // CODEGEN: Parameter 'current' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Post", ReplyAction="http://tempuri.org/IForumService/PostResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/PostFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.PostResponse Post(ForumClientConsole.ForumService.PostRequest request);
+        
+        // CODEGEN: Parameter 'current' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/Reply", ReplyAction="http://tempuri.org/IForumService/ReplyResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/ReplyFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.ReplyResponse Reply(ForumClientConsole.ForumService.ReplyRequest request);
+        
+        // CODEGEN: Parameter 'oldPost' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/EditPost", ReplyAction="http://tempuri.org/IForumService/EditPostResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/EditPostFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.EditPostResponse EditPost(ForumClientConsole.ForumService.EditPostRequest request);
+        
+        // CODEGEN: Parameter 'postkey' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/RemovePost", ReplyAction="http://tempuri.org/IForumService/RemovePostResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/RemovePostFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.RemovePostResponse RemovePost(ForumClientConsole.ForumService.RemovePostRequest request);
+        
+        // CODEGEN: Parameter 'adminUsername' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/AddModerator", ReplyAction="http://tempuri.org/IForumService/AddModeratorResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/AddModeratorFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.AddModeratorResponse AddModerator(ForumClientConsole.ForumService.AddModeratorRequest request);
+        
+        // CODEGEN: Parameter 'adminUsername' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/RemoveModerator", ReplyAction="http://tempuri.org/IForumService/RemoveModeratorResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/RemoveModeratorFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.RemoveModeratorResponse RemoveModerator(ForumClientConsole.ForumService.RemoveModeratorRequest request);
+        
+        // CODEGEN: Parameter 'adminUsername' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReplaceModerator", ReplyAction="http://tempuri.org/IForumService/ReplaceModeratorResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/ReplaceModeratorFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.ReplaceModeratorResponse ReplaceModerator(ForumClientConsole.ForumService.ReplaceModeratorRequest request);
+        
+        // CODEGEN: Parameter 'adminUsername' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/AddSubforum", ReplyAction="http://tempuri.org/IForumService/AddSubforumResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/AddSubforumFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.AddSubforumResponse AddSubforum(ForumClientConsole.ForumService.AddSubforumRequest request);
+        
+        // CODEGEN: Parameter 'adminUsername' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/RemoveSubforum", ReplyAction="http://tempuri.org/IForumService/RemoveSubforumResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/RemoveSubforumFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.RemoveSubforumResponse RemoveSubforum(ForumClientConsole.ForumService.RemoveSubforumRequest request);
+        
+        // CODEGEN: Parameter 'adminUsername' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReportSubForumTotalPosts", ReplyAction="http://tempuri.org/IForumService/ReportSubForumTotalPostsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/ReportSubForumTotalPostsFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.ReportSubForumTotalPostsResponse ReportSubForumTotalPosts(ForumClientConsole.ForumService.ReportSubForumTotalPostsRequest request);
+        
+        // CODEGEN: Parameter 'adminUsername' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReportUserTotalPosts", ReplyAction="http://tempuri.org/IForumService/ReportUserTotalPostsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/ReportUserTotalPostsFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.ReportUserTotalPostsResponse ReportUserTotalPosts(ForumClientConsole.ForumService.ReportUserTotalPostsRequest request);
+        
+        // CODEGEN: Parameter 'oldAdminUsername' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IForumService/ReplaceAdmin", ReplyAction="http://tempuri.org/IForumService/ReplaceAdminResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ForumClientConsole.ForumService.FaultException), Action="http://tempuri.org/IForumService/ReplaceAdminFaultExceptionFault", Name="FaultException", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Exception))]
+        ForumClientConsole.ForumService.ReplaceAdminResponse ReplaceAdmin(ForumClientConsole.ForumService.ReplaceAdminRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="Register", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class RegisterRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string password;
+        
+        public RegisterRequest() {
+        }
+        
+        public RegisterRequest(string username, string password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="RegisterResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class RegisterResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string RegisterResult;
+        
+        public RegisterResponse() {
+        }
+        
+        public RegisterResponse(string RegisterResult) {
+            this.RegisterResult = RegisterResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="Login", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class LoginRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string password;
+        
+        public LoginRequest() {
+        }
+        
+        public LoginRequest(string username, string password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="LoginResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class LoginResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string LoginResult;
+        
+        public LoginResponse() {
+        }
+        
+        public LoginResponse(string LoginResult) {
+            this.LoginResult = LoginResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="Logout", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class LogoutRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string username;
+        
+        public LogoutRequest() {
+        }
+        
+        public LogoutRequest(string username) {
+            this.username = username;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="LogoutResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class LogoutResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string LogoutResult;
+        
+        public LogoutResponse() {
+        }
+        
+        public LogoutResponse(string LogoutResult) {
+            this.LogoutResult = LogoutResult;
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.233")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.datacontract.org/2004/07/ForumUtils.SharedDataTypes")]
+    public partial class Post : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string bodyField;
+        
+        private bool hasRepliesField;
+        
+        private bool hasRepliesFieldSpecified;
+        
+        private Postkey keyField;
+        
+        private Postkey parentPostField;
+        
+        private string subforumField;
+        
+        private string titleField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
+        public string Body {
+            get {
+                return this.bodyField;
+            }
+            set {
+                this.bodyField = value;
+                this.RaisePropertyChanged("Body");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public bool HasReplies {
+            get {
+                return this.hasRepliesField;
+            }
+            set {
+                this.hasRepliesField = value;
+                this.RaisePropertyChanged("HasReplies");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool HasRepliesSpecified {
+            get {
+                return this.hasRepliesFieldSpecified;
+            }
+            set {
+                this.hasRepliesFieldSpecified = value;
+                this.RaisePropertyChanged("HasRepliesSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=2)]
+        public Postkey Key {
+            get {
+                return this.keyField;
+            }
+            set {
+                this.keyField = value;
+                this.RaisePropertyChanged("Key");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
+        public Postkey ParentPost {
+            get {
+                return this.parentPostField;
+            }
+            set {
+                this.parentPostField = value;
+                this.RaisePropertyChanged("ParentPost");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
+        public string Subforum {
+            get {
+                return this.subforumField;
+            }
+            set {
+                this.subforumField = value;
+                this.RaisePropertyChanged("Subforum");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=5)]
+        public string Title {
+            get {
+                return this.titleField;
+            }
+            set {
+                this.titleField = value;
+                this.RaisePropertyChanged("Title");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.233")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.datacontract.org/2004/07/ForumUtils.SharedDataTypes")]
+    public partial class Postkey : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.DateTime timeField;
+        
+        private bool timeFieldSpecified;
+        
+        private string usernameField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public System.DateTime Time {
+            get {
+                return this.timeField;
+            }
+            set {
+                this.timeField = value;
+                this.RaisePropertyChanged("Time");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool TimeSpecified {
+            get {
+                return this.timeFieldSpecified;
+            }
+            set {
+                this.timeFieldSpecified = value;
+                this.RaisePropertyChanged("TimeSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=1)]
+        public string Username {
+            get {
+                return this.usernameField;
+            }
+            set {
+                this.usernameField = value;
+                this.RaisePropertyChanged("Username");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="Subscribe", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class SubscribeRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string username;
+        
+        public SubscribeRequest() {
+        }
+        
+        public SubscribeRequest(string username) {
+            this.username = username;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="SubscribeResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class SubscribeResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public ForumClientConsole.ForumService.Post SubscribeResult;
+        
+        public SubscribeResponse() {
+        }
+        
+        public SubscribeResponse(ForumClientConsole.ForumService.Post SubscribeResult) {
+            this.SubscribeResult = SubscribeResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetSubforumsList", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetSubforumsListRequest {
+        
+        public GetSubforumsListRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetSubforumsListResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetSubforumsListResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlArrayAttribute(IsNullable=true)]
+        [System.Xml.Serialization.XmlArrayItemAttribute(Namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays")]
+        public string[] GetSubforumsListResult;
+        
+        public GetSubforumsListResponse() {
+        }
+        
+        public GetSubforumsListResponse(string[] GetSubforumsListResult) {
+            this.GetSubforumsListResult = GetSubforumsListResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetSubforum", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetSubforumRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string subforum;
+        
+        public GetSubforumRequest() {
+        }
+        
+        public GetSubforumRequest(string subforum) {
+            this.subforum = subforum;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetSubforumResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetSubforumResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlArrayAttribute(IsNullable=true)]
+        [System.Xml.Serialization.XmlArrayItemAttribute(Namespace="http://schemas.datacontract.org/2004/07/ForumUtils.SharedDataTypes")]
+        public Post[] GetSubforumResult;
+        
+        public GetSubforumResponse() {
+        }
+        
+        public GetSubforumResponse(Post[] GetSubforumResult) {
+            this.GetSubforumResult = GetSubforumResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetPost", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetPostRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public ForumClientConsole.ForumService.Postkey postkey;
+        
+        public GetPostRequest() {
+        }
+        
+        public GetPostRequest(ForumClientConsole.ForumService.Postkey postkey) {
+            this.postkey = postkey;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetPostResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetPostResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public ForumClientConsole.ForumService.Post GetPostResult;
+        
+        public GetPostResponse() {
+        }
+        
+        public GetPostResponse(ForumClientConsole.ForumService.Post GetPostResult) {
+            this.GetPostResult = GetPostResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetReplies", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetRepliesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public ForumClientConsole.ForumService.Postkey postkey;
+        
+        public GetRepliesRequest() {
+        }
+        
+        public GetRepliesRequest(ForumClientConsole.ForumService.Postkey postkey) {
+            this.postkey = postkey;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetRepliesResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetRepliesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlArrayAttribute(IsNullable=true)]
+        [System.Xml.Serialization.XmlArrayItemAttribute(Namespace="http://schemas.datacontract.org/2004/07/ForumUtils.SharedDataTypes")]
+        public Post[] GetRepliesResult;
+        
+        public GetRepliesResponse() {
+        }
+        
+        public GetRepliesResponse(Post[] GetRepliesResult) {
+            this.GetRepliesResult = GetRepliesResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="Post", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class PostRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string current;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public ForumClientConsole.ForumService.Post toPost;
+        
+        public PostRequest() {
+        }
+        
+        public PostRequest(string current, ForumClientConsole.ForumService.Post toPost) {
+            this.current = current;
+            this.toPost = toPost;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="PostResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class PostResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string PostResult;
+        
+        public PostResponse() {
+        }
+        
+        public PostResponse(string PostResult) {
+            this.PostResult = PostResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="Reply", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class ReplyRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public ForumClientConsole.ForumService.Postkey current;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public ForumClientConsole.ForumService.Post toPost;
+        
+        public ReplyRequest() {
+        }
+        
+        public ReplyRequest(ForumClientConsole.ForumService.Postkey current, ForumClientConsole.ForumService.Post toPost) {
+            this.current = current;
+            this.toPost = toPost;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="ReplyResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class ReplyResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string ReplyResult;
+        
+        public ReplyResponse() {
+        }
+        
+        public ReplyResponse(string ReplyResult) {
+            this.ReplyResult = ReplyResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="EditPost", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class EditPostRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public ForumClientConsole.ForumService.Postkey oldPost;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public ForumClientConsole.ForumService.Post newPost;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string usrname;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string password;
+        
+        public EditPostRequest() {
+        }
+        
+        public EditPostRequest(ForumClientConsole.ForumService.Postkey oldPost, ForumClientConsole.ForumService.Post newPost, string usrname, string password) {
+            this.oldPost = oldPost;
+            this.newPost = newPost;
+            this.usrname = usrname;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="EditPostResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class EditPostResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string EditPostResult;
+        
+        public EditPostResponse() {
+        }
+        
+        public EditPostResponse(string EditPostResult) {
+            this.EditPostResult = EditPostResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="RemovePost", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class RemovePostRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public ForumClientConsole.ForumService.Postkey postkey;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string username;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string password;
+        
+        public RemovePostRequest() {
+        }
+        
+        public RemovePostRequest(ForumClientConsole.ForumService.Postkey postkey, string username, string password) {
+            this.postkey = postkey;
+            this.username = username;
+            this.password = password;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="RemovePostResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class RemovePostResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string RemovePostResult;
+        
+        public RemovePostResponse() {
+        }
+        
+        public RemovePostResponse(string RemovePostResult) {
+            this.RemovePostResult = RemovePostResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="AddModerator", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class AddModeratorRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string adminUsername;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string adminPassword;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string usernameToAdd;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string subforum;
+        
+        public AddModeratorRequest() {
+        }
+        
+        public AddModeratorRequest(string adminUsername, string adminPassword, string usernameToAdd, string subforum) {
+            this.adminUsername = adminUsername;
+            this.adminPassword = adminPassword;
+            this.usernameToAdd = usernameToAdd;
+            this.subforum = subforum;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="AddModeratorResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class AddModeratorResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string AddModeratorResult;
+        
+        public AddModeratorResponse() {
+        }
+        
+        public AddModeratorResponse(string AddModeratorResult) {
+            this.AddModeratorResult = AddModeratorResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="RemoveModerator", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class RemoveModeratorRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string adminUsername;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string adminPassword;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string usernameToRemove;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string subforum;
+        
+        public RemoveModeratorRequest() {
+        }
+        
+        public RemoveModeratorRequest(string adminUsername, string adminPassword, string usernameToRemove, string subforum) {
+            this.adminUsername = adminUsername;
+            this.adminPassword = adminPassword;
+            this.usernameToRemove = usernameToRemove;
+            this.subforum = subforum;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="RemoveModeratorResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class RemoveModeratorResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string RemoveModeratorResult;
+        
+        public RemoveModeratorResponse() {
+        }
+        
+        public RemoveModeratorResponse(string RemoveModeratorResult) {
+            this.RemoveModeratorResult = RemoveModeratorResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="ReplaceModerator", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class ReplaceModeratorRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string adminUsername;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string adminPassword;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string usernameToAdd;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string usernameToRemove;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=4)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string subforum;
+        
+        public ReplaceModeratorRequest() {
+        }
+        
+        public ReplaceModeratorRequest(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum) {
+            this.adminUsername = adminUsername;
+            this.adminPassword = adminPassword;
+            this.usernameToAdd = usernameToAdd;
+            this.usernameToRemove = usernameToRemove;
+            this.subforum = subforum;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="ReplaceModeratorResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class ReplaceModeratorResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string ReplaceModeratorResult;
+        
+        public ReplaceModeratorResponse() {
+        }
+        
+        public ReplaceModeratorResponse(string ReplaceModeratorResult) {
+            this.ReplaceModeratorResult = ReplaceModeratorResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="AddSubforum", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class AddSubforumRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string adminUsername;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string adminPassword;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string subforumName;
+        
+        public AddSubforumRequest() {
+        }
+        
+        public AddSubforumRequest(string adminUsername, string adminPassword, string subforumName) {
+            this.adminUsername = adminUsername;
+            this.adminPassword = adminPassword;
+            this.subforumName = subforumName;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="AddSubforumResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class AddSubforumResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string AddSubforumResult;
+        
+        public AddSubforumResponse() {
+        }
+        
+        public AddSubforumResponse(string AddSubforumResult) {
+            this.AddSubforumResult = AddSubforumResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="RemoveSubforum", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class RemoveSubforumRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string adminUsername;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string adminPassword;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string subforumName;
+        
+        public RemoveSubforumRequest() {
+        }
+        
+        public RemoveSubforumRequest(string adminUsername, string adminPassword, string subforumName) {
+            this.adminUsername = adminUsername;
+            this.adminPassword = adminPassword;
+            this.subforumName = subforumName;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="RemoveSubforumResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class RemoveSubforumResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string RemoveSubforumResult;
+        
+        public RemoveSubforumResponse() {
+        }
+        
+        public RemoveSubforumResponse(string RemoveSubforumResult) {
+            this.RemoveSubforumResult = RemoveSubforumResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="ReportSubForumTotalPosts", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class ReportSubForumTotalPostsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string adminUsername;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string adminPassword;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string subforumName;
+        
+        public ReportSubForumTotalPostsRequest() {
+        }
+        
+        public ReportSubForumTotalPostsRequest(string adminUsername, string adminPassword, string subforumName) {
+            this.adminUsername = adminUsername;
+            this.adminPassword = adminPassword;
+            this.subforumName = subforumName;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="ReportSubForumTotalPostsResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class ReportSubForumTotalPostsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public int ReportSubForumTotalPostsResult;
+        
+        public ReportSubForumTotalPostsResponse() {
+        }
+        
+        public ReportSubForumTotalPostsResponse(int ReportSubForumTotalPostsResult) {
+            this.ReportSubForumTotalPostsResult = ReportSubForumTotalPostsResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="ReportUserTotalPosts", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class ReportUserTotalPostsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string adminUsername;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string adminPassword;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string username;
+        
+        public ReportUserTotalPostsRequest() {
+        }
+        
+        public ReportUserTotalPostsRequest(string adminUsername, string adminPassword, string username) {
+            this.adminUsername = adminUsername;
+            this.adminPassword = adminPassword;
+            this.username = username;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="ReportUserTotalPostsResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class ReportUserTotalPostsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public int ReportUserTotalPostsResult;
+        
+        public ReportUserTotalPostsResponse() {
+        }
+        
+        public ReportUserTotalPostsResponse(int ReportUserTotalPostsResult) {
+            this.ReportUserTotalPostsResult = ReportUserTotalPostsResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="ReplaceAdmin", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class ReplaceAdminRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string oldAdminUsername;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string oldAdminPassword;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string newAdminUsername;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string newAdminPassword;
+        
+        public ReplaceAdminRequest() {
+        }
+        
+        public ReplaceAdminRequest(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword) {
+            this.oldAdminUsername = oldAdminUsername;
+            this.oldAdminPassword = oldAdminPassword;
+            this.newAdminUsername = newAdminUsername;
+            this.newAdminPassword = newAdminPassword;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="ReplaceAdminResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class ReplaceAdminResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string ReplaceAdminResult;
+        
+        public ReplaceAdminResponse() {
+        }
+        
+        public ReplaceAdminResponse(string ReplaceAdminResult) {
+            this.ReplaceAdminResult = ReplaceAdminResult;
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -121,118 +1267,294 @@ namespace ForumClientConsole.ForumService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ForumServiceClient : System.ServiceModel.DuplexClientBase<ForumClientConsole.ForumService.IForumService>, ForumClientConsole.ForumService.IForumService {
+    public partial class ForumServiceClient : System.ServiceModel.ClientBase<ForumClientConsole.ForumService.IForumService>, ForumClientConsole.ForumService.IForumService {
         
-        public ForumServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
-                base(callbackInstance) {
+        public ForumServiceClient() {
         }
         
-        public ForumServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
-                base(callbackInstance, endpointConfigurationName) {
+        public ForumServiceClient(string endpointConfigurationName) : 
+                base(endpointConfigurationName) {
         }
         
-        public ForumServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
-                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        public ForumServiceClient(string endpointConfigurationName, string remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
         }
         
-        public ForumServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        public ForumServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
         }
         
-        public ForumServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(callbackInstance, binding, remoteAddress) {
+        public ForumServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(binding, remoteAddress) {
         }
         
-        public bool Register(string username, string password) {
-            return base.Channel.Register(username, password);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.RegisterResponse ForumClientConsole.ForumService.IForumService.Register(ForumClientConsole.ForumService.RegisterRequest request) {
+            return base.Channel.Register(request);
         }
         
-        public bool Login(string username, string password) {
-            return base.Channel.Login(username, password);
+        public string Register(string username, string password) {
+            ForumClientConsole.ForumService.RegisterRequest inValue = new ForumClientConsole.ForumService.RegisterRequest();
+            inValue.username = username;
+            inValue.password = password;
+            ForumClientConsole.ForumService.RegisterResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).Register(inValue);
+            return retVal.RegisterResult;
         }
         
-        public bool Logout(string username) {
-            return base.Channel.Logout(username);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.LoginResponse ForumClientConsole.ForumService.IForumService.Login(ForumClientConsole.ForumService.LoginRequest request) {
+            return base.Channel.Login(request);
+        }
+        
+        public string Login(string username, string password) {
+            ForumClientConsole.ForumService.LoginRequest inValue = new ForumClientConsole.ForumService.LoginRequest();
+            inValue.username = username;
+            inValue.password = password;
+            ForumClientConsole.ForumService.LoginResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).Login(inValue);
+            return retVal.LoginResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.LogoutResponse ForumClientConsole.ForumService.IForumService.Logout(ForumClientConsole.ForumService.LogoutRequest request) {
+            return base.Channel.Logout(request);
+        }
+        
+        public string Logout(string username) {
+            ForumClientConsole.ForumService.LogoutRequest inValue = new ForumClientConsole.ForumService.LogoutRequest();
+            inValue.username = username;
+            ForumClientConsole.ForumService.LogoutResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).Logout(inValue);
+            return retVal.LogoutResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.SubscribeResponse ForumClientConsole.ForumService.IForumService.Subscribe(ForumClientConsole.ForumService.SubscribeRequest request) {
+            return base.Channel.Subscribe(request);
+        }
+        
+        public ForumClientConsole.ForumService.Post Subscribe(string username) {
+            ForumClientConsole.ForumService.SubscribeRequest inValue = new ForumClientConsole.ForumService.SubscribeRequest();
+            inValue.username = username;
+            ForumClientConsole.ForumService.SubscribeResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).Subscribe(inValue);
+            return retVal.SubscribeResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.GetSubforumsListResponse ForumClientConsole.ForumService.IForumService.GetSubforumsList(ForumClientConsole.ForumService.GetSubforumsListRequest request) {
+            return base.Channel.GetSubforumsList(request);
         }
         
         public string[] GetSubforumsList() {
-            return base.Channel.GetSubforumsList();
+            ForumClientConsole.ForumService.GetSubforumsListRequest inValue = new ForumClientConsole.ForumService.GetSubforumsListRequest();
+            ForumClientConsole.ForumService.GetSubforumsListResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).GetSubforumsList(inValue);
+            return retVal.GetSubforumsListResult;
         }
         
-        public ForumUtils.SharedDataTypes.Post[] GetSubforum(string subforum) {
-            return base.Channel.GetSubforum(subforum);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.GetSubforumResponse ForumClientConsole.ForumService.IForumService.GetSubforum(ForumClientConsole.ForumService.GetSubforumRequest request) {
+            return base.Channel.GetSubforum(request);
         }
         
-        public ForumUtils.SharedDataTypes.Post GetPost(ForumUtils.SharedDataTypes.Postkey postkey) {
-            return base.Channel.GetPost(postkey);
+        public Post[] GetSubforum(string subforum) {
+            ForumClientConsole.ForumService.GetSubforumRequest inValue = new ForumClientConsole.ForumService.GetSubforumRequest();
+            inValue.subforum = subforum;
+            ForumClientConsole.ForumService.GetSubforumResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).GetSubforum(inValue);
+            return retVal.GetSubforumResult;
         }
         
-        public ForumUtils.SharedDataTypes.Post[] GetReplies(ForumUtils.SharedDataTypes.Postkey postkey) {
-            return base.Channel.GetReplies(postkey);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.GetPostResponse ForumClientConsole.ForumService.IForumService.GetPost(ForumClientConsole.ForumService.GetPostRequest request) {
+            return base.Channel.GetPost(request);
         }
         
-        public bool Post(string current, ForumUtils.SharedDataTypes.Post toPost) {
-            return base.Channel.Post(current, toPost);
+        public ForumClientConsole.ForumService.Post GetPost(ForumClientConsole.ForumService.Postkey postkey) {
+            ForumClientConsole.ForumService.GetPostRequest inValue = new ForumClientConsole.ForumService.GetPostRequest();
+            inValue.postkey = postkey;
+            ForumClientConsole.ForumService.GetPostResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).GetPost(inValue);
+            return retVal.GetPostResult;
         }
         
-        public bool Reply(ForumUtils.SharedDataTypes.Postkey current, ForumUtils.SharedDataTypes.Post toPost) {
-            return base.Channel.Reply(current, toPost);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.GetRepliesResponse ForumClientConsole.ForumService.IForumService.GetReplies(ForumClientConsole.ForumService.GetRepliesRequest request) {
+            return base.Channel.GetReplies(request);
         }
         
-        public bool EditPost(ForumUtils.SharedDataTypes.Postkey oldPost, ForumUtils.SharedDataTypes.Post newPost, string usrname, string password) {
-            return base.Channel.EditPost(oldPost, newPost, usrname, password);
+        public Post[] GetReplies(ForumClientConsole.ForumService.Postkey postkey) {
+            ForumClientConsole.ForumService.GetRepliesRequest inValue = new ForumClientConsole.ForumService.GetRepliesRequest();
+            inValue.postkey = postkey;
+            ForumClientConsole.ForumService.GetRepliesResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).GetReplies(inValue);
+            return retVal.GetRepliesResult;
         }
         
-        public bool RemovePost(ForumUtils.SharedDataTypes.Postkey postkey, string username, string password) {
-            return base.Channel.RemovePost(postkey, username, password);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.PostResponse ForumClientConsole.ForumService.IForumService.Post(ForumClientConsole.ForumService.PostRequest request) {
+            return base.Channel.Post(request);
         }
         
-        public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum) {
-            return base.Channel.AddModerator(adminUsername, adminPassword, usernameToAdd, subforum);
+        public string Post(string current, ForumClientConsole.ForumService.Post toPost) {
+            ForumClientConsole.ForumService.PostRequest inValue = new ForumClientConsole.ForumService.PostRequest();
+            inValue.current = current;
+            inValue.toPost = toPost;
+            ForumClientConsole.ForumService.PostResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).Post(inValue);
+            return retVal.PostResult;
         }
         
-        public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum) {
-            return base.Channel.RemoveModerator(adminUsername, adminPassword, usernameToRemove, subforum);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.ReplyResponse ForumClientConsole.ForumService.IForumService.Reply(ForumClientConsole.ForumService.ReplyRequest request) {
+            return base.Channel.Reply(request);
         }
         
-        public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum) {
-            return base.Channel.ReplaceModerator(adminUsername, adminPassword, usernameToAdd, usernameToRemove, subforum);
+        public string Reply(ForumClientConsole.ForumService.Postkey current, ForumClientConsole.ForumService.Post toPost) {
+            ForumClientConsole.ForumService.ReplyRequest inValue = new ForumClientConsole.ForumService.ReplyRequest();
+            inValue.current = current;
+            inValue.toPost = toPost;
+            ForumClientConsole.ForumService.ReplyResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).Reply(inValue);
+            return retVal.ReplyResult;
         }
         
-        public bool AddSubforum(string adminUsername, string adminPassword, string subforumName) {
-            return base.Channel.AddSubforum(adminUsername, adminPassword, subforumName);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.EditPostResponse ForumClientConsole.ForumService.IForumService.EditPost(ForumClientConsole.ForumService.EditPostRequest request) {
+            return base.Channel.EditPost(request);
         }
         
-        public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName) {
-            return base.Channel.RemoveSubforum(adminUsername, adminPassword, subforumName);
+        public string EditPost(ForumClientConsole.ForumService.Postkey oldPost, ForumClientConsole.ForumService.Post newPost, string usrname, string password) {
+            ForumClientConsole.ForumService.EditPostRequest inValue = new ForumClientConsole.ForumService.EditPostRequest();
+            inValue.oldPost = oldPost;
+            inValue.newPost = newPost;
+            inValue.usrname = usrname;
+            inValue.password = password;
+            ForumClientConsole.ForumService.EditPostResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).EditPost(inValue);
+            return retVal.EditPostResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.RemovePostResponse ForumClientConsole.ForumService.IForumService.RemovePost(ForumClientConsole.ForumService.RemovePostRequest request) {
+            return base.Channel.RemovePost(request);
+        }
+        
+        public string RemovePost(ForumClientConsole.ForumService.Postkey postkey, string username, string password) {
+            ForumClientConsole.ForumService.RemovePostRequest inValue = new ForumClientConsole.ForumService.RemovePostRequest();
+            inValue.postkey = postkey;
+            inValue.username = username;
+            inValue.password = password;
+            ForumClientConsole.ForumService.RemovePostResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).RemovePost(inValue);
+            return retVal.RemovePostResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.AddModeratorResponse ForumClientConsole.ForumService.IForumService.AddModerator(ForumClientConsole.ForumService.AddModeratorRequest request) {
+            return base.Channel.AddModerator(request);
+        }
+        
+        public string AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum) {
+            ForumClientConsole.ForumService.AddModeratorRequest inValue = new ForumClientConsole.ForumService.AddModeratorRequest();
+            inValue.adminUsername = adminUsername;
+            inValue.adminPassword = adminPassword;
+            inValue.usernameToAdd = usernameToAdd;
+            inValue.subforum = subforum;
+            ForumClientConsole.ForumService.AddModeratorResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).AddModerator(inValue);
+            return retVal.AddModeratorResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.RemoveModeratorResponse ForumClientConsole.ForumService.IForumService.RemoveModerator(ForumClientConsole.ForumService.RemoveModeratorRequest request) {
+            return base.Channel.RemoveModerator(request);
+        }
+        
+        public string RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum) {
+            ForumClientConsole.ForumService.RemoveModeratorRequest inValue = new ForumClientConsole.ForumService.RemoveModeratorRequest();
+            inValue.adminUsername = adminUsername;
+            inValue.adminPassword = adminPassword;
+            inValue.usernameToRemove = usernameToRemove;
+            inValue.subforum = subforum;
+            ForumClientConsole.ForumService.RemoveModeratorResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).RemoveModerator(inValue);
+            return retVal.RemoveModeratorResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.ReplaceModeratorResponse ForumClientConsole.ForumService.IForumService.ReplaceModerator(ForumClientConsole.ForumService.ReplaceModeratorRequest request) {
+            return base.Channel.ReplaceModerator(request);
+        }
+        
+        public string ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum) {
+            ForumClientConsole.ForumService.ReplaceModeratorRequest inValue = new ForumClientConsole.ForumService.ReplaceModeratorRequest();
+            inValue.adminUsername = adminUsername;
+            inValue.adminPassword = adminPassword;
+            inValue.usernameToAdd = usernameToAdd;
+            inValue.usernameToRemove = usernameToRemove;
+            inValue.subforum = subforum;
+            ForumClientConsole.ForumService.ReplaceModeratorResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).ReplaceModerator(inValue);
+            return retVal.ReplaceModeratorResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.AddSubforumResponse ForumClientConsole.ForumService.IForumService.AddSubforum(ForumClientConsole.ForumService.AddSubforumRequest request) {
+            return base.Channel.AddSubforum(request);
+        }
+        
+        public string AddSubforum(string adminUsername, string adminPassword, string subforumName) {
+            ForumClientConsole.ForumService.AddSubforumRequest inValue = new ForumClientConsole.ForumService.AddSubforumRequest();
+            inValue.adminUsername = adminUsername;
+            inValue.adminPassword = adminPassword;
+            inValue.subforumName = subforumName;
+            ForumClientConsole.ForumService.AddSubforumResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).AddSubforum(inValue);
+            return retVal.AddSubforumResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.RemoveSubforumResponse ForumClientConsole.ForumService.IForumService.RemoveSubforum(ForumClientConsole.ForumService.RemoveSubforumRequest request) {
+            return base.Channel.RemoveSubforum(request);
+        }
+        
+        public string RemoveSubforum(string adminUsername, string adminPassword, string subforumName) {
+            ForumClientConsole.ForumService.RemoveSubforumRequest inValue = new ForumClientConsole.ForumService.RemoveSubforumRequest();
+            inValue.adminUsername = adminUsername;
+            inValue.adminPassword = adminPassword;
+            inValue.subforumName = subforumName;
+            ForumClientConsole.ForumService.RemoveSubforumResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).RemoveSubforum(inValue);
+            return retVal.RemoveSubforumResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.ReportSubForumTotalPostsResponse ForumClientConsole.ForumService.IForumService.ReportSubForumTotalPosts(ForumClientConsole.ForumService.ReportSubForumTotalPostsRequest request) {
+            return base.Channel.ReportSubForumTotalPosts(request);
         }
         
         public int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName) {
-            return base.Channel.ReportSubForumTotalPosts(adminUsername, adminPassword, subforumName);
+            ForumClientConsole.ForumService.ReportSubForumTotalPostsRequest inValue = new ForumClientConsole.ForumService.ReportSubForumTotalPostsRequest();
+            inValue.adminUsername = adminUsername;
+            inValue.adminPassword = adminPassword;
+            inValue.subforumName = subforumName;
+            ForumClientConsole.ForumService.ReportSubForumTotalPostsResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).ReportSubForumTotalPosts(inValue);
+            return retVal.ReportSubForumTotalPostsResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.ReportUserTotalPostsResponse ForumClientConsole.ForumService.IForumService.ReportUserTotalPosts(ForumClientConsole.ForumService.ReportUserTotalPostsRequest request) {
+            return base.Channel.ReportUserTotalPosts(request);
         }
         
         public int ReportUserTotalPosts(string adminUsername, string adminPassword, string username) {
-            return base.Channel.ReportUserTotalPosts(adminUsername, adminPassword, username);
+            ForumClientConsole.ForumService.ReportUserTotalPostsRequest inValue = new ForumClientConsole.ForumService.ReportUserTotalPostsRequest();
+            inValue.adminUsername = adminUsername;
+            inValue.adminPassword = adminPassword;
+            inValue.username = username;
+            ForumClientConsole.ForumService.ReportUserTotalPostsResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).ReportUserTotalPosts(inValue);
+            return retVal.ReportUserTotalPostsResult;
         }
         
-        public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword) {
-            return base.Channel.ReplaceAdmin(oldAdminUsername, oldAdminPassword, newAdminUsername, newAdminPassword);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ForumClientConsole.ForumService.ReplaceAdminResponse ForumClientConsole.ForumService.IForumService.ReplaceAdmin(ForumClientConsole.ForumService.ReplaceAdminRequest request) {
+            return base.Channel.ReplaceAdmin(request);
         }
         
-        public bool SubscribeToForum() {
-            return base.Channel.SubscribeToForum();
-        }
-        
-        public bool UnsubscribeFromForum() {
-            return base.Channel.UnsubscribeFromForum();
-        }
-        
-        public string GetData(int value) {
-            return base.Channel.GetData(value);
-        }
-        
-        public ForumClientCore.ForumService.CompositeType GetDataUsingDataContract(ForumClientCore.ForumService.CompositeType composite) {
-            return base.Channel.GetDataUsingDataContract(composite);
+        public string ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword) {
+            ForumClientConsole.ForumService.ReplaceAdminRequest inValue = new ForumClientConsole.ForumService.ReplaceAdminRequest();
+            inValue.oldAdminUsername = oldAdminUsername;
+            inValue.oldAdminPassword = oldAdminPassword;
+            inValue.newAdminUsername = newAdminUsername;
+            inValue.newAdminPassword = newAdminPassword;
+            ForumClientConsole.ForumService.ReplaceAdminResponse retVal = ((ForumClientConsole.ForumService.IForumService)(this)).ReplaceAdmin(inValue);
+            return retVal.ReplaceAdminResult;
         }
     }
 }

@@ -6,7 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 using System.Web.Script.Serialization;
-using ForumUtils.SharedDataTypes;
+using ForumShared.SharedDataTypes;
 
 namespace ForumServer
 {

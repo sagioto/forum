@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using ForumClientCore;
 using System.Text.RegularExpressions;
-using ForumUtils.SharedDataTypes;
+using ForumShared.SharedDataTypes;
 
 namespace ForumClientConsole
 {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ForumServer.DataTypes;
 using ForumUtils.SharedDataTypes;
+using ForumShared.SharedDataTypes;
 
 namespace ForumServer.DataLayer
 {

@@ -66,7 +66,7 @@
     <None Include="app.config" />
     <None Include="ClientCoreClassDiagram.cd" />
     <None Include="ForumUtils.SharedDataTypes.Post.datasource" />
-    <None Include="Service References\ForumService\ForumClientCore.ForumService.CompositeType.datasource">
+    <None Include="Service References\ForumService\ForumClientCore.ForumService.Post.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ForumService\ServerNetworkAdaptor.wsdl" />
@@ -79,18 +79,24 @@
     <None Include="Service References\ForumService\ServerNetworkAdaptor2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor34.xsd">
+    <None Include="Service References\ForumService\ServerNetworkAdaptor3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor35.xsd">
+    <None Include="Service References\ForumService\ServerNetworkAdaptor4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor36.xsd">
+    <None Include="Service References\ForumService\ServerNetworkAdaptor5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor37.xsd">
+    <None Include="Service References\ForumService\ServerNetworkAdaptor6.xsd">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ForumUtils\ForumShared.csproj">
+      <Project>{8E463DBF-841C-4989-9219-A0AE255F58F9}</Project>
+      <Name>ForumShared</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ForumService\" />
@@ -109,12 +115,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ForumUtils\ForumShared.csproj">
-      <Project>{8E463DBF-841C-4989-9219-A0AE255F58F9}</Project>
-      <Name>ForumShared</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

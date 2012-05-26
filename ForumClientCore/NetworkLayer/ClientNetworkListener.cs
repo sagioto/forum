@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.ServiceModel;
 using ForumClientCore.ForumService;
-using ForumUtils.SharedDataTypes;
+//using ForumShared.SharedDataTypes;
 
 namespace ForumClientCore.NetworkLayer
 {
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
-    class ClientNetworkListener : ForumService.IForumServiceCallback
+    class ClientNetworkListener
     {
 
         // Event setting

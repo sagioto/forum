@@ -6,6 +6,7 @@ using ForumServer.DataTypes;
 using System.Collections.Concurrent;
 using System.Configuration;
 using ForumUtils.SharedDataTypes;
+using ForumShared.SharedDataTypes;
 using System.Threading;
 
 namespace ForumServer.DataLayer

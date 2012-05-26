@@ -4,6 +4,7 @@ using ForumServer.DataLayer;
 using ForumServer.DataTypes;
 using ForumServer.Policy;
 using ForumServer.Security;
+using ForumShared.SharedDataTypes;
 using ForumUtils.SharedDataTypes;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -308,7 +309,7 @@ namespace ForumServer
 
         }
 
-        private bool CheckPost(ForumUtils.SharedDataTypes.Post post)
+        private bool CheckPost(Post post)
         {
             return ((post.Body != null && post.Body.Length != 0)
                    || (post.Title != null && post.Title.Length != 0));

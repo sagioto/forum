@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Runtime.Serialization;
 
-namespace ForumUtils.SharedDataTypes
+namespace ForumShared.SharedDataTypes
 {
     [DataContract]
     public class Post : IComparable

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using ForumClientCore.ForumService;
 using System.ServiceModel;
-using ForumUtils.NetworkLayer;
-using ForumUtils.SharedDataTypes;
+using ForumShared.NetworkLayer;
+//using ForumShared.SharedDataTypes;
 
 namespace ForumClientCore.NetworkLayer
 {
@@ -78,7 +78,8 @@ namespace ForumClientCore.NetworkLayer
         /// <returns>Returns true if registration succeeded, false if user is already registered.</returns>
         internal bool Register(String usename, String password)
         {
-            return webService.Register(usename, password);
+            RegisterResponse rr = webService.Register(new RegisterRequest(usename, password));
+            return false;
         }
 
         /// <summary>
@@ -132,7 +133,7 @@ namespace ForumClientCore.NetworkLayer
             {
                 return webService.GetReplies(postkey);
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 throw e;
             }
@@ -150,7 +151,7 @@ namespace ForumClientCore.NetworkLayer
             {
                 return webService.Post(subForumName, postToAdd);
             }
-            catch (FaultException e)
+            catch (System.ServiceModel.FaultException e)
             {
                 throw e;
             }
@@ -173,7 +174,7 @@ namespace ForumClientCore.NetworkLayer
             {
                 return webService.GetPost(postkey);
             }
-            catch (FaultException e)
+            catch (System.ServiceModel.FaultException e)
             {
                 throw e;
             }

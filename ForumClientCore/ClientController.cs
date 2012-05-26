@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using ForumClientCore.NetworkLayer;
 using System.ServiceModel;
-using ForumUtils.SharedDataTypes;
+using ForumShared.SharedDataTypes;
 
 namespace ForumClientCore
 {

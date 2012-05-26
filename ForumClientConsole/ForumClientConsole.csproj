@@ -70,6 +70,9 @@
     <None Include="app.config" />
     <None Include="Properties\DataSources\ForumClientCore.ForumService.CompositeType.datasource" />
     <None Include="Properties\DataSources\ForumUtils.SharedDataTypes.Post.datasource" />
+    <None Include="Service References\ForumService\ForumClientConsole.ForumService.Post.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ForumService\ServerNetworkAdaptor.wsdl" />
     <None Include="Service References\ForumService\ServerNetworkAdaptor.xsd">
       <SubType>Designer</SubType>

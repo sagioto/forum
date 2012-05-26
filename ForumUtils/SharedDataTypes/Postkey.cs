@@ -5,7 +5,7 @@ using System.Web;
 using System.Collections;
 using System.Runtime.Serialization;
 
-namespace ForumUtils.SharedDataTypes
+namespace ForumShared.SharedDataTypes
 {
     [DataContract]
     public class Postkey : IEqualityComparer<Postkey>// IEquatable<Postkey>//IComparer //IEqualityComparer

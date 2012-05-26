@@ -8,8 +8,8 @@
     <ProjectGuid>{8E463DBF-841C-4989-9219-A0AE255F58F9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ForumUtils</RootNamespace>
-    <AssemblyName>ForumUtils</AssemblyName>
+    <RootNamespace>ForumShared</RootNamespace>
+    <AssemblyName>ForumShared</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

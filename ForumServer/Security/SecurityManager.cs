@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using ForumServer.DataTypes;
 using ForumUtils.SharedDataTypes;
+using ForumShared.SharedDataTypes;
 using ForumServer.DataLayer;
 
 namespace ForumServer.Security

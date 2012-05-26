@@ -6,7 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 using ForumServer.DataTypes;
-using ForumUtils.SharedDataTypes;
+using ForumShared.SharedDataTypes;
 using System.ServiceModel.Activation;
 
 namespace ForumServer
