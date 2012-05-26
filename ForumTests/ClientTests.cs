@@ -118,13 +118,7 @@ namespace ForumTests
             Assert.IsFalse(cc.Post("XXXYYYZZZ", "badTitle", "badBody"));//post message in sub forum that isn"t exists
 
         }
-        [TestMethod]
-        public void UserIntegration2()
-        {
-            //edit by th writer
-            //edit by admin
-            //edit by moderator
-        }
+
 
         [TestMethod]
         public void UserIntegration1()
