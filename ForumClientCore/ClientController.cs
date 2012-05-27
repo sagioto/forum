@@ -12,7 +12,7 @@ namespace ForumClientCore
     public class ClientController
     {
         ClientNetworkAdaptor netAdaptor;
-        private bool loggedIn = false;
+        public bool loggedIn = false;
         private string loggedAs = "";
         private string loggedPassword = "";
         private string currentSubForum = "";
