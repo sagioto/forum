@@ -74,7 +74,7 @@ namespace ForumShared.ForumAPI
         /// <returns>returns array of the sub forum</returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json)]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json)]
         string[] GetSubforumsList();
 
         /// <summary>
@@ -281,7 +281,7 @@ namespace ForumShared.ForumAPI
 
     }
 
-/*    [DataContract]
+/*  [DataContract]
     [Flags]
     public enum Result
     {

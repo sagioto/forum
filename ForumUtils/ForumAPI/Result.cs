@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
 
 namespace ForumShared.ForumAPI
 {
+    [DataContract]
+    [Flags]
     public enum Result
     {
         NULL = 0x0000,
