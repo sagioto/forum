@@ -66,15 +66,9 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ClientTests.cs" />
     <Compile Include="ServerTest.cs" />
-    <Compile Include="Service References\ForumService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ForumClientCore\ForumClientCore.csproj">
@@ -98,35 +92,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\DataSources\ForumClientCore.ForumService.CompositeType.datasource" />
-    <None Include="Service References\ForumService\ServerNetworkAdaptor.wsdl" />
-    <None Include="Service References\ForumService\ServerNetworkAdaptor.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor2.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <Shadow Include="Test References\ForumServer.accessor" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\ForumService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ForumService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ForumService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ForumService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

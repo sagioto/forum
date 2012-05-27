@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting.Web;
 using ForumUtils.SharedDataTypes;
 using System.Threading;
 using ForumServer.DataLayer;
+using ForumShared.SharedDataTypes;
 
 namespace ServerTests
 {
