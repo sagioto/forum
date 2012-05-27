@@ -77,7 +77,7 @@ namespace ForumServer.Security
             User user = dataManager.GetUser(username);
             if (user == null)
                 return Result.USER_NOT_FOUND;
-            if (user.Level.Equals(AuthorizationLevel.MEMBER)
+            if (!user.Level.Equals(AuthorizationLevel.GUEST)
                 && IsUserLoggendIn(user))
                 return Result.OK;
             return Result.INSUFFICENT_PERMISSIONS;
