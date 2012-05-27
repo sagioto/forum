@@ -74,6 +74,7 @@ namespace ForumClientConsole
                             break;
                         }
                         EditPost(command);
+                        PrintCurrentLocation();
                         break;
                     case "back":
                         Back();
@@ -241,7 +242,7 @@ namespace ForumClientConsole
             }
             else
             {
-                
+
             }
         }
 
@@ -260,12 +261,13 @@ namespace ForumClientConsole
             {
                 if (p.Title.Equals(command[1]))
                 {
-                    try
+                    Post[] replies = controller.GetReplies(p.Key);
+                    if (replies != null)
                     {
-                        Post[] replies = controller.GetReplies(p.Key);
+                        currentPost = p;
                         PrintPostList(replies);
                     }
-                    catch (Exception e)
+                    else
                     {
                         Console.WriteLine("Sorry, can't get the post right now...");
                     }
@@ -337,34 +339,41 @@ namespace ForumClientConsole
 
         private void Post()
         {
-            Console.WriteLine("You are writing a post in: " + currentSubForum);
-            Console.WriteLine("Please enter a title to your post");
-            string title = Console.ReadLine();
-            Console.WriteLine("Enter the body of your post");
-            string body = Console.ReadLine();
-            try
+            if (currentSubForum != null)
             {
-                Result r = controller.Post(currentSubForum, title, body);
-                if (r == Result.OK)
+                Console.WriteLine("You are writing a post in: " + currentSubForum);
+                Console.WriteLine("Please enter a title to your post");
+                string title = Console.ReadLine();
+                Console.WriteLine("Enter the body of your post");
+                string body = Console.ReadLine();
+                try
                 {
-                    Console.WriteLine("Posted successfully!");
+                    Result r = controller.Post(currentSubForum, title, body);
+                    if (r == Result.OK)
+                    {
+                        Console.WriteLine("Posted successfully!");
+                    }
+                    else if (r == Result.INSUFFICENT_PERMISSIONS)
+                    {
+                        Console.WriteLine("Sorry, could not post. Are you logged in?");
+                    }
+                    else if (r == Result.ENTRY_EXISTS)
+                    {
+                        Console.WriteLine("The post already exists.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Sorry, couldn't post your message. Got response from server: " + r.ToString());
+                    }
                 }
-                else if (r == Result.INSUFFICENT_PERMISSIONS)
+                catch (Exception e)
                 {
-                    Console.WriteLine("Sorry, could not post. Are you logged in?");
-                } 
-                else if (r == Result.ENTRY_EXISTS)
-                {
-                    Console.WriteLine("The post already exists.");
-                } 
-                else 
-                {
-                    Console.WriteLine("Sorry, couldn't post your message. Got response from server: " + r.ToString());
+                    Console.WriteLine("Error! Got response from server: " + e.Message);
                 }
             }
-            catch (Exception e)
+            else
             {
-                Console.WriteLine("Error! Got response from server: " + e.Message);
+                Console.WriteLine("It seems that you haven't entered a subforum yet...");
             }
         }
 
