@@ -230,20 +230,35 @@ namespace ForumClientConsole
 
         private void Back() //TODO support currentPost navigation!!!! CRITICAL!
         {
-            if (currentPost != null)
+            if (currentPost == null || currentSubForum == null)
             {
-                Post[] posts = controller.Back(currentPost.Key);
-                PrintPostList(posts);
+                //we are already at top level or looking at a subforum. just list the subforums again.
+                currentPost = null;
+                currentSubForum = null;
+                ListSubForums();
             }
-            else if (currentSubForum != null)
+            else if (currentPost.ParentPost == null)
             {
-                Post[] posts = controller.GetSubforum(currentSubForum);
-                PrintPostList(posts);
+                //we are currently looking at a subforum post, back to the subforum itself.
+                currentPost = null;
+                GetSubforum(currentSubForum);
             }
             else
             {
-
+                //we are currently looking at some post. back up to its parent.
+                currentPost = controller.GetPost(currentPost.Key);
+                PrintPostList(controller.GetReplies(currentPost.Key));
             }
+        }
+
+        private void ListSubForums()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ListForums()
+        {
+            throw new NotImplementedException();
         }
 
         private void ShowReplies(string[] command)

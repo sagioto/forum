@@ -131,27 +131,9 @@ namespace ForumClientCore
             }
         }
 
-        public Post[] Back(Postkey postkey)
+        public Post GetPost(Postkey postkey)
         {
-            if (postkey == null)
-            {
-                currentSubForum = "";
-                return null;
-            }
-            Post p = netAdaptor.GetPost(postkey);
-            if (p.ParentPost == null)
-            {
-                Post[] toReturn = netAdaptor.GetSubforum(currentSubForum);
-
-                if (toReturn == null)
-                    return new Post[0];
-                else
-                    return toReturn;
-            }
-            else
-            {
-                return netAdaptor.GetReplies(p.Key);
-            }
+            return netAdaptor.GetPost(postkey);
         }
 
         public Post[] GetSubforum(String subforumname)
