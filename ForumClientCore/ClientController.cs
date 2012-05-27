@@ -15,21 +15,7 @@ namespace ForumClientCore
         private bool loggedIn = false;
         private string loggedAs = "";
         private string loggedPassword = "";
-        private Post currentPost = null;
         private string currentSubForum = "";
-
-        public Post CurrentPost
-        {
-            get
-            {
-                return currentPost;
-            }
-            set
-            {
-                currentPost = value;
-            }
-        }
-
 
         public string CurrentSubForum
         {
@@ -82,6 +68,11 @@ namespace ForumClientCore
             OnUpdateFromController(message);    // Invoking an event - will notify evryone who sleep on it
         }
 
+        public Result Register(string userName, string password)
+        {
+            return netAdaptor.Register(userName, password);
+        }
+
         public bool Login(string userName, string password)
         {
             if (loggedIn)
@@ -100,17 +91,6 @@ namespace ForumClientCore
                 return false;
             }
         }
-
-        public String[] GetSubforumsList()
-        {
-            return netAdaptor.GetSubforumsList();
-        }
-
-        public Result Register(string userName, string password)
-        {
-            return netAdaptor.Register(userName, password);
-        }
-
 
         public bool Logout()
         {
@@ -132,6 +112,11 @@ namespace ForumClientCore
 
         }
 
+        public String[] GetSubforumsList()
+        {
+            return netAdaptor.GetSubforumsList();
+        }
+
         public Result Post(string subForumName, string title, string body)
         {
             Postkey newKey = new Postkey(loggedAs, DateTime.Now);
@@ -146,16 +131,16 @@ namespace ForumClientCore
             }
         }
 
-        public Post[] Back()
+        public Post[] Back(Postkey postkey)
         {
-            if (currentPost == null)
+            if (postkey == null)
             {
                 currentSubForum = "";
                 return null;
             }
-            else if (currentPost.ParentPost == null)
+            Post p = netAdaptor.GetPost(postkey);
+            if (p.ParentPost == null)
             {
-                currentPost = null;
                 Post[] toReturn = netAdaptor.GetSubforum(currentSubForum);
 
                 if (toReturn == null)
@@ -165,9 +150,7 @@ namespace ForumClientCore
             }
             else
             {
-                Post parent = netAdaptor.GetPost(currentPost.ParentPost);
-                currentPost = parent;
-                return netAdaptor.GetReplies(currentPost.Key);
+                return netAdaptor.GetReplies(p.Key);
             }
         }
 
@@ -177,7 +160,6 @@ namespace ForumClientCore
             if (subForum != null)
             {
                 currentSubForum = subforumname;
-                currentPost = null;
             }
             return subForum;
         }
@@ -186,7 +168,6 @@ namespace ForumClientCore
         {
             try
             {
-                currentPost = netAdaptor.GetPost(postkey);
                 return netAdaptor.GetReplies(postkey);
             }
             catch (FaultException e)
@@ -201,31 +182,16 @@ namespace ForumClientCore
             return netAdaptor.Reply(originalPost, newReply);
         }
 
-        //overload - no need the argument originalPost (can get this info from the field currentPost)
-        public Result Reply(string title, string body)
+        public Result EditPost(Postkey postToEdit, string title, string body)
         {
-            Post newReply = new Post(new Postkey(loggedAs, DateTime.Now), title, body, currentPost.Key, currentSubForum);
-            return netAdaptor.Reply(currentPost.Key, newReply);
-        }
-
-        public Result EditPost(string title, string body)
-        {
-            Post newPost = new Post(currentPost.Key, title, body, currentPost.ParentPost, currentSubForum);
-            return netAdaptor.EditPost(currentPost.Key, newPost, loggedAs, loggedPassword);
+            Post edit = netAdaptor.GetPost(postToEdit);
+            Post newPost = new Post(postToEdit, title, body, edit.ParentPost, currentSubForum);
+            return netAdaptor.EditPost(postToEdit, newPost, loggedAs, loggedPassword);
         }
 
         public Result RemovePost(Postkey postkey)
         {
             return netAdaptor.RemovePost(postkey, loggedAs, loggedPassword);
-        }
-
-        //overload
-        public Result RemovePost()
-        {
-            Post parentPost = netAdaptor.GetPost(currentPost.ParentPost);
-            Result adapterAnswer = netAdaptor.RemovePost(currentPost.Key, loggedAs, loggedPassword);
-            currentPost = parentPost;
-            return adapterAnswer;
         }
 
         public Result AddModerator(string usernameToAdd, string subforum)
