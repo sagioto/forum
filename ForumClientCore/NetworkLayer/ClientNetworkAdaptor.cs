@@ -35,7 +35,7 @@ namespace ForumClientCore.NetworkLayer
             // Web Service settings
             InstanceContext context = new InstanceContext(netListener);     // Sending IntanceContex to Server that it will be able to make callbacks
             //webService = new ForumServiceClient(context); //TODO uncomment
-            ChannelFactory<IForumService> cf = new ChannelFactory<IForumService>(new WebHttpBinding(), "http://localhost:52644");
+            ChannelFactory<IForumService> cf = new ChannelFactory<IForumService>(new WebHttpBinding(), "http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc");
             cf.Endpoint.Behaviors.Add(new WebHttpBehavior());
             webService = cf.CreateChannel();
             if (GetCallBack)

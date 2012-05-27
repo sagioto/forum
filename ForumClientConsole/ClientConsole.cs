@@ -205,7 +205,8 @@ namespace ForumClientConsole
                         string title = Console.ReadLine();
                         Console.WriteLine("Enter the new body of your post");
                         string body = Console.ReadLine();
-                        if (controller.EditPost(title, body) == Result.OK)
+                        Result r = controller.EditPost(p.Key, title, body);
+                        if (r == Result.OK)
                         {
                             Console.WriteLine("Post was edited successfully");
                         }
@@ -226,22 +227,34 @@ namespace ForumClientConsole
 
         #region Console Operations
 
-        private void Back()
+        private void Back() //TODO support currentPost navigation!!!! CRITICAL!
         {
-            Post[] posts = controller.Back();
-            PrintPostList(posts);
+            if (currentPost != null)
+            {
+                Post[] posts = controller.Back(currentPost.Key);
+                PrintPostList(posts);
+            }
+            else if (currentSubForum != null)
+            {
+                Post[] posts = controller.GetSubforum(currentSubForum);
+                PrintPostList(posts);
+            }
+            else
+            {
+                
+            }
         }
 
         private void ShowReplies(string[] command)
         {
             Post[] posts;
-            if (controller.CurrentPost != null)
+            if (currentPost != null)
             {
-                posts = controller.GetReplies(controller.CurrentPost.Key);
+                posts = controller.GetReplies(currentPost.Key);
             }
             else
             {
-                posts = controller.GetSubforum(controller.CurrentSubForum);
+                posts = controller.GetSubforum(currentSubForum);
             }
             foreach (Post p in posts)
             {
@@ -305,13 +318,13 @@ namespace ForumClientConsole
             string title = Console.ReadLine();
             Console.WriteLine("Enter the body of your post");
             string body = Console.ReadLine();
-            if (controller.CurrentPost == null)
+            if (currentPost == null)
             {
                 Console.WriteLine("Sorry, you can only reply inside a sub-forum");
             }
             else
             {
-                if (controller.Reply(controller.CurrentPost.Key, title, body) == Result.OK)
+                if (controller.Reply(currentPost.Key, title, body) == Result.OK)
                 {
                     Console.WriteLine("Replied to the post successfully!");
                 }
