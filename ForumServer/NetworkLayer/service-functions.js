@@ -21,21 +21,31 @@ function RegisterAndLoginCall(user, methodName){
 	var response = callService(methodName, user,
 		function(result){
 		//alert("Result is: " + result[methodName + "Result"]);
-		if(result[methodName + "Result"] == 1){
-			if(methodName == "Register"){
-				RegisterAndLogin("Login");
+		switch(result[methodName + "Result"]){
+			case 1:
+				if(methodName == "Register"){
+					RegisterAndLogin("Login");
+				}
+				else{
+					$('input[name="username"]').val('');
+					$('input[name="password"]').val('');
+					$('form[name="login"]').fadeOut('fast',
+						function(){
+							$('form[name="logout"]').html('<p>logged in as ' + username + 
+							' <button name="logoutButton" type="button" onclick="Logout(username)" class="login-out-buttons">logout</button></p>');
+							$('form[name="logout"]').fadeIn('fast');
+					});
+				}
+				break;
+			case 0:
+			case 2: alert("user name and password cannot be empty");
+				break;
+			case 512: if(methodName == "Register"){
+					alert("user already exists");
+					}
+					else alert("user already logged in");
+				break;
 			}
-			else{
-				$('input[name="username"]').val('');
-				$('input[name="password"]').val('');
-				$('form[name="login"]').fadeOut('fast',
-					function(){
-						$('form[name="logout"]').html('<p>logged in as ' + username + 
-						' <button name="logoutButton" type="button" onclick="Logout(username)" class="login-out-buttons">logout</button></p>');
-						$('form[name="logout"]').fadeIn('fast');
-				});
-			}
-		}
 		}
 	);
 }
