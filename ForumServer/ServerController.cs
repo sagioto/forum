@@ -223,7 +223,7 @@ namespace ForumServer
                 log.Info("got request to post in sub forum: " + subforum);
                 if (!CheckPost(post))
                     return Result.ILLEGAL_POST;
-                post.Replies = new Dictionary<Postkey, Post>();
+                
                 Result res = securityManager.IsAuthorizedToPost(post.Key.Username, subforum);
                 if (res == Result.OK)
                     if (dataManager.AddPost(post, subforum.ToString()))
@@ -250,7 +250,7 @@ namespace ForumServer
                 log.Info("got request to reply to post " + currPost);
                 if (!CheckPost(post))
                     return Result.ILLEGAL_POST;
-                post.Replies = new Dictionary<Postkey, Post>();
+                
                 Result res = securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum);
                 if (res == Result.OK)
                     if (dataManager.AddReply(post, currPost))

@@ -128,6 +128,7 @@ namespace ForumServer
         {
             try
             {
+                toPost.Replies = new Dictionary<Postkey, Post>();
                 return controller.Post(currentSubforum, toPost);
 
             }
@@ -142,6 +143,7 @@ namespace ForumServer
         {
             try
             {
+                toPost.Replies = new Dictionary<Postkey, Post>();
                 return controller.Reply(current, toPost);
           
             }
