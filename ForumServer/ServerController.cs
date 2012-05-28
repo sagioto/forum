@@ -54,7 +54,10 @@ namespace ForumServer
             try
             {
                 log.Info("got request to register from user " + username + " and password *******");
-                return securityManager.AuthorizedRegister(username, password);
+                if (username != null && username.Length != 0
+                    && password != null && password.Length != 0)
+                    return securityManager.AuthorizedRegister(username, password);
+                else return Result.NULL;
             }
             catch (Exception e)
             {

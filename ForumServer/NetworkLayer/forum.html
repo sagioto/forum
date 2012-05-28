@@ -9,22 +9,23 @@
 
 <script type="text/javascript">                                         
     $(document).ready(function() {
+		var username = "kuku";
+		$('form[name="logout"]').hide();
+		$('form[name="login"]').hide();
+		$('form[name="login"]').slideDown('slow');
 		GetSubforumsList();
- });                                     
+ });                       
  </script>
 
 </head>
 
 <body>
 <form name="login" class="login-out-forms">
-  <input name="username" type="text" placeholder="username">
+  <input name="username" type="text" placeholder="username" min="3">
   <input name="password" type="password" placeholder="password" min="3">
-  <button name="loginButton" type="button" onclick="Register()" class="login-out-buttons">login</button>
+  <button name="loginButton" type="button" onclick="RegisterAndLogin('Login')" class="login-out-buttons">login</button>
+  <button name="registerButton" type="button" onclick="RegisterAndLogin('Register')" class="login-out-buttons">register</button>
 </form>
-<form name="logout" class="login-out-forms">
-  logged in as
-  <output name="x" for="username"></output>
-  <button name="logoutButton" type="button" class="login-out-buttons">logout</button>
-</form>
+<form name="logout" class="login-out-forms" />
 </body>
 </html>
