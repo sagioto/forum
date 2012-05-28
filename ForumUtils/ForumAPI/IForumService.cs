@@ -26,7 +26,7 @@ namespace ForumShared.ForumAPI
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         Result Register(String username, String password);
 
@@ -38,7 +38,7 @@ namespace ForumShared.ForumAPI
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         Result Login(String username, String password);
 
@@ -49,7 +49,7 @@ namespace ForumShared.ForumAPI
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         Result Logout(String username);
 
@@ -60,7 +60,7 @@ namespace ForumShared.ForumAPI
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         Post Subscribe(String username);
 
@@ -74,7 +74,7 @@ namespace ForumShared.ForumAPI
         /// <returns>returns array of the sub forum</returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json)]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json)]
         string[] GetSubforumsList();
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace ForumShared.ForumAPI
         /// <returns>returns the posts of the requested sub forum</returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         Post[] GetSubforum(string subforum);
 
@@ -96,7 +96,7 @@ namespace ForumShared.ForumAPI
         /// <returns>post </returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         Post GetPost(Postkey postkey);
 
@@ -107,7 +107,7 @@ namespace ForumShared.ForumAPI
         /// <returns>post </returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         Post[] GetReplies(Postkey postkey);
 
@@ -123,7 +123,7 @@ namespace ForumShared.ForumAPI
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         Result Post(string current, Post toPost);
 
@@ -135,7 +135,7 @@ namespace ForumShared.ForumAPI
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         Result Reply(Postkey current, Post toPost);
 
@@ -147,7 +147,7 @@ namespace ForumShared.ForumAPI
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         Result EditPost(Postkey oldPost, Post newPost, string usrname, string password);
 
@@ -160,7 +160,7 @@ namespace ForumShared.ForumAPI
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         Result RemovePost(Postkey postkey, string username, string password);
 
@@ -177,7 +177,7 @@ namespace ForumShared.ForumAPI
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         Result AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum);
 
@@ -191,7 +191,7 @@ namespace ForumShared.ForumAPI
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         Result RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum);
 
@@ -206,7 +206,7 @@ namespace ForumShared.ForumAPI
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         Result ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum);
 
@@ -219,7 +219,7 @@ namespace ForumShared.ForumAPI
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         Result AddSubforum(string adminUsername, string adminPassword, string subforumName);
 
@@ -233,7 +233,7 @@ namespace ForumShared.ForumAPI
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         Result RemoveSubforum(string adminUsername, string adminPassword, string subforumName);
 
@@ -246,7 +246,7 @@ namespace ForumShared.ForumAPI
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         int ReportSubForumTotalPosts(string adminUsername, string adminPassword, string subforumName);
 
@@ -259,7 +259,7 @@ namespace ForumShared.ForumAPI
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         int ReportUserTotalPosts(string adminUsername, string adminPassword, string username);
 
@@ -273,7 +273,7 @@ namespace ForumShared.ForumAPI
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "GET", BodyStyle = WebMessageBodyStyle.Wrapped,
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
         Result ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword);
 
