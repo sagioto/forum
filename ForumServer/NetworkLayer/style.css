@@ -1,7 +1,16 @@
 @charset "utf-8";
-.login-out-forms {
+.login-out-forms
+{
 	text-align: center;
 }
-.login-out-buttons {
-	
+.login-out-buttons
+{
+	border-radius: 8px;
+	/*background-color: dodgerblue;
+	font-weight:bold;*/
+}
+
+#subforumsTable
+{
+
 }
