@@ -3,7 +3,7 @@
 <head>
 <title>Sagioto Forum 3.0</title>
 <script type="text/javascript" src="jquery-1.7.2.js"></script>
-<!-- <script type="text/javascript" src="jsons.js"></script> -->
+<script type="text/javascript" src="jsons.js"></script>
 <script type="text/javascript" src="service-functions.js"></script>
 <link href="style.css" rel="stylesheet" type="text/css">
 
@@ -20,19 +20,12 @@
 </head>
 
 <body>
-	<form name="login" class="login-out-forms">
-	  <input name="username" type="text" placeholder="username" min="3">
-	  <input name="password" type="password" placeholder="password" min="3">
-	  <button name="loginButton" type="button" onclick="RegisterAndLogin('Login')" class="login-out-buttons">login</button>
-	  <button name="registerButton" type="button" onclick="RegisterAndLogin('Register')" class="login-out-buttons">register</button>
-	</form>
-
-	<form name="logout" class="login-out-forms"> 
-	</form>
-
-	<div id="subforums"">
-		<table id="subforumsTable"/>
-	</div>
-
+<form name="login" class="login-out-forms">
+  <input name="username" type="text" placeholder="username" min="3">
+  <input name="password" type="password" placeholder="password" min="3">
+  <button name="loginButton" type="button" onclick="RegisterAndLogin('Login')" class="login-out-buttons">login</button>
+  <button name="registerButton" type="button" onclick="RegisterAndLogin('Register')" class="login-out-buttons">register</button>
+</form>
+<form name="logout" class="login-out-forms" />
 </body>
 </html>

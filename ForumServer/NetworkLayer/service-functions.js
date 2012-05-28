@@ -14,19 +14,7 @@ function callService(methodName, params, onSuccess) {
 }
 
 function GetSubforumsList(){
-	var response = callService("GetSubforumsList", "", function(result){
-		var sfList = $('#subforumsTable');
-		$.each(result, function(i)
-			{
-				var tr = document.createElement("tr");
-				var td = document.createElement("td");
-				td.innerHTML = result[i];
-				tr.appendChild(td);
-				td.setAttribute('onclick', 'GetSubforum(\'' + result[i] + '\')');
-				sfList.append(tr);
-			}
-		)
-		});
+	var response = callService("GetSubforumsList", "", function(result){alert(result);});
 }
 
 function RegisterAndLoginCall(user, methodName){
@@ -81,16 +69,6 @@ function Logout(name){
 					}
 			);
 		}
-		}
-	);
-}
-
-function GetSubforum(name)
-{
-	callService("GetSubforum", {"subforum": name},
-		function(result)
-		{
-			alert(JSON.stringify(result));
 		}
 	);
 }
