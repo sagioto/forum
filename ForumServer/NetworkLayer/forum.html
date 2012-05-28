@@ -20,17 +20,19 @@
 </head>
 
 <body>
-	<form name="login" class="login-out-forms">
-	  <input name="username" type="text" placeholder="username" min="3">
-	  <input name="password" type="password" placeholder="password" min="3">
-	  <button name="loginButton" type="button" onclick="RegisterAndLogin('Login')" class="login-out-buttons">login</button>
-	  <button name="registerButton" type="button" onclick="RegisterAndLogin('Register')" class="login-out-buttons">register</button>
-	</form>
+	<div id="forms" style="height: 100px">
+		<form name="login" class="login-out-forms">
+			<input name="username" type="text" placeholder="username" min="3">
+			<input name="password" type="password" placeholder="password" min="3">
+			<button name="loginButton" type="button" onclick="RegisterAndLogin('Login')" class="login-out-buttons">login</button>
+			<button name="registerButton" type="button" onclick="RegisterAndLogin('Register')" class="login-out-buttons">register</button>
+		</form>
 
-	<form name="logout" class="login-out-forms"> 
-	</form>
-
-	<div id="subforums"">
+		<form name="logout" class="login-out-forms"> 
+		</form>
+	<div/>
+	
+	<div id="subforums" style="position: relative">
 		<table id="subforumsTable"/>
 	</div>
 
