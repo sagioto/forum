@@ -116,15 +116,7 @@ namespace ForumClientCore.NetworkLayer
         /// <returns>Returns an array of Subforums. (The main forum).</returns>
         internal string[] GetSubforumsList()
         {
-            try
-            {
-                return webService.GetSubforumsList();
-            }
-            catch (Exception e)
-            {
-                Console.Write("Bullshit");
-                return null;
-            }
+            return webService.GetSubforumsList();
         }
 
         /// <summary>

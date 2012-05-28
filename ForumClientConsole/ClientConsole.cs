@@ -6,6 +6,7 @@ using ForumClientCore;
 using System.Text.RegularExpressions;
 using ForumShared.SharedDataTypes;
 using ForumShared.ForumAPI;
+using System.ServiceModel;
 
 namespace ForumClientConsole
 {
@@ -32,7 +33,7 @@ namespace ForumClientConsole
         /// <summary>
         /// Menu method
         /// </summary>
-        public void startMenu()
+        public int startMenu()
         {
             //AllocConsole(); 
             InitConsole();
@@ -49,105 +50,128 @@ namespace ForumClientConsole
                 char[] delimeters = { ' ' };
                 string[] command = line.Split(delimeters, 2);
 
-                switch (command[0])
+                try
                 {
-                    case "menu":
-                        Console.WriteLine("\nThe available commands are:");
-                        Console.WriteLine("\n\tlist-forums\n\tshow-forum [forum name]\n\tshow-replies [post title]\n\tback\n\trefresh\n\tedit [post title]\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tremove [post title]\n\tquit\n\tadmin-menu\n");
-                        break;
-                    case "admin-menu": // TODO add report commands
-                        Console.WriteLine("\n\tadd-moderator\n\tremove-moderator\n\treplace-moderator\n\treplace-admin\n\tadd-forum\n\tremove-forum\n\t");
-                        break;
-                    case "remove":
-                        if (command.Length < 2)
-                        {
-                            Console.WriteLine("Usage: remove [post title]");
+                    switch (command[0])
+                    {
+                        case "menu":
+                            Console.WriteLine("\nThe available commands are:");
+                            Console.WriteLine("\n\tlist-forums\n\tshow-forum [forum name]\n\tshow-replies [post title]\n\tback\n\trefresh\n\tedit [post title]\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tremove [post title]\n\tquit\n\tadmin-menu\n");
                             break;
-                        }
-                        RemovePost(command);
-                        PrintCurrentLocation();
-                        break;
-                    case "edit":
-                        if (command.Length < 2)
-                        {
-                            Console.WriteLine("Usage: edit [post title]");
+                        case "admin-menu": // TODO add report commands
+                            Console.WriteLine("\n\tadd-moderator\n\tremove-moderator\n\treplace-moderator\n\treplace-admin\n\tadd-forum\n\tremove-forum\n\t");
                             break;
-                        }
-                        EditPost(command);
-                        PrintCurrentLocation();
-                        break;
-                    case "back":
-                        Back();
-                        break;
-                    case "list-forums":
-                        Console.WriteLine("Here is the list of sub-forums:");
-                        int i = 0;
-                        foreach (String subforum in controller.GetSubforumsList())
-                        {
-                            Console.WriteLine(i + ") " + subforum);
-                            i++;
-                        }
-                        break;
-                    case "show-replies":
-                        if (command.Length < 2)
-                        {
-                            Console.WriteLine("Usage: show-replies [post title]");
+                        case "remove":
+                            if (command.Length < 2)
+                            {
+                                Console.WriteLine("Usage: remove [post title]");
+                                break;
+                            }
+                            RemovePost(command);
+                            PrintCurrentLocation();
                             break;
-                        }
-                        ShowReplies(command);
-                        break;
-                    case "reply":
-                        Reply();
-                        break;
-                    case "show-forum":
-                        if (command.Length < 2)
-                        {
-                            Console.WriteLine("Usage: show [forum name]");
+                        case "edit":
+                            if (command.Length < 2)
+                            {
+                                Console.WriteLine("Usage: edit [post title]");
+                                break;
+                            }
+                            EditPost(command);
+                            PrintCurrentLocation();
                             break;
+                        case "back":
+                            Back();
+                            break;
+                        case "list-forums":
+                            Console.WriteLine("Here is the list of sub-forums:");
+                            int i = 0;
+                            foreach (String subforum in controller.GetSubforumsList())
+                            {
+                                Console.WriteLine(i + ") " + subforum);
+                                i++;
+                            }
+                            break;
+                        case "show-replies":
+                            if (command.Length < 2)
+                            {
+                                Console.WriteLine("Usage: show-replies [post title]");
+                                break;
+                            }
+                            ShowReplies(command);
+                            break;
+                        case "reply":
+                            Reply();
+                            break;
+                        case "show-forum":
+                            if (command.Length < 2)
+                            {
+                                Console.WriteLine("Usage: show [forum name]");
+                                break;
+                            }
+                            GetSubforum(command[1]);
+                            break;
+                        case "register":
+                            Register();
+                            break;
+                        case "login":
+                            Login();
+                            break;
+                        case "logout":
+                            Logout();
+                            break;
+                        case "post":
+                            Post(); //post the message on the current subforum
+                            GetSubforum(currentSubForum); //reload the subforum post list
+                            break;
+                        case "add-moderator":
+                            AddModerator();
+                            break;
+                        case "remove-moderator":
+                            RemoveModerator();
+                            break;
+                        case "replace-moderator":
+                            ReplaceModerator();
+                            break;
+                        case "replace-admin":
+                            ReplaceAdmin();
+                            break;
+                        case "add-forum":
+                            AddForum();
+                            break;
+                        case "remove-forum":
+                            RemoveForum();
+                            break;
+                        case "refresh":
+                            PrintCurrentLocation();
+                            break;
+                        case "quit":
+                            Logout();
+                            freeConsole();
+                            return 0;
+                        default:
+                            Console.WriteLine("Unrecognized command: " + line + ". You can type menu for a list of commands");
+                            break;
+                    }
+
+                }
+                catch (EndpointNotFoundException e)
+                {
+                    while (true)
+                    {
+                        Console.WriteLine("It seems like the server could not be reached. Would you like to restart? yes/no");
+                        string restart = Console.ReadLine();
+                        if (restart.Equals("yes"))
+                        {
+                            Console.Clear();
+                            freeConsole();
+                            return -3;
                         }
-                        GetSubforum(command[1]);
-                        break;
-                    case "register":
-                        Register();
-                        break;
-                    case "login":
-                        Login();
-                        break;
-                    case "logout":
-                        Logout();
-                        break;
-                    case "post":
-                        Post(); //post the message on the current subforum
-                        GetSubforum(currentSubForum); //reload the subforum post list
-                        break;
-                    case "add-moderator":
-                        AddModerator();
-                        break;
-                    case "remove-moderator":
-                        RemoveModerator();
-                        break;
-                    case "replace-moderator":
-                        ReplaceModerator();
-                        break;
-                    case "replace-admin":
-                        ReplaceAdmin();
-                        break;
-                    case "add-forum":
-                        AddForum();
-                        break;
-                    case "remove-forum":
-                        RemoveForum();
-                        break;
-                    case "refresh":
-                        PrintCurrentLocation();
-                        break;
-                    case "quit":
-                        Logout();
-                        freeConsole();
-                        return;
-                    default:
-                        Console.WriteLine("Unrecognized command: " + line + ". You can type menu for a list of commands");
-                        break;
+                        else if (restart.Equals("no"))
+                        {
+                            freeConsole();
+                            return -1;
+                        }
+                    }
                 }
             }
 
@@ -706,6 +730,7 @@ namespace ForumClientConsole
             Console.WindowWidth = 100;
             Console.Beep();
             Console.BackgroundColor = ConsoleColor.Blue;
+            Console.Clear();
             StringBuilder sb = new StringBuilder();
             sb.Append("  $$\\     $$\\                        $$$$$$\\                                                       \n");
             sb.Append("  $$ |    $$ |                      $$  __$$\\                                                      \n");
