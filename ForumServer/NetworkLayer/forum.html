@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sagioto Forum 3.0</title>
+<script type="text/javascript" src="jquery-1.7.2.js"></script>
+<script type="text/javascript" src="jsons.js"></script>
+<script type="text/javascript" src="service-functions.js"></script>
+<link href="style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript">                                         
+    $(document).ready(function() {
+		GetSubforumsList();
+ });                                     
+ </script>
+
+</head>
+
+<body>
+<form name="login" class="login-out-forms">
+  <input name="username" type="text" placeholder="username">
+  <input name="password" type="password" placeholder="password" min="3">
+  <button name="loginButton" type="button" onclick="Register()" class="login-out-buttons">login</button>
+</form>
+<form name="logout" class="login-out-forms">
+  logged in as
+  <output name="x" for="username"></output>
+  <button name="logoutButton" type="button" class="login-out-buttons">logout</button>
+</form>
+</body>
+</html>
