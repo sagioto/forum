@@ -106,7 +106,7 @@ function Subscribe()
 				alert(JSON.stringify(result));
 		}
 	);
-	Subscribe();
+	setTimeout('Subscribe()',60 * 1000);
 }
 
 function GetSubforum(name)

@@ -50,7 +50,10 @@ namespace ForumServer.DataLayer
                     {
                         Thread.Sleep(100);
                         this.AddPost(new Post(new Postkey(adminName, DateTime.Now),
-                            "Post" + j + " in Subforum: " + s.Name,"content", null, s.Name), s.Name);
+                            "Post" + j + " in Subforum: " + s.Name,"Vestibulum ante ipsum primis in"
+                        + "faucibus orci luctus et ultrices posuere cubilia Curae; In eget eleifend dui."
+                        + "Maecenas commodo commodo elit, vel porta purus hendrerit varius. Fusce nec luctus eros. Vestibulum"
+                        + "in lacus nunc. Vivamus ornare accumsan ullamcorper. Sed felis elit, sollicitudin non interdum vitae, sagittis ut nulla. Ut et ante ut dolor dignissim condimentum. Vestibulum accumsan mi nec eros pellentesque non vehicula enim vestibulum. In malesuada placerat enim, et ultrices mi laoreet sit amet.", null, s.Name), s.Name);
                     }
                 }
             }

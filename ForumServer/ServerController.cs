@@ -102,8 +102,10 @@ namespace ForumServer
             try
             {
                 log.Info("got request to subscribe frome user " + username);
-
-                User toSubscribe = dataManager.GetUser(username);
+                User toSubscribe;
+                if (username.Equals("guest"))
+                    toSubscribe = new User(username, "123");
+                else toSubscribe = dataManager.GetUser(username);
                 if (toSubscribe != null)
                 {
                     lock (toSubscribe)
