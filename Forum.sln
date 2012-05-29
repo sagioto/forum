@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumClientCore", "ForumCli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumServer", "ForumServer\ForumServer.csproj", "{A27A133F-3BE9-4869-B21E-045605A58827}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumUtils", "ForumUtils\ForumUtils.csproj", "{8E463DBF-841C-4989-9219-A0AE255F58F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumShared", "ForumUtils\ForumShared.csproj", "{8E463DBF-841C-4989-9219-A0AE255F58F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumClientGui", "ForumClientGui\ForumClientGui.csproj", "{BE68A022-3E9F-4845-9327-4E29DA8A9169}"
 	ProjectSection(ProjectDependencies) = postProject

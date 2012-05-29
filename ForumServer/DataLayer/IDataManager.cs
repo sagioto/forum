@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ForumServer.DataTypes;
 using ForumUtils.SharedDataTypes;
+using ForumShared.SharedDataTypes;
 
 namespace ForumServer.DataLayer
 {
@@ -192,6 +193,12 @@ namespace ForumServer.DataLayer
         /// <returns>admin</returns>
         /// <exception cref="UserNotFoundException"></exception>
         User GetAdmin();
+
+        /// <summary>
+        /// gets a list of all the logged in users
+        /// </summary>
+        /// <returns></returns>
+        List<User> GetAllLoggedInUsers();
 
         #endregion
 

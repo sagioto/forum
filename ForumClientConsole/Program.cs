@@ -10,7 +10,20 @@ namespace ForumClientConsole
         static void Main(string[] args)
         {
             ClientConsole c = new ClientConsole();
-            c.startMenu();
+            int exitCode = c.startMenu();
+            while (exitCode == -3) //restart!
+            {
+                c = new ClientConsole();
+                exitCode = c.startMenu();
+            }
+            if (exitCode == -1)
+            {
+                //Other errors....
+            }
+            if (exitCode == 0)
+            {
+                //all good.
+            }
         }
     }
 }

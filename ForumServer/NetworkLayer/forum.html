@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sagioto Forum 3.0</title>
+<script type="text/javascript" src="jquery-1.7.2.js"></script>
+<script type="text/javascript" src="date.js"></script>  
+<script type="text/javascript" src="service-functions.js"></script>
+<link href="style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript">                                         
+    $(document).ready(function() {
+		$('form[name="logout"]').hide();
+		$('form[name="login"]').hide();
+		$('form[name="login"]').fadeIn('slow');
+		GetSubforumsList();
+		Subscribe();
+ });                       
+ </script>
+
+</head>
+
+<body>
+<div id="container" style="width: 900px">
+	<div id="forms" style="height: 50px">
+		<form name="login" class="login-out-forms">
+			<input name="username" type="text" placeholder="username" min="3">
+			<input name="password" type="password" placeholder="password" min="3">
+			<button name="loginButton" type="button" onclick="RegisterAndLogin('Login')" class="login-out-buttons">login</button>
+			<button name="registerButton" type="button" onclick="RegisterAndLogin('Register')" class="login-out-buttons">register</button>
+		</form>
+
+		<form name="logout" class="login-out-forms"> 
+		</form>
+	</div>
+	
+	<div id="forum" style="width: 900px; position: absolute; top: 110px;">
+		<table id="subforumsTable" width="800px"/>
+	</div>
+</div>
+</body>
+</html>

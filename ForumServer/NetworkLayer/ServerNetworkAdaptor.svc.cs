@@ -5,19 +5,21 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
-using ForumUtils.NetworkLayer;
-using ForumServer.NetworkLayer;
 using ForumServer.DataTypes;
-using ForumUtils.SharedDataTypes;
+using ForumShared.SharedDataTypes;
+using ForumShared.ForumAPI;
+using System.ServiceModel.Activation;
 
 namespace ForumServer
 {
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    [ServiceBehavior(AddressFilterMode = AddressFilterMode.Any)]
     public class ServerNetworkAdaptor : IForumService
     {
         private static ServerController controller = new ServerController();
-        private ISerializer serializer = new JsonSerializer();
 
-        public bool Register(String username, String password)
+        #region user functions
+        public Result Register(String username, String password)
         {
             try
             {
@@ -25,13 +27,12 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                return false;
                 throw new FaultException<Exception>(e, "couldn't register");
             }
 
         }
 
-        public bool Login(String username, String password)
+        public Result Login(String username, String password)
         {
 
             try
@@ -40,13 +41,12 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                return false;
                 throw new FaultException<Exception>(e, "couldn't login");
             }
 
         }
 
-        public bool Logout(String username)
+        public Result Logout(String username)
         {
 
             try
@@ -55,11 +55,25 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                return false;
                 throw new FaultException<Exception>(e, "couldn't logout");
             }
 
         }
+
+        public Post Subscribe(string username)
+        {
+            try
+            {
+                return controller.Subscribe(username);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "couldn't subscribe");
+            }
+        }
+        #endregion
+
+        #region viewing functions
 
         public string[] GetSubforumsList()
         {
@@ -70,7 +84,6 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                return null;
                 throw new FaultException<Exception>(e, "couldn't get sub forums list");
             }
 
@@ -84,7 +97,6 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                return null;
                 throw new FaultException<Exception>(e, "couldn't get sub forum");
             }
         }
@@ -97,7 +109,6 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                return null;
                 throw new FaultException<Exception>(e, "couldn't get post");
             }
         }
@@ -111,51 +122,45 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                return null;
                 throw new FaultException<Exception>(e, "couldn't get post");
             }
 
         }
 
+        #endregion
 
-        public bool Post(string currentSubforum, Post toPost)
+        #region posting functions
+
+        public Result Post(string currentSubforum, Post toPost)
         {
             try
             {
-                if (controller.Post(currentSubforum, toPost))
-                {
-                    Publish(toPost);
-                    return true;
-                }
-                else return false;
+                toPost.Replies = new Dictionary<Postkey, Post>();
+                return controller.Post(currentSubforum, toPost);
+
             }
             catch (Exception e)
             {
-                return false;
                 throw new FaultException<Exception>(e, "something went wrong with post");
             }
         }
 
-        public bool Reply(Postkey current, Post toPost)
+        public Result Reply(Postkey current, Post toPost)
         {
             try
             {
-                if (controller.Reply(current, toPost))
-                {
-                    Publish(toPost);
-                    return true;
-                }
-                else return false;
+                toPost.Replies = new Dictionary<Postkey, Post>();
+                return controller.Reply(current, toPost);
+          
             }
             catch (Exception e)
             {
-                return false;
                 throw new FaultException<Exception>(e, "something went wrong with reply");
             }
 
         }
 
-        public bool EditPost(Postkey postToUpdate, Post originalPost, string username, string password)
+        public Result EditPost(Postkey postToUpdate, Post originalPost, string username, string password)
         {
             try
             {
@@ -163,14 +168,13 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                return false;
                 throw new FaultException<Exception>(e, "somthing went wrong with edit");
             }
 
         }
 
 
-        public bool RemovePost(Postkey postkey, string username, string password)
+        public Result RemovePost(Postkey postkey, string username, string password)
         {
 
             try
@@ -179,15 +183,16 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                return false;
                 throw new FaultException<Exception>(e, "somthing went wrong with remove");
             }
 
         }
 
+        #endregion
+
         #region admin functions
 
-        public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
+        public Result AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
         {
 
             try
@@ -196,13 +201,12 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                return false;
                 throw new FaultException<Exception>(e, "couldn't add moderator");
             }
 
         }
 
-        public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
+        public Result RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
         {
 
             try
@@ -211,13 +215,12 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                return false;
                 throw new FaultException<Exception>(e, "couldn't remove moderator");
             }
 
         }
 
-        public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
+        public Result ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
         {
 
             try
@@ -226,13 +229,12 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                return false;
                 throw new FaultException<Exception>(e, "couldn't replace moderator");
             }
 
         }
 
-        public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
+        public Result AddSubforum(string adminUsername, string adminPassword, string subforumName)
         {
 
             try
@@ -241,13 +243,12 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                return false;
                 throw new FaultException<Exception>(e, "couldn't add sub forum");
             }
 
         }
 
-        public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
+        public Result RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
         {
 
             try
@@ -256,7 +257,6 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                return false;
                 throw new FaultException<Exception>(e, "couldn't remove sub forum");
             }
 
@@ -271,7 +271,6 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                return -1;
                 throw new FaultException<Exception>(e, "couldn't get report");
             }
 
@@ -286,13 +285,12 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                return -1;
                 throw new FaultException<Exception>(e, "couldn't get report");
             }
 
         }
 
-        public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
+        public Result ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
         {
 
             try
@@ -301,7 +299,6 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                return false;
                 throw new FaultException<Exception>(e, "couldn't replace admin");
             }
 
@@ -310,123 +307,5 @@ namespace ForumServer
         #endregion
 
 
-        private static List<IForumListener> subscribers = new List<IForumListener>();
-
-        /// <summary>
-        /// Subscribe to forum
-        /// </summary>
-        /// <returns></returns>
-        public bool SubscribeToForum()
-        {
-            try
-            {
-                IForumListener listener = OperationContext.Current.GetCallbackChannel<IForumListener>();
-                if (!subscribers.Contains(listener))
-                    subscribers.Add(listener);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Unsubscribe from forum
-        /// </summary>
-        /// <returns></returns>
-        public bool UnsubscribeFromForum()
-        {
-            try
-            {
-                IForumListener callback = OperationContext.Current.GetCallbackChannel<IForumListener>();
-                if (subscribers.Contains(callback))
-                    subscribers.Remove(callback);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-
-        /// <summary>
-        /// Add message to forum. TODO - Should be changes to Post
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        public bool AddMessage(Post post)
-        {
-            foreach (IForumListener listener in subscribers)
-            {
-                if ((((ICommunicationObject)listener).State == CommunicationState.Opened))
-                {
-                    try
-                    {
-                        listener.onUpdate(post);
-                    }
-                    catch (Exception)
-                    {
-                        throw;
-                    }
-                }
-                else
-                {
-                    subscribers.Remove(listener);
-                }
-            }
-            return true;
-        }
-
-        public bool Publish(Post post)
-        {
-            foreach (IForumListener listener in subscribers)
-            {
-                if ((((ICommunicationObject)listener).State == CommunicationState.Opened))
-                {
-                    try
-                    {
-                        listener.onUpdate(post);
-                    }
-                    catch (Exception)
-                    {
-                        throw;
-                    }
-                }
-                else
-                {
-                    subscribers.Remove(listener);
-                }
-            }
-            return true;
-        }
-
-
-
-        #region Temp methods
-
-        public string GetData(int value)
-        {
-            return string.Format("You sent to server: {0}", value);
-        }
-
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
-        {
-            if (composite == null)
-            {
-                throw new ArgumentNullException("composite");
-            }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
-        }
-
-        #endregion
-
-
-
-    }
+       }
 }

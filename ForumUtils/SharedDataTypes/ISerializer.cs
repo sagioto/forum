@@ -2,18 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ForumUtils.SharedDataTypes;
+using ForumShared.SharedDataTypes;
 
-namespace ForumUtils.NetworkLayer
+namespace ForumShared.NetworkLayer
 {
     public interface ISerializer
     {
-        string SerializeSubforum(Subforum toSerialize);
-
-        Subforum DeserializeSubforum(string toDeserialize);
-
-        Subforum[] DeserializeSubforumArray(string toDeserialize);
-
         string SerializePost(Post toSerialize);
 
         Post DeserializePost(string toDeserialize);

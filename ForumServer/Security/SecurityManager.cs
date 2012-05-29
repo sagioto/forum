@@ -4,108 +4,123 @@ using System.Linq;
 using System.Web;
 using ForumServer.DataTypes;
 using ForumUtils.SharedDataTypes;
+using ForumShared.SharedDataTypes;
+using ForumShared.ForumAPI;
+using ForumServer.DataLayer;
 
 namespace ForumServer.Security
 {
     public class SecurityManager : ISecurityManager
     {
-        private DataLayer.DataManager dataManager;
+        private DataManager dataManager;
 
         public SecurityManager(DataLayer.DataManager dataManager)
         {
             this.dataManager = dataManager;
-
-            User admin = dataManager.GetAdmin();
-            if (admin == null)
-            {
-                string adminName = System.Web.Configuration.WebConfigurationManager.AppSettings["adminName"];
-                string adminPassword = System.Web.Configuration.WebConfigurationManager.AppSettings["adminPassword"];
-                admin = new User(adminName, adminPassword);
-                admin.Level = AuthorizationLevel.ADMIN;
-                dataManager.SetAdmin(admin);
-            }
         }
 
 
-        public bool AuthorizedRegister(string username, string password)
+        public Result AuthorizedRegister(string username, string password)
         {
             User user = dataManager.GetUser(username);
             if (user != null)
-                return false;
+                return Result.SECURITY_ERROR;
             else
             {
                 user = new User(username, password);
                 user.Level = AuthorizationLevel.MEMBER;
-                dataManager.AddUser(user);
-                return true;
+                dataManager.UpdateUser(user);
+                return Result.OK;
             }
         }
 
-        public bool AuthorizedLogin(string username, string password)
+        public Result AuthorizedLogin(string username, string password)
         {
             User user = dataManager.GetUser(username);
-            if (user != null && user.Password.Equals(password)
+            if (user == null)
+                return Result.USER_NOT_FOUND;
+            if (user.Password.Equals(password)
                 && user.CurrentState == UserState.Logout)
             {
                 user.CurrentState = UserState.Login;
                 dataManager.UpdateUser(user);
-                return true;
+                return Result.OK;
             }
-            else return false;
+            else return Result.SECURITY_ERROR;
         }
 
-        public bool AuthorizedLogout(string username)
+        public Result AuthorizedLogout(string username)
         {
             User user = dataManager.GetUser(username);
+            if (user == null)
+                return Result.USER_NOT_FOUND;
             if (IsUserLoggendIn(user))
             {
                 user.CurrentState = UserState.Logout;
                 dataManager.UpdateUser(user);
-                return true;
+                return Result.OK;
             }
-            else return false;
+            else return Result.SECURITY_ERROR;
         }
 
         public bool IsLoggedin(string username)
         {
             User user = dataManager.GetUser(username);
-            return (IsUserLoggendIn(user));
+            if (user == null)
+                return false;
+            return IsUserLoggendIn(user);
         }
 
-        
-        public bool IsAuthorizedToPost(string username, string subforum)
-        {
-            //TODO check if sub forum should be considered
+
+        public Result IsAuthorizedToPost(string username, string subforum)
+        {   
             User user = dataManager.GetUser(username);
-            return (user != null && user.Level.Equals(AuthorizationLevel.MEMBER) 
-                && IsUserLoggendIn(user));
+            if (user == null)
+                return Result.USER_NOT_FOUND;
+            if (!user.Level.Equals(AuthorizationLevel.GUEST)
+                && IsUserLoggendIn(user))
+                return Result.OK;
+            return Result.INSUFFICENT_PERMISSIONS;
         }
 
-        public bool IsAuthorizedToEdit(string username, Postkey postkey, string password)
+        public Result IsAuthorizedToEdit(string username, Postkey postkey, string password)
         {
             User user = dataManager.GetUser(username);
+            if (user == null)
+                return Result.USER_NOT_FOUND;
             Post post = dataManager.GetPost(postkey);
+            if (user == null)
+                return Result.POST_NOT_FOUND;
             Subforum sub = dataManager.GetSubforums().Find(subforum => subforum.Name.Equals(post.Subforum));
-            return user != null && post != null
-                && user.Password.Equals(password)
-                && (post.Key.Username.Equals(username)
+            if(user.Password.Equals(password)
+               && (post.Key.Username.Equals(username)
                     || (user.Level.Equals(AuthorizationLevel.MODERATOR)
                         && sub != null && sub.ModeratorsList.Contains(username))
-                    || (user.Level.Equals(AuthorizationLevel.ADMIN)));                
+                    || (user.Level.Equals(AuthorizationLevel.ADMIN))))
+                return Result.OK;
+            return Result.INSUFFICENT_PERMISSIONS;
         }
 
-        public bool IsAuthorizedToEditSubforums(string username)
+        public Result IsAuthorizedToEditSubforums(string username)
         {
             //TODO check if this is the right condition
             User user = dataManager.GetUser(username);
-            return user != null && user.Level.Equals(AuthorizationLevel.ADMIN);
+            if (user == null)
+                return Result.USER_NOT_FOUND;
+            if (user.Level.Equals(AuthorizationLevel.ADMIN))
+                return Result.OK;
+            return Result.INSUFFICENT_PERMISSIONS;
         }
 
 
-        public bool AuthenticateAdmin(string username, string password)
+        public Result AuthenticateAdmin(string username, string password)
         {
             User admin = dataManager.GetAdmin();
-            return admin.Password.Equals(password) && admin.Username.Equals(password);
+            if (admin == null)
+                return Result.USER_NOT_FOUND;
+            if (admin.Password.Equals(password) && admin.Username.Equals(password))
+                return Result.OK;
+            return Result.INSUFFICENT_PERMISSIONS;
         }
 
         private static bool IsUserLoggendIn(User user)

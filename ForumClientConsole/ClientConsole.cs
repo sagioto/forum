@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using ForumClientCore;
 using System.Text.RegularExpressions;
-using ForumUtils.SharedDataTypes;
+using ForumShared.SharedDataTypes;
+using ForumShared.ForumAPI;
+using System.ServiceModel;
 
 namespace ForumClientConsole
 {
@@ -31,7 +33,7 @@ namespace ForumClientConsole
         /// <summary>
         /// Menu method
         /// </summary>
-        public void startMenu()
+        public int startMenu()
         {
             //AllocConsole(); 
             InitConsole();
@@ -48,115 +50,347 @@ namespace ForumClientConsole
                 char[] delimeters = { ' ' };
                 string[] command = line.Split(delimeters, 2);
 
-                switch (command[0])
+                try
                 {
-                    case "menu":
-                        Console.WriteLine("\nThe available commands are:");
-                        Console.WriteLine("\n\tlist-forums\n\tshow-forum [forum name]\n\tshow-replies [post title]\n\trefresh\n\tback\n\tedit [post title]\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tremove-post\n\tquit\n\tadmin-menu\n");
-                        break;
-                    case "admin-menu": // TODO add report commands
-                        Console.WriteLine("\n\tadd-moderator\n\tremove-moderator\n\treplace-moderator\n\treplace-admin\n\tadd-forum\n\tremove-forum\n\t");
-                        break;
-                    case "refresh":
-                        if (controller.CurrentPost == null)
-                        {
-                            PrintPostList(controller.GetSubforum(controller.CurrentSubForum));
-                        }
-                        else
-                        {
-                            PrintPostList(controller.GetReplies(controller.CurrentPost.Key));
-                        }
-                        break;
-                    case "remove-post":
-                        RemovePost();
-                        break;
-                    case "edit":
-                        if (command.Length < 2)
-                        {
-                            Console.WriteLine("Usage: edit [post title]");
+                    switch (command[0])
+                    {
+                        case "menu":
+                            Console.WriteLine("\nThe available commands are:");
+                            Console.WriteLine("\n\tlist-forums\n\tshow-forum [forum name]\n\tshow-replies [post title]\n\tback\n\trefresh\n\tedit [post title]\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tremove [post title]\n\tquit\n\tadmin-menu\n");
                             break;
-                        }
-                        EditPost(command);
-                        break;
-                    case "back":
-                        Back();
-                        break;
-                    case "list-forums":
-                        Console.WriteLine("Here is the list of sub-forums:");
-                        int i = 0;
-                        foreach (String subforum in controller.GetSubforumsList())
-                        {
-                            Console.WriteLine(i + ") " + subforum);
-                            i++;
-                        }
-                        break;
-                    case "show-replies":
-                        if (command.Length < 2)
-                        {
-                            Console.WriteLine("Usage: show-replies [post title]");
+                        case "admin-menu": // TODO add report commands
+                            Console.WriteLine("\n\tadd-moderator\n\tremove-moderator\n\treplace-moderator\n\treplace-admin\n\tadd-forum\n\tremove-forum\n\t");
                             break;
-                        }
-                        ShowReplies(command);
-                        break;
-                    case "reply":
-                        Reply();
-                        break;
-                    case "show-forum":
-                        if (command.Length < 2)
-                        {
-                            Console.WriteLine("Usage: show [forum name]");
+                        case "remove":
+                            if (command.Length < 2)
+                            {
+                                Console.WriteLine("Usage: remove [post title]");
+                                break;
+                            }
+                            RemovePost(command);
+                            PrintCurrentLocation();
                             break;
+                        case "edit":
+                            if (command.Length < 2)
+                            {
+                                Console.WriteLine("Usage: edit [post title]");
+                                break;
+                            }
+                            EditPost(command);
+                            PrintCurrentLocation();
+                            break;
+                        case "back":
+                            Back();
+                            break;
+                        case "list-forums":
+                            Console.WriteLine("Here is the list of sub-forums:");
+                            int i = 0;
+                            foreach (String subforum in controller.GetSubforumsList())
+                            {
+                                Console.WriteLine(i + ") " + subforum);
+                                i++;
+                            }
+                            break;
+                        case "show-replies":
+                            if (command.Length < 2)
+                            {
+                                Console.WriteLine("Usage: show-replies [post title]");
+                                break;
+                            }
+                            ShowReplies(command);
+                            break;
+                        case "reply":
+                            Reply();
+                            break;
+                        case "show-forum":
+                            if (command.Length < 2)
+                            {
+                                Console.WriteLine("Usage: show [forum name]");
+                                break;
+                            }
+                            GetSubforum(command[1]);
+                            break;
+                        case "register":
+                            Register();
+                            break;
+                        case "login":
+                            Login();
+                            break;
+                        case "logout":
+                            Logout();
+                            break;
+                        case "post":
+                            Post(); //post the message on the current subforum
+                            GetSubforum(currentSubForum); //reload the subforum post list
+                            break;
+                        case "add-moderator":
+                            AddModerator();
+                            break;
+                        case "remove-moderator":
+                            RemoveModerator();
+                            break;
+                        case "replace-moderator":
+                            ReplaceModerator();
+                            break;
+                        case "replace-admin":
+                            ReplaceAdmin();
+                            break;
+                        case "add-forum":
+                            AddForum();
+                            break;
+                        case "remove-forum":
+                            RemoveForum();
+                            break;
+                        case "refresh":
+                            PrintCurrentLocation();
+                            break;
+                        case "quit":
+                            Logout();
+                            freeConsole();
+                            return 0;
+                        default:
+                            Console.WriteLine("Unrecognized command: " + line + ". You can type menu for a list of commands");
+                            break;
+                    }
+
+                }
+                catch (EndpointNotFoundException e)
+                {
+                    while (true)
+                    {
+                        Console.WriteLine("It seems like the server could not be reached. Would you like to restart? yes/no");
+                        string restart = Console.ReadLine();
+                        if (restart.Equals("yes"))
+                        {
+                            Console.Clear();
+                            freeConsole();
+                            return -3;
                         }
-                        GetSubforum(command[1]);
-                        break;
-                    case "register":
-                        Register();
-                        break;
-                    case "login":
-                        Login();
-                        break;
-                    case "logout":
-                        Logout();
-                        break;
-                    case "post":
-                        Post();
-                        break;
-                    case "quit":
-                        Logout();
-                        freeConsole();
-                        return;
-                    default:
-                        Console.WriteLine("Unrecognized command: " + line + ". You can type menu for a list of commands");
-                        break;
+                        else if (restart.Equals("no"))
+                        {
+                            freeConsole();
+                            return -1;
+                        }
+                    }
                 }
             }
 
         }
 
-        private void RemovePost()
+        private void RemoveForum()
         {
-            if (controller.RemovePost(controller.CurrentPost.Key))
+            if (!controller.loggedIn)
             {
-                PrintPostList(controller.GetReplies(controller.CurrentPost.Key));
-                Console.WriteLine("Post removed successfully.");
+                Console.WriteLine("You need to login first.");
+                return;
+            }
+            Console.WriteLine("Please enter the name of sub-forum you want to remove");
+            string subforumName = Console.ReadLine();
+            Result r = controller.RemoveSubforum(subforumName);
+            if (r == Result.OK)
+            {
+                Console.WriteLine("Forum was removed successfully!");
             }
             else
             {
-                PrintPostList(controller.GetReplies(controller.CurrentPost.Key));
-                Console.WriteLine("Post was not removed.");
+                Console.WriteLine("Could not remove the forum! Got response: " + r.ToString());
+            }
+        }
+
+        private void AddForum()
+        {
+            if (!controller.loggedIn)
+            {
+                Console.WriteLine("You need to login first.");
+                return;
+            }
+            Console.WriteLine("Please enter the name of the new sub-forum");
+            string subforumName = Console.ReadLine();
+            Result r = controller.AddSubforum(subforumName);
+            if (r == Result.OK)
+            {
+                Console.WriteLine("Forum was added successfully!");
+            }
+            else
+            {
+                Console.WriteLine("Could not add the forum! Got response: " + r.ToString());
+            }
+        }
+
+        private void ReplaceAdmin()
+        {
+            if (!controller.loggedIn)
+            {
+                Console.WriteLine("You need to login first.");
+                return;
+            }
+            Console.WriteLine("Please enter the user name of the new admin");
+            string newAdmin = Console.ReadLine();
+            Console.WriteLine("Please enter the password of the new admin");
+            string newPassword = Console.ReadLine();
+            bool r = controller.ReplaceAdmin(newAdmin, newPassword);
+            if (r)
+            {
+                Console.WriteLine("Admin replaced successfully!");
+            }
+            else
+            {
+                Console.WriteLine("Could not replace the admin! Got response: " + r.ToString());
+            }
+        }
+
+        private void ReplaceModerator()
+        {
+            if (!controller.loggedIn)
+            {
+                Console.WriteLine("You need to login first.");
+                return;
+            }
+            Console.WriteLine("Please enter the user name of the subforum to replace in");
+            string subforumName = Console.ReadLine();            
+            Console.WriteLine("Please enter the name of the new moderator");
+            string newMod = Console.ReadLine();
+            Console.WriteLine("Please enter the name of the old moderator");
+            string oldMod = Console.ReadLine();
+            Result r = controller.ReplaceModerator(newMod, oldMod, subforumName);
+            if (r == Result.OK)
+            {
+                Console.WriteLine("Moderators replaced successfully!");
+            }
+            else
+            {
+                Console.WriteLine("Could not replace the moderator! Got response: " + r.ToString());
+            }
+        }
+
+        private void RemoveModerator()
+        {
+            if (!controller.loggedIn)
+            {
+                Console.WriteLine("You need to login first.");
+                return;
+            }
+            Console.WriteLine("Please enter the user name of the subforum to remove from");
+            string subforumName = Console.ReadLine();
+            Console.WriteLine("Please enter the name of the moderator to remove");
+            string moderator = Console.ReadLine();
+            Result r = controller.RemoveModerator(moderator, subforumName);
+            if (r == Result.OK)
+            {
+                Console.WriteLine("Moderator removed successfully!");
+            }
+            else
+            {
+                Console.WriteLine("Could not remove the moderator! Got response: " + r.ToString());
+            }
+        }
+
+        private void AddModerator()
+        {
+            if (!controller.loggedIn)
+            {
+                Console.WriteLine("You need to login first.");
+                return;
+            }
+            Console.WriteLine("Please enter the user name of the subforum to add to");
+            string subforumName = Console.ReadLine();
+            Console.WriteLine("Please enter the name of the moderator to add");
+            string moderator = Console.ReadLine();
+            Result r = controller.AddModerator(moderator, subforumName);
+            if (r == Result.OK)
+            {
+                Console.WriteLine("Moderator added successfully!");
+            }
+            else
+            {
+                Console.WriteLine("Could not add the moderator! Got response: " + r.ToString());
+            }
+        }
+
+        private void PrintCurrentLocation()
+        {
+            //Should print the current Post/Subforum.
+            if (currentSubForum == null)
+            {
+                ListSubForums();
+            }
+            else if (currentPost == null)
+            {
+                PrintPostList(controller.GetSubforum(currentSubForum));
+            }
+            else
+            {
+                PrintPostList(controller.GetReplies(currentPost.Key));
+            }
+
+        }
+
+        private void RemovePost(string[] command)
+        {
+            if (!controller.loggedIn)
+            {
+                Console.WriteLine("You need to log in in order to delete a post.");
+            }
+            Post[] posts;
+            if (currentPost != null)
+            {
+                posts = controller.GetReplies(currentPost.Key);
+            }
+            else if (currentSubForum != null)
+            {
+                posts = controller.GetSubforum(currentSubForum);
+            }
+            else
+            {
+                Console.WriteLine("Please enter a subforum or a post first.");
+                return;
+            }
+            foreach (Post p in posts)
+            {
+                if (p.Title.Equals(command[1]))
+                {
+                    try
+                    {
+                        Result r = controller.RemovePost(p.Key);
+                        if (r == Result.OK)
+                        {
+                            Console.WriteLine("Post was removed successfully");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Post could not be removed. Sorry. Got response: " + r.ToString());
+                        }
+
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Sorry, can't get the post right now...");
+                    }
+                    break;
+                }
             }
         }
 
         private void EditPost(string[] command)
         {
-            Post[] posts;
-            if (controller.CurrentPost != null)
+            if (!controller.loggedIn)
             {
-                posts = controller.GetReplies(controller.CurrentPost.Key);
+                Console.WriteLine("You need to log in in order to edit a post.");
+                return;
+            }
+            Post[] posts;
+            if (currentPost != null)
+            {
+                posts = controller.GetReplies(currentPost.Key);
+            }
+            else if (currentSubForum != null)
+            {
+                posts = controller.GetSubforum(currentSubForum);
             }
             else
             {
-                posts = controller.GetSubforum(controller.CurrentSubForum);
+                Console.WriteLine("Please enter a subforum or a post first.");
+                return;
             }
             foreach (Post p in posts)
             {
@@ -168,7 +402,8 @@ namespace ForumClientConsole
                         string title = Console.ReadLine();
                         Console.WriteLine("Enter the new body of your post");
                         string body = Console.ReadLine();
-                        if (controller.EditPost(title, body))
+                        Result r = controller.EditPost(p.Key, title, body);
+                        if (r == Result.OK)
                         {
                             Console.WriteLine("Post was edited successfully");
                         }
@@ -189,33 +424,62 @@ namespace ForumClientConsole
 
         #region Console Operations
 
-        private void Back()
+        private void Back() //TODO support currentPost navigation!!!! CRITICAL!
         {
-            Post[] posts = controller.Back();
-            PrintPostList(posts);
+            if (currentPost == null || currentSubForum == null)
+            {
+                //we are already at top level or looking at a subforum. just list the subforums again.
+                currentPost = null;
+                currentSubForum = null;
+                ListSubForums();
+            }
+            else if (currentPost.ParentPost == null)
+            {
+                //we are currently looking at a subforum post, back to the subforum itself.
+                currentPost = null;
+                GetSubforum(currentSubForum);
+            }
+            else
+            {
+                //we are currently looking at some post. back up to its parent.
+                currentPost = controller.GetPost(currentPost.Key);
+                PrintPostList(controller.GetReplies(currentPost.Key));
+            }
+        }
+
+        private void ListSubForums()
+        {
+            Console.WriteLine("Here is the list of sub-forums:");
+            int i = 0;
+            foreach (String subforum in controller.GetSubforumsList())
+            {
+                Console.WriteLine(i + ") " + subforum);
+                i++;
+            }
         }
 
         private void ShowReplies(string[] command)
         {
             Post[] posts;
-            if (controller.CurrentPost != null)
+            if (currentPost != null)
             {
-                posts = controller.GetReplies(controller.CurrentPost.Key);
+                posts = controller.GetReplies(currentPost.Key);
             }
             else
             {
-                posts = controller.GetSubforum(controller.CurrentSubForum);
+                posts = controller.GetSubforum(currentSubForum);
             }
             foreach (Post p in posts)
             {
                 if (p.Title.Equals(command[1]))
                 {
-                    try
+                    Post[] replies = controller.GetReplies(p.Key);
+                    if (replies != null)
                     {
-                        Post[] replies = controller.GetReplies(p.Key);
+                        currentPost = p;
                         PrintPostList(replies);
                     }
-                    catch (Exception e)
+                    else
                     {
                         Console.WriteLine("Sorry, can't get the post right now...");
                     }
@@ -227,10 +491,19 @@ namespace ForumClientConsole
         private void GetSubforum(string subforumname)
         {
             Post[] subForumPosts = controller.GetSubforum(subforumname);
-            PrintPostList(subForumPosts);
+            if (subForumPosts == null)
+            {
+                Console.Write("The subforum you requested was not found.");
+            }
+            else
+            {
+                currentSubForum = subforumname;
+                currentPost = null;
+                PrintPostList(subForumPosts);
+            }
         }
 
-        private void PrintPostList(ForumUtils.SharedDataTypes.Post[] subForumPosts)
+        private void PrintPostList(Post[] subForumPosts)
         {
             if (subForumPosts != null)
             {
@@ -256,18 +529,24 @@ namespace ForumClientConsole
 
         private void Reply()
         {
+            if (!controller.loggedIn)
+            {
+                Console.WriteLine("You need to log in in order to Reply on a post.");
+                return;
+            }
             Console.WriteLine("Please enter a title to your post");
             string title = Console.ReadLine();
             Console.WriteLine("Enter the body of your post");
             string body = Console.ReadLine();
-            if (controller.CurrentPost == null)
+            if (currentPost == null)
             {
                 Console.WriteLine("Sorry, you can only reply inside a sub-forum");
             }
             else
             {
-                if (controller.Reply(controller.CurrentPost.Key, title, body))
+                if (controller.Reply(currentPost.Key, title, body) == Result.OK)
                 {
+                    PrintCurrentLocation();
                     Console.WriteLine("Replied to the post successfully!");
                 }
                 else
@@ -279,26 +558,50 @@ namespace ForumClientConsole
 
         private void Post()
         {
-            Console.WriteLine("Enter the name of the forum you want to post in");
-            string subForum = Console.ReadLine();
-            Console.WriteLine("Please enter a title to your post");
-            string title = Console.ReadLine();
-            Console.WriteLine("Enter the body of your post");
-            string body = Console.ReadLine();
-            try
+            if (!controller.loggedIn)
             {
-                if (controller.Post(subForum, title, body))
+                Console.WriteLine("You need to log in in order to post.");
+                return;
+            }
+            if (currentSubForum != null)
+            {
+                Console.WriteLine("You are writing a post in: " + currentSubForum);
+                Console.WriteLine("Please enter a title to your post");
+                string title = Console.ReadLine();
+                Console.WriteLine("Enter the body of your post");
+                string body = Console.ReadLine();
+                try
                 {
-                    Console.WriteLine("Posted successfully!");
+                    Result r = controller.Post(currentSubForum, title, body);
+                    if (r == Result.OK)
+                    {
+                        Console.WriteLine("Posted successfully!");
+                    }
+                    else if (r == Result.INSUFFICENT_PERMISSIONS)
+                    {
+                        Console.WriteLine("Sorry, you don't have enough permissions.");
+                    }
+                    else if (r == Result.ENTRY_EXISTS)
+                    {
+                        Console.WriteLine("The post already exists.");
+                    }
+                    else if (r == Result.USER_NOT_FOUND)
+                    {
+                        Console.WriteLine("Sorry, could not post. Are you logged in?");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Sorry, couldn't post your message. Got response from server: " + r.ToString());
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    Console.WriteLine("Sorry, could not post. Are you logged in?");
+                    Console.WriteLine("Error! Got response from server: " + e.Message);
                 }
             }
-            catch (Exception e)
+            else
             {
-                Console.WriteLine("Got response from server: " + e.Message);
+                Console.WriteLine("It seems that you haven't entered a subforum yet...");
             }
         }
 
@@ -350,13 +653,18 @@ namespace ForumClientConsole
             }
             Console.WriteLine("Please choose your password");
             password = ReadPassword();
-            if (controller.Register(userName, password))
+            Result r = controller.Register(userName, password);
+            if (r == Result.OK)
             {
                 Console.WriteLine("Registration Successful. You can now login to your account");
             }
+            else if (r == Result.ENTRY_EXISTS)
+            {
+                Console.WriteLine("Registration Failed! The username already exists");
+            }
             else
             {
-                Console.WriteLine("Registration Failed! Please try again...");
+                Console.WriteLine("Sorry, you could not be registered. message: " + r.ToString());
             }
         }
 
@@ -422,6 +730,7 @@ namespace ForumClientConsole
             Console.WindowWidth = 100;
             Console.Beep();
             Console.BackgroundColor = ConsoleColor.Blue;
+            Console.Clear();
             StringBuilder sb = new StringBuilder();
             sb.Append("  $$\\     $$\\                        $$$$$$\\                                                       \n");
             sb.Append("  $$ |    $$ |                      $$  __$$\\                                                      \n");
@@ -434,5 +743,9 @@ namespace ForumClientConsole
             Console.WriteLine(sb);
         }
 
+
+        public string currentSubForum { get; set; }
+
+        public Post currentPost { get; set; }
     }
 }

@@ -5,6 +5,8 @@ using System.Web;
 using ForumServer.DataTypes;
 using System.Threading.Tasks;
 using ForumUtils.SharedDataTypes;
+using ForumShared.SharedDataTypes;
+using ForumShared.ForumAPI;
 
 namespace ForumServer.Policy
 {
@@ -16,7 +18,7 @@ namespace ForumServer.Policy
         {
             this.dataManager = dataManager;
         }
-        public bool AddModerator(string username, string subforum)
+        public Result AddModerator(string username, string subforum)
         {  
             Subforum forum = dataManager.GetSubforum(subforum);
             User user = dataManager.GetUser(username);
@@ -25,12 +27,12 @@ namespace ForumServer.Policy
                 int numOfPublishedPosts = dataManager.GetSubforum(subforum).Posts.Values.
                     Where(post => post.Key.Username.Equals(username) && post.Subforum.Equals(subforum)).Count();
                 if(numOfPublishedPosts >= 5)
-                    return true;
+                    return Result.OK;
             }
-            return false;
+            return Result.POLICY_REJECTED;
         }
 
-        public bool RemoveModerator(string username, string subforum)
+        public Result RemoveModerator(string username, string subforum)
         {
             Subforum forum = dataManager.GetSubforum(subforum);
             User user = dataManager.GetUser(username);
@@ -42,19 +44,25 @@ namespace ForumServer.Policy
                     && post.Subforum.Equals(subforum)
                     && DateTime.Now.Subtract(post.Key.Time) < TimeSpan.FromHours(1)).Count();
                 if (numOfPublishedPostsInLastHour == 0)
-                    return true;
+                    return Result.OK;
             }
-            return false;
+            return Result.POLICY_REJECTED;
         }
 
-        public bool ChangeModerator(string oldUsername, string newUsername, string subforum)
+        public Result ChangeModerator(string oldUsername, string newUsername, string subforum)
         {
-            return true;
+            return Result.OK;
         }
 
-        public bool IsAuthorizedToEdit(Postkey originalPostKey, string username)
+        public Result IsAuthorizedToEdit(Postkey originalPostKey, string username)
         {
-            return true;
+            return Result.OK;
         }
+
+        public bool ShouldNotify(Post post, string username)
+        {
+            return (post.Key.Username != username);
+        }
+
     }
 }

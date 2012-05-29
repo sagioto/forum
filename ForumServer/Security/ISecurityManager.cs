@@ -4,26 +4,28 @@ using System.Linq;
 using System.Text;
 using ForumServer.DataTypes;
 using ForumUtils.SharedDataTypes;
+using ForumShared.SharedDataTypes;
+using ForumShared.ForumAPI;
 
 namespace ForumServer.Security
 {
     interface ISecurityManager
     {
 
-        bool AuthorizedRegister(string username, string password);
+        Result AuthorizedRegister(string username, string password);
 
-        bool AuthorizedLogin(string username, string password);
+        Result AuthorizedLogin(string username, string password);
 
-        bool AuthorizedLogout(string username);
+        Result AuthorizedLogout(string username);
 
         bool IsLoggedin(string username);
 
-        bool IsAuthorizedToPost(string username, string subforum);
+        Result IsAuthorizedToPost(string username, string subforum);
 
-        bool IsAuthorizedToEdit(string username, Postkey post, string password);
+        Result IsAuthorizedToEdit(string username, Postkey post, string password);
 
-        bool IsAuthorizedToEditSubforums(string username);
+        Result IsAuthorizedToEditSubforums(string username);
 
-        bool AuthenticateAdmin(string username, string password);
+        Result AuthenticateAdmin(string username, string password);
     }
 }

@@ -2,16 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ForumUtils.SharedDataTypes;
+using ForumShared.SharedDataTypes;
+using ForumShared.ForumAPI;
 
 namespace ForumServer.Policy
 {
     interface IPolicyManager
     {
-         bool AddModerator(string username, string subforum);
+         Result AddModerator(string username, string subforum);
 
-         bool RemoveModerator(string username, string subforum);
+         Result RemoveModerator(string username, string subforum);
 
-         bool ChangeModerator(string oldUsername, string newUsername, string subforum);
+         Result ChangeModerator(string oldUsername, string newUsername, string subforum);
+
+         bool ShouldNotify(Post post, string username);
  
     }
 }

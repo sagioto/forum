@@ -4,9 +4,13 @@ using ForumServer.DataLayer;
 using ForumServer.DataTypes;
 using ForumServer.Policy;
 using ForumServer.Security;
+using ForumShared.SharedDataTypes;
 using ForumUtils.SharedDataTypes;
+using ForumShared.ForumAPI;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading;
+using System.Configuration;
 
 namespace ForumServer
 {
@@ -15,6 +19,8 @@ namespace ForumServer
         private DataManager dataManager;
         private SecurityManager securityManager;
         private PolicyManager policyManager;
+        private Post posted;
+        private TimeSpan timeToWait;
         private log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
@@ -23,11 +29,12 @@ namespace ForumServer
             log4net.Config.XmlConfigurator.Configure();
             try
             {
-                log.Info("initializing service...");
+                log.Info("intializing service...");
                 dataManager = new DataManager();
                 securityManager = new SecurityManager(dataManager);
                 policyManager = new PolicyManager(dataManager);
-
+                string time = ConfigurationManager.AppSettings["timeToWaitMinutes"];
+                timeToWait = TimeSpan.FromMinutes(int.Parse(time));
                 dataManager.InitForumData();
 
             }
@@ -39,35 +46,18 @@ namespace ForumServer
 
         }
 
-        public string[] GetSubforumsList()
-        {
-            try
-            {
-                log.Info("got request to enter");
-                
-                Subforum[] subs = dataManager.GetSubforums().ToArray<Subforum>();
-                List<string> names = new List<string>();
-                foreach(Subforum sub in subs)
-                {
-                    names.Add(sub.Name);
-                }
-                string[] sorted = names.ToArray();
-                Array.Sort<string>(sorted);
-                return sorted; 
-            }
-            catch (Exception e)
-            {
-                log.Error("got request to enter from someone but got error", e);
-                throw e;
-            }
-        }
 
-        public bool Register(string username, string password)
+        #region user functions
+
+        public Result Register(string username, string password)
         {
             try
             {
                 log.Info("got request to register from user " + username + " and password *******");
-                return securityManager.AuthorizedRegister(username, password);
+                if (username != null && username.Length != 0
+                    && password != null && password.Length != 0)
+                    return securityManager.AuthorizedRegister(username, password);
+                else return Result.NULL;
             }
             catch (Exception e)
             {
@@ -77,7 +67,7 @@ namespace ForumServer
         }
 
 
-        public bool Login(string username, string password)
+        public Result Login(string username, string password)
         {
             try
             {
@@ -92,7 +82,7 @@ namespace ForumServer
 
         }
 
-        public bool Logout(string username)
+        public Result Logout(string username)
         {
             try
             {
@@ -105,6 +95,80 @@ namespace ForumServer
                 throw e;
             }
 
+        }
+
+        public Post Subscribe(String username)
+        {
+            try
+            {
+                log.Info("got request to subscribe frome user " + username);
+                User toSubscribe;
+                if (username.Equals("guest"))
+                    toSubscribe = new User(username, "123");
+                else toSubscribe = dataManager.GetUser(username);
+                if (toSubscribe != null)
+                {
+                    lock (toSubscribe)
+                    {
+                        if (Monitor.Wait(toSubscribe, timeToWait))
+                            return this.posted;
+                    }
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                log.Error("failed to subscribe", e);
+                throw e;
+            }
+        }
+
+
+        private void Notify(Post posted)
+        {
+
+            try
+            {
+                log.Info("got request to notify on post");
+
+                List<User> toNotify = dataManager.GetAllLoggedInUsers().Where(user => policyManager.ShouldNotify(posted, user.Username)).ToList();
+                this.posted = posted;
+                foreach (User user in toNotify)
+                {
+                    lock (user)
+                    {
+                        Monitor.Pulse(user);
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                log.Error("failed to notify", e);
+                throw e;
+            }
+
+        }
+
+        #endregion
+
+        #region viewing functions
+
+        public string[] GetSubforumsList()
+        {
+            try
+            {
+                log.Info("got request to enter");
+
+                string[] subs = dataManager.GetSubforums().Select(subforum => subforum.Name).ToArray();
+                Array.Sort<string>(subs);
+                return subs;
+            }
+            catch (Exception e)
+            {
+                log.Error("got requset to enter from someone but got error", e);
+                throw e;
+            }
         }
 
         public Post[] GetSubForum(string subforum)
@@ -153,21 +217,27 @@ namespace ForumServer
             }
         }
 
-        public bool Post(string subforum, Post post)
+        #endregion
+
+        #region posting functions
+
+        public Result Post(string subforum, Post post)
         {
             try
             {
                 log.Info("got request to post in sub forum: " + subforum);
-                try
-                {
-                    return CheckPost(post)
-                        && securityManager.IsAuthorizedToPost(post.Key.Username, subforum)
-                        && dataManager.AddPost(post, subforum.ToString());
-                }
-                catch (SubforumNotFoundException)
-                {
-                    return false;
-                }
+                if (!CheckPost(post))
+                    return Result.ILLEGAL_POST;
+                
+                Result res = securityManager.IsAuthorizedToPost(post.Key.Username, subforum);
+                if (res == Result.OK)
+                    if (dataManager.AddPost(post, subforum.ToString()))
+                    {
+                        //Notify(post); TODO uncomment when implemented
+                        return Result.OK;
+                    }
+                    else return Result.SUB_FORUM_NOT_FOUND;
+                else return res;
             }
             catch (Exception e)
             {
@@ -177,15 +247,24 @@ namespace ForumServer
 
         }
 
-       
-        public bool Reply(Postkey currPost, Post post)
+
+        public Result Reply(Postkey currPost, Post post)
         {
             try
             {
                 log.Info("got request to reply to post " + currPost);
-                return CheckPost(post)
-                        && securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum)
-                        && dataManager.AddReply(post, currPost);
+                if (!CheckPost(post))
+                    return Result.ILLEGAL_POST;
+                
+                Result res = securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum);
+                if (res == Result.OK)
+                    if (dataManager.AddReply(post, currPost))
+                    {
+                        //Notify(post); TODO uncomment when implemented
+                        return Result.OK;
+                    }
+                    else return Result.POST_NOT_FOUND;
+                else return res;
             }
             catch (Exception e)
             {
@@ -195,31 +274,40 @@ namespace ForumServer
 
         }
 
-        public bool EditPost(Postkey currPost, Post post, string username, string password)
+        public Result EditPost(Postkey currPost, Post post, string username, string password)
         {
             try
             {
                 log.Info("got request to edit post " + currPost);
-                return CheckPost(post)
-                    && securityManager.IsAuthorizedToEdit(username, currPost, password)
-                    && dataManager.EditPost(post, currPost);
+                if (!CheckPost(post))
+                    return Result.ILLEGAL_POST;
+                Result res = securityManager.IsAuthorizedToEdit(username, currPost, password);
+                if (res == Result.OK)
+                    if (dataManager.EditPost(post, currPost))
+                        return Result.OK;
+                    else return Result.POST_NOT_FOUND;
+                else return res;
             }
             catch (Exception e)
             {
                 log.Error("failed to edit post " + currPost, e);
                 throw e;
             }
-
         }
 
-        public bool RemovePost(Postkey originalPostKey, string username, string password)
+        public Result RemovePost(Postkey originalPostKey, string username, string password)
         {
             try
             {
                 log.Info("got request to remove post " + originalPostKey);
-                return securityManager.IsAuthorizedToEdit(username, originalPostKey, password)
-                && policyManager.IsAuthorizedToEdit(originalPostKey, username)
-                && dataManager.RemovePost(originalPostKey);
+                Result res = securityManager.IsAuthorizedToEdit(username, originalPostKey, password)
+                                | policyManager.IsAuthorizedToEdit(originalPostKey, username);
+
+                if (res == Result.OK)
+                    if (dataManager.RemovePost(originalPostKey))
+                        return Result.OK;
+                    else return Result.POST_NOT_FOUND;
+                else return res;
             }
             catch (Exception e)
             {
@@ -229,14 +317,26 @@ namespace ForumServer
 
         }
 
-        public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
+        private bool CheckPost(Post post)
+        {
+            return ((post.Body != null && post.Body.Length != 0)
+                   || (post.Title != null && post.Title.Length != 0));
+        }
+
+        #endregion
+
+        #region admin functions
+
+
+        public Result AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
         {
             try
             {
                 log.Info("got request to add moderator " + usernameToAdd + " to " + subforum);
 
-                if (securityManager.AuthenticateAdmin(adminUsername, adminPassword)
-                && policyManager.AddModerator(usernameToAdd, subforum))
+                Result res = securityManager.AuthenticateAdmin(adminUsername, adminPassword)
+                             | policyManager.AddModerator(usernameToAdd, subforum);
+                if (res == Result.OK)
                 {
                     dataManager.GetSubforum(subforum).ModeratorsList.Add(usernameToAdd);
                     User user = dataManager.GetUser(usernameToAdd);
@@ -245,9 +345,9 @@ namespace ForumServer
                         user.Level = AuthorizationLevel.MODERATOR;
                         dataManager.UpdateUser(user);
                     }
-                    return true;
+                    return Result.OK;
                 }
-                else return false;
+                else return res;
 
             }
             catch (Exception e)
@@ -258,14 +358,14 @@ namespace ForumServer
 
         }
 
-        public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
+        public Result RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
         {
             try
             {
                 log.Info("got request to remove moderator " + usernameToRemove + " to " + subforum);
-
-                if (securityManager.AuthenticateAdmin(adminUsername, adminPassword)
-                 && policyManager.RemoveModerator(usernameToRemove, subforum))
+                Result res = securityManager.AuthenticateAdmin(adminUsername, adminPassword)
+                                | policyManager.RemoveModerator(usernameToRemove, subforum);
+                if (res == Result.OK)
                 {
                     dataManager.GetSubforum(subforum).ModeratorsList.Remove(usernameToRemove);
                     bool moderator = CheckIfModerator(usernameToRemove);
@@ -275,9 +375,9 @@ namespace ForumServer
                         user.Level = AuthorizationLevel.MEMBER;
                         dataManager.UpdateUser(user);
                     }
-                    return true;
+                    return Result.OK;
                 }
-                else return false;
+                else return res;
             }
             catch (Exception e)
             {
@@ -314,7 +414,7 @@ namespace ForumServer
 
         }
 
-        public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
+        public Result ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
         {
 
             try
@@ -322,8 +422,8 @@ namespace ForumServer
                 log.Info("got request to replace moderator" + usernameToRemove + " with " + usernameToAdd);
 
                 return policyManager.ChangeModerator(usernameToRemove, usernameToAdd, subforum)
-        && RemoveModerator(adminUsername, adminPassword, usernameToRemove, subforum)
-        && AddModerator(adminUsername, adminPassword, usernameToAdd, subforum);
+                        | RemoveModerator(adminUsername, adminPassword, usernameToRemove, subforum)
+                        | AddModerator(adminUsername, adminPassword, usernameToAdd, subforum);
 
             }
             catch (Exception e)
@@ -334,15 +434,19 @@ namespace ForumServer
 
         }
 
-        public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
+        public Result AddSubforum(string adminUsername, string adminPassword, string subforumName)
         {
 
             try
             {
                 log.Info("got request to add sub forum " + subforumName);
 
-                return securityManager.AuthenticateAdmin(adminUsername, adminPassword)
-            && dataManager.AddSubforum(new Subforum(subforumName));     //TODO - Its better that you will build the Subforum. No more required fields (like at least one Moderator?)
+                Result res = securityManager.AuthenticateAdmin(adminUsername, adminPassword);
+                if (res == Result.OK)
+                    if (dataManager.AddSubforum(new Subforum(subforumName)))
+                        return Result.OK;
+                    else return Result.ENTRY_EXISTS;
+                else return res;
 
             }
             catch (Exception e)
@@ -353,15 +457,19 @@ namespace ForumServer
 
         }
 
-        public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
+        public Result RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
         {
 
             try
             {
                 log.Info("got request add sub forum " + subforumName);
 
-                return securityManager.AuthenticateAdmin(adminUsername, adminPassword)
-                    && dataManager.RemoveSubforum(subforumName);
+                Result res = securityManager.AuthenticateAdmin(adminUsername, adminPassword);
+                if (res == Result.OK)
+                    if (dataManager.RemoveSubforum(subforumName))
+                        return Result.OK;
+                    else return Result.SUB_FORUM_NOT_FOUND;
+                else return res;
 
             }
             catch (Exception e)
@@ -372,14 +480,15 @@ namespace ForumServer
 
         }
 
-        public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
+        public Result ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
         {
 
             try
             {
                 log.Info("got request to replace admin");
 
-                if (securityManager.AuthenticateAdmin(oldAdminUsername, oldAdminPassword))
+                Result res = securityManager.AuthenticateAdmin(oldAdminUsername, oldAdminPassword);
+                if (res == Result.OK)
                 {
                     User newAdmin;
                     try
@@ -391,16 +500,18 @@ namespace ForumServer
                         newAdmin = new User(newAdminUsername, newAdminPassword);
                         dataManager.AddUser(newAdmin);
                     }
-                    
+
                     User oldAdmin = dataManager.GetAdmin();
                     if (CheckIfModerator(oldAdminUsername))
                         oldAdmin.Level = AuthorizationLevel.MODERATOR;
                     else
                         oldAdmin.Level = AuthorizationLevel.MEMBER;
                     newAdmin.Level = AuthorizationLevel.ADMIN;
-                    return dataManager.SetAdmin(newAdmin);
+                    if (dataManager.SetAdmin(newAdmin))
+                        return Result.OK;
+                    else return Result.ENTRY_EXISTS;
                 }
-                else return false;
+                else return res;
 
             }
             catch (Exception e)
@@ -418,7 +529,7 @@ namespace ForumServer
             {
                 log.Info("got request to report sub forum total posts on " + subforumName);
 
-                if (securityManager.AuthenticateAdmin(adminUsername, adminPassword))
+                if (securityManager.AuthenticateAdmin(adminUsername, adminPassword) == Result.OK)
                     return dataManager.GetSubforum(subforumName).TotalPosts;
                 return -1;
 
@@ -438,7 +549,7 @@ namespace ForumServer
             {
                 log.Info("got request to report total posts of user " + username);
 
-                if (securityManager.AuthenticateAdmin(adminUsername, adminPassword))
+                if (securityManager.AuthenticateAdmin(adminUsername, adminPassword) == Result.OK)
                     return dataManager.GetAllPosts().Where(post => post.Key.Username.Equals(username)).Count();
                 return -1;
 
@@ -451,11 +562,9 @@ namespace ForumServer
 
         }
 
-        private bool CheckPost(ForumUtils.SharedDataTypes.Post post)
-        {
-            return ((post.Body != null && post.Body.Length != 0)
-                   || (post.Title != null && post.Title.Length != 0));
-        }
+        #endregion
+
+
 
     }
 }

@@ -8,8 +8,8 @@
     <ProjectGuid>{8E463DBF-841C-4989-9219-A0AE255F58F9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ForumUtils</RootNamespace>
-    <AssemblyName>ForumUtils</AssemblyName>
+    <RootNamespace>ForumShared</RootNamespace>
+    <AssemblyName>ForumShared</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -35,6 +35,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.Extensions" />
@@ -45,12 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ForumAPI\Result.cs" />
+    <Compile Include="ForumAPI\IForumService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SharedDataTypes\ISerializer.cs" />
     <Compile Include="SharedDataTypes\JsonSerializer.cs" />
     <Compile Include="SharedDataTypes\Post.cs" />
     <Compile Include="SharedDataTypes\Postkey.cs" />
-    <Compile Include="SharedDataTypes\Subforum.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -42,11 +42,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
@@ -74,45 +72,37 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataLayer\DataManager.cs" />
-    <Compile Include="DataLayer\DataManagerLocal.cs" />
-    <Compile Include="DataLayer\ForumModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ForumModel.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="DataLayer\DataBaseAdaptor.cs" />
+    <Compile Include="DataLayer\IDataBaseAdaptor.cs" />
     <Compile Include="DataLayer\IDataManager.cs" />
     <Compile Include="DataTypes\Exceptions\SubforumNotFoundException.cs" />
     <Compile Include="DataTypes\Exceptions\UserNotFoundException.cs" />
     <Compile Include="DataTypes\Exceptions\PostNotFoundException.cs" />
     <Compile Include="DataTypes\AuthorizationLevel.cs" />
+    <Compile Include="DataTypes\Subforum.cs" />
     <Compile Include="DataTypes\User.cs" />
     <Compile Include="DataTypes\UserState.cs" />
-    <Compile Include="NetworkLayer\IForumListener.cs" />
     <Compile Include="NetworkLayer\ServerNetworkAdaptor.svc.cs">
       <DependentUpon>ServerNetworkAdaptor.svc</DependentUpon>
     </Compile>
-    <Compile Include="NetworkLayer\IForumService.cs" />
     <Compile Include="Policy\IPolicyManager.cs" />
     <Compile Include="Policy\PolicyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ISecurityManager.cs" />
     <Compile Include="Security\SecurityManager.cs" />
-    <Compile Include="Lib\ServerController.cs" />
+    <Compile Include="ServerController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ForumUtils\ForumUtils.csproj">
+    <ProjectReference Include="..\ForumUtils\ForumShared.csproj">
       <Project>{8E463DBF-841C-4989-9219-A0AE255F58F9}</Project>
-      <Name>ForumUtils</Name>
+      <Name>ForumShared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="DataLayer\ForumModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ForumModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
+    <None Include="ServerClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -122,7 +112,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>53966</DevelopmentServerPort>
+          <DevelopmentServerPort>52644</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

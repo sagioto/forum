@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace ForumServer.DataTypes
 {
@@ -14,6 +11,8 @@ namespace ForumServer.DataTypes
         //private Set<Post> posts;
         private AuthorizationLevel level;
         private UserState currentState;
+
+
 
         public User(string username, string password)
         {
@@ -88,9 +87,9 @@ namespace ForumServer.DataTypes
             {
                 currentState = value;
             }
-        }
 
         #endregion
 
+        }
     }
 }

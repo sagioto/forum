@@ -6,6 +6,7 @@ using ForumServer.DataLayer;
 using ForumServer.DataTypes;
 using ForumUtils.SharedDataTypes;
 using System.Threading;
+using ForumShared.SharedDataTypes;
 
 namespace ServerTests
 {

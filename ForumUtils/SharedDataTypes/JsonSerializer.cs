@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
-using ForumUtils.SharedDataTypes;
+using ForumShared.SharedDataTypes;
 
-namespace ForumUtils.NetworkLayer
+namespace ForumShared.NetworkLayer
 {
     public class JsonSerializer : ISerializer
     {
@@ -17,21 +17,6 @@ namespace ForumUtils.NetworkLayer
             //serializer.RecursionLimit = 100;
         }
 
-
-        public string SerializeSubforum(Subforum toSerialize)
-        {
-            return serializer.Serialize(toSerialize);
-        }
-
-        public Subforum DeserializeSubforum(string toDeserialize)
-        {
-            return serializer.Deserialize(toDeserialize, typeof(Subforum)) as Subforum;
-        }
-
-        public Subforum[] DeserializeSubforumArray(string toDeserialize)
-        {
-            return serializer.Deserialize(toDeserialize, typeof(Subforum[])) as Subforum[];
-        }
 
         public string SerializePost(Post toSerialize)
         {

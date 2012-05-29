@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using ForumClientCore.ForumService;
 using System.ServiceModel;
-using ForumUtils.NetworkLayer;
-using ForumUtils.SharedDataTypes;
+using System.ServiceModel.Web;
+using System.Text;
+//using ForumClientCore.ForumService;
+using ForumShared.ForumAPI;
+using ForumShared.NetworkLayer;
+using ForumShared.SharedDataTypes;
+using System.ServiceModel.Description;
 
 namespace ForumClientCore.NetworkLayer
 {
+
     public class ClientNetworkAdaptor
     {
         IForumService webService;
@@ -30,10 +34,13 @@ namespace ForumClientCore.NetworkLayer
 
             // Web Service settings
             InstanceContext context = new InstanceContext(netListener);     // Sending IntanceContex to Server that it will be able to make callbacks
-            webService = new ForumServiceClient(context);
+            //webService = new ForumServiceClient(context); //TODO uncomment
+            ChannelFactory<IForumService> cf = new ChannelFactory<IForumService>(new WebHttpBinding(), "http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc");
+            cf.Endpoint.Behaviors.Add(new WebHttpBehavior());
+            webService = cf.CreateChannel();
             if (GetCallBack)
             {
-                //webService.SubscribeToForum();  // Subscribing to Forum in order to get callbacks
+                //webService.SubscribeToForum();  // Subscribing to Forum in order to get callbacks TODO uncomment
             }
         }
 
@@ -45,7 +52,8 @@ namespace ForumClientCore.NetworkLayer
 
             // Web Service settings
             InstanceContext context = new InstanceContext(netListener);     // Sending IntanceContex to Server that it will be able to make callbacks
-            webService = new ForumServiceClient(context);
+            //  webService = new ForumServiceClient(context); //TODO uncomment
+           // webService = new ForumServiceClient();
         }
 
         /// <summary>
@@ -56,7 +64,7 @@ namespace ForumClientCore.NetworkLayer
         /// </remarks>
         ~ClientNetworkAdaptor()
         {
-            webService.UnsubscribeFromForum();
+            // webService.UnsubscribeFromForum();
         }
 
         /// <summary>
@@ -64,10 +72,10 @@ namespace ForumClientCore.NetworkLayer
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        public string getDataFromServer(int num)
-        {
-            return webService.GetData(num);
-        }
+        //       public string getDataFromServer(int num)
+        //       {
+        //          return webService.GetData(num);
+        //     }
 
 
         /// <summary>
@@ -76,7 +84,7 @@ namespace ForumClientCore.NetworkLayer
         /// <param name="usename"></param>
         /// <param name="password"></param>
         /// <returns>Returns true if registration succeeded, false if user is already registered.</returns>
-        internal bool Register(String usename, String password)
+        internal Result Register(String usename, String password)
         {
             return webService.Register(usename, password);
         }
@@ -87,7 +95,7 @@ namespace ForumClientCore.NetworkLayer
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns>Returns true if login succeeded, false if User/Password are incorrect.</returns>
-        internal bool Login(String username, String password)
+        internal Result Login(String username, String password)
         {
             return webService.Login(username, password);
         }
@@ -97,7 +105,7 @@ namespace ForumClientCore.NetworkLayer
         /// </summary>
         /// <param name="username"></param>
         /// <returns>Returns true if logged out successfully, false otherwise.</returns>
-        internal bool Logout(String username)
+        internal Result Logout(String username)
         {
             return webService.Logout(username);
         }
@@ -132,7 +140,7 @@ namespace ForumClientCore.NetworkLayer
             {
                 return webService.GetReplies(postkey);
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 throw e;
             }
@@ -144,13 +152,13 @@ namespace ForumClientCore.NetworkLayer
         /// <param name="subForumName">The name sub forum to post in</param>
         /// <param name="postToAdd">The new post to be posted</param>
         /// <returns>Returns true if posting is successful.</returns>
-        internal bool Post(String subForumName, Post postToAdd)
+        internal Result Post(String subForumName, Post postToAdd)
         {
             try
             {
                 return webService.Post(subForumName, postToAdd);
             }
-            catch (FaultException e)
+            catch (System.ServiceModel.FaultException e)
             {
                 throw e;
             }
@@ -162,7 +170,7 @@ namespace ForumClientCore.NetworkLayer
         /// <param name="originalPost">The post being replied</param>
         /// <param name="newReply">The new reply post</param>
         /// <returns>Returns true if reply succeeded, false otherwise</returns>
-        internal bool Reply(Postkey originalPost, Post newReply)
+        internal Result Reply(Postkey originalPost, Post newReply)
         {
             return webService.Reply(originalPost, newReply);
         }
@@ -173,43 +181,43 @@ namespace ForumClientCore.NetworkLayer
             {
                 return webService.GetPost(postkey);
             }
-            catch (FaultException e)
+            catch (System.ServiceModel.FaultException e)
             {
                 throw e;
             }
         }
 
-        public bool EditPost(Postkey oldPost, Post newPost, string username, string password)
+        public Result EditPost(Postkey oldPost, Post newPost, string username, string password)
         {
             return webService.EditPost(oldPost, newPost, username, password);
         }
 
-        public bool RemovePost(Postkey postkey, string username, string password)
+        public Result RemovePost(Postkey postkey, string username, string password)
         {
             return webService.RemovePost(postkey, username, password);
         }
 
-        public bool AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
+        public Result AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
         {
             return webService.AddModerator(adminUsername, adminPassword, usernameToAdd, subforum);
         }
 
-        public bool RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
+        public Result RemoveModerator(string adminUsername, string adminPassword, string usernameToRemove, string subforum)
         {
             return webService.RemoveModerator(adminUsername, adminPassword, usernameToRemove, subforum);
         }
 
-        public bool ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
+        public Result ReplaceModerator(string adminUsername, string adminPassword, string usernameToAdd, string usernameToRemove, string subforum)
         {
             return webService.ReplaceModerator(adminUsername, adminPassword, usernameToAdd, usernameToRemove, subforum);
         }
 
-        public bool AddSubforum(string adminUsername, string adminPassword, string subforumName)
+        public Result AddSubforum(string adminUsername, string adminPassword, string subforumName)
         {
             return webService.AddSubforum(adminUsername, adminPassword, subforumName);
         }
 
-        public bool RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
+        public Result RemoveSubforum(string adminUsername, string adminPassword, string subforumName)
         {
             return webService.RemoveSubforum(adminUsername, adminPassword, subforumName);
         }
@@ -235,11 +243,6 @@ namespace ForumClientCore.NetworkLayer
         }
 
         public string GetData(int value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
         {
             throw new NotImplementedException();
         }

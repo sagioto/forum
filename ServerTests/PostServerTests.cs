@@ -4,6 +4,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting.Web;
 using System.Collections.Generic;
 using ForumUtils.SharedDataTypes;
+using ForumShared.SharedDataTypes;
 
 namespace ServerTests
 {

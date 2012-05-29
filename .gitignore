@@ -1,11 +1,7 @@
 *.suo
 **/bin
 **/obj
+/obj
 TestResults/*
 **/Logs/*
-ForumClientCore/Service References/ForumService/Reference.svcmap.orig
-ForumClientCore/Service References/ForumService/ServerNetworkAdaptor1.xsd.orig
-ForumClientConsole/Service References/ForumService/ServerNetworkAdaptor.wsdl
-ForumClientConsole/Service References/ForumService/ServerNetworkAdaptor.wsdl
-ForumClientConsole/Service References/ForumService/ServerNetworkAdaptor.xsd
-ForumClientConsole/Service References/ForumService/ServerNetworkAdaptor.wsdl
+**/Service References/*
