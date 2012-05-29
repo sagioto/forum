@@ -42,9 +42,11 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
@@ -72,8 +74,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataLayer\DataManager.cs" />
-    <Compile Include="DataLayer\DataBaseAdaptor.cs" />
-    <Compile Include="DataLayer\IDataBaseAdaptor.cs" />
+    <Compile Include="DataLayer\DataManagerLocal.cs" />
+    <Compile Include="DataLayer\ForumModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ForumModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="DataLayer\IDataManager.cs" />
     <Compile Include="DataTypes\Exceptions\SubforumNotFoundException.cs" />
     <Compile Include="DataTypes\Exceptions\UserNotFoundException.cs" />
@@ -102,6 +108,12 @@
       <Name>ForumUtils</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="DataLayer\ForumModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ForumModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>
@@ -110,7 +122,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>52644</DevelopmentServerPort>
+          <DevelopmentServerPort>53966</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

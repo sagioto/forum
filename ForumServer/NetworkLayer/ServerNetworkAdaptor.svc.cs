@@ -134,7 +134,6 @@ namespace ForumServer
                 return false;
                 throw new FaultException<Exception>(e, "something went wrong with post");
             }
-
         }
 
         public bool Reply(Postkey current, Post toPost)

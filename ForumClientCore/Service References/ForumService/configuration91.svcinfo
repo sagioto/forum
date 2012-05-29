@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="fjzVoajjUp4o08U7iNmObev0vRY=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="Ms7nPz4AYj6hd3ELMTdXupegHlQ=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="wsDualHttpBinding" name="WSDualHttpBinding_IForumService">
       <properties>
@@ -97,10 +97,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="WSDualHttpBinding_IForumService" contract="ForumService.IForumService" bindingType="wsDualHttpBinding" address="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc" bindingConfiguration="WSDualHttpBinding_IForumService">
+    <endpoint name="WSDualHttpBinding_IForumService" contract="ForumService.IForumService" bindingType="wsDualHttpBinding" address="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc" bindingConfiguration="WSDualHttpBinding_IForumService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc</serializedValue>
+          <serializedValue>http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

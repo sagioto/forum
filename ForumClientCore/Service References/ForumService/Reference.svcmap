@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="17b71bf3-0358-4dfa-91bc-799819ae2586" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="66fe5f80-b88d-413c-81d6-34bdd90909df" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -18,18 +18,18 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ServerNetworkAdaptor34.xsd" MetadataType="Schema" ID="a248d4a8-84a4-46b6-8ad2-e514f72e9ba6" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd6" />
-    <MetadataFile FileName="ServerNetworkAdaptor35.xsd" MetadataType="Schema" ID="fb110825-10c5-4639-9e88-fc9d4ad6f19e" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd5" />
-    <MetadataFile FileName="ServerNetworkAdaptor36.xsd" MetadataType="Schema" ID="5a9b84d8-8bc5-4067-a5d6-219b487e4f35" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd4" />
-    <MetadataFile FileName="ServerNetworkAdaptor37.xsd" MetadataType="Schema" ID="250e4d81-75be-4116-82cf-19a1dafcc179" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd3" />
-    <MetadataFile FileName="ServerNetworkAdaptor1.xsd" MetadataType="Schema" ID="06fa296c-97e3-4f58-a365-5a1d3b6dd503" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd2" />
-    <MetadataFile FileName="ServerNetworkAdaptor.xsd" MetadataType="Schema" ID="e4dc8863-f840-4c53-a475-236ce63e5724" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd1" />
-    <MetadataFile FileName="ServerNetworkAdaptor2.xsd" MetadataType="Schema" ID="2385aa9e-8374-4b66-9ee1-8e69a03d8b2e" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd0" />
-    <MetadataFile FileName="ServerNetworkAdaptor.wsdl" MetadataType="Wsdl" ID="76be6d00-663d-472e-92fe-02716b359022" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?wsdl" />
-    <MetadataFile FileName="ServerNetworkAdaptor.disco" MetadataType="Disco" ID="2e051ec1-fe44-429e-9f21-537ebddfa7ee" SourceId="1" SourceUrl="http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc?disco" />
+    <MetadataFile FileName="ServerNetworkAdaptor.xsd" MetadataType="Schema" ID="15828025-7f72-4827-b0b4-c24e5f66dfe4" SourceId="1" SourceUrl="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd5" />
+    <MetadataFile FileName="ServerNetworkAdaptor1.xsd" MetadataType="Schema" ID="1d94f4e3-1c6d-4fef-b6a7-8a4ebaebb4ba" SourceId="1" SourceUrl="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd0" />
+    <MetadataFile FileName="ServerNetworkAdaptor.wsdl" MetadataType="Wsdl" ID="94abf630-ef07-4bd0-9cbd-344e81b0a2bd" SourceId="1" SourceUrl="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc?wsdl" />
+    <MetadataFile FileName="ServerNetworkAdaptor2.xsd" MetadataType="Schema" ID="6200265d-846a-4362-9103-3a6db3102644" SourceId="1" SourceUrl="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd2" />
+    <MetadataFile FileName="ServerNetworkAdaptor3.xsd" MetadataType="Schema" ID="baa55023-52ef-4b28-9043-0c1f5c76fa79" SourceId="1" SourceUrl="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd3" />
+    <MetadataFile FileName="ServerNetworkAdaptor.disco" MetadataType="Disco" ID="1e1874e8-ef23-401f-bac1-631521f6aa58" SourceId="1" SourceUrl="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc?disco" />
+    <MetadataFile FileName="ServerNetworkAdaptor4.xsd" MetadataType="Schema" ID="69806401-52b5-47e3-b2d3-e48744cd45d7" SourceId="1" SourceUrl="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd1" />
+    <MetadataFile FileName="ServerNetworkAdaptor5.xsd" MetadataType="Schema" ID="fff2b816-55d5-497c-ad70-2ac238f552eb" SourceId="1" SourceUrl="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd6" />
+    <MetadataFile FileName="ServerNetworkAdaptor6.xsd" MetadataType="Schema" ID="9ca9614d-096d-4601-b472-6b5ebb63ddbd" SourceId="1" SourceUrl="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd4" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -23,7 +23,7 @@ namespace ForumServer
             log4net.Config.XmlConfigurator.Configure();
             try
             {
-                log.Info("intializing service...");
+                log.Info("initializing service...");
                 dataManager = new DataManager();
                 securityManager = new SecurityManager(dataManager);
                 policyManager = new PolicyManager(dataManager);
@@ -57,7 +57,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                log.Error("got requset to enter from someone but got error", e);
+                log.Error("got request to enter from someone but got error", e);
                 throw e;
             }
         }

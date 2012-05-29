@@ -22,6 +22,10 @@ namespace ForumUtils.SharedDataTypes
         [NonSerialized]
         private Dictionary<Postkey, Post> replies;
 
+        /// <summary>
+        /// Default constructor. Needed for DataManger.
+        /// </summary>
+        public Post(){}
 
         public Post(Postkey postKey, string title, string body, Postkey parentPost, string subforum)
         {

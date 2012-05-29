@@ -111,13 +111,13 @@
     <None Include="Service References\ForumService\ServerNetworkAdaptor3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor31.xsd">
+    <None Include="Service References\ForumService\ServerNetworkAdaptor4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor32.xsd">
+    <None Include="Service References\ForumService\ServerNetworkAdaptor5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor33.xsd">
+    <None Include="Service References\ForumService\ServerNetworkAdaptor6.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -133,6 +133,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\onUpdate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\newPost.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ForumService\" />
@@ -151,12 +157,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="images\onUpdate.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="images\newPost.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

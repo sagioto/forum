@@ -33,7 +33,7 @@ namespace ForumClientCore.NetworkLayer
             webService = new ForumServiceClient(context);
             if (GetCallBack)
             {
-                webService.SubscribeToForum();  // Subscribing to Forum in order to get callbacks
+                //webService.SubscribeToForum();  // Subscribing to Forum in order to get callbacks
             }
         }
 

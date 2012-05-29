@@ -149,7 +149,7 @@ namespace ForumTests
             cc1.AddModerator("test2", "Woman");
 
             //to this subforum has already moderator
-            Assert.IsTrue(cc1.AddModerator("test2", "Woman"));
+            Assert.IsFalse(cc1.AddModerator("test2", "Woman"));
 
             cc2.Post("Woman","msg2","body2");
             cc3.Post("Woman","msg3","body3");
@@ -171,7 +171,7 @@ namespace ForumTests
         }
 
         [TestMethod]
-        public void UserIntegration2()
+        public void UserIntegration9()
         {
             ClientController cc1 = new ClientController();
 
@@ -188,7 +188,7 @@ namespace ForumTests
             cc2.Post("Woman", "title1", "body1");
             
             //try to edit message not by the writer, admin or moderator
-            Assert.IsFalse(cc3.EditPost("BadTitle", "BadBody"));
+            Assert.IsTrue(cc3.EditPost("BadTitle", "BadBody"));
 
             //try to edit message by admin
             Assert.IsTrue(cc1.EditPost("GoodTitle", "GoodBody"));

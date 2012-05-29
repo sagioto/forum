@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting.Web;
 using ForumServer.DataTypes;
 using System.Collections.Generic;
 using ForumUtils.SharedDataTypes;
+using System.Threading;
 
 namespace ServerTests
 {
@@ -76,6 +77,7 @@ namespace ServerTests
             Assert.IsNotNull(target);
         }
 
+
         /// <summary>
         ///A test for AddPost
         ///</summary>
@@ -83,10 +85,11 @@ namespace ServerTests
         public void AddPostServerTests()
         {
             DataManager target = new DataManager();
-            target.AddSubforum(new Subforum("subforumName"));
+            // target.AddSubforum(new Subforum("subforumName"));
             Postkey pk = new Postkey("dor", DateTime.Now);
-            bool actual = target.AddPost(new Post(pk, "Post", "", null, null), "subforumName");
-            Assert.AreEqual(target.GetSubforum("subforumName")!=null, actual);
+            bool actual = target.AddPost(new Post(pk, "Post", "body", null, "subforum"), "subforumName");
+            Post p = target.GetPost(pk);
+            //Assert.AreEqual(target.GetSubforum("subforumName")!=null, actual);
         }
 
         /// <summary>
@@ -96,32 +99,38 @@ namespace ServerTests
         public void AddReplyServerTests()
         {
             DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
-            target.InitForumData();
-            List<Subforum> list = target.GetSubforums();
+            //target.InitForumData();
+            Post post = new Post(new Postkey("dor", DateTime.Now), "MainPost", "", null, "Travel");
+            Thread.Sleep(1000);
+            Post reply = new Post(new Postkey("dor", DateTime.Now), "ReplyToMainPost", "", null, "Travel");
+            target.AddPost(post, "Travel");
+            target.AddReply(reply, post.Key);
+            Post p = target.GetPost(post.Key);
+            //List<Subforum> list = target.GetSubforums();
 
-            Post reply8 = new Post(new Postkey("dor", DateTime.Now), "Reply", "", null, "Travel");
-            foreach (Post p in list[0].Posts.Values)
-            {
-                target.AddReply(reply8, p.Key);
-            }
-            
+            //Post reply8 = new Post(new Postkey("dor", DateTime.Now), "Reply", "", null, "Travel");
+            //foreach (Post PostToReturn in list[0].Posts.Values)
+            //{
+            //    target.AddReply(reply8, PostToReturn.Key);
+            //}
+            Console.WriteLine();
 
-            target.AddSubforum(new Subforum("subforum"));
-            Postkey pk = new Postkey("dor", DateTime.Now);
-            target.AddPost(new Post(pk, "Post", "", null, "subforum"), "subforum");
-            //Post reply = new Post(new Postkey("dor", DateTime.Now), "Reply", null, null);
-            Post reply = new Post(new Postkey("dor222", pk.Time), "Reply", "", null, null);
-            reply.Body = "reply body";
-            bool ans = target.AddReply(reply, pk);
-            //Post reply2 = new Post(new Postkey("dor", DateTime.Now), "Reply2 - new Update", null, null);
-            Post reply2 = new Post(new Postkey("dor222", pk.Time), "Reply2 - new Update", "", null, null);
-            reply2.Body = " reply 2 body";
-            //ans = target.AddReply(reply2, reply.Key);
-            //reply.Replies.Add(reply2.Key, reply2);
-            //reply.Replies.ContainsKey(reply2.Key);
-            //bool ans2 = target.EditPost(reply2, reply.Key);
-            Assert.IsTrue(ans);
-            Assert.AreEqual(target.GetPost(reply.Key) != null, ans);
+            //target.AddSubforum(new Subforum("subforum"));
+            //Postkey pk = new Postkey("dor", DateTime.Now);
+            //target.AddPost(new Post(pk, "Post", "", null, "subforum"), "subforum");
+            ////Post reply = new Post(new Postkey("dor", DateTime.Now), "Reply", null, null);
+            //Post reply = new Post(new Postkey("dor222", pk.Time), "Reply", "", null, null);
+            //reply.Body = "reply body";
+            //bool ans = target.AddReply(reply, pk);
+            ////Post reply2 = new Post(new Postkey("dor", DateTime.Now), "Reply2 - new Update", null, null);
+            //Post reply2 = new Post(new Postkey("dor222", pk.Time), "Reply2 - new Update", "", null, null);
+            //reply2.Body = " reply 2 body";
+            ////ans = target.AddReply(reply2, reply.Key);
+            ////reply.Replies.Add(reply2.Key, reply2);
+            ////reply.Replies.ContainsKey(reply2.Key);
+            ////bool ans2 = target.EditPost(reply2, reply.Key);
+            // Assert.IsTrue(ans);
+            //Assert.AreEqual(target.GetPost(reply.Key) != null, ans);
         }
 
         /// <summary>
@@ -159,7 +168,7 @@ namespace ServerTests
             moderators.Add("dagan");
             moderators.Add("sagi");
             moderators.Add("romi");
-            target.SetModerators(subforum,moderators);
+            target.SetModerators(subforum, moderators);
             actual = target.GetModerators(subforum);
             Assert.AreEqual(moderators, actual);
         }
@@ -278,14 +287,14 @@ namespace ServerTests
         public void RemovePostServerTests()
         {
             DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
-            Subforum subforum = new Subforum("subforum1");
-            target.AddSubforum(subforum);
-            Postkey pk = new Postkey("dor", DateTime.Now);
+            //Subforum subforum = new Subforum("subforum1");
+            //target.AddSubforum(subforum);
+            //Postkey pk = new Postkey("dor", DateTime.Now);
             Postkey pk2 = new Postkey("dor", DateTime.Now);
-            target.AddPost(new Post(pk, "post1", "", null, null), "subforum1");
-            target.AddPost(new Post(new Postkey("dor", DateTime.Now), "post2", "", null, null), "subforum1");
-            target.AddPost(new Post(new Postkey("dor2", DateTime.Now), "post3", "", null, null), "subforum1");
-            target.AddReply(new Post(pk2, "reply1 to post1", "", null, null), pk);
+            // target.AddPost(new Post(pk, "post1", "", null , ""), "subforum1");
+            //target.AddPost(new Post(new Postkey("dor", DateTime.Now), "post2", "", null, null), "subforum1");
+            target.AddPost(new Post(pk2, "post8", "", null, ""), "subforum1");
+            //target.AddReply(new Post(pk2, "reply1 to post1", "", null, null), pk);
             bool actual;
             actual = target.RemovePost(pk2);
             Assert.IsTrue(actual);
@@ -309,14 +318,14 @@ namespace ServerTests
         public void GetAllPostsServerTests()
         {
             DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
-            Subforum subforum = new Subforum("subforum1");
-            target.AddSubforum(subforum);
-            Postkey pk = new Postkey("dor", DateTime.Now);
-            Postkey pk2 = new Postkey("dor", DateTime.Now);
-            target.AddPost(new Post(pk, "post1", "", null, null), "subforum1");
-            target.AddPost(new Post(new Postkey("dor", DateTime.Now), "post2", "", null, null), "subforum1");
-            target.AddPost(new Post(new Postkey("dor2", DateTime.Now), "post3", "", null, null), "subforum1");
-            target.AddReply(new Post(pk2, "reply1 to post1", "", null, null), pk);
+            //Subforum subforum = new Subforum("subforum1");
+            //target.AddSubforum(subforum);
+            //Postkey pk = new Postkey("dor", DateTime.Now);
+            //Postkey pk2 = new Postkey("dor", DateTime.Now);
+            //target.AddPost(new Post(pk, "post1", "", null, null), "subforum1");
+            //target.AddPost(new Post(new Postkey("dor", DateTime.Now), "post2", "", null, null), "subforum1");
+            //target.AddPost(new Post(new Postkey("dor2", DateTime.Now), "post3", "", null, null), "subforum1");
+            //target.AddReply(new Post(pk2, "reply1 to post1", "", null, null), pk);
             List<Post> actual;
             actual = target.GetAllPosts();
             Assert.IsNotNull(actual);
@@ -351,5 +360,60 @@ namespace ServerTests
             Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
+
+        [TestMethod()]
+        public void AddSubforumServerTests()
+        {
+            DataManager target = new DataManager();
+            //target.AddSubforum(new Subforum("Subforum"));
+            // target.RemoveSubforum("Subforum");
+            //Subforum s = target.GetSubforum("Subforum");
+            List<Subforum> l = target.GetSubforums();
+            Console.WriteLine();
+        }
+
+
+        [TestMethod()]
+        public void ModeratorsMethodsServerTests()
+        {
+            DataManager target = new DataManager();
+            List<string> ml = new List<string>();
+            ml.Add("dor");
+            //ml.Add("dor2");
+            target.SetModerators("Cars", ml);
+            //target.GetModerators("Cars");
+            //target.GetModerators("Subforum");
+            target.RemoveModerator("Cars", "dor");
+        }
+
+        [TestMethod()]
+        public void UserMethodsServerTests()
+        {
+            DataManager target = new DataManager();
+            //target.AddUser(new User("gran33", "gran33"));
+            //target.GetUser("dor");
+            //target.UpdateUser(new User("dor", "pass1234"));
+            //target.SetUserState("dor", UserState.Login);
+            //target.GetUserPosts("dor2");
+            // target.SetAdmin(new User("guest9", ""));
+            User u = target.GetAdmin();
+            Console.WriteLine(u.Username);
+
+
+        }
+
+        [TestMethod()]
+        public void InitForumServerTests()
+        {
+            DataManager target = new DataManager();
+            target.InitForumData();
+        }
+
+        [TestMethod()]
+        public void CleanForumServerTests()
+        {
+            DataManager target = new DataManager();
+            target.CleanForumData();
+        }
     }
 }

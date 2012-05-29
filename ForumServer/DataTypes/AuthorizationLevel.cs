@@ -12,4 +12,5 @@ namespace ForumServer.DataTypes
         MODERATOR,  /*Subforum admin*/
         ADMIN       /*Forum admin*/
     }
+
 }

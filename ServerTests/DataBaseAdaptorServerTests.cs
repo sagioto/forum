@@ -72,9 +72,6 @@ namespace ServerTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\Users\\dleitman\\Documents\\Git\\forum\\ForumServer", "/")]
-        [UrlToTest("http://localhost:52644/")]
         public void DataBaseAdaptorConstructorServerTests()
         {
             DataBaseAdaptor target = new DataBaseAdaptor();

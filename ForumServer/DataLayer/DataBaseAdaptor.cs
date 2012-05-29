@@ -7,5 +7,11 @@ namespace ForumServer.DataLayer
 {
     public class DataBaseAdaptor : IDataBaseAdaptor
     {
+
+        public DataBaseAdaptor()
+        {
+        }
+        
+        
     }
 }
