@@ -104,9 +104,9 @@ function Subscribe()
 		{
 			if(result.SubscribeResult != null)
 				alert(JSON.stringify(result));
+			setTimeout('Subscribe()',60 * 1000);
 		}
 	);
-	setTimeout('Subscribe()',60 * 1000);
 }
 
 function GetSubforum(name)
