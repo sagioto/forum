@@ -46,6 +46,11 @@ td
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e4f5fc', endColorstr='#2ab0ed',GradientType=0 ); /* IE6-9 */
 }
 
+#forms
+{
+	font-family: "Trebuchet MS";
+}
+
 div
 {
 	margin: 0 auto;

@@ -16,6 +16,7 @@ function callService(methodName, params, onSuccess) {
 function GetSubforumsList(){
 	var response = callService("GetSubforumsList", "", function(result){
 		var sfList = $('#subforumsTable');
+		sfList.hide();
 		$.each(result, function(i)
 			{
 				var tr = document.createElement("tr");
@@ -26,6 +27,7 @@ function GetSubforumsList(){
 				sfList.append(tr);
 			}
 		)
+		sfList.fadeIn('slow');
 		});
 }
 
