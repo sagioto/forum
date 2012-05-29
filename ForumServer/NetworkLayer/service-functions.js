@@ -8,7 +8,7 @@ function callService(methodName, params, onSuccess) {
 				data: JSON.stringify(params),
 				dataType: "json",
 				success: onSuccess,
-				error: function(req, msg, obj){alert("There was an error")},
+				error: function(req, msg, obj){alert("Lost connection with the server")},
 				type: "POST"
 			});
 }
