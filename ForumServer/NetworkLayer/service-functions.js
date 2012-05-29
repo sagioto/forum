@@ -50,7 +50,11 @@ function RegisterAndLoginCall(user, methodName){
 				}
 				break;
 			case 0:
-			case 2: alert("user name and password cannot be empty");
+			case 2:if(methodName == "Login" & username != ""){
+					alert("user " + username + " is not registered");
+					break;
+					} 
+				alert("user name and password cannot be empty");
 				break;
 			case 512: if(methodName == "Register"){
 					alert("user already exists");
