@@ -1,6 +1,11 @@
 /**
  * @author Sagi Bernstein
  */
+var username = "guest";
+var currentPost;
+var recursionLevel = 1;
+ 
+ 
 function callService(methodName, params, onSuccess) {
 				
 	return $.ajax({	url: "ServerNetworkAdaptor.svc/" + methodName,
@@ -24,6 +29,7 @@ function GetSubforumsList(){
 				td.innerHTML = result[i];
 				tr.appendChild(td);
 				td.setAttribute('onclick', 'GetSubforum(\'' + result[i] + '\')');
+				td.setAttribute('class', 'subforum');
 				sfList.append(tr);
 			}
 		)
@@ -91,12 +97,50 @@ function Logout(name){
 	);
 }
 
+function Subscribe()
+{
+	callService("Subscribe", {"username": username},
+		function(result)
+		{
+			if(result.SubscribeResult != null)
+				alert(JSON.stringify(result));
+		}
+	);
+	Subscribe();
+}
+
 function GetSubforum(name)
 {
 	callService("GetSubforum", {"subforum": name},
 		function(result)
 		{
-			alert(JSON.stringify(result));
+			$('td').fadeOut();
+			$.each(result.GetSubforumResult, function(i)
+				{
+					var tr = document.createElement("tr");
+					var td = document.createElement("td");
+					var post = result.GetSubforumResult[i];
+					td.innerHTML = '<table width="800px"><tbody><tr><td class="postTitle">' + post.Title + '</td>' + 
+					'<td class="postPoster"> posted by ' + post.Key.Username + ' on ' + getDateString(post.Key.Time) + '</td></tr>' +
+					'<tr><td class="postContent" colspan="2"><h2>' + post.Body + '</h2></td><tr></tbody></table>';
+					tr.appendChild(td);
+					td.setAttribute('onclick', 'GetReplies(\'' + post.Key + '\')');
+					td.setAttribute('class', 'post');
+					$('#subforumsTable').append(tr);
+				}
+			);
 		}
 	);
 }
+
+function getDateString(jsonDate) {
+     if (jsonDate == undefined) {
+         return "";
+     }
+     var utcTime = parseInt(jsonDate.substr(6));
+
+     var date = new Date(utcTime);
+     var minutesOffset = date.getTimezoneOffset();
+
+     return date.addMinutes(minutesOffset).toString("dd/MM/yyyy hh:mm:ss");
+ }

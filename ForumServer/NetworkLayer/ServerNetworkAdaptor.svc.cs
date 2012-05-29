@@ -62,7 +62,14 @@ namespace ForumServer
 
         public Post Subscribe(string username)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return controller.Subscribe(username);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "couldn't subscribe");
+            }
         }
         #endregion
 
