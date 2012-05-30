@@ -159,17 +159,19 @@ function ShowPosts(posts)
 			var id = idCounter++;
 			var buttons = "";
 			if(post.HasReplies)
-				buttons = '<button "class="postButton" onclick="GetReplies(\'' + post.Key.Username + ',' + post.Key.Time + '\')" >view replies</button>';
+				buttons = '<button id="repliesB' + id + '" class="postButton" onclick="GetReplies(\'' + post.Key.Username + ',' + post.Key.Time + '\')" >view replies</button>';
 			
 			if(username != "guest")
-				buttons = buttons + '<button class="postButton" onclick="showReply(\'' + post.Key.Username + ',' + post.Key.Time + ',' + id + '\')" >reply</button>'
-			+ '<button class="postButton" onclick="showEdit(\'' + post.Key.Username + ',' + post.Key.Time + ',' + id + '\')" >edit</button>'
-			+ '<button class="postButton" onclick="Remove(\'' + post.Key.Username + ',' + post.Key.Time + ',' + id + '\')" >remove</button>';
+				buttons = buttons + '<button id="replyB' + id + '" class="postButton" onclick="showReply(\'' + post.Key.Username + ',' + post.Key.Time + ',' + id + '\')" >reply</button>'
+			+ '<button id="editB' + id + '" class="postButton" onclick="showEdit(\'' + post.Key.Username + ',' + post.Key.Time + ',' + id + '\')" >edit</button>'
+			+ '<button id="removeB' + id + '" class="postButton" onclick="Remove(\'' + post.Key.Username + ',' + post.Key.Time + ',' + id + '\')" >remove</button>';
 			
 			var buttonsTr = '<tr colspan="3"><td>' + buttons + '</td></tr>';
-			td.innerHTML = '<div><table id="post' + id + '" width="800px"><tbody><tr><td class="postTitle">' + post.Title + '</td><td>' + 
+			td.innerHTML = '<div><table id="post' + id + '" width="800px"><tbody><tr>' +
+			'<td class="postTitle">' + post.Title + '</td><td>' + 
 			'</td><td class="postPoster"> posted by ' + post.Key.Username + ' on ' + getDateString(post.Key.Time) + '</td></tr>' +
-			'<tr><td class="postContent" colspan="3"><h2>' + post.Body + '</h2></td></tr>' + buttonsTr + '</tbody></table></div>';
+			'<tr><td class="postContent" colspan="3"><h2>' + post.Body + '</h2></td></tr>'
+			+ buttonsTr + '</tbody></table></div>';
 			tr.appendChild(td);
 			td.setAttribute('class', 'post');
 			$('#subforumsTable').append(tr);
@@ -248,7 +250,6 @@ function GetReplies(postKey)
 			function(result)
 			{
 				currentPost = result.GetPostResult;
-				currentSubforum = null;
 			}
 	);
 	callService("GetReplies", {"postkey": { "username" : splitted[0], "time" : splitted[1]}},
@@ -272,8 +273,52 @@ function showPost(subforum)
 function showReply(postKey)
 {
 	var splitted = postKey.split(",");
-	$('#post'+splitted[2]).append('<h1>oh yehhhh!!</h1>');
-	//TODO
+	var id = splitted[2];
+	var postHtml = '<div id="posting' + id + '"><tr><td><div>title:</br><textarea id="titleToPost' + id + '" rows="1" cols="90"/></div></td></tr>'
+		+ '<tr><td><div>body:</br><textarea id="bodyToPost' + id + '" rows="10" cols="90" /></div></td></tr><div>';
+	$('#post'+id).children().append(postHtml);
+	$('#posting' + id).hide();
+	$('#posting' + id).slideDown('slow');
+	if(typeof $('#repliesB'+id) !== 'undefined')
+		$('#repliesB'+id).attr("disabled", "disabled");
+	$('#replyB'+id).val('submit');
+	$('#replyB'+id).attr("onclick", 'doReply(\'' + postKey + '\')');
+	$('#editB'+id).attr("disabled", "disabled");
+	$('#removeB'+id).attr("disabled", "disabled");
+
+}
+
+function doReply(postKey)
+{
+	var splitted = postKey.split(",");
+	var id = splitted[2];
+	var sub = currentSubforum;
+	$('#posting' + id).slideUp('slow', function(){$('#posting' + id).remove();});
+	if(typeof $('#repliesB'+id) !== 'undefined')
+		$('#repliesB'+id).attr("disabled", "false");
+	$('#replyB'+id).val('reply');
+	$('#replyB'+id).attr("onclick", 'showReply(\'' + postKey + '\')');
+	$('#editB'+id).removeAttr("disabled");
+	$('#removeB'+id).removeAttr("disabled");
+	// callService("Reply", {"current": { "Username" : splitted[0], "Time" : splitted[1]},
+							// "toPost" : { "Key": { "Username" : username, "Time" : '/' + new Date().toUTCString() '/'},
+							// "Title": $('titleToPost' + id).val(), "Body": $('bodyToPost' + id).val(),
+							// "Parent": { "Username" : splitted[0], "Time" : splitted[1]},
+							// "Subforum": currentSubforum }
+								// }
+			// function(result)
+			// {
+				// switch(result.RemovePostResult)
+				// {
+					// case OK:
+						// $('#post'+splitted[2]).parent().slideUp('slow', function(){$(toRemove).parent().parent().remove();});
+						// break;
+					// default:
+						// alert("insufficient permissions!");
+						// break;
+				// }
+			// }
+	// );
 }
 
 function showEdit(postKey)
@@ -309,7 +354,7 @@ function Remove(postKey)
      var utcTime = parseInt(jsonDate.substr(6));
 
      var date = new Date(utcTime);
-     var minutesOffset = date.getTimezoneOffset();
+    // var minutesOffset = date.getTimezoneOffset();
 
-     return date.addMinutes(minutesOffset).toString("dd/MM/yyyy hh:mm:ss");
+     return date./*addMinutes(minutesOffset).*/toString("dd/MM/yyyy HH:mm:ss");
  }

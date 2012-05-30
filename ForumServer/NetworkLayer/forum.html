@@ -10,9 +10,11 @@
 
 <script type="text/javascript">                                         
     $(document).ready(function() {
+		$('#forum').hide();
 		$('form[name="logout"]').hide();
 		$('form[name="login"]').hide();
 		$('form[name="login"]').fadeIn('slow');
+		$('#forum').fadeIn('slow');
 		GetSubforumsList();
 		Subscribe();
  });
