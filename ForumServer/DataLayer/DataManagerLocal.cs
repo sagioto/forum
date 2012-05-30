@@ -7,11 +7,12 @@ using System.Configuration;
 using ForumServer.DataTypes;
 using ForumUtils.SharedDataTypes;
 using System.Threading;
+using ForumShared.SharedDataTypes;
 
 namespace ForumServer.DataLayer
 {
     // This is assignment 2 Data Manager - NOT USED ANY MORE
-    public class DataManagerLocal
+    public class DataManagerLocal : IDataManager
     {
 
          
@@ -530,5 +531,11 @@ namespace ForumServer.DataLayer
         #endregion
 
 
+
+
+        public List<User> GetAllLoggedInUsers()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

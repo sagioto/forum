@@ -7,6 +7,7 @@ using System.Collections.Concurrent;
 using System.Configuration;
 using ForumUtils.SharedDataTypes;
 using System.Threading;
+using ForumShared.SharedDataTypes;
 
 namespace ForumServer.DataLayer
 {
@@ -169,7 +170,7 @@ namespace ForumServer.DataLayer
             pke.Time = post.Key.Time;
             PostEntity pe = new PostEntity();
             IEnumerable<int> postKeysList = (from m in ForumContext.PostKeyEntities
-                          select m.PostKeyId);
+                                             select m.PostKeyId);
             int lastId = 0;
             if (postKeysList.Count() != 0)
             {
@@ -463,7 +464,7 @@ namespace ForumServer.DataLayer
                     me.Username = modName;
                     me.Subforum = subforum;
                     ForumContext.ModeratorEntities.AddObject(me);
-                    
+
                     IEnumerable<UserEntity> usersQuery = from u in ForumContext.UserEntities
                                                          where u.UserName == modName
                                                          select u;
@@ -488,15 +489,15 @@ namespace ForumServer.DataLayer
             {
                 // Update in moderators table
                 IEnumerable<ModeratorEntity> getModeratorQuery = from m in ForumContext.ModeratorEntities
-                                                               where m.Subforum == subforum && m.Username == moderatorName
-                                                               select m;
+                                                                 where m.Subforum == subforum && m.Username == moderatorName
+                                                                 select m;
 
 
                 // Update in users table
-               
+
                 IEnumerable<ModeratorEntity> userIsStillModeratorQuery = from m in ForumContext.ModeratorEntities
-                                                               where m.Username == moderatorName
-                                                               select m;
+                                                                         where m.Username == moderatorName
+                                                                         select m;
                 UserEntity ue = null;
                 if (userIsStillModeratorQuery.Count() == 1)     // If user was just moderator of subforum then change his status in yblUsers
                 {
@@ -507,7 +508,7 @@ namespace ForumServer.DataLayer
                     ue.Authentication = AuthorizationLevel.MEMBER.ToString();
                 }
                 ForumContext.ModeratorEntities.DeleteObject(getModeratorQuery.First());
-                
+
                 ForumContext.SaveChanges();
                 return true;
             }
@@ -603,8 +604,8 @@ namespace ForumServer.DataLayer
             try
             {
                 IEnumerable<UserEntity> usersQuery = from u in ForumContext.UserEntities
-                                                       where u.UserName == user.Username
-                                                       select u;
+                                                     where u.UserName == user.Username
+                                                     select u;
                 UserEntity ue = usersQuery.First();
                 ue.Password = user.Password;
                 ue.State = user.CurrentState.ToString();
@@ -626,8 +627,8 @@ namespace ForumServer.DataLayer
             try
             {
                 IEnumerable<UserEntity> usersQuery = from u in ForumContext.UserEntities
-                                                       where u.UserName == username
-                                                       select u;
+                                                     where u.UserName == username
+                                                     select u;
                 UserEntity ue = usersQuery.First();
                 ue.State = state.ToString();
                 ForumContext.SaveChanges();
@@ -657,7 +658,7 @@ namespace ForumServer.DataLayer
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -667,8 +668,8 @@ namespace ForumServer.DataLayer
             try
             {
                 IEnumerable<UserEntity> usersQuery = from u in ForumContext.UserEntities
-                                                       where u.UserName == admin.Username
-                                                       select u;
+                                                     where u.UserName == admin.Username
+                                                     select u;
                 UserEntity ue = usersQuery.First();
                 ue.Authentication = AuthorizationLevel.ADMIN.ToString();
                 ForumContext.SaveChanges();
@@ -686,8 +687,8 @@ namespace ForumServer.DataLayer
             try
             {
                 IEnumerable<UserEntity> usersQuery = from u in ForumContext.UserEntities
-                                                       where u.Authentication == "ADMIN"
-                                                       select u;
+                                                     where u.Authentication == "ADMIN"
+                                                     select u;
                 if (usersQuery.Count() == 1)
                 {
 
@@ -714,5 +715,27 @@ namespace ForumServer.DataLayer
 
 
 
+
+        public List<User> GetAllLoggedInUsers()
+        {
+            try
+            {
+                List<User> result = new List<User>();
+                IEnumerable<UserEntity> usersQuery = from u in ForumContext.UserEntities
+                                                     where u.State == "Login"
+                                                     select u;
+                foreach (UserEntity user in usersQuery)
+                {
+                    result.Add(GetUser(user.UserName));
+                }
+                return result;
+            }
+            catch (Exception)
+            {
+                //TODO
+                throw;
+            }
+
+        }
     }
 }

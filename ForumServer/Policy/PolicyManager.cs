@@ -19,14 +19,14 @@ namespace ForumServer.Policy
             this.dataManager = dataManager;
         }
         public Result AddModerator(string username, string subforum)
-        {  
+        {
             Subforum forum = dataManager.GetSubforum(subforum);
             User user = dataManager.GetUser(username);
-            if(user != null && forum != null)
+            if (user != null && forum != null)
             {
                 int numOfPublishedPosts = dataManager.GetSubforum(subforum).Posts.Values.
                     Where(post => post.Key.Username.Equals(username) && post.Subforum.Equals(subforum)).Count();
-                if(numOfPublishedPosts >= 5)
+                if (numOfPublishedPosts >= 5)
                     return Result.OK;
             }
             return Result.POLICY_REJECTED;
@@ -36,7 +36,7 @@ namespace ForumServer.Policy
         {
             Subforum forum = dataManager.GetSubforum(subforum);
             User user = dataManager.GetUser(username);
-            
+
             if (user != null && forum != null)
             {
                 int numOfPublishedPostsInLastHour = dataManager.GetSubforum(subforum).Posts.Values
