@@ -42,6 +42,7 @@
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.registerLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.subforumsGrid = new System.Windows.Forms.DataGridView();
             this.newPostPanel = new System.Windows.Forms.Panel();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
@@ -66,7 +67,6 @@
             this.linkLabel4 = new System.Windows.Forms.LinkLabel();
             this.repliesIndicator = new System.Windows.Forms.LinkLabel();
             this.repliesGrid = new System.Windows.Forms.DataGridView();
-            this.subforumsGrid = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -74,6 +74,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.onUpdatePictureBox)).BeginInit();
             this.loginPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.subforumsGrid)).BeginInit();
             this.newPostPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
@@ -90,7 +91,6 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.repliesGrid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.subforumsGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -252,6 +252,27 @@
             this.registerLinkLabel.TabStop = true;
             this.registerLinkLabel.Text = "Register";
             this.registerLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.registerLinkLabel_LinkClicked);
+            // 
+            // subforumsGrid
+            // 
+            this.subforumsGrid.AllowUserToAddRows = false;
+            this.subforumsGrid.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Red;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Blue;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            this.subforumsGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.subforumsGrid.BackgroundColor = System.Drawing.Color.White;
+            this.subforumsGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.subforumsGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.subforumsGrid.ColumnHeadersVisible = false;
+            this.subforumsGrid.Location = new System.Drawing.Point(363, 207);
+            this.subforumsGrid.Name = "subforumsGrid";
+            this.subforumsGrid.ReadOnly = true;
+            this.subforumsGrid.RowHeadersVisible = false;
+            this.subforumsGrid.Size = new System.Drawing.Size(137, 139);
+            this.subforumsGrid.TabIndex = 0;
+            this.subforumsGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.subforumsGrid_CellClick);
             // 
             // newPostPanel
             // 
@@ -477,7 +498,7 @@
             // 
             this.postBody.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.postBody.BackColor = System.Drawing.Color.Gainsboro;
+            this.postBody.BackColor = System.Drawing.Color.WhiteSmoke;
             this.postBody.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.postBody.Location = new System.Drawing.Point(8, 89);
             this.postBody.Name = "postBody";
@@ -547,27 +568,6 @@
             this.repliesGrid.TabIndex = 3;
             this.repliesGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.repliesGrid_CellContentClick);
             // 
-            // subforumsGrid
-            // 
-            this.subforumsGrid.AllowUserToAddRows = false;
-            this.subforumsGrid.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Red;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Blue;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            this.subforumsGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.subforumsGrid.BackgroundColor = System.Drawing.Color.White;
-            this.subforumsGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.subforumsGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.subforumsGrid.ColumnHeadersVisible = false;
-            this.subforumsGrid.Location = new System.Drawing.Point(363, 207);
-            this.subforumsGrid.Name = "subforumsGrid";
-            this.subforumsGrid.ReadOnly = true;
-            this.subforumsGrid.RowHeadersVisible = false;
-            this.subforumsGrid.Size = new System.Drawing.Size(137, 139);
-            this.subforumsGrid.TabIndex = 0;
-            this.subforumsGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.subforumsGrid_CellClick);
-            // 
             // ClientFormUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -587,6 +587,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.onUpdatePictureBox)).EndInit();
             this.loginPanel.ResumeLayout(false);
             this.loginPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.subforumsGrid)).EndInit();
             this.newPostPanel.ResumeLayout(false);
             this.splitContainer3.Panel1.ResumeLayout(false);
             this.splitContainer3.Panel2.ResumeLayout(false);
@@ -607,7 +608,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.repliesGrid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.subforumsGrid)).EndInit();
             this.ResumeLayout(false);
 
         }

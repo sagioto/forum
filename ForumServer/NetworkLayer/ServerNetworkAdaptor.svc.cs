@@ -143,7 +143,6 @@ namespace ForumServer
             {
                 throw new FaultException<Exception>(e, "something went wrong with post");
             }
-
         }
 
         public Result Reply(Postkey current, Post toPost)

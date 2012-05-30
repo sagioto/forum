@@ -8,9 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using ForumClientCore;
-using Infragistics.Win.UltraWinTree;
-using Infragistics.Win.UltraWinEditors;
-using ForumUtils.SharedDataTypes;
+using ForumShared.SharedDataTypes;
+using ForumShared.ForumAPI;
 
 namespace ForumClientGui
 {
@@ -389,8 +388,8 @@ namespace ForumClientGui
 
         private void t_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            bool res = (bool)e.Result;
-            if (res)
+            Result res = (Result)e.Result;
+            if (res == Result.OK)
             {
                 backPostLabel_LinkClicked(null, null);
             }
@@ -409,10 +408,10 @@ namespace ForumClientGui
         {
             try
             {
-                bool res = controller.Register(usernameTextBox.Text, passTextBox.Text);
-                if (!res)
+                Result res = controller.Register(usernameTextBox.Text, passTextBox.Text);
+                if (res != Result.OK)
                 {
-                    MessageBox.Show("Username is already registered", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Username is already exists. Details: " + res.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {

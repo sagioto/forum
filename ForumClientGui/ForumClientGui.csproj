@@ -61,11 +61,6 @@
     <Compile Include="PostSend.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\ForumService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="ClientFormUI.resx">
       <DependentUpon>ClientFormUI.cs</DependentUpon>
     </EmbeddedResource>
@@ -92,28 +87,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor.wsdl" />
-    <None Include="Service References\ForumService\ServerNetworkAdaptor.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor31.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor32.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor33.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ForumClientCore\ForumClientCore.csproj">
@@ -127,24 +100,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\ForumService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ForumService\ServerNetworkAdaptor.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ForumService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ForumService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ForumService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="images\onUpdate.png" />

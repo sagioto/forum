@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="66fe5f80-b88d-413c-81d6-34bdd90909df" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ServerNetworkAdaptor.xsd" MetadataType="Schema" ID="15828025-7f72-4827-b0b4-c24e5f66dfe4" SourceId="1" SourceUrl="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd5" />
+    <MetadataFile FileName="ServerNetworkAdaptor1.xsd" MetadataType="Schema" ID="1d94f4e3-1c6d-4fef-b6a7-8a4ebaebb4ba" SourceId="1" SourceUrl="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd0" />
+    <MetadataFile FileName="ServerNetworkAdaptor.wsdl" MetadataType="Wsdl" ID="94abf630-ef07-4bd0-9cbd-344e81b0a2bd" SourceId="1" SourceUrl="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc?wsdl" />
+    <MetadataFile FileName="ServerNetworkAdaptor2.xsd" MetadataType="Schema" ID="6200265d-846a-4362-9103-3a6db3102644" SourceId="1" SourceUrl="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd2" />
+    <MetadataFile FileName="ServerNetworkAdaptor3.xsd" MetadataType="Schema" ID="baa55023-52ef-4b28-9043-0c1f5c76fa79" SourceId="1" SourceUrl="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd3" />
+    <MetadataFile FileName="ServerNetworkAdaptor.disco" MetadataType="Disco" ID="1e1874e8-ef23-401f-bac1-631521f6aa58" SourceId="1" SourceUrl="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc?disco" />
+    <MetadataFile FileName="ServerNetworkAdaptor4.xsd" MetadataType="Schema" ID="69806401-52b5-47e3-b2d3-e48744cd45d7" SourceId="1" SourceUrl="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd1" />
+    <MetadataFile FileName="ServerNetworkAdaptor5.xsd" MetadataType="Schema" ID="fff2b816-55d5-497c-ad70-2ac238f552eb" SourceId="1" SourceUrl="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd6" />
+    <MetadataFile FileName="ServerNetworkAdaptor6.xsd" MetadataType="Schema" ID="9ca9614d-096d-4601-b472-6b5ebb63ddbd" SourceId="1" SourceUrl="http://localhost:53966/NetworkLayer/ServerNetworkAdaptor.svc?xsd=xsd4" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

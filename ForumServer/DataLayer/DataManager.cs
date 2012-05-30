@@ -6,32 +6,48 @@ using ForumServer.DataTypes;
 using System.Collections.Concurrent;
 using System.Configuration;
 using ForumUtils.SharedDataTypes;
-using ForumShared.SharedDataTypes;
 using System.Threading;
+using ForumShared.SharedDataTypes;
 
 namespace ForumServer.DataLayer
 {
     public class DataManager : IDataManager
     {
-        // Data structures:
-        private ConcurrentDictionary<string, User> users;
-        private ConcurrentDictionary<string, Subforum> subforumsList;
-        private string adminName;
+        ForumEntities ForumContext;
 
         public DataManager()
         {
-            users = new ConcurrentDictionary<string, User>();
-            subforumsList = new ConcurrentDictionary<string, Subforum>();
+            ForumContext = new ForumEntities();
+            CleanForumData();
+            // Add admin:
             string adminName = ConfigurationManager.AppSettings["adminName"];
             string adminPass = ConfigurationManager.AppSettings["adminPassword"];
             User admin = new User(adminName, adminPass);
-            admin.Level = AuthorizationLevel.ADMIN;
+            AddUser(admin);
             SetAdmin(admin);
         }
 
-        #region IDataManager methods
-
-        #region Init methods
+        public void CleanForumData()
+        {
+            try
+            {
+                List<string> tblNames = new List<string>();
+                tblNames.Add("tblSubforums");
+                tblNames.Add("tblPostKeys");
+                tblNames.Add("tblPosts");
+                tblNames.Add("tblUsers");
+                ForumContext.ExecuteStoreCommand(@"DBCC CHECKIDENT (tblPostKeys, RESEED, 0)");
+                foreach (var tableName in tblNames)
+                {
+                    ForumContext.ExecuteStoreCommand("DELETE FROM " + tableName);
+                }
+            }
+            catch (Exception)
+            {
+                //TODO
+                throw;
+            }
+        }
 
         public void InitForumData()
         {
@@ -48,199 +64,393 @@ namespace ForumServer.DataLayer
                     this.AddSubforum(s);
                     for (int j = 0 ; j < numberOfPosts ; j++)
                     {
-                        Thread.Sleep(100);
+                        Thread.Sleep(1000);
                         this.AddPost(new Post(new Postkey(adminName, DateTime.Now),
-                            "Post" + j + " in Subforum: " + s.Name,"Vestibulum ante ipsum primis in"
-                        + "faucibus orci luctus et ultrices posuere cubilia Curae; In eget eleifend dui."
-                        + "Maecenas commodo commodo elit, vel porta purus hendrerit varius. Fusce nec luctus eros. Vestibulum"
-                        + "in lacus nunc. Vivamus ornare accumsan ullamcorper. Sed felis elit, sollicitudin non interdum vitae, sagittis ut nulla. Ut et ante ut dolor dignissim condimentum. Vestibulum accumsan mi nec eros pellentesque non vehicula enim vestibulum. In malesuada placerat enim, et ultrices mi laoreet sit amet.", null, s.Name), s.Name);
+                            "Post" + j + " in Subforum: " + s.Name, "content", new Postkey("", DateTime.Now), s.Name), s.Name);
                     }
                 }
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
 
-        #endregion
-
-        #region Posts & Reply methods
-
         public Post GetPost(Postkey postkey)
         {
-            Post res;
-            GetPost(postkey, out res);
-            if (res != null)
+            try
             {
-                return res;
+                IEnumerable<PostEntity> postsQuery = GetPostEntity(postkey);
+
+                if (postsQuery.Count() != 1)
+                {
+                    // Post wasn't found or more than one was found
+                    return null;
+                }
+                else
+                {
+                    PostEntity pe = postsQuery.First();
+                    return PostEntityToPost(pe);
+                }
+            }
+            catch (Exception)
+            {
+                //TODO
+                throw;
+            }
+        }
+
+
+
+        private Post PostEntityToPost(PostEntity pe)
+        {
+            Postkey parentPostKey = null;
+
+            // Finding parent`s postkey:
+            if (pe.ParentPostKeyId != -1)
+            {
+                IEnumerable<PostKeyEntity> parentPostkeyQuery = from pk in ForumContext.PostKeyEntities
+                                                                where pk.PostKeyId == pe.ParentPostKeyId
+                                                                select pk;
+                PostKeyEntity pke = parentPostkeyQuery.ElementAt<PostKeyEntity>(0);
+                parentPostKey = new Postkey(pke.Username, pke.Time);
+            }
+
+            // Finding PostKey:
+            IEnumerable<PostKeyEntity> PostkeyQuery = from pk in ForumContext.PostKeyEntities
+                                                      where pk.PostKeyId == pe.PostKeyId
+                                                      select pk;
+            PostKeyEntity postkeyEntity = PostkeyQuery.First();
+            Postkey postkey = new Postkey(postkeyEntity.Username, postkeyEntity.Time);
+
+            Post PostToReturn = new Post(postkey, pe.Title, pe.Body, parentPostKey, pe.SubforumName);
+
+            // Replies:
+            IEnumerable<PostEntity> repliesList = from r in ForumContext.PostEntities
+                                                  where r.ParentPostKeyId == pe.PostKeyId
+                                                  select r;
+            Dictionary<Postkey, Post> repliesDictionary = null;
+            if (repliesList.Count() != 0)
+            {
+                repliesDictionary = new Dictionary<Postkey, Post>();
+                foreach (PostEntity reply in repliesList)
+                {
+                    Post p = PostEntityToPost(reply);
+                    repliesDictionary.Add(p.Key, p);
+                }
+                PostToReturn.HasReplies = true;
             }
             else
             {
-                throw new PostNotFoundException();
+                PostToReturn.HasReplies = false;
             }
+            PostToReturn.Replies = repliesDictionary;
+            return PostToReturn;
+        }
+
+        private IEnumerable<PostEntity> GetPostEntity(Postkey postkey)
+        {
+            IEnumerable<PostEntity> postsQuery = (from pk in ForumContext.PostKeyEntities
+                                                  from post in ForumContext.PostEntities
+                                                  where pk.Username == postkey.Username &&
+                                                  pk.Time.Hour == postkey.Time.Hour &&
+                                                  pk.Time.Minute == postkey.Time.Minute && pk.Time.Second == postkey.Time.Second
+                                                  && pk.Time.Year == postkey.Time.Year && pk.Time.Month == postkey.Time.Month &&
+                                                  pk.Time.Day == postkey.Time.Day
+                                                  && pk.PostKeyId == post.PostKeyId
+                                                  select post);
+            return postsQuery;
         }
 
         public bool AddPost(Post post, string subforum)
         {
+            PostKeyEntity pke = new PostKeyEntity();
+            pke.Username = post.Key.Username;
+            pke.Time = post.Key.Time;
+            PostEntity pe = new PostEntity();
+            IEnumerable<int> postKeysList = (from m in ForumContext.PostKeyEntities
+                                             select m.PostKeyId);
+            int lastId = 0;
+            if (postKeysList.Count() != 0)
+            {
+                lastId = postKeysList.Max();
+            }
+            pe.PostKeyId = lastId + 1;
+            pe.ParentPostKeyId = -1;
+            pe.Title = post.Title;
+            pe.Body = post.Body;
+            pe.SubforumName = subforum; //TODO - Why do we need 'subforum'?
             try
             {
-                subforumsList[subforum].TotalPosts++;
-                return subforumsList[subforum].AddPost(post);
+                ForumContext.AddToPostKeyEntities(pke);
+                ForumContext.AddToPostEntities(pe);
+                ForumContext.SaveChanges();
+                return true;
             }
             catch (Exception)
             {
-                throw new SubforumNotFoundException();
+                //TODO
+                throw;
             }
+
         }
 
         public bool RemovePost(Postkey postkey)
         {
-            foreach (KeyValuePair<string, Subforum> subforumEntry in subforumsList)
-            {
-                try
-                {
-                    if (subforumEntry.Value.Posts.ContainsKey(postkey))
-                    {
-                        subforumsList[subforumEntry.Key].Posts.Remove(postkey);
-                        subforumsList[subforumEntry.Key].TotalPosts--;
-                        return true;
-                    }
-                    else
-                    {
-                        return RemoveReply(postkey, subforumsList[subforumEntry.Key].Posts);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
-            return false;
-        }
-
-        public bool AddReply(Post reply, Postkey originalPost)
-        {
-            Post post;
-            GetPost(originalPost, out post);
-            if (post == null)
-                throw new PostNotFoundException();
             try
             {
-                post.HasReplies = true;
-                subforumsList[post.Subforum].TotalPosts++;
-                post.Replies.Add(reply.Key, reply);
+                // Find Postkey
+                IEnumerable<PostKeyEntity> postkeyQuery = GetPostKeyEntity(postkey);
+
+                // Find Post
+                PostKeyEntity pke = postkeyQuery.First();
+                IEnumerable<PostEntity> postQuery = GetPostEntity(postkey);
+
+                ForumContext.PostKeyEntities.DeleteObject(pke);
+                ForumContext.PostEntities.DeleteObject(postQuery.ElementAt<PostEntity>(0));
+                ForumContext.SaveChanges();
                 return true;
-                //return UpdatePost(oldPost);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
+                //TODO
+                throw;
             }
         }
 
-        public bool EditPost(Post postToUpdate, Postkey originalPost)
+        private IEnumerable<PostKeyEntity> GetPostKeyEntity(Postkey postkey)
         {
-            Post oldPost;
-            GetPost(originalPost, out oldPost);
-            if (oldPost == null)
-                throw new PostNotFoundException();
+            IEnumerable<PostKeyEntity> postkeyQuery = from pk in ForumContext.PostKeyEntities
+                                                      where pk.Username == postkey.Username &&
+                                                      pk.Time.Hour == postkey.Time.Hour &&
+                                                      pk.Time.Minute == postkey.Time.Minute && pk.Time.Second == postkey.Time.Second
+                                                      && pk.Time.Year == postkey.Time.Year && pk.Time.Month == postkey.Time.Month &&
+                                                      pk.Time.Day == postkey.Time.Day
+                                                      select pk;
+            return postkeyQuery;
+        }
+
+        public bool AddReply(Post reply, Postkey postKey)
+        {
             try
             {
-                oldPost.Body = postToUpdate.Body;
-                oldPost.Title = postToUpdate.Title;
+                // Find parent postkey:
+                IEnumerable<PostKeyEntity> postkeyQuery = GetPostKeyEntity(postKey);
+                IEnumerable<PostEntity> postQuery = GetPostEntity(postKey);
+
+                PostKeyEntity pke = new PostKeyEntity();
+                pke.Username = reply.Key.Username;
+                pke.Time = reply.Key.Time;
+                ForumContext.AddToPostKeyEntities(pke);
+                PostEntity pe = new PostEntity();
+                int lastId = (from m in ForumContext.PostKeyEntities
+                              select m.PostKeyId).Max();
+                pe.PostKeyId = lastId + 1;
+                pe.ParentPostKeyId = postkeyQuery.ElementAt(0).PostKeyId;
+                pe.Title = reply.Title;
+                pe.Body = reply.Body;
+                pe.SubforumName = postQuery.ElementAt(0).SubforumName;
+
+                ForumContext.AddToPostEntities(pe);
+                ForumContext.SaveChanges();
                 return true;
-                //return UpdatePost(oldPost);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                //TODO
+                throw;
+            }
+        }
+
+        public bool EditPost(Post postToUpdate, Postkey oldPostKey)
+        {
+            try
+            {
+                PostEntity post = GetPostEntity(oldPostKey).First();
+                post.Title = postToUpdate.Title;
+                post.Body = postToUpdate.Body;
+                //TODO - Do username & datetime (Postkey) change on update?
+                ForumContext.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                //TODO
+                throw;
             }
         }
 
         public List<Post> GetAllPosts()
         {
-            List<Post> allPosts = new List<Post>();
-            foreach (KeyValuePair<string, Subforum> subforumEntry in subforumsList)
+            List<Post> result = new List<Post>();
+            try
             {
-                try
+                IEnumerable<PostEntity> postsQuery = from post in ForumContext.PostEntities
+                                                     select post;
+
+                foreach (PostEntity pe in postsQuery)
                 {
-                    allPosts = allPosts.Union(subforumEntry.Value.Posts.Values.ToList<Post>()).ToList<Post>();
-                    foreach (Post post in subforumEntry.Value.Posts.Values)
-                    {
-                        allPosts = allPosts.Union(GetAllReplyOfPost(post)).ToList<Post>();
-                    }
+                    Post p = PostEntityToPost(pe);
+                    result.Add(p);
+
+                    //Postkey parentPostKey = null;
+
+                    //// Create PostKey
+
+                    //IEnumerable<PostKeyEntity> PostkeyQuery = from pk in ForumContext.PostKeyEntities
+                    //                                          where pk.PostKeyId == pe.PostKeyId
+                    //                                          select pk;
+                    //PostKeyEntity pke = PostkeyQuery.First();
+                    //Postkey postKey = new Postkey(pke.Username, pke.Time);
+
+                    //// Create parent postKey
+                    //if (pe.ParentPostKeyId != -1)
+                    //{
+                    //    IEnumerable<PostKeyEntity> parentPostkeyQuery = from pk in ForumContext.PostKeyEntities
+                    //                                                    where pk.PostKeyId == pe.ParentPostKeyId
+                    //                                                    select pk;
+                    //    pke = parentPostkeyQuery.First();
+                    //    parentPostKey = new Postkey(pke.Username, pke.Time);
+                    //}
+                    //Post p = new Post(postKey, pe.Title, pe.Body, parentPostKey, pe.SubforumName);
+                    //result.Add(p);
                 }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+                return result;
             }
-            return allPosts;
+            catch (Exception)
+            {
+                //TODO
+                throw;
+            }
         }
 
 
 
-        #endregion
-
-        #region Subforms Getters & Setters
 
         public bool AddSubforum(Subforum subforum)
         {
             try
             {
-                subforumsList.TryAdd(subforum.Name, subforum);
+                SubforumEntity se = new SubforumEntity();
+                se.Name = subforum.Name;
+                se.Description = subforum.Description;
+                ForumContext.SubforumEntities.AddObject(se);
+                ForumContext.SaveChanges();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+
+                throw;
             }
         }
+
 
         public bool RemoveSubforum(string subforum)
         {
             try
             {
-                Subforum s;
-                return subforumsList.TryRemove(subforum, out s);
+                IEnumerable<SubforumEntity> subforumsQuery = from s in ForumContext.SubforumEntities
+                                                             where s.Name == subforum
+                                                             select s;
+                ForumContext.SubforumEntities.DeleteObject(subforumsQuery.First());
+                ForumContext.SaveChanges();
+                return true;
             }
             catch (Exception)
             {
-                throw new SubforumNotFoundException();
+                //TODO
+                throw;
             }
+
         }
 
         public Subforum GetSubforum(string subforumName)
         {
             try
             {
-                return subforumsList[subforumName];
+                // Get SubforumEntity
+                IEnumerable<SubforumEntity> subforumsQuery = from s in ForumContext.SubforumEntities
+                                                             where s.Name == subforumName
+                                                             select s;
+                return GetSubforum(subforumsQuery.First());
             }
             catch (Exception)
             {
-                throw new SubforumNotFoundException();
+                //TODO
+                throw;
             }
+        }
 
+        private Subforum GetSubforum(SubforumEntity subforumEntity)
+        {
+            string subforumName = subforumEntity.Name;
+            SubforumEntity se = subforumEntity;
+            Subforum subforum = new Subforum(se.Name);
+            subforum.Description = se.Description;
+            Dictionary<Postkey, Post> subforumPostsDic = new Dictionary<Postkey, Post>();
+            // Get subforum`s posts
+            IEnumerable<PostEntity> postsQuery = from p in ForumContext.PostEntities
+                                                 where p.SubforumName == subforumName && p.ParentPostKeyId == -1
+                                                 select p;
+            foreach (PostEntity post in postsQuery)
+            {
+                Post p = PostEntityToPost(post);
+                subforumPostsDic.Add(p.Key, p);
+            }
+            subforum.Posts = subforumPostsDic;
+            subforum.TotalPosts = postsQuery.Count();
+
+            // Get subforum`s moderator:
+            List<string> moderatorsList = new List<string>();
+            IEnumerable<ModeratorEntity> moderatorsQuery = from m in ForumContext.ModeratorEntities
+                                                           where m.Subforum == subforumName
+                                                           select m;
+            foreach (ModeratorEntity moderator in moderatorsQuery)
+            {
+                moderatorsList.Add(moderator.Username);
+            }
+            subforum.ModeratorsList = moderatorsList;
+
+            return subforum;
         }
 
         public List<Subforum> GetSubforums()
         {
-            List<Subforum> result = subforumsList.Values.ToList<Subforum>();
-            result.Sort();
+            List<Subforum> result = new List<Subforum>();
+            IEnumerable<SubforumEntity> allSubforums = from s in ForumContext.SubforumEntities
+                                                       select s;
+            foreach (SubforumEntity subforum in allSubforums)
+            {
+                result.Add(GetSubforum(subforum));
+            }
             return result;
         }
+
+
+        // TODO - Can a user be moderator on more than one subforum?
+
 
         public List<string> GetModerators(string subforum)
         {
             try
             {
-                return subforumsList[subforum].ModeratorsList;
+                List<string> result = new List<string>();
+                IEnumerable<ModeratorEntity> moderatorsQuery = from m in ForumContext.ModeratorEntities
+                                                               where m.Subforum == subforum
+                                                               select m;
+                foreach (ModeratorEntity moderator in moderatorsQuery)
+                {
+                    result.Add(moderator.Username);
+                }
+                return result;
             }
             catch (Exception)
             {
-                throw new SubforumNotFoundException();
+                //TODO
+                throw;
             }
         }
 
@@ -248,29 +458,85 @@ namespace ForumServer.DataLayer
         {
             try
             {
-                subforumsList[subforum].ModeratorsList = moderatorsList;
+                foreach (string modName in moderatorsList)
+                {
+                    ModeratorEntity me = new ModeratorEntity();
+                    me.Username = modName;
+                    me.Subforum = subforum;
+                    ForumContext.ModeratorEntities.AddObject(me);
+
+                    IEnumerable<UserEntity> usersQuery = from u in ForumContext.UserEntities
+                                                         where u.UserName == modName
+                                                         select u;
+                    usersQuery.First().Authentication = AuthorizationLevel.MODERATOR.ToString();
+
+                }
+                ForumContext.SaveChanges();
                 return true;
             }
             catch (Exception)
             {
-                throw new SubforumNotFoundException();
+                //TODO
+                throw;
             }
         }
 
-        #endregion
 
-        #region Users methods
+        // Add to interface
+        public bool RemoveModerator(string subforum, string moderatorName)
+        {
+            try
+            {
+                // Update in moderators table
+                IEnumerable<ModeratorEntity> getModeratorQuery = from m in ForumContext.ModeratorEntities
+                                                                 where m.Subforum == subforum && m.Username == moderatorName
+                                                                 select m;
+
+
+                // Update in users table
+
+                IEnumerable<ModeratorEntity> userIsStillModeratorQuery = from m in ForumContext.ModeratorEntities
+                                                                         where m.Username == moderatorName
+                                                                         select m;
+                UserEntity ue = null;
+                if (userIsStillModeratorQuery.Count() == 1)     // If user was just moderator of subforum then change his status in yblUsers
+                {
+                    IEnumerable<UserEntity> usersQuery = from u in ForumContext.UserEntities
+                                                         where u.UserName == moderatorName
+                                                         select u;
+                    ue = usersQuery.First();
+                    ue.Authentication = AuthorizationLevel.MEMBER.ToString();
+                }
+                ForumContext.ModeratorEntities.DeleteObject(getModeratorQuery.First());
+
+                ForumContext.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                //TODO
+                throw;
+            }
+        }
 
         public bool AddUser(User user)
         {
             try
             {
-                users.TryAdd(user.Username, user);
+                UserEntity ue = new UserEntity();
+                ue.UserName = user.Username;
+                ue.Password = user.Password;
+                ue.Authentication = user.Level.ToString();
+                ue.State = user.CurrentState.ToString();
+                //TODO - Add friends
+                ForumContext.UserEntities.AddObject(ue);
+                ForumContext.SaveChanges();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                //TODO
+                throw;
             }
         }
 
@@ -278,9 +544,156 @@ namespace ForumServer.DataLayer
         {
             try
             {
-                if (users.ContainsKey(username))
+                IEnumerable<UserEntity> usersQuery = from u in ForumContext.UserEntities
+                                                     where u.UserName == username
+                                                     select u;
+                if (usersQuery.Count() != 1)
                 {
-                    return users[username];
+                    // User wasn't found or more than one was found
+                    return null;
+                }
+                else
+                {
+                    UserEntity ue = usersQuery.First();
+                    User user = new User(ue.UserName.Trim(), ue.Password.Trim());
+                    switch (ue.Authentication.Trim())
+                    {
+                        case "GUEST":
+                            user.Level = AuthorizationLevel.GUEST;
+                            break;
+                        case "MEMBER":
+                            user.Level = AuthorizationLevel.MEMBER;
+                            break;
+                        case "MODERATOR":
+                            user.Level = AuthorizationLevel.MODERATOR;
+                            break;
+                        case "ADMIN":
+                            user.Level = AuthorizationLevel.ADMIN;
+                            break;
+                        default:
+                            break;
+                    }
+
+
+                    switch (ue.State.Trim())
+                    {
+                        case "Login":
+                            user.CurrentState = UserState.Login;
+                            break;
+                        case "Logout":
+                            user.CurrentState = UserState.Logout;
+                            break;
+                        default:
+                            break;
+                    }
+                    // TODO - Add friends:
+                    user.Friends = null;
+
+                    return user;
+                }
+            }
+            catch (Exception)
+            {
+                //TODO
+                throw;
+            }
+        }
+
+        public bool UpdateUser(User user)
+        {
+            try
+            {
+                IEnumerable<UserEntity> usersQuery = from u in ForumContext.UserEntities
+                                                     where u.UserName == user.Username
+                                                     select u;
+                UserEntity ue = usersQuery.First();
+                ue.Password = user.Password;
+                ue.State = user.CurrentState.ToString();
+                ue.Authentication = user.Level.ToString();
+                //TODO:
+                //ue.friends - TODO
+                ForumContext.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                //TODO
+                throw;
+            }
+        }
+
+        public bool SetUserState(string username, UserState state)
+        {
+            try
+            {
+                IEnumerable<UserEntity> usersQuery = from u in ForumContext.UserEntities
+                                                     where u.UserName == username
+                                                     select u;
+                UserEntity ue = usersQuery.First();
+                ue.State = state.ToString();
+                ForumContext.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                //TODO
+                throw;
+            }
+        }
+
+        public List<Post> GetUserPosts(string username)
+        {
+            List<Post> result = new List<Post>();
+            try
+            {
+                IEnumerable<PostEntity> postsQuery = from pk in ForumContext.PostKeyEntities
+                                                     from post in ForumContext.PostEntities
+                                                     where pk.PostKeyId == post.PostKeyId && pk.Username == username
+                                                     select post;
+                foreach (PostEntity pe in postsQuery)
+                {
+                    result.Add(PostEntityToPost(pe));
+                }
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool SetAdmin(User admin)
+        {
+            try
+            {
+                IEnumerable<UserEntity> usersQuery = from u in ForumContext.UserEntities
+                                                     where u.UserName == admin.Username
+                                                     select u;
+                UserEntity ue = usersQuery.First();
+                ue.Authentication = AuthorizationLevel.ADMIN.ToString();
+                ForumContext.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                //TODO
+                throw;
+            }
+        }
+
+        public User GetAdmin()
+        {
+            try
+            {
+                IEnumerable<UserEntity> usersQuery = from u in ForumContext.UserEntities
+                                                     where u.Authentication == "ADMIN"
+                                                     select u;
+                if (usersQuery.Count() == 1)
+                {
+
+                    UserEntity ue = usersQuery.First();
+                    return GetUser(ue.UserName);
                 }
                 else
                 {
@@ -289,256 +702,40 @@ namespace ForumServer.DataLayer
             }
             catch (Exception)
             {
-                throw new UserNotFoundException();
+                //TODO
+                throw;
             }
         }
 
-        public bool UpdateUser(User user)
-        {
-            try
-            {
-                users[user.Username] = user;
-                return true;
-            }
-            catch (Exception)
-            {
-                throw new UserNotFoundException();
-            }
-        }
-
-        public bool SetUserState(string username, UserState state)
-        {
-            try
-            {
-                users[username].CurrentState = state;
-                return true;
-            }
-            catch (Exception)
-            {
-                throw new UserNotFoundException();
-            }
-        }
-
-        public List<Post> GetUserPosts(string username)
-        {
-            List<Post> postsOfUser;
-            GetUserPosts(username, out postsOfUser);
-            return postsOfUser;
-        }
-
-        public bool SetAdmin(User admin)
-        {
-            try
-            {
-                admin.Level = AuthorizationLevel.ADMIN;
-                users.TryAdd(admin.Username, admin);
-                this.adminName = admin.Username;
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public User GetAdmin()
-        {
-            try
-            {
-                return users[adminName];
-            }
-            catch (Exception)
-            {
-                throw new UserNotFoundException();
-            }
-        }
-
-        public List<User> GetAllLoggedInUsers()
+        // Add to interface
+        public bool ChangeAdmin(User newAdmin, User oldAdmin)
         {
             throw new NotImplementedException();
         }
 
 
 
-        #endregion
 
-        #endregion //IDataManager methods
-
-        #region Internal Private methods
-
-        private void GetPost(Postkey postkey, out Post returnedPost)
+        public List<User> GetAllLoggedInUsers()
         {
-            returnedPost = null;
-            foreach (KeyValuePair<string, Subforum> subforumEntry in subforumsList)
+            try
             {
-                if (returnedPost != null)
+                List<User> result = new List<User>();
+                IEnumerable<UserEntity> usersQuery = from u in ForumContext.UserEntities
+                                                     where u.State == "Login"
+                                                     select u;
+                foreach (UserEntity user in usersQuery)
                 {
-                    break;
+                    result.Add(GetUser(user.UserName));
                 }
-                try
-                {
-                    foreach (Post p in subforumEntry.Value.Posts.Values)
-                    {
-                        if (p.Key.CompareTo(postkey) == 0)
-                        {
-                            returnedPost = p;
-                            break;
-
-                        }
-                    }
-                    if (returnedPost != null)
-                    {
-                        break;
-                    }
-                    else
-                    {
-
-                    
-                       
-                    //if (subforumEntry.Value.Posts.ContainsKey(postkey))    // If oldPost is main oldPost in subforumName
-                    //{
-                    //    returnedPost = subforumsList[subforumEntry.Key].Posts[postkey];
-                    //    break;
-                    //}
-                    //else    // If oldPost is not main oldPost, search oldPost in replies & update
-
-                    //{
-                        GetReply(postkey, subforumsList[subforumEntry.Key].Posts, out returnedPost);
-                        if (returnedPost != null)
-                            break;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+                return result;
             }
+            catch (Exception)
+            {
+                //TODO
+                throw;
+            }
+
         }
-
-        private void GetRepliesOfUser(Post post, string username, List<Post> listOfUserPosts, out List<Post> returnedReplies)
-        {
-            returnedReplies = listOfUserPosts;
-            foreach (Post reply in post.Replies.Values)
-            {
-                if (reply.Key.Username == username)
-                {
-                    returnedReplies.Add(reply);
-                    GetRepliesOfUser(reply, username, listOfUserPosts.Union(returnedReplies).ToList(), out returnedReplies);
-                }
-            }
-        }
-
-        private void GetUserPosts(string username, out List<Post> returnedPosts)
-        {
-            returnedPosts = new List<Post>();
-            List<Post> returnedReplies = null;
-            foreach (KeyValuePair<string, Subforum> subforumEntry in subforumsList)
-            {
-                try
-                {
-                    foreach (Post post in subforumEntry.Value.Posts.Values)
-                    {
-                        if (post.Key.Username == username)
-                        {
-                            returnedPosts.Add(post);
-                            GetRepliesOfUser(post, username, new List<Post>(), out returnedReplies);
-                            returnedPosts = returnedPosts.Union(returnedReplies).ToList<Post>();
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
-        }
-
-        private bool RemoveReply(Postkey postkey, Dictionary<Postkey, Post> repliesList)
-        {
-            foreach (Post reply in repliesList.Values)
-            {
-                if (reply.Replies.ContainsKey(postkey))
-                {
-                    reply.Replies.Remove(postkey);
-                    subforumsList[reply.Subforum].TotalPosts--;
-                    reply.HasReplies = !(reply.Replies.Values.Count == 0); // If reply.Replies.Values.Count > 0 then HasReplies==true;
-                    return true;
-                }
-                else
-                {
-                    return RemoveReply(postkey, reply.Replies);
-                }
-            }
-            return false;
-        }
-
-        private void GetReply(Postkey postkey, Dictionary<Postkey, Post> postsList, out Post returnedPost)
-        {
-            returnedPost = null;
-            foreach (Post p in postsList.Values)
-            {
-                if (p.Key.CompareTo(postkey) == 0)
-                {
-                    returnedPost = p;
-                    break;
-                }
-            }
-            if (returnedPost != null)
-            {
-                return;
-            }
-            //if (postsList.ContainsKey(postkey))
-            //{
-            //    returnedPost = postsList[postkey];
-            //    return;
-            //}
-            //else
-            //{
-                foreach (Post reply in postsList.Values)
-                {
-                    if (returnedPost == null)
-                    {
-                        GetReply(postkey, reply.Replies, out returnedPost);
-                    }
-                }
-            //}
-        }
-
-        private bool UpdateReply(Post replyToUpdate, Dictionary<Postkey, Post> postsList)
-        {
-            bool ans = false;
-            if (postsList.ContainsKey(replyToUpdate.Key))
-            {
-                postsList[replyToUpdate.Key] = replyToUpdate;
-                return true;
-            }
-            else
-            {
-                foreach (Post reply in postsList.Values)
-                {
-                    ans = UpdateReply(replyToUpdate, reply.Replies);
-                    if (ans == true)
-                    {
-                        return ans;
-                    }
-                }
-                return false;
-            }
-        }
-
-        private List<Post> GetAllReplyOfPost(Post post)
-        {
-            List<Post> allReplies = new List<Post>();
-            allReplies = allReplies.Union(post.Replies.Values).ToList<Post>();
-            foreach (Post p in post.Replies.Values)
-            {
-                allReplies = allReplies.Union(GetAllReplyOfPost(p)).ToList<Post>();
-            }
-            return allReplies;
-        }
-        #endregion
-
-
-
     }
 }

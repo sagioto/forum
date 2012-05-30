@@ -12,8 +12,9 @@ namespace ForumUtils.SharedDataTypes
         private List<string> moderatorsList;
         private Dictionary<Postkey, Post> posts;
         private int totalPosts;
+        private string description;
 
-        
+
         public Subforum(string name)
         {
             this.name = name;
@@ -64,8 +65,26 @@ namespace ForumUtils.SharedDataTypes
 
         public int TotalPosts
         {
-            get { return totalPosts; }
-            set { totalPosts = value; }
+            get
+            {
+                return totalPosts;
+            }
+            set
+            {
+                totalPosts = value;
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return description;
+            }
+            set
+            {
+                description = value;
+            }
         }
 
         #endregion
@@ -85,11 +104,15 @@ namespace ForumUtils.SharedDataTypes
             return true;
         }
 
+
+
         #endregion
 
         public int CompareTo(object subforum)
         {
             return this.name.CompareTo(((Subforum)subforum).Name);
         }
+
+
     }
 }

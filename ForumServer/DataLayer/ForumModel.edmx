@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ForumModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="ForumModelStoreContainer">
+          <EntitySet Name="tblModerators" EntityType="ForumModel.Store.tblModerators" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblPostKeys" EntityType="ForumModel.Store.tblPostKeys" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblPosts" EntityType="ForumModel.Store.tblPosts" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblSubforums" EntityType="ForumModel.Store.tblSubforums" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblUsers" EntityType="ForumModel.Store.tblUsers" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_tblPostKeys_tblUsers" Association="ForumModel.Store.FK_tblPostKeys_tblUsers">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblPostKeys" EntitySet="tblPostKeys" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tblModerators">
+          <Key>
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="Subforum" />
+          </Key>
+          <Property Name="Username" Type="nchar" Nullable="false" MaxLength="50" />
+          <Property Name="Subforum" Type="nchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblPostKeys">
+          <Key>
+            <PropertyRef Name="PostKeyId" />
+          </Key>
+          <Property Name="PostKeyId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="nchar" Nullable="false" MaxLength="20" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblPosts">
+          <Key>
+            <PropertyRef Name="PostKeyId" />
+          </Key>
+          <Property Name="PostKeyId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nchar" Nullable="false" MaxLength="100" />
+          <Property Name="Body" Type="nchar" MaxLength="1000" />
+          <Property Name="ParentPostKeyId" Type="int" />
+          <Property Name="SubforumName" Type="nchar" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="tblSubforums">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="nchar" Nullable="false" MaxLength="50" />
+          <Property Name="Description" Type="nchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="tblUsers">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="nchar" Nullable="false" MaxLength="20" />
+          <Property Name="Password" Type="nchar" Nullable="false" MaxLength="20" />
+          <Property Name="Authentication" Type="nchar" Nullable="false" MaxLength="20" />
+          <Property Name="State" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_tblPostKeys_tblUsers">
+          <End Role="tblUsers" Type="ForumModel.Store.tblUsers" Multiplicity="1" />
+          <End Role="tblPostKeys" Type="ForumModel.Store.tblPostKeys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="tblPostKeys">
+              <PropertyRef Name="Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ForumModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="ForumEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="PostKeyEntities" EntityType="ForumModel.PostKeyEntity" />
+          <EntitySet Name="PostEntities" EntityType="ForumModel.PostEntity" />
+          <EntitySet Name="UserEntities" EntityType="ForumModel.UserEntity" />
+          <AssociationSet Name="FK_tblPostKeys_tblUsers" Association="ForumModel.FK_tblPostKeys_tblUsers">
+            <End Role="tblUser" EntitySet="UserEntities" />
+            <End Role="tblPostKey" EntitySet="PostKeyEntities" />
+          </AssociationSet>
+          <EntitySet Name="SubforumEntities" EntityType="ForumModel.SubforumEntity" />
+          <EntitySet Name="ModeratorEntities" EntityType="ForumModel.ModeratorEntity" />
+        </EntityContainer>
+        <EntityType Name="PostKeyEntity">
+          <Key>
+            <PropertyRef Name="PostKeyId" />
+          </Key>
+          <Property Type="Int32" Name="PostKeyId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Type="DateTime" Name="Time" Nullable="false" />
+          <NavigationProperty Name="tblUser" Relationship="ForumModel.FK_tblPostKeys_tblUsers" FromRole="tblPostKey" ToRole="tblUser" />
+        </EntityType>
+        <EntityType Name="PostEntity">
+          <Key>
+            <PropertyRef Name="PostKeyId" />
+          </Key>
+          <Property Type="Int32" Name="PostKeyId" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="Body" MaxLength="1000" FixedLength="true" Unicode="true" />
+          <Property Type="Int32" Name="ParentPostKeyId" />
+          <Property Type="String" Name="SubforumName" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UserEntity">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="Authentication" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="State" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="tblPostKeys" Relationship="ForumModel.FK_tblPostKeys_tblUsers" FromRole="tblUser" ToRole="tblPostKey" />
+        </EntityType>
+        <Association Name="FK_tblPostKeys_tblUsers">
+          <End Type="ForumModel.UserEntity" Role="tblUser" Multiplicity="1" />
+          <End Type="ForumModel.PostKeyEntity" Role="tblPostKey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="tblPostKey">
+              <PropertyRef Name="Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SubforumEntity">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="1000" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ModeratorEntity">
+          <Key>
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="Subforum" />
+          </Key>
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="Subforum" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ForumModelStoreContainer" CdmEntityContainer="ForumEntities">
+          <EntitySetMapping Name="PostKeyEntities">
+            <EntityTypeMapping TypeName="ForumModel.PostKeyEntity">
+              <MappingFragment StoreEntitySet="tblPostKeys">
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="PostKeyId" ColumnName="PostKeyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostEntities">
+            <EntityTypeMapping TypeName="ForumModel.PostEntity">
+              <MappingFragment StoreEntitySet="tblPosts">
+                <ScalarProperty Name="SubforumName" ColumnName="SubforumName" />
+                <ScalarProperty Name="ParentPostKeyId" ColumnName="ParentPostKeyId" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PostKeyId" ColumnName="PostKeyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserEntities">
+            <EntityTypeMapping TypeName="ForumModel.UserEntity">
+              <MappingFragment StoreEntitySet="tblUsers">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Authentication" ColumnName="Authentication" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubforumEntities">
+            <EntityTypeMapping TypeName="ForumModel.SubforumEntity">
+              <MappingFragment StoreEntitySet="tblSubforums">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ModeratorEntities">
+            <EntityTypeMapping TypeName="ForumModel.ModeratorEntity">
+              <MappingFragment StoreEntitySet="tblModerators">
+                <ScalarProperty Name="Subforum" ColumnName="Subforum" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="ForumModel" ZoomLevel="90">
+        <EntityTypeShape EntityType="ForumModel.PostKeyEntity" Width="1.5" PointX="3" PointY="1" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="ForumModel.PostEntity" Width="1.5" PointX="0.75" PointY="3.75" Height="1.9802864583333317" />
+        <EntityTypeShape EntityType="ForumModel.UserEntity" Width="1.5" PointX="0.75" PointY="0.875" Height="1.9802864583333315" />
+        <AssociationConnector Association="ForumModel.FK_tblPostKeys_tblUsers" >
+          <ConnectorPoint PointX="2.25" PointY="1.8939925130208337" />
+          <ConnectorPoint PointX="3" PointY="1.8939925130208337" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="ForumModel.SubforumEntity" Width="1.5" PointX="3.375" PointY="3.75" Height="1.4033821614583322" />
+        <EntityTypeShape EntityType="ForumModel.ModeratorEntity" Width="1.5" PointX="5.375" PointY="0.75" Height="1.4033821614583317" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

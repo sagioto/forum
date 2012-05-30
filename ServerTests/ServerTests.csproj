@@ -42,9 +42,11 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
@@ -64,7 +66,6 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataBaseAdaptorServerTests.cs" />
     <Compile Include="DataManagerServerTests.cs" />
     <Compile Include="IDataManagerServerTests.cs" />
     <Compile Include="PolicyManagerTest.cs" />

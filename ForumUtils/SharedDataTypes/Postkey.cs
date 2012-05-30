@@ -19,6 +19,8 @@ namespace ForumShared.SharedDataTypes
             this.time = time;
         }
 
+        public Postkey(){}
+
         #region Parameter Properties
 
         [DataMember]
