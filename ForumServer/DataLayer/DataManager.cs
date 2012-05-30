@@ -65,8 +65,9 @@ namespace ForumServer.DataLayer
                     for (int j = 0 ; j < numberOfPosts ; j++)
                     {
                         Thread.Sleep(1000);
+                        string content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ligula libero, rhoncus ac sollicitudin ut, pulvinar nec risus. Nunc laoreet hendrerit mollis. Sed at quam sit amet lacus vehicula hendrerit sit amet sed tellus. In accumsan turpis id justo scelerisque auctor. Sed ultricies, felis vitae hendrerit viverra, nunc arcu rutrum orci, eu tincidunt urna quam vel nulla. Praesent ut suscipit massa. Proin cursus egestas interdum. Maecenas at enim nibh. Nunc dictum mi non neque eleifend quis vulputate velit tincidunt. Integer fringilla sapien quis ipsum lobortis vel mollis ante rhoncus.";
                         this.AddPost(new Post(new Postkey(adminName, DateTime.Now),
-                            "Post" + j + " in Subforum: " + s.Name, "content", new Postkey("", DateTime.Now), s.Name), s.Name);
+                            "Post" + j + " in Subforum: " + s.Name, content, new Postkey("", DateTime.Now), s.Name), s.Name);
                     }
                 }
             }

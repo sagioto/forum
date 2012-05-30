@@ -21,11 +21,13 @@ function callService(methodName, params, onSuccess) {
 }
 
 function GetSubforumsList(){
+	currentSubforum = null;
+	currentpost = null;
 	var response = callService("GetSubforumsList", "", function(result){
-		var sfList = $('#subforumsTable');
-		sfList.hide();
-		ClearPage();
-		
+	var sfList = $('#subforumsTable');
+	sfList.hide();
+	ClearPage();
+	
 		$.each(result, function(i)
 			{
 				var tr = document.createElement("tr");
@@ -40,6 +42,14 @@ function GetSubforumsList(){
 		)
 		sfList.fadeIn('slow');
 		});
+}
+
+function refresh()
+{
+	if(currentPost)
+		GetReplies(currentPost.Key.Username + ',' + currentPost.Key.Time);
+	else if(currentSubforum)
+		GetSubforum(currentSubforum);
 }
 
 function RegisterAndLoginCall(user, methodName){
@@ -59,6 +69,7 @@ function RegisterAndLoginCall(user, methodName){
 							$('form[name="logout"]').html('<p>logged in as ' + username + 
 							' <button name="logoutButton" type="button" onclick="Logout(username)" class="login-out-buttons">logout</button></p>');
 							$('form[name="logout"]').fadeIn('fast');
+							refresh();
 					});
 				}
 				break;
@@ -96,6 +107,7 @@ function Logout(name){
 			$('form[name="logout"]').fadeOut('fast', 
 					function(){
 						$('form[name="login"]').fadeIn('fast');
+						
 					}
 			);
 		}
@@ -130,9 +142,9 @@ function ShowPosts(posts)
 				buttons = '<button class="postButton" onclick="GetReplies(\'' + post.Key.Username + ',' + post.Key.Time + '\')" >view replies</button>';
 			
 			if(username != "guest")
-				buttons = buttons + '<button class="postButton" onclick="Reply(\'' + post.Key.Username + ',' + post.Key.Time + '\')" >reply</button>'
-			+ '<button class="postButton" onclick="Edit(\'' + post.Key.Username + ',' + post.Key.Time + '\')" >edit</button>'
-			+ '<button class="postButton" onclick="Remove(\'' + post.Key.Username + ',' + post.Key.Time + '\')" >remove</button>';
+				buttons = buttons + '<button class="postButton" onclick="showReply(\'' + post.Key.Username + ',' + post.Key.Time + '\')" >reply</button>'
+			+ '<button class="postButton" onclick="showEdit(\'' + post.Key.Username + ',' + post.Key.Time + '\')" >edit</button>'
+			+ '<button class="postButton" onclick="showRemove(\'' + post.Key.Username + ',' + post.Key.Time + '\')" >remove</button>';
 			
 			var buttonsTr = '<tr colspan="3"><td>' + buttons + '</td></tr>';
 			td.innerHTML = '<table width="800px"><tbody><tr><td class="postTitle">' + post.Title + '</td><td>' + 
