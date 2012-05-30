@@ -106,8 +106,10 @@ function Logout(name){
 		if(result[methodName + "Result"] == 1){
 			$('form[name="logout"]').fadeOut('fast', 
 					function(){
+						password = null;
+						username = "guest";
+						refresh();
 						$('form[name="login"]').fadeIn('fast');
-						
 					}
 			);
 		}
@@ -166,6 +168,7 @@ function GetSubforum(name)
 	var table = document.createElement("table");
 	var tr = document.createElement("tr");
 	var tr2 = document.createElement("tr");
+	tr2.setAttribute('class','titleTr');
 	var tdTitle = document.createElement("td");
 	var tdpost = document.createElement("td");
 	tdpost.setAttribute('align', 'center');
@@ -204,9 +207,11 @@ function getDateString(jsonDate) {
  
 function ClearPage()
 {
+	
 	$('.post').fadeOut();
 	$('.post').parent().remove();
 	$('.subforum').fadeOut();
+	$('.titleTr').remove();
 	$('.subforum').parent().remove();
 }
 
