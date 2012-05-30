@@ -3,7 +3,8 @@
  */
 var username = "guest";
 var password;
-var current;
+var currentPost = null;
+var currentSubforum = null;
 var recursionLevel = 1;
  
  
@@ -148,6 +149,8 @@ function ShowPosts(posts)
 function GetSubforum(name)
 {
 	ClearPage();
+	currentPost = null;
+	currentSubforum = name;
 	var table = document.createElement("table");
 	var tr = document.createElement("tr");
 	var tr2 = document.createElement("tr");
@@ -198,18 +201,33 @@ function ClearPage()
 function GoUp()
 {
 	ClearPage();
-	if (typeof(current) != "undefined"
-		&& current != null
-		&& typeof(current.Parent) != "undefined"
-		&& current.Parent != null)
-		GetReplies(current.Parent);
+	if (currentPost != null &&
+		currentPost.Parent != null)
+		{
+			currentPost = currentPost.Parent;
+			GetReplies(currentPost.Parent);
+		}
+	else if(currentPost != null)
+		{
+			GetSubforum(currentPost.Subforum);
+		}
 	else
-		GetSubforumsList();
+		{
+			GetSubforumsList();
+		}
 }
 
 function GetReplies(postKey)
-{
+{	
+	
 	var splitted = postKey.split(",");
+	callService("GetPost", {"postkey": { "username" : splitted[0], "time" : splitted[1]}},
+			function(result)
+			{
+				currentPost = result.GetPostResult;
+				currentSubforum = null;
+			}
+	);
 	callService("GetReplies", {"postkey": { "username" : splitted[0], "time" : splitted[1]}},
 			function(result)
 			{
@@ -229,6 +247,8 @@ function showPost(subforum)
 function showReply(postKey)
 {
 	var splitted = postKey.split(",");
+	var posthtml = $(this);
+	posthtml.append('<h1>oh yehhh!!!</h1>')
 	//TODO
 }
 
