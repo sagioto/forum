@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading;
 using ForumShared.SharedDataTypes;
 using ForumUtils.SharedDataTypes;
+using ForumServer;
 
 namespace ServerTests
 {
@@ -427,6 +428,15 @@ namespace ServerTests
             target.SetUserState("dor2", UserState.Logout);
             List<User> ans = target.GetAllLoggedInUsers();
             Console.WriteLine();
+        }
+
+
+        [TestMethod()]
+        public void RegisterServerTests()
+        {
+            ServerController c = new ServerController();
+            c.Register("dor", "dor");
+
         }
     }
 }

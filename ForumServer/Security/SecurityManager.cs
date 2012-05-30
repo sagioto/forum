@@ -29,7 +29,7 @@ namespace ForumServer.Security
             {
                 user = new User(username, password);
                 user.Level = AuthorizationLevel.MEMBER;
-                dataManager.UpdateUser(user);
+                dataManager.AddUser(user);
                 return Result.OK;
             }
         }
