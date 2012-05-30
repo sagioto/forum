@@ -8,13 +8,12 @@
 //------------------------------------------------------------------------------
 
 using System;
-using System.ComponentModel;
-using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Linq;
-using System.Runtime.Serialization;
+using System.Data.EntityClient;
+using System.ComponentModel;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -152,7 +151,6 @@ namespace ForumServer.DataLayer
         private ObjectSet<ModeratorEntity> _ModeratorEntities;
 
         #endregion
-
         #region AddTo Methods
     
         /// <summary>
@@ -196,11 +194,11 @@ namespace ForumServer.DataLayer
         }
 
         #endregion
-
     }
+    
 
     #endregion
-
+    
     #region Entities
     
     /// <summary>
@@ -227,7 +225,6 @@ namespace ForumServer.DataLayer
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -285,7 +282,6 @@ namespace ForumServer.DataLayer
         partial void OnSubforumChanged();
 
         #endregion
-
     
     }
     
@@ -315,7 +311,6 @@ namespace ForumServer.DataLayer
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -442,7 +437,6 @@ namespace ForumServer.DataLayer
         partial void OnSubforumNameChanged();
 
         #endregion
-
     
     }
     
@@ -472,7 +466,6 @@ namespace ForumServer.DataLayer
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -551,7 +544,6 @@ namespace ForumServer.DataLayer
         partial void OnTimeChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -594,7 +586,6 @@ namespace ForumServer.DataLayer
         }
 
         #endregion
-
     }
     
     /// <summary>
@@ -619,7 +610,6 @@ namespace ForumServer.DataLayer
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -674,7 +664,6 @@ namespace ForumServer.DataLayer
         partial void OnDescriptionChanged();
 
         #endregion
-
     
     }
     
@@ -704,7 +693,6 @@ namespace ForumServer.DataLayer
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -807,7 +795,6 @@ namespace ForumServer.DataLayer
         partial void OnStateChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -834,10 +821,8 @@ namespace ForumServer.DataLayer
         }
 
         #endregion
-
     }
 
     #endregion
-
     
 }

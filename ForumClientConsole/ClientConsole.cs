@@ -510,21 +510,68 @@ namespace ForumClientConsole
                 StringBuilder sb = new StringBuilder();
                 foreach (Post p in subForumPosts)
                 {
+                    int lineLength = 95;
                     sb.Append("***********************************************************************************************\n");
                     sb.Append("*                                                                                             *\n");
-                    string empty = "*                                                                                             *\n";
-                    string title = empty.Substring(0, empty.Length / 2 - p.Title.Length / 2) + p.Title + empty.Substring((empty.Length / 2) + (p.Title.Length / 2) + 1);
-                    sb.Append(title);
+                    string title = FormatPostComponent(p.Title, lineLength);
+                    sb.Append(title+"\n");
                     sb.Append("*                                                                                             *\n");
                     sb.Append("*---------------------------------------------------------------------------------------------*\n");
                     sb.Append("*                                                                                             *\n");
-                    string body = empty.Substring(0, empty.Length / 2 - p.Body.Length / 2) + p.Body + empty.Substring((empty.Length / 2) + (p.Body.Length / 2) + 1);
-                    sb.Append(body);
+                    string body = FormatPostComponent(p.Body, lineLength);
+                    sb.Append(body+"\n");
                     sb.Append("*                                                                                             *\n");
                 }
                 sb.Append("***********************************************************************************************\n");
                 Console.WriteLine(sb);
             }
+        }
+
+        private string FormatPostComponent(string comp, int lineLength)
+        {
+            //string empty = "*                                                                                                  *\n";
+            //string title = empty.Substring(0, empty.Length / 2 - comp.Length / 2) + comp + empty.Substring((empty.Length / 2) + (comp.Length / 2) + 1); //TODO will probably crash on long TITLE!!!!!
+            if (string.IsNullOrEmpty(comp)) return "";
+
+            var lines = new List<string>();
+
+            // breaking the string into lines makes it easier to process.
+            foreach (string line in comp.Split("\n".ToCharArray()))
+            {
+                var remainingLine = line.Trim();
+                do
+                {
+                    var newLine = GetTrimmedLine(remainingLine, lineLength - 4);
+                    string formattedLine = "* " + newLine + " *";
+                    while (formattedLine.Length < lineLength)
+                    {
+                        formattedLine = formattedLine.Substring(0, formattedLine.Length - 1) + " *";
+                    }
+                    lines.Add(formattedLine);
+                    remainingLine = remainingLine.Substring(newLine.Length).Trim();
+                    // Keep iterating as int as we've got words remaining 
+                    // in the line.
+                } while (remainingLine.Length > 0);
+            }
+
+            return string.Join(Environment.NewLine, lines.ToArray());
+        }
+
+        private string GetTrimmedLine(string str, int maxLength)
+        {
+            if (str.Length <= maxLength) return str;
+
+            // Search backwords in the string for a whitespace char
+            // starting with the char one after the maximum length
+            // (if the next char is a whitespace, the last word fits).
+            for (int i = maxLength; i >= 0; i--)
+            {
+                if (char.IsWhiteSpace(str[i]))
+                    return str.Substring(0, i).TrimEnd();
+            }
+
+            // No whitespace chars, just break the word at the maxlength.
+            return str.Substring(0, maxLength);
         }
 
         private void Reply()
