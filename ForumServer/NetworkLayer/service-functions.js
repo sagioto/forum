@@ -2,7 +2,8 @@
  * @author Sagi Bernstein
  */
 var username = "guest";
-var currentPost;
+var password;
+var current;
 var recursionLevel = 1;
  
  
@@ -22,6 +23,8 @@ function GetSubforumsList(){
 	var response = callService("GetSubforumsList", "", function(result){
 		var sfList = $('#subforumsTable');
 		sfList.hide();
+		ClearPage();
+		
 		$.each(result, function(i)
 			{
 				var tr = document.createElement("tr");
@@ -30,6 +33,7 @@ function GetSubforumsList(){
 				tr.appendChild(td);
 				td.setAttribute('onclick', 'GetSubforum(\'' + result[i] + '\')');
 				td.setAttribute('class', 'subforum');
+				td.setAttribute('colspan', '2');
 				sfList.append(tr);
 			}
 		)
@@ -78,6 +82,7 @@ function RegisterAndLogin(methodName){
 	var name = $('input[name="username"]').val();
 	var pass = $('input[name="password"]').val();
 	username = name;
+	password = pass;
 	return RegisterAndLoginCall({"username": name, "password": pass}, methodName);
 }
 
@@ -104,32 +109,69 @@ function Subscribe()
 		{
 			if(result.SubscribeResult != null)
 				alert(JSON.stringify(result));
+			//TODO: do somthing else
 			setTimeout('Subscribe()',60 * 1000);
 		}
 	);
 }
 
+function ShowPosts(posts)
+{
+
+	$.each(posts, function(i)
+		{
+			var tr = document.createElement("tr");
+			var td = document.createElement("td");
+			var post = posts[i];
+			
+			var buttons = "";
+			if(post.HasReplies)
+				buttons = '<button class="postButton" onclick="GetReplies(\'' + post.Key.Username + ',' + post.Key.Time + '\')" >view replies</button>';
+			
+			if(username != "guest")
+				buttons = buttons + '<button class="postButton" onclick="Reply(\'' + post.Key.Username + ',' + post.Key.Time + '\')" >reply</button>'
+			+ '<button class="postButton" onclick="Edit(\'' + post.Key.Username + ',' + post.Key.Time + '\')" >edit</button>'
+			+ '<button class="postButton" onclick="Remove(\'' + post.Key.Username + ',' + post.Key.Time + '\')" >remove</button>';
+			
+			var buttonsTr = '<tr colspan="3"><td>' + buttons + '</td></tr>';
+			td.innerHTML = '<table width="800px"><tbody><tr><td class="postTitle">' + post.Title + '</td><td>' + 
+			'</td><td class="postPoster"> posted by ' + post.Key.Username + ' on ' + getDateString(post.Key.Time) + '</td></tr>' +
+			'<tr><td class="postContent" colspan="3"><h2>' + post.Body + '</h2></td></tr>' + buttonsTr + '</tbody></table>';
+			tr.appendChild(td);
+			td.setAttribute('class', 'post');
+			$('#subforumsTable').append(tr);
+		}
+	);
+	$('post').fadeIn();
+}
+
 function GetSubforum(name)
 {
+	ClearPage();
+	var table = document.createElement("table");
+	var tr = document.createElement("tr");
+	var tr2 = document.createElement("tr");
+	var tdTitle = document.createElement("td");
+	var tdpost = document.createElement("td");
+	tdpost.setAttribute('align', 'center');
+	tdTitle.setAttribute('align', 'center');
+	tdTitle.setAttribute('class', 'post');
+	tdpost.setAttribute('class', 'post');
+	tdTitle.innerHTML = '<h1>' + name + '</h1>';
+	tdpost.innerHTML = '<button class="postButton" onclick="showPost(\'' + name + '\')" >post</button>';
+	tr.appendChild(tdTitle);
+	if(username != "guest")
+		tr.appendChild(tdpost);
+	table.appendChild(tr);
+	tr2.appendChild(table);
+	$('#subforumsTable').append(tr2);
+	
 	callService("GetSubforum", {"subforum": name},
-		function(result)
-		{
-			$('td').fadeOut();
-			$.each(result.GetSubforumResult, function(i)
-				{
-					var tr = document.createElement("tr");
-					var td = document.createElement("td");
-					var post = result.GetSubforumResult[i];
-					td.innerHTML = '<table width="800px"><tbody><tr><td class="postTitle">' + post.Title + '</td>' + 
-					'<td class="postPoster"> posted by ' + post.Key.Username + ' on ' + getDateString(post.Key.Time) + '</td></tr>' +
-					'<tr><td class="postContent" colspan="2"><h2>' + post.Body + '</h2></td><tr></tbody></table>';
-					tr.appendChild(td);
-					td.setAttribute('onclick', 'GetReplies(\'' + post.Key + '\')');
-					td.setAttribute('class', 'post');
-					$('#subforumsTable').append(tr);
-				}
-			);
-		}
+			function(result)
+			{
+				
+				ShowPosts(result.GetSubforumResult);
+			}
 	);
 }
 
@@ -144,3 +186,65 @@ function getDateString(jsonDate) {
 
      return date.addMinutes(minutesOffset).toString("dd/MM/yyyy hh:mm:ss");
  }
+ 
+function ClearPage()
+{
+	$('.post').fadeOut();
+	$('.post').parent().remove();
+	$('.subforum').fadeOut();
+	$('.subforum').parent().remove();
+}
+
+function GoUp()
+{
+	ClearPage();
+	if (typeof(current) != "undefined"
+		&& current != null
+		&& typeof(current.Parent) != "undefined"
+		&& current.Parent != null)
+		GetReplies(current.Parent);
+	else
+		GetSubforumsList();
+}
+
+function GetReplies(postKey)
+{
+	var splitted = postKey.split(",");
+	callService("GetReplies", {"postkey": { "username" : splitted[0], "time" : splitted[1]}},
+			function(result)
+			{
+				ClearPage();
+				ShowPosts(result.GetSubforumResult);
+			}
+	);
+}
+
+
+function showPost(subforum)
+{
+	//TODO
+}
+
+
+function showReply(postKey)
+{
+	var splitted = postKey.split(",");
+	//TODO
+}
+
+function showEdit(postKey)
+{
+	var splitted = postKey.split(",");
+	//TODO
+}
+
+function Remove(postKey)
+{
+	var splitted = postKey.split(",");
+	callService("RemovePost", {"postkey": { "Username" : splitted[0], "Time" : splitted[1]}, "username":username, "password":password},
+			function(result)
+			{
+				//TODO remove post from page
+			}
+	);
+}
