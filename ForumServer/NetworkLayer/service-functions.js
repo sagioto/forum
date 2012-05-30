@@ -274,8 +274,8 @@ function showReply(postKey)
 {
 	var splitted = postKey.split(",");
 	var id = splitted[2];
-	var postHtml = '<div id="posting' + id + '"><tr><td><div>title:</br><textarea id="titleToPost' + id + '" rows="1" cols="90"/></div></td></tr>'
-		+ '<tr><td><div>body:</br><textarea id="bodyToPost' + id + '" rows="10" cols="90" /></div></td></tr><div>';
+	var postHtml = '<div id="posting' + id + '"><tr><td><div>title:</br><textarea id="titleToPost' + id + '" rows="1" cols="80"/></div></td></tr>'
+		+ '<tr><td><div>body:</br><textarea id="bodyToPost' + id + '" rows="10" cols="80" /></div></td></tr><div>';
 	$('#post'+id).children().append(postHtml);
 	$('#posting' + id).hide();
 	$('#posting' + id).slideDown('slow');
