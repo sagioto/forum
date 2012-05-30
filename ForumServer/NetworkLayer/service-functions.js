@@ -1,6 +1,8 @@
 /**
  * @author Sagi Bernstein
  */
+ 
+ //*******************************************Variables
 var username = "guest";
 var password;
 var currentPost = null;
@@ -21,6 +23,7 @@ var POLICY_REJECTED = 0x0400;
 var ILLEGAL_POST = 0x1000;
  
  
+//*******************************************The Ajax Call
 function callService(methodName, params, onSuccess) {
 				
 	return $.ajax({	url: "ServerNetworkAdaptor.svc/" + methodName,
@@ -33,38 +36,7 @@ function callService(methodName, params, onSuccess) {
 			});
 }
 
-function GetSubforumsList(){
-	currentSubforum = null;
-	currentpost = null;
-	var response = callService("GetSubforumsList", "", function(result){
-	var sfList = $('#subforumsTable');
-	sfList.hide();
-	ClearPage();
-	
-		$.each(result, function(i)
-			{
-				var tr = document.createElement("tr");
-				var td = document.createElement("td");
-				td.innerHTML = result[i];
-				tr.appendChild(td);
-				td.setAttribute('onclick', 'GetSubforum(\'' + result[i] + '\')');
-				td.setAttribute('class', 'subforum');
-				td.setAttribute('colspan', '2');
-				sfList.append(tr);
-			}
-		)
-		sfList.fadeIn('slow');
-		});
-}
-
-function refresh()
-{
-	if(currentPost)
-		GetReplies(currentPost.Key.Username + ',' + currentPost.Key.Time);
-	else if(currentSubforum)
-		GetSubforum(currentSubforum);
-}
-
+//*******************************************User Functions
 function RegisterAndLoginCall(user, methodName){
 	var response = callService(methodName, user,
 		function(result){
@@ -136,11 +108,44 @@ function Subscribe()
 		function(result)
 		{
 			if(result.SubscribeResult != null)
-				alert(JSON.stringify(result));
+				alert(JSON.stringify(result.SubscribeResult));
 			//TODO: do somthing else
 			setTimeout('Subscribe()',60 * 1000);
 		}
 	);
+}
+
+//*******************************************Viewing Functions
+function GetSubforumsList(){
+	currentSubforum = null;
+	currentpost = null;
+	var response = callService("GetSubforumsList", "", function(result){
+	var sfList = $('#subforumsTable');
+	sfList.hide();
+	ClearPage();
+	
+		$.each(result, function(i)
+			{
+				var tr = document.createElement("tr");
+				var td = document.createElement("td");
+				td.innerHTML = result[i];
+				tr.appendChild(td);
+				td.setAttribute('onclick', 'GetSubforum(\'' + result[i] + '\')');
+				td.setAttribute('class', 'subforum');
+				td.setAttribute('colspan', '2');
+				sfList.append(tr);
+			}
+		)
+		sfList.fadeIn('slow');
+		});
+}
+
+function refresh()
+{
+	if(currentPost)
+		GetReplies(currentPost.Key.Username + ',' + currentPost.Key.Time);
+	else if(currentSubforum)
+		GetSubforum(currentSubforum);
 }
 
 function ShowPosts(posts)
@@ -205,18 +210,6 @@ function GetSubforum(name)
 			}
 	);
 }
-
-function getDateString(jsonDate) {
-     if (jsonDate == undefined) {
-         return "";
-     }
-     var utcTime = parseInt(jsonDate.substr(6));
-
-     var date = new Date(utcTime);
-     var minutesOffset = date.getTimezoneOffset();
-
-     return date.addMinutes(minutesOffset).toString("dd/MM/yyyy hh:mm:ss");
- }
  
 function ClearPage()
 {
@@ -267,9 +260,11 @@ function GetReplies(postKey)
 	);
 }
 
-
+ //*******************************************Posting Functions
 function showPost(subforum)
 {
+	var splitted = postKey.split(",");
+	$('#post'+splitted[2]).append('<h1>oh yehhhh!!</h1>');
 	//TODO
 }
 
@@ -277,15 +272,14 @@ function showPost(subforum)
 function showReply(postKey)
 {
 	var splitted = postKey.split(",");
-	var posthtml = $(this);
-	posthtml.append('<h1>oh yehhh!!!</h1>')
+	$('#post'+splitted[2]).append('<h1>oh yehhhh!!</h1>');
 	//TODO
 }
 
 function showEdit(postKey)
 {
 	var splitted = postKey.split(",");
-	//TODO
+	$('#post'+splitted[2]).append('<h1>oh yehhhh!!</h1>');
 }
 
 function Remove(postKey)
@@ -297,8 +291,7 @@ function Remove(postKey)
 				switch(result.RemovePostResult)
 				{
 					case OK:
-						var toRemove = '#post'+splitted[2];
-						$(toRemove).parent().slideUp('slow', function(){$(toRemove).parent().parent().remove();});
+						$('#post'+splitted[2]).parent().slideUp('slow', function(){$(toRemove).parent().parent().remove();});
 						break;
 					default:
 						alert("insufficient permissions!");
@@ -307,3 +300,16 @@ function Remove(postKey)
 			}
 	);
 }
+
+ //*******************************************Utils
+ function getDateString(jsonDate) {
+     if (jsonDate == undefined) {
+         return "";
+     }
+     var utcTime = parseInt(jsonDate.substr(6));
+
+     var date = new Date(utcTime);
+     var minutesOffset = date.getTimezoneOffset();
+
+     return date.addMinutes(minutesOffset).toString("dd/MM/yyyy hh:mm:ss");
+ }
