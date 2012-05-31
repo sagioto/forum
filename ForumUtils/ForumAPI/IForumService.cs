@@ -19,6 +19,18 @@ namespace ForumShared.ForumAPI
  
         #region user functions
         /// <summary>
+        /// get the number of logged in users.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(FaultException))]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json)]
+        int GetNumOfLoggedInUsers();
+
+
+        /// <summary>
         /// register the user to the system
         /// </summary>
         /// <param name="username"></param>

@@ -19,6 +19,12 @@ namespace ForumServer
         private static ServerController controller = new ServerController();
 
         #region user functions
+
+        public int GetNumOfLoggedInUsers()
+        {
+            return controller.GetNumOfLoggedInUsers();
+        }
+
         public Result Register(String username, String password)
         {
             try
@@ -305,7 +311,5 @@ namespace ForumServer
         }
 
         #endregion
-
-
-       }
+    }
 }

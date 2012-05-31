@@ -49,6 +49,11 @@ namespace ForumServer
 
         #region user functions
 
+        public int GetNumOfLoggedInUsers()
+        {
+            return dataManager.GetAllLoggedInUsers().Count;
+        }
+
         public Result Register(string username, string password)
         {
             try
@@ -563,7 +568,6 @@ namespace ForumServer
         }
 
         #endregion
-
 
 
     }
