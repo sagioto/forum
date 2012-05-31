@@ -20,12 +20,7 @@ namespace ForumServer
 
         #region user functions
 
-        public int GetNumOfLoggedInUsers()
-        {
-            return controller.GetNumOfLoggedInUsers();
-        }
-
-        public Result Register(String username, String password)
+       public Result Register(String username, String password)
         {
             try
             {
@@ -65,6 +60,21 @@ namespace ForumServer
             }
 
         }
+
+        public int GetNumOfLoggedInUsers()
+        {
+
+            try
+            {
+                return controller.GetNumOfLoggedInUsers();
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, "couldn't get number of users");
+            }
+
+        }
+
 
         public Post Subscribe(string username)
         {

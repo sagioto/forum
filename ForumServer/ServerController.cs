@@ -49,10 +49,7 @@ namespace ForumServer
 
         #region user functions
 
-        public int GetNumOfLoggedInUsers()
-        {
-            return dataManager.GetAllLoggedInUsers().Count;
-        }
+        
 
         public Result Register(string username, string password)
         {
@@ -97,6 +94,23 @@ namespace ForumServer
             catch (Exception e)
             {
                 log.Error("failed to logout user " + username, e);
+                throw e;
+            }
+
+        }
+
+        public int GetNumOfLoggedInUsers()
+        {
+            try
+            {
+                log.Info("got request for number of users");
+
+                return dataManager.GetAllLoggedInUsers().Count;
+
+            }
+            catch (Exception e)
+            {
+                log.Error("failed to get number of users", e);
                 throw e;
             }
 
