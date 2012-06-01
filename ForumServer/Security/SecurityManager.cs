@@ -40,7 +40,7 @@ namespace ForumServer.Security
             if (user == null)
                 return Result.USER_NOT_FOUND;
             if (user.Password.Equals(password)
-                && user.CurrentState == UserState.Logout)
+                /*&& user.CurrentState == UserState.Logout //Trying to enable multiple logins*/)
             {
                 user.CurrentState = UserState.Login;
                 dataManager.UpdateUser(user);

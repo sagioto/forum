@@ -264,8 +264,11 @@ function GetReplies(postKey)
  //*******************************************Posting Functions
 function showPost(subforum)
 {
-	var postHtml = '<div class="post" id="posting' + subforum + '" ><tr><td><div>title:</br><textarea id="titleToPost' + subforum + '" rows="1" cols="70"/></div></td></tr>'
-		+ '<tr><td><div>body:</br><textarea id="bodyToPost' + subforum + '" rows="10" cols="70" /></div></td></tr><div>';
+	var postHtml = '<tr><td><div class="post" id="posting' + subforum + '" >\
+						<div>title:</br><textarea id="titleToPost' + subforum + '" rows="1" cols="70"/></div>'
+					 + '<div>body:</br><textarea id="bodyToPost' + subforum + '" rows="10" cols="70" /></div></div></td>'
+					 + '<td width="130px" align="center" class="post"><button id="cancelBtn" class="postButton" onclick="cancelPost(\'' + subforum + '\')" >cancel</button></td>'
+					 + '</tr>';
 	$('.titleTr').children().append(postHtml);
 	$('#subforumpostbutton').attr("onclick", 'doPost(\'' + subforum + '\')');
 	$('#posting' + subforum).hide();
