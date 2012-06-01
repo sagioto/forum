@@ -50,6 +50,10 @@ namespace ForumClientWPF
             datePostLabel.Content = currentPost.Key.Time.ToString();
             usernameLabel.Content = currentPost.Key.Username;
 
+            if (currentPost.HasReplies)
+            {
+
+            }
         }
 
 
