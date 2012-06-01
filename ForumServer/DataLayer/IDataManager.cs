@@ -8,7 +8,7 @@ using ForumShared.SharedDataTypes;
 
 namespace ForumServer.DataLayer
 {
-    interface IDataManager
+    public interface IDataManager
     {
 
         #region Init methods

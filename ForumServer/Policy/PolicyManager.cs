@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 using ForumUtils.SharedDataTypes;
 using ForumShared.SharedDataTypes;
 using ForumShared.ForumAPI;
+using ForumServer.DataLayer;
 
 namespace ForumServer.Policy
 {
     public class PolicyManager : IPolicyManager
     {
-        private DataLayer.DataManager dataManager;
+        private IDataManager dataManager;
 
-        public PolicyManager(DataLayer.DataManager dataManager)
+        public PolicyManager(IDataManager dataManager)
         {
             this.dataManager = dataManager;
         }

@@ -94,6 +94,11 @@ table
 	font-family: "Trebuchet MS";
 }
 
+textarea
+{
+	resize: none;
+}
+
 div
 {
 	margin: 0 auto;

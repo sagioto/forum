@@ -12,11 +12,11 @@ namespace ForumServer.Security
 {
     public class SecurityManager : ISecurityManager
     {
-        private DataManager dataManager;
+        private IDataManager dataManager;
 
-        public SecurityManager(DataLayer.DataManager dataManager)
+        public SecurityManager(IDataManager dataManagerArg)
         {
-            this.dataManager = dataManager;
+            this.dataManager = dataManagerArg;
         }
 
 

@@ -19,7 +19,8 @@ namespace ForumServer
         private static ServerController controller = new ServerController();
 
         #region user functions
-        public Result Register(String username, String password)
+
+       public Result Register(String username, String password)
         {
             try
             {
@@ -41,7 +42,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "couldn't login");
+                throw new FaultException<Exception>(e, e.Message);
             }
 
         }
@@ -55,10 +56,25 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "couldn't logout");
+                throw new FaultException<Exception>(e, e.Message);
             }
 
         }
+
+        public int GetNumOfLoggedInUsers()
+        {
+
+            try
+            {
+                return controller.GetNumOfLoggedInUsers();
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, e.Message);
+            }
+
+        }
+
 
         public Post Subscribe(string username)
         {
@@ -68,7 +84,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "couldn't subscribe");
+                throw new FaultException<Exception>(e, e.Message);
             }
         }
         #endregion
@@ -77,14 +93,13 @@ namespace ForumServer
 
         public string[] GetSubforumsList()
         {
-
             try
             {
                 return controller.GetSubforumsList();
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "couldn't get sub forums list");
+                throw new FaultException<Exception>(e, e.Message);
             }
 
         }
@@ -97,7 +112,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "couldn't get sub forum");
+                throw new FaultException<Exception>(e, e.Message);
             }
         }
 
@@ -109,7 +124,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "couldn't get post");
+                throw new FaultException<Exception>(e, e.Message);
             }
         }
 
@@ -122,7 +137,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "couldn't get post");
+                throw new FaultException<Exception>(e, e.Message);
             }
 
         }
@@ -141,7 +156,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "something went wrong with post");
+                throw new FaultException<Exception>(e, e.Message);
             }
         }
 
@@ -155,7 +170,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "something went wrong with reply");
+                throw new FaultException<Exception>(e, e.Message);
             }
 
         }
@@ -168,7 +183,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "somthing went wrong with edit");
+                throw new FaultException<Exception>(e, e.Message);
             }
 
         }
@@ -183,7 +198,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "somthing went wrong with remove");
+                throw new FaultException<Exception>(e, e.Message);
             }
 
         }
@@ -201,7 +216,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "couldn't add moderator");
+                throw new FaultException<Exception>(e, e.Message);
             }
 
         }
@@ -215,7 +230,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "couldn't remove moderator");
+                throw new FaultException<Exception>(e, e.Message);
             }
 
         }
@@ -229,7 +244,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "couldn't replace moderator");
+                throw new FaultException<Exception>(e, e.Message);
             }
 
         }
@@ -243,7 +258,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "couldn't add sub forum");
+                throw new FaultException<Exception>(e, e.Message);
             }
 
         }
@@ -257,7 +272,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "couldn't remove sub forum");
+                throw new FaultException<Exception>(e, e.Message);
             }
 
         }
@@ -271,7 +286,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "couldn't get report");
+                throw new FaultException<Exception>(e, e.Message);
             }
 
         }
@@ -285,7 +300,7 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "couldn't get report");
+                throw new FaultException<Exception>(e, e.Message);
             }
 
         }
@@ -299,13 +314,11 @@ namespace ForumServer
             }
             catch (Exception e)
             {
-                throw new FaultException<Exception>(e, "couldn't replace admin");
+                throw new FaultException<Exception>(e, e.Message);
             }
 
         }
 
         #endregion
-
-
-       }
+    }
 }

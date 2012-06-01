@@ -1,12 +1,29 @@
 /**
  * @author Sagi Bernstein
  */
+ 
+ //*******************************************Variables
 var username = "guest";
 var password;
-var current;
+var currentPost = null;
+var currentSubforum = null;
 var recursionLevel = 1;
+var idCounter = 0;
+
+var NULL_VALUE = 0x0000;
+var OK = 0x0001;
+var USER_NOT_FOUND = 0x0002;
+var POST_NOT_FOUND = 0x0004;
+var SUB_FORUM_NOT_FOUND = 0x0010;
+var ENTRY_EXISTS = 0x0020;
+var INSUFFICENT_PERMISSIONS = 0x0040;
+var ADMIN_PERMISSIONS_NEEDED = 0x0100;
+var SECURITY_ERROR = 0x0200;
+var POLICY_REJECTED = 0x0400;
+var ILLEGAL_POST = 0x1000;
  
  
+//*******************************************The Ajax Call
 function callService(methodName, params, onSuccess) {
 				
 	return $.ajax({	url: "ServerNetworkAdaptor.svc/" + methodName,
@@ -19,34 +36,13 @@ function callService(methodName, params, onSuccess) {
 			});
 }
 
-function GetSubforumsList(){
-	var response = callService("GetSubforumsList", "", function(result){
-		var sfList = $('#subforumsTable');
-		sfList.hide();
-		ClearPage();
-		
-		$.each(result, function(i)
-			{
-				var tr = document.createElement("tr");
-				var td = document.createElement("td");
-				td.innerHTML = result[i];
-				tr.appendChild(td);
-				td.setAttribute('onclick', 'GetSubforum(\'' + result[i] + '\')');
-				td.setAttribute('class', 'subforum');
-				td.setAttribute('colspan', '2');
-				sfList.append(tr);
-			}
-		)
-		sfList.fadeIn('slow');
-		});
-}
-
+//*******************************************User Functions
 function RegisterAndLoginCall(user, methodName){
 	var response = callService(methodName, user,
 		function(result){
 		//alert("Result is: " + result[methodName + "Result"]);
 		switch(result[methodName + "Result"]){
-			case 1:
+			case OK:
 				if(methodName == "Register"){
 					RegisterAndLogin("Login");
 				}
@@ -55,20 +51,21 @@ function RegisterAndLoginCall(user, methodName){
 					$('input[name="password"]').val('');
 					$('form[name="login"]').fadeOut('fast',
 						function(){
-							$('form[name="logout"]').html('<p>logged in as ' + username + 
-							' <button name="logoutButton" type="button" onclick="Logout(username)" class="login-out-buttons">logout</button></p>');
+							$('form[name="logout"]').html('<p>welcome ' + username + 
+							'&nbsp;&nbsp;&nbsp;<button name="logoutButton" type="button" onclick="Logout(username)" class="login-out-buttons">logout</button></p>');
 							$('form[name="logout"]').fadeIn('fast');
+							refresh();
 					});
 				}
 				break;
-			case 0:
-			case 2:if(methodName == "Login" & username != ""){
+			case NULL_VALUE:
+			case USER_NOT_FOUND:if(methodName == "Login" & username != ""){
 					alert("user " + username + " is not registered");
 					break;
 					} 
 				alert("user name and password cannot be empty");
 				break;
-			case 512: if(methodName == "Register"){
+			case SECURITY_ERROR: if(methodName == "Register"){
 					alert("user already exists");
 					}
 					else alert("user already logged in");
@@ -94,6 +91,9 @@ function Logout(name){
 		if(result[methodName + "Result"] == 1){
 			$('form[name="logout"]').fadeOut('fast', 
 					function(){
+						password = null;
+						username = "guest";
+						refresh();
 						$('form[name="login"]').fadeIn('fast');
 					}
 			);
@@ -108,11 +108,43 @@ function Subscribe()
 		function(result)
 		{
 			if(result.SubscribeResult != null)
-				alert(JSON.stringify(result));
-			//TODO: do somthing else
+				alert(JSON.stringify(result.SubscribeResult.Key.Username + " posted on " + result.SubscribeResult.Subforum));
 			setTimeout('Subscribe()',60 * 1000);
 		}
 	);
+}
+
+//*******************************************Viewing Functions
+function GetSubforumsList(){
+	currentSubforum = null;
+	currentpost = null;
+	var response = callService("GetSubforumsList", "", function(result){
+	var sfList = $('#subforumsTable');
+	sfList.hide();
+	ClearPage();
+	
+		$.each(result, function(i)
+			{
+				var tr = document.createElement("tr");
+				var td = document.createElement("td");
+				td.innerHTML = result[i];
+				tr.appendChild(td);
+				td.setAttribute('onclick', 'GetSubforum(\'' + result[i] + '\')');
+				td.setAttribute('class', 'subforum');
+				td.setAttribute('colspan', '2');
+				sfList.append(tr);
+			}
+		)
+		sfList.fadeIn('slow');
+		});
+}
+
+function refresh()
+{
+	if(currentPost)
+		GetReplies(currentPost.Key.Username + ',' + currentPost.Key.Time);
+	else if(currentSubforum)
+		GetSubforum(currentSubforum);
 }
 
 function ShowPosts(posts)
@@ -123,20 +155,22 @@ function ShowPosts(posts)
 			var tr = document.createElement("tr");
 			var td = document.createElement("td");
 			var post = posts[i];
-			
+			var id = idCounter++;
 			var buttons = "";
 			if(post.HasReplies)
-				buttons = '<button class="postButton" onclick="GetReplies(\'' + post.Key.Username + ',' + post.Key.Time + '\')" >view replies</button>';
+				buttons = '<button id="repliesB' + id + '" class="postButton" onclick="GetReplies(\'' + post.Key.Username + ',' + post.Key.Time + '\')" >view replies</button>';
 			
 			if(username != "guest")
-				buttons = buttons + '<button class="postButton" onclick="Reply(\'' + post.Key.Username + ',' + post.Key.Time + '\')" >reply</button>'
-			+ '<button class="postButton" onclick="Edit(\'' + post.Key.Username + ',' + post.Key.Time + '\')" >edit</button>'
-			+ '<button class="postButton" onclick="Remove(\'' + post.Key.Username + ',' + post.Key.Time + '\')" >remove</button>';
+				buttons = buttons + '<button id="replyB' + id + '" class="postButton" onclick="showReply(\'' + post.Key.Username + ',' + post.Key.Time + ',' + id + '\')" >reply</button>'
+			+ '<button id="editB' + id + '" class="postButton" onclick="showEdit(\'' + post.Key.Username + ',' + post.Key.Time + ',' + id + '\')" >edit</button>'
+			+ '<button id="removeB' + id + '" class="postButton" onclick="Remove(\'' + post.Key.Username + ',' + post.Key.Time + ',' + id + '\')" >remove</button>';
 			
 			var buttonsTr = '<tr colspan="3"><td>' + buttons + '</td></tr>';
-			td.innerHTML = '<table width="800px"><tbody><tr><td class="postTitle">' + post.Title + '</td><td>' + 
+			td.innerHTML = '<div><table id="post' + id + '" width="800px"><tbody><tr>' +
+			'<td class="postTitle">' + post.Title + '</td><td>' + 
 			'</td><td class="postPoster"> posted by ' + post.Key.Username + ' on ' + getDateString(post.Key.Time) + '</td></tr>' +
-			'<tr><td class="postContent" colspan="3"><h2>' + post.Body + '</h2></td></tr>' + buttonsTr + '</tbody></table>';
+			'<tr><td class="postContent" colspan="3"><h2>' + post.Body + '</h2></td></tr>'
+			+ buttonsTr + '</tbody></table></div>';
 			tr.appendChild(td);
 			td.setAttribute('class', 'post');
 			$('#subforumsTable').append(tr);
@@ -148,17 +182,21 @@ function ShowPosts(posts)
 function GetSubforum(name)
 {
 	ClearPage();
+	currentPost = null;
+	currentSubforum = name;
 	var table = document.createElement("table");
 	var tr = document.createElement("tr");
 	var tr2 = document.createElement("tr");
+	tr2.setAttribute('class','titleTr');
 	var tdTitle = document.createElement("td");
 	var tdpost = document.createElement("td");
 	tdpost.setAttribute('align', 'center');
+	tdpost.setAttribute('width', '130px');
 	tdTitle.setAttribute('align', 'center');
 	tdTitle.setAttribute('class', 'post');
 	tdpost.setAttribute('class', 'post');
 	tdTitle.innerHTML = '<h1>' + name + '</h1>';
-	tdpost.innerHTML = '<button class="postButton" onclick="showPost(\'' + name + '\')" >post</button>';
+	tdpost.innerHTML = '<button id="subforumpostbutton" class="postButton" onclick="showPost(\'' + name + '\')" >post</button>';
 	tr.appendChild(tdTitle);
 	if(username != "guest")
 		tr.appendChild(tdpost);
@@ -174,68 +212,225 @@ function GetSubforum(name)
 			}
 	);
 }
-
-function getDateString(jsonDate) {
-     if (jsonDate == undefined) {
-         return "";
-     }
-     var utcTime = parseInt(jsonDate.substr(6));
-
-     var date = new Date(utcTime);
-     var minutesOffset = date.getTimezoneOffset();
-
-     return date.addMinutes(minutesOffset).toString("dd/MM/yyyy hh:mm:ss");
- }
  
 function ClearPage()
 {
+	
 	$('.post').fadeOut();
 	$('.post').parent().remove();
 	$('.subforum').fadeOut();
+	$('.titleTr').remove();
 	$('.subforum').parent().remove();
 }
 
 function GoUp()
 {
 	ClearPage();
-	if (typeof(current) != "undefined"
-		&& current != null
-		&& typeof(current.Parent) != "undefined"
-		&& current.Parent != null)
-		GetReplies(current.Parent);
+	if (currentPost != null &&
+		currentPost.Parent != null)
+		{
+			currentPost = currentPost.Parent;
+			GetReplies(currentPost.Parent);
+		}
+	else if(currentPost != null)
+		{
+			GetSubforum(currentPost.Subforum);
+		}
 	else
-		GetSubforumsList();
+		{
+			GetSubforumsList();
+		}
 }
 
 function GetReplies(postKey)
-{
+{	
+	
 	var splitted = postKey.split(",");
-	callService("GetReplies", {"postkey": { "username" : splitted[0], "time" : splitted[1]}},
+	callService("GetPost", {"postkey": { "Username" : splitted[0], "Time" : splitted[1]}},
 			function(result)
 			{
-				ClearPage();
-				ShowPosts(result.GetSubforumResult);
+				currentPost = result.GetPostResult;
+				callService("GetReplies", {"key": { "Username" : splitted[0], "Time" : splitted[1]}},
+					function(result)
+					{
+						ClearPage();
+						ShowPosts(result.GetSubforumResult);
+					}
+				);
 			}
 	);
 }
 
-
+ //*******************************************Posting Functions
 function showPost(subforum)
 {
-	//TODO
+	var postHtml = '<div class="post" id="posting' + subforum + '" ><tr><td><div>title:</br><textarea id="titleToPost' + subforum + '" rows="1" cols="70"/></div></td></tr>'
+		+ '<tr><td><div>body:</br><textarea id="bodyToPost' + subforum + '" rows="10" cols="70" /></div></td></tr><div>';
+	$('.titleTr').children().append(postHtml);
+	$('#subforumpostbutton').attr("onclick", 'doPost(\'' + subforum + '\')');
+	$('#posting' + subforum).hide();
+	$('#posting' + subforum).slideDown('slow');
+	
 }
 
+//TODO add button
+function cancelPost(subforum)
+{
+	$('#subforumpostbutton').attr('onclick', 'showPost(\'' + subforum + '\')');
+	$('#posting' + subforum).slideUp('slow', function(){$('#posting' + subforum).remove();});
+}
+function doPost(subforum)
+{
+	cancelPost(subforum);
+	callService("Post", {"current": subforum,
+						"toPost" : { "Key": { "Username" : username, "Time" : '\/Date(' + new Date().getTime() + ')\/'},
+							"Title": $('#titleToPost' + subforum).val(), "Body": $('#bodyToPost' + subforum).val(),
+							"Parent": null,
+							"Subforum": subforum }
+						},
+			function(result)
+			{
+				switch(result.PostResult)
+				{
+					case OK:
+						refresh();
+						break;
+					default:
+						alert("insufficient permissions!");
+						break;
+				}
+			}
+	);
+}
+
+function rollDown(id)
+{
+	var postHtml = '<div id="posting' + id + '"><tr><td><div>title:</br><textarea id="titleToPost' + id + '" rows="1" cols="80"/></div></td></tr>'
+		+ '<tr><td><div>body:</br><textarea id="bodyToPost' + id + '" rows="10" cols="80" /></div></td></tr><div>';
+	$('#post'+id).children().append(postHtml);
+	$('#posting' + id).hide();
+	$('#posting' + id).slideDown('slow');
+	if(typeof $('#repliesB'+id) !== 'undefined')
+		$('#repliesB'+id).attr("disabled", "disabled");
+}
 
 function showReply(postKey)
 {
 	var splitted = postKey.split(",");
-	//TODO
+	var id = splitted[2];
+	rollDown(id);
+	$('#replyB'+id).html('submit');
+	$('#replyB'+id).hide();
+	$('#replyB'+id).show();
+	$('#replyB'+id).attr("onclick", 'doReply(\'' + postKey + '\')');
+	$('#editB'+id).attr("disabled", "disabled");
+	$('#removeB'+id).attr("disabled", "disabled");
+
+}
+
+function cancelReply(postKey)
+{
+	var splitted = postKey.split(",");
+	var id = splitted[2];
+	var sub = currentSubforum;
+	$('#posting' + id).slideUp('slow', function(){$('#posting' + id).remove();});
+	if(typeof $('#repliesB'+id) !== 'undefined')
+		$('#repliesB'+id).attr("disabled", "false");
+	$('#replyB'+id).html('reply');
+	$('#replyB'+id).attr('onclick', 'showReply(\'' + postKey + '\')');
+	$('#replyB'+id).hide();
+	$('#replyB'+id).show();
+	$('#editB'+id).removeAttr("disabled");
+	$('#removeB'+id).removeAttr("disabled");
+}
+
+
+function doReply(postKey)
+{
+	var splitted = postKey.split(",");
+	var id = splitted[2];
+	var sub = currentSubforum;
+	
+	callService("Reply", {"current": { "Username" : splitted[0], "Time" : splitted[1]},
+							"toPost" : { "Key": { "Username" : username, "Time" : '\/Date(' + new Date().getTime() + '+0300)\/'},
+							"Title": $('#titleToPost' + id).val(), "Body": $('#bodyToPost' + id).val(),
+							"Parent": { "Username" : splitted[0], "Time" : splitted[1]},
+							"Subforum": currentSubforum }
+						},
+			function(result)
+			{
+				switch(result.ReplyResult)
+				{
+					case OK:
+						$('#post'+splitted[2]).parent().slideUp('slow', function(){$(toRemove).parent().parent().remove();});
+						break;
+					default:
+						alert("insufficient permissions!");
+						break;
+				}
+			}
+	);
 }
 
 function showEdit(postKey)
 {
 	var splitted = postKey.split(",");
-	//TODO
+	var id = splitted[2];
+	rollDown(id);
+	$('#editB'+id).html('submit');
+	$('#editB'+id).hide();
+	$('#editB'+id).show();
+	$('#editB'+id).attr("onclick", 'doEdit(\'' + postKey + '\')');
+	$('#replyB'+id).attr("disabled", "disabled");
+	$('#removeB'+id).attr("disabled", "disabled");
+	$('#titleToPost' + id).val($('#post' + id).find('.postTitle').html());
+	$('#bodyToPost' + id).val($('#post' + id).find('h2').html());
+}
+//TODO add button
+function cancelEdit(postKey)
+{
+	var splitted = postKey.split(",");
+	var id = splitted[2];
+	var sub = currentSubforum;
+	$('#posting' + id).slideUp('slow', function(){$('#posting' + id).remove();});
+	if(typeof $('#repliesB'+id) !== 'undefined')
+		$('#repliesB'+id).attr("disabled", "false");
+	$('#editB'+id).html('edit');
+	$('#editB'+id).attr('onclick', 'showEdit(\'' + postKey + '\')');
+	$('#editB'+id).hide();
+	$('#editB'+id).show();
+	$('#replyB'+id).removeAttr("disabled");
+	$('#removeB'+id).removeAttr("disabled");
+}
+
+function doEdit(postKey)
+{	
+	cancelEdit(postKey);
+	var splitted = postKey.split(",");
+	var id = splitted[2];
+	var sub = currentSubforum;
+	callService("EditPost", {"currPost": { "Username" : splitted[0], "Time" : splitted[1]},
+							"toPost" : { "Key": null,
+							"Title": $('#titleToPost' + id).val(), "Body": $('#bodyToPost' + id).val(),
+							"Parent": null,
+							"Subforum": sub },
+							"username":username,
+							"password":password
+						},
+			function(result)
+			{
+				switch(result.EditPostResult)
+				{
+					case OK:
+						$('#post'+splitted[2]).parent().slideUp('slow', function(){$(toRemove).parent().parent().remove();});
+						refresh();
+						break;
+					default:
+						alert("insufficient permissions!");
+						break;
+				}
+			}
+	);
 }
 
 function Remove(postKey)
@@ -244,7 +439,27 @@ function Remove(postKey)
 	callService("RemovePost", {"postkey": { "Username" : splitted[0], "Time" : splitted[1]}, "username":username, "password":password},
 			function(result)
 			{
-				//TODO remove post from page
+				switch(result.RemovePostResult)
+				{
+					case OK:
+						$('#post'+splitted[2]).parent().slideUp('slow', function(){$(toRemove).parent().parent().remove();});
+						break;
+					default:
+						alert("insufficient permissions!");
+						break;
+				}
 			}
 	);
 }
+
+ //*******************************************Utils
+ function getDateString(jsonDate) {
+     if (jsonDate == undefined) {
+         return "";
+     }
+     var utcTime = parseInt(jsonDate.substr(6));
+
+     var date = new Date(utcTime);
+
+     return date.toString("dd/MM/yyyy HH:mm:ss");
+ }
