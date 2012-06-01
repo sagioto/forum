@@ -30,7 +30,7 @@ namespace ForumServer
             try
             {
                 log.Info("intializing service...");
-                dataManager = new DataManager();
+                dataManager = new DataManagerLocal();
                 securityManager = new SecurityManager(dataManager);
                 policyManager = new PolicyManager(dataManager);
                 string time = ConfigurationManager.AppSettings["timeToWaitMinutes"];
