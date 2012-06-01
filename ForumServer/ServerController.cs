@@ -35,7 +35,7 @@ namespace ForumServer
                 policyManager = new PolicyManager(dataManager);
                 string time = ConfigurationManager.AppSettings["timeToWaitMinutes"];
                 timeToWait = TimeSpan.FromMinutes(int.Parse(time));
-               // dataManager.InitForumData();
+                // dataManager.InitForumData();
 
             }
             catch (Exception e)
@@ -92,6 +92,25 @@ namespace ForumServer
             catch (Exception e)
             {
                 log.Error("failed to logout user " + username, e);
+                throw e;
+            }
+
+        }
+
+
+
+        internal int GetNumOfLoggedInUsers()
+        {
+            try
+            {
+                log.Info("got request for number of users");
+
+                return dataManager.GetAllLoggedInUsers().Count;
+
+            }
+            catch (Exception e)
+            {
+                log.Error("failed to get number of users", e);
                 throw e;
             }
 
@@ -228,7 +247,7 @@ namespace ForumServer
                 log.Info("got request to post in sub forum: " + subforum);
                 if (!CheckPost(post))
                     return Result.ILLEGAL_POST;
-                
+
                 Result res = securityManager.IsAuthorizedToPost(post.Key.Username, subforum);
                 if (res == Result.OK)
                     if (dataManager.AddPost(post, subforum.ToString()))
@@ -255,7 +274,7 @@ namespace ForumServer
                 log.Info("got request to reply to post " + currPost);
                 if (!CheckPost(post))
                     return Result.ILLEGAL_POST;
-                
+
                 Result res = securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum);
                 if (res == Result.OK)
                     if (dataManager.AddReply(post, currPost))
@@ -563,8 +582,6 @@ namespace ForumServer
         }
 
         #endregion
-
-
 
     }
 }
