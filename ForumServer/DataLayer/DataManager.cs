@@ -18,12 +18,12 @@ namespace ForumServer.DataLayer
         public DataManager()
         {
             ForumContext = new ForumEntities();
-            CleanForumData();
+           //CleanForumData();
             // Add admin:
             string adminName = ConfigurationManager.AppSettings["adminName"];
             string adminPass = ConfigurationManager.AppSettings["adminPassword"];
             User admin = new User(adminName, adminPass);
-            AddUser(admin);
+          //  AddUser(admin);
             SetAdmin(admin);
         }
 
@@ -130,10 +130,9 @@ namespace ForumServer.DataLayer
             IEnumerable<PostEntity> repliesList = from r in ForumContext.PostEntities
                                                   where r.ParentPostKeyId == pe.PostKeyId
                                                   select r;
-            Dictionary<Postkey, Post> repliesDictionary = null;
+            Dictionary<Postkey, Post> repliesDictionary = new Dictionary<Postkey, Post>();
             if (repliesList.Count() != 0)
             {
-                repliesDictionary = new Dictionary<Postkey, Post>();
                 foreach (PostEntity reply in repliesList)
                 {
                     Post p = PostEntityToPost(reply);
