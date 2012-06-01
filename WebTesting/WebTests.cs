@@ -45,7 +45,7 @@ namespace WebTesting
         public void TheSimplewebTest()
         {
             driver.Navigate().GoToUrl(baseURL);
-            Thread.Sleep(1000);
+            Thread.Sleep(3000);
             string cars = driver.FindElement(By.XPath("//*[@id='subforumsTable']/tbody/tr[1]/td")).Text;
             Assert.True(cars.Equals("Cars"));
             driver.FindElement(By.XPath("//*[@id='subforumsTable']/tbody/tr[1]/td")).Click();

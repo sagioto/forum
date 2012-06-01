@@ -471,7 +471,7 @@ namespace ForumClientConsole
             }
             foreach (Post p in posts)
             {
-                if (p.Title.Equals(command[1]))
+                if (p.Title.Trim().Equals(command[1]))
                 {
                     Post[] replies = controller.GetReplies(p.Key);
                     if (replies != null)
