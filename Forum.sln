@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerTests", "ServerTests\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumTests", "ForumTests\ForumTests.csproj", "{EB180CBD-3F47-45AB-A956-871DBD23CE9E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumClientWPF", "ForumClientWPF\ForumClientWPF.csproj", "{FF749A87-99FF-43CB-8AF9-01993156BE92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,16 @@ Global
 		{EB180CBD-3F47-45AB-A956-871DBD23CE9E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{EB180CBD-3F47-45AB-A956-871DBD23CE9E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{EB180CBD-3F47-45AB-A956-871DBD23CE9E}.Release|x86.ActiveCfg = Release|Any CPU
+		{FF749A87-99FF-43CB-8AF9-01993156BE92}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{FF749A87-99FF-43CB-8AF9-01993156BE92}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{FF749A87-99FF-43CB-8AF9-01993156BE92}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{FF749A87-99FF-43CB-8AF9-01993156BE92}.Debug|x86.ActiveCfg = Debug|x86
+		{FF749A87-99FF-43CB-8AF9-01993156BE92}.Debug|x86.Build.0 = Debug|x86
+		{FF749A87-99FF-43CB-8AF9-01993156BE92}.Release|Any CPU.ActiveCfg = Release|x86
+		{FF749A87-99FF-43CB-8AF9-01993156BE92}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{FF749A87-99FF-43CB-8AF9-01993156BE92}.Release|Mixed Platforms.Build.0 = Release|x86
+		{FF749A87-99FF-43CB-8AF9-01993156BE92}.Release|x86.ActiveCfg = Release|x86
+		{FF749A87-99FF-43CB-8AF9-01993156BE92}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

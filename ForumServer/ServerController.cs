@@ -29,13 +29,13 @@ namespace ForumServer
             log4net.Config.XmlConfigurator.Configure();
             try
             {
-                log.Info("intializing service...");
+                log.Info("initializing service...");
                 dataManager = new DataManager();
                 securityManager = new SecurityManager(dataManager);
                 policyManager = new PolicyManager(dataManager);
                 string time = ConfigurationManager.AppSettings["timeToWaitMinutes"];
                 timeToWait = TimeSpan.FromMinutes(int.Parse(time));
-                dataManager.InitForumData();
+               // dataManager.InitForumData();
 
             }
             catch (Exception e)
