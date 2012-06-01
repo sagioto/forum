@@ -18,12 +18,12 @@ namespace ForumServer.DataLayer
         public DataManager()
         {
             ForumContext = new ForumEntities();
-            CleanForumData();
+            //CleanForumData();
             // Add admin:
             string adminName = ConfigurationManager.AppSettings["adminName"];
             string adminPass = ConfigurationManager.AppSettings["adminPassword"];
             User admin = new User(adminName, adminPass);
-            AddUser(admin);
+            //AddUser(admin);
             SetAdmin(admin);
         }
 
