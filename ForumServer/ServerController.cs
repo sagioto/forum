@@ -226,8 +226,16 @@ namespace ForumServer
         {
             try
             {
-                log.Info("got request for post " + key);
-                return dataManager.GetPost(key).Replies.Values.ToArray();//.OrderBy(post => post.Key.Time).ToArray();
+                if (key != null)
+                {
+                    log.Info("got request for post " + key);
+                    return dataManager.GetPost(key).Replies.Values.ToArray();//.OrderBy(post => post.Key.Time).ToArray();
+                }
+                else
+                {
+                    log.Info("got a null postkey in get replies");
+                    return null;
+                }
             }
             catch (Exception e)
             {
@@ -252,7 +260,7 @@ namespace ForumServer
                 if (res == Result.OK)
                     if (dataManager.AddPost(post, subforum.ToString()))
                     {
-                        //Notify(post); TODO uncomment when implemented
+                        Notify(post);
                         return Result.OK;
                     }
                     else return Result.SUB_FORUM_NOT_FOUND;
@@ -279,7 +287,7 @@ namespace ForumServer
                 if (res == Result.OK)
                     if (dataManager.AddReply(post, currPost))
                     {
-                        //Notify(post); TODO uncomment when implemented
+                        Notify(post);
                         return Result.OK;
                     }
                     else return Result.POST_NOT_FOUND;
