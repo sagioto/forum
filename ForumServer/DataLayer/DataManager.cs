@@ -19,12 +19,7 @@ namespace ForumServer.DataLayer
         {
             ForumContext = new ForumEntities();
            //CleanForumData();
-            // Add admin:
-            string adminName = ConfigurationManager.AppSettings["adminName"];
-            string adminPass = ConfigurationManager.AppSettings["adminPassword"];
-            User admin = new User(adminName, adminPass);
-          //  AddUser(admin);
-            SetAdmin(admin);
+            
         }
 
         public void CleanForumData()
@@ -56,7 +51,12 @@ namespace ForumServer.DataLayer
                 int numberOfSubforums = Convert.ToInt32(ConfigurationManager.AppSettings["initializeNumberOfSubforums"].ToString());
                 string[] subforumsNamesList = ConfigurationManager.AppSettings["subforumsNamesList"].ToString().Split(',');
                 int numberOfPosts = Convert.ToInt32(ConfigurationManager.AppSettings["numberOfPostsInEachSubforum"].ToString());
-                string adminName = ConfigurationManager.AppSettings["adminName"].ToString();
+                // Add admin:
+                string adminName = ConfigurationManager.AppSettings["adminName"];
+                string adminPass = ConfigurationManager.AppSettings["adminPassword"];
+                User admin = new User(adminName, adminPass);
+                AddUser(admin);
+                SetAdmin(admin);
 
                 for (int i = 0 ; i < numberOfSubforums ; i++)
                 {
