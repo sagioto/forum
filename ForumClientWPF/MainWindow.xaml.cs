@@ -26,14 +26,10 @@ namespace ForumClientWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        ClientController controller;
         SubforumsList subforumsList;
         private PostControlList postsControlsList;
-        List<Post> postsList;
-       // Thread getPostsWorkerThread;
 
-        //GUI parameters:
-        private Window darkwindow;
+       // Thread getPostsWorkerThread;
 
         LoginWindow loginWin;
         private string currentSubforum;
@@ -47,7 +43,7 @@ namespace ForumClientWPF
             loginWin.registered += new LoginWindow.LoginEventHandler(loginWin_registered);
             loginWin.cancelled += new LoginWindow.LoginEventHandler(loginWin_cancelled);
 
-            controller = new ClientController(true);
+            StaticObjects.controller = new ClientController(true);
             // controller.OnUpdateFromController += new ForumClientCore.NetworkLayer.ClientNetworkAdaptor.OnUpdate(controller_OnUpdateFromServer);
 
             subforumsList = new SubforumsList();
@@ -56,7 +52,7 @@ namespace ForumClientWPF
             GetSubforums();
 
             //GUI:
-            darkwindow = new Window()
+            StaticObjects.darkwindow = new Window()
             {
                 Background = Brushes.Black,
                 Opacity = 0.4,
@@ -65,20 +61,11 @@ namespace ForumClientWPF
                 WindowState = WindowState.Maximized,
                 Topmost = true
             };
-
-            //getPostsWorkerThread = new Thread(getSubforum);
-            //getPostsWorkerThread.SetApartmentState(ApartmentState.STA);
-
-
-            StaticObjects.postWindow = new PostWindow();
+            StaticObjects.newPostWin = new AddPostWin();
+            StaticObjects.newPostWin.closed += new AddPostWin.LoginEventHandler(loginWin_cancelled);
 
             postsControlsList = new PostControlList();
-            postsListBox.DataContext = postsControlsList;
-
-            subforumsListBox.ItemsSource = subforumsList;
-            
-            // treeView1.DataContext = postsControlsList;
-            // treeView1.ItemsSource = postsControlsList;
+            subforumsComboBox.ItemsSource = subforumsList;
 
         }
 
@@ -86,10 +73,33 @@ namespace ForumClientWPF
 
         private void getSubforum()
         {
-            List<Post> postsList = controller.GetSubforum(currentSubforum).ToList<Post>();
+            List<Post> postsList = StaticObjects.controller.GetSubforum(currentSubforum).ToList<Post>();
             foreach (Post p in postsList)
             {
-                postsControlsList.Add(new PostControl(p));
+                PostControl pc = new PostControl(p, false);
+                TreeViewItem ti = new TreeViewItem();
+                ti.Header = pc;
+                ti.IsExpanded = true;
+                if (p.HasReplies)
+                {
+                    getReplies(p, ti);
+                }
+               postsTreeView.Items.Add(ti);
+               // postsControlsList.Add(pc);
+            }
+        }
+
+        private static void getReplies(Post p, TreeViewItem ti)
+        {
+            // Get replies from server
+            Post[] replies = StaticObjects.controller.GetReplies(p.Key);
+            // Add replies as children
+            foreach (Post reply in replies)
+            {
+                TreeViewItem child = new TreeViewItem();
+                child.Header = new PostControl(reply, true);
+                getReplies(reply, child);
+                ti.Items.Add(child);
             }
         }
 
@@ -101,7 +111,7 @@ namespace ForumClientWPF
         {
             loginWin.setTitle("Register");
 
-            darkwindow.Show();
+            StaticObjects.darkwindow.Show();
             loginWin.Show();
         }
 
@@ -109,7 +119,7 @@ namespace ForumClientWPF
 
         private void GetSubforums()
         {
-            string[] sl = controller.GetSubforumsList();
+            string[] sl = StaticObjects.controller.GetSubforumsList();
             foreach (string s in sl)
             {
                 subforumsList.Add(s);
@@ -127,10 +137,10 @@ namespace ForumClientWPF
        
         public void loginWin_loggedIn()
         {
-            darkwindow.Hide();
+            StaticObjects.darkwindow.Hide();
             try
             {
-                bool res = controller.Login(loginWin.Username, loginWin.Password);
+                bool res = StaticObjects.controller.Login(loginWin.Username, loginWin.Password);
                 if (!res)
                 {
                     MessageBox.Show("Bad username or password", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -150,10 +160,10 @@ namespace ForumClientWPF
 
         public void loginWin_registered()
         {
-            darkwindow.Hide();
+            StaticObjects.darkwindow.Hide();
             try
             {
-                Result res = controller.Register(loginWin.Username, loginWin.Password);
+                Result res = StaticObjects.controller.Register(loginWin.Username, loginWin.Password);
                 if (res != Result.OK)
                 {
                     MessageBox.Show("Username is already exists. Details: " + res.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -172,14 +182,14 @@ namespace ForumClientWPF
 
         public void loginWin_cancelled()
         {
-            darkwindow.Hide();
+            StaticObjects.darkwindow.Hide();
         }
 
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
             loginWin.setTitle("Login");
 
-            darkwindow.Show();
+            StaticObjects.darkwindow.Show();
             loginWin.Show();
         }
 
@@ -187,7 +197,7 @@ namespace ForumClientWPF
         {
             try
             {
-                bool res = controller.Logout();
+                bool res = StaticObjects.controller.Logout();
                 if (!res)
                 {
                     MessageBox.Show("Username is not registered", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -205,58 +215,73 @@ namespace ForumClientWPF
 
         #endregion
 
-
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void newPostImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            GetSubforums();
-            subforumsListBox.Visibility = System.Windows.Visibility.Visible;
-            // postsDataGrid.Visibility = System.Windows.Visibility.Hidden;
-            currentSubforumLabel.Visibility = System.Windows.Visibility.Hidden;
+            try
+            {
+                StaticObjects.newPostWin.setWinProperties(null, currentSubforum);
+                StaticObjects.darkwindow.Show();
+                StaticObjects.newPostWin.Show();
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
 
-        private void subforumsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void subforumsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            mainLabel.Visibility = System.Windows.Visibility.Hidden;
             currentSubforum = e.AddedItems[0].ToString();
-            postsControlsList.Clear();
+            postsTreeView.Items.Clear();
             //Thread getPostsWorkerThread = new Thread(getSubforum);
             //getPostsWorkerThread.SetApartmentState(ApartmentState.STA);
             //getPostsWorkerThread.Start();
 
             getSubforum();
-            
-            
-            
-
-            currentSubforumLabel.Content = "Subforum: " + currentSubforum;
-            currentSubforumLabel.Visibility = System.Windows.Visibility.Visible;
-           
-
-            //TODO - Animation for subforum list
-            subforumsListBox.Visibility = System.Windows.Visibility.Hidden;
-            postsListBox.Visibility = System.Windows.Visibility.Visible;
-            // postsDataGrid.Visibility = System.Windows.Visibility.Visible;
-           // DataTable dt = ListToTable(controller.GetSubforum(currentSubforum).ToList<Post>());
-            //  postsDataGrid.ItemsSource = dt.DefaultView;
+            postsTreeView.Visibility = System.Windows.Visibility.Visible;
         }
 
-        private DataTable ListToTable(List<Post> postsList)
+        private void registerButton_Click(object sender, MouseButtonEventArgs e)
         {
-            DataTable dt = new DataTable();
-            dt.Columns.Add();
-            dt.Columns.Add();
-            dt.Columns.Add();
-            dt.Columns.Add();
-            foreach (Post p in postsList)
+            loginWin.setTitle("Register");
+
+            StaticObjects.darkwindow.Show();
+            loginWin.Show();
+        }
+
+        private void loginImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            loginWin.setTitle("Login");
+
+            StaticObjects.darkwindow.Show();
+            loginWin.Show();
+        }
+
+        private void logoutImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
             {
-                dt.Rows.Add("* ", p.Title, p.Key.Username, p.Key.Time.ToShortDateString());
+                bool res = StaticObjects.controller.Logout();
+                if (!res)
+                {
+                    MessageBox.Show("Username is not registered", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    helloLabel.Content = "Hello guest";
+                }
             }
-            return dt;
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
-        private void button3_Click(object sender, RoutedEventArgs e)
-        {
-            postsControlsList.Add(new PostControl(null));
-        }
+
+
+
 
 
     }

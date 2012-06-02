@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:local="clr-namespace:ForumClientWPF"
-        Title="MainWindow" Height="723" Width="1009" Opacity="1" OpacityMask="{x:Null}">
+        Title="MainWindow" Opacity="1" OpacityMask="{x:Null}" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="702" Width="1254">
     <Window.Resources>
      <!--   <local:PostControl x:Key="postsControlsList" />-->
         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
@@ -13,55 +13,27 @@
     </Window.Resources>
 
     
-    <Grid Background="#FFC3E2F5" OverridesDefaultStyle="True" OpacityMask="{x:Null}" Opacity="100000">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="464*" />
-            <ColumnDefinition Width="65*" />
-            <ColumnDefinition Width="116*" />
-            <ColumnDefinition Width="45*" />
-            <ColumnDefinition Width="256*" />
-            <ColumnDefinition Width="41*" />
-        </Grid.ColumnDefinitions>
-        <Label Content="SAGIOTO Forum" Height="52" HorizontalAlignment="Left" Margin="336,6,0,0" Name="label1" VerticalAlignment="Top" Width="287" FontWeight="Bold" FontSize="32" FontStyle="Italic" FontFamily="Showcard Gothic" Grid.ColumnSpan="3" BorderBrush="#FFF90A0A"></Label>
+    <Grid OverridesDefaultStyle="True" OpacityMask="{x:Null}" Opacity="100000" Visibility="Visible" Height="678" Width="1240">
+        <Label Content="SAGIOTO Forum" Height="52" HorizontalAlignment="Left" Margin="441,12,0,0" Name="label1" VerticalAlignment="Top" Width="287" FontWeight="Bold" FontSize="32" FontStyle="Italic" FontFamily="Showcard Gothic" BorderBrush="#FFF90A0A"></Label>
         <Label Content="Hello guest" Height="31" HorizontalAlignment="Left" Margin="9,6,0,0" Name="helloLabel" VerticalAlignment="Top" Width="139" />
-        <Button Content="Register" HorizontalAlignment="Left" Margin="68,12,0,647" Name="registerButton" Width="65" Grid.Column="4" Click="registerButton_Click" />
-        <Button Content="LogIn" HorizontalAlignment="Left" Margin="147,12,0,647" Name="loginButton" Width="65" Grid.Column="4" Click="loginButton_Click" />
-        <Button Content="LogOut" HorizontalAlignment="Left" Margin="223,12,0,647" Name="logoutButton" Width="65" Grid.ColumnSpan="2" Grid.Column="4" Opacity="100000" OpacityMask="{x:Null}" Click="logoutButton_Click" />
-        <Frame Grid.ColumnSpan="6" Height="547" HorizontalAlignment="Left" Margin="9,109,0,0" Name="frame1" VerticalAlignment="Top" Width="969" BorderBrush="Black" OpacityMask="{x:Null}">
-            <Frame.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFA7CFED" Offset="0.024000000000000021" />
-                    <GradientStop Color="Black" Offset="0" />
-                    <GradientStop Color="White" Offset="1" />
-                </LinearGradientBrush>
-            </Frame.Background>
-        </Frame>
-        <Button Content="Subforums list" Height="23" HorizontalAlignment="Left" Margin="435,79,0,0" Name="button1" VerticalAlignment="Top" Width="46" Grid.ColumnSpan="2" Click="button1_Click" />
-        <Button Content="New Post" Height="24" HorizontalAlignment="Left" Margin="41,79,0,0" Name="button2" VerticalAlignment="Top" Width="41" Grid.Column="1" Grid.ColumnSpan="2" />
-        <Button Content="Previous post" Height="24" HorizontalAlignment="Left" Margin="368,78,0,0" Name="button3" VerticalAlignment="Top" Width="47" Click="button3_Click" />
-        <ListBox DataContext="{Binding Path=Window.subforumsList}"   Grid.ColumnSpan="5" Height="451" HorizontalAlignment="Left" Margin="227,128,0,0" Name="subforumsListBox" VerticalAlignment="Top" Width="504" Background="{x:Null}" FontSize="24" Focusable="False" OverridesDefaultStyle="False" FontFamily="Pristina" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" SelectionChanged="subforumsListBox_SelectionChanged">
-            <ListBox.Resources>
-                <Style x:Key="myLBStyle" TargetType="{x:Type ListBoxItem}">
-                    <Style.Resources>
-                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
-                             Color="Transparent"/>
-                    </Style.Resources>
-                </Style>
-            </ListBox.Resources>
-            <ListBox.ItemBindingGroup>
-                <BindingGroup />
-            </ListBox.ItemBindingGroup>
-
-        </ListBox>
-        <Label Content="Current Subforums" FontFamily="Raavi" FontSize="18" FontWeight="Bold" Height="34" HorizontalAlignment="Left" Margin="12,128,0,0" Name="currentSubforumLabel" OverridesDefaultStyle="False" VerticalAlignment="Top" Width="209">
-            <Label.Foreground>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFC3FF00" Offset="0" />
-                    <GradientStop Color="#FFD8F558" Offset="1" />
-                </LinearGradientBrush>
-            </Label.Foreground>
-        </Label>
-        <ListBox ItemsSource="{Binding Path=PostControl}" Height="515" HorizontalAlignment="Left" VerticalContentAlignment="Stretch" Margin="267,128,0,0" Name="postsListBox" VerticalAlignment="Top" Width="695" Grid.ColumnSpan="6" Visibility="Hidden" />
+        <TreeView Height="553" HorizontalAlignment="Left" Margin="4,110,0,0" Name="postsTreeView" VerticalAlignment="Top" Width="1226" BorderThickness="5" Background="#FFF0F2F7" BorderBrush="#FF072881"></TreeView>
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="528,81,0,0" Name="subforumsComboBox" VerticalAlignment="Top" Width="188" Background="#FFF2F2F2" DataContext="{Binding}" SelectionChanged="subforumsComboBox_SelectionChanged" ForceCursor="False">
+        <ComboBox.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}">Blue</SolidColorBrush>
+        </ComboBox.Resources>
+        </ComboBox>
+        <Label Content="Subforums:" Height="28" HorizontalAlignment="Left" Margin="441,78,0,0" Name="label2" VerticalAlignment="Top" Width="82" />
+        <Image Height="45" HorizontalAlignment="Left" Margin="12,63,0,0" Name="newPostImage" Stretch="Fill" VerticalAlignment="Top" Width="48" Source="/ForumClientWPF;component/images/newPost.png" Tag="Add New Post" MouseLeftButtonDown="newPostImage_MouseLeftButtonDown" Cursor="Hand" ToolTip="Add New Post" />
+        <Image Height="23" HorizontalAlignment="Left" Margin="1150,6,0,0" Name="loginImage" Source="/ForumClientWPF;component/images/login.png" Stretch="Fill" Tag="Login" VerticalAlignment="Top" Width="24" MouseLeftButtonDown="loginImage_MouseLeftButtonDown" Cursor="Hand" ToolTip="Login" />
+        <Image Height="23" HorizontalAlignment="Left" Margin="1189,6,0,0" Name="logoutImage" Source="/ForumClientWPF;component/images/logout.png" Stretch="Fill" Tag="Logout" VerticalAlignment="Top" Width="24" MouseLeftButtonDown="logoutImage_MouseLeftButtonDown" Cursor="Hand" ToolTip="Logout" />
+        <Image Height="23" HorizontalAlignment="Left" Margin="1112,6,0,0" Name="registerImage" Source="/ForumClientWPF;component/images/register.png" Stretch="Fill" Tag="Register" VerticalAlignment="Top" Width="24" MouseLeftButtonDown="registerButton_Click" Cursor="Hand" ToolTip="Register" />
+        <Label Content="Select subforum from list above" Height="44" HorizontalAlignment="Left" Margin="420,368,0,0" Name="mainLabel" VerticalAlignment="Top" Foreground="#FF696161" FontSize="26" Width="373" />
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                <GradientStop Color="#FFF5F8F8" Offset="0" />
+                <GradientStop Color="#FFCDE2EB" Offset="1" />
+            </LinearGradientBrush>
+        </Grid.Background>
     </Grid>
     
 </Window>

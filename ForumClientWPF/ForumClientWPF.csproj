@@ -56,15 +56,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="PostControlList.cs" />
-    <Compile Include="PostWindow.xaml.cs">
-      <DependentUpon>PostWindow.xaml</DependentUpon>
+    <Compile Include="AddPostWin.xaml.cs">
+      <DependentUpon>AddPostWin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PostControlList.cs" />
     <Compile Include="StaticObjects.cs" />
     <Compile Include="SubforumsList.cs" />
     <Compile Include="temp.xaml.cs">
       <DependentUpon>temp.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddPostWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -85,10 +89,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PostControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PostWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,6 +143,36 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\addReply.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\editPost.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\showReplies.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\profile.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\newPost.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\login.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\logout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\register.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
