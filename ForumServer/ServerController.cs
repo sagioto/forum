@@ -19,7 +19,7 @@ namespace ForumServer
         private IDataManager dataManager;
         private ISecurityManager securityManager;
         private IPolicyManager policyManager;
-        private Post posted;
+        volatile private Post posted;
         private TimeSpan timeToWait;
         private log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -129,7 +129,9 @@ namespace ForumServer
                 {
                     lock (toSubscribe)
                     {
-                        if (Monitor.Wait(toSubscribe, timeToWait))
+                        DateTime start = DateTime.Now;
+                        Monitor.Wait(toSubscribe, timeToWait);
+                        if (DateTime.Now - start < timeToWait)
                             return this.posted;
                     }
                 }

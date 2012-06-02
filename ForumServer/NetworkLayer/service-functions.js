@@ -24,16 +24,21 @@ var ILLEGAL_POST = 0x1000;
  
  
 //*******************************************The Ajax Call
-function callService(methodName, params, onSuccess) {
+function callServiceWithError(methodName, params, onSuccess, onError) {
 				
 	return $.ajax({	url: "ServerNetworkAdaptor.svc/" + methodName,
 				contentType: "application/json",
 				data: JSON.stringify(params),
 				dataType: "json",
 				success: onSuccess,
-				error: function(req, msg, obj){alert("Lost connection with the server")},
+				error: onError,
 				type: "POST"
 			});
+}
+
+function callService(methodName, params, onSuccess) {	
+	return callServiceWithError(methodName, params, onSuccess, 
+		function(req, msg, obj){alert("Lost connection with the server")});
 }
 
 //*******************************************User Functions
@@ -104,13 +109,14 @@ function Logout(name){
 
 function Subscribe()
 {
-	callService("Subscribe", {"username": username},
+	callServiceWithError("Subscribe", {"username": username},
 		function(result)
 		{
 			if(result.SubscribeResult != null)
 				alert(JSON.stringify(result.SubscribeResult.Key.Username + " posted on " + result.SubscribeResult.Subforum));
-			Subscribe()
-		}
+			Subscribe();
+		},
+		function(req, msg, obj){}
 	);
 }
 
