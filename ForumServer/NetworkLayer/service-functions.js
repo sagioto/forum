@@ -24,7 +24,8 @@ var ILLEGAL_POST = 0x1000;
  
  
 //*******************************************The Ajax Call
-function callServiceWithError(methodName, params, onSuccess, onError) {
+function callServiceWithError(methodName, params, onSuccess, onError)
+{
 				
 	return $.ajax({	url: "ServerNetworkAdaptor.svc/" + methodName,
 				contentType: "application/json",
@@ -36,13 +37,15 @@ function callServiceWithError(methodName, params, onSuccess, onError) {
 			});
 }
 
-function callService(methodName, params, onSuccess) {	
+function callService(methodName, params, onSuccess)
+{	
 	return callServiceWithError(methodName, params, onSuccess, 
 		function(req, msg, obj){alert("Lost connection with the server")});
 }
 
 //*******************************************User Functions
-function RegisterAndLoginCall(user, methodName){
+function RegisterAndLoginCall(user, methodName)
+{
 	var response = callService(methodName, user,
 		function(result){
 		//alert("Result is: " + result[methodName + "Result"]);
@@ -80,7 +83,8 @@ function RegisterAndLoginCall(user, methodName){
 	);
 }
 
-function RegisterAndLogin(methodName){
+function RegisterAndLogin(methodName)
+{
 	var name = $('input[name="username"]').val();
 	var pass = $('input[name="password"]').val();
 	username = name;
@@ -88,7 +92,8 @@ function RegisterAndLogin(methodName){
 	return RegisterAndLoginCall({"username": name, "password": pass}, methodName);
 }
 
-function Logout(name){
+function Logout(name)
+{
 	var methodName = "Logout";
 	callService(methodName, {"username": name},
 		function(result){
@@ -121,7 +126,8 @@ function Subscribe()
 }
 
 //*******************************************Viewing Functions
-function GetSubforumsList(){
+function GetSubforumsList()
+{
 	currentSubforum = null;
 	currentpost = null;
 	var response = callService("GetSubforumsList", "", function(result){
@@ -297,6 +303,7 @@ function cancelPost(subforum)
 		function(){$('#posting' + subforum).parent().parent().remove();}
 	);
 }
+
 function doPost(subforum)
 {
 	cancelPost(subforum);
@@ -364,7 +371,6 @@ function cancelReply(postKey)
 	$('#editB'+id).removeAttr("disabled");
 	$('#removeB'+id).removeAttr("disabled");
 }
-
 
 function doReply(postKey)
 {
@@ -473,8 +479,9 @@ function Remove(postKey)
 	);
 }
 
- //*******************************************Utils
- function getDateString(jsonDate) {
+//*******************************************Utils
+function getDateString(jsonDate)
+{
      if (jsonDate == undefined) {
          return "";
      }
