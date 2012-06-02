@@ -158,7 +158,7 @@ namespace ForumServer
                 {
                     lock (user)
                     {
-                        Monitor.Pulse(user);
+                        Monitor.PulseAll(user);
                     }
                 }
 
