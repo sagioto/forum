@@ -36,8 +36,8 @@ namespace ForumServer
                 dataManager = new DataManager();
                 securityManager = new SecurityManager(dataManager);
                 policyManager = new PolicyManager(dataManager);
-                string time = ConfigurationManager.AppSettings["timeToWaitMinutes"];
-                timeToWait = TimeSpan.FromMinutes(int.Parse(time));
+                string time = ConfigurationManager.AppSettings["timeToWaitSeconds"];
+                timeToWait = TimeSpan.FromSeconds(int.Parse(time));
                 // dataManager.InitForumData();
 
             }
