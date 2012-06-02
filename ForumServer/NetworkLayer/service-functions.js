@@ -270,13 +270,14 @@ function GetReplies(postKey)
  //*******************************************Posting Functions
 function showPost(subforum)
 {
-	var postHtml = '<tr><td><div class="post" id="posting' + subforum + '" >\
-						<div>title:</br><textarea id="titleToPost' + subforum + '" rows="1" cols="70"/></div>'
-					 + '<div>body:</br><textarea id="bodyToPost' + subforum + '" rows="10" cols="70" /></div></div></td>'
-					 + '<td width="130px" align="center" class="post"><button id="cancelBtn" class="postButton" onclick="cancelPost(\'' + subforum + '\')" >cancel</button></td>'
-					 + '</tr>';
+	var postHtml = '<tr><td colspan="2"><div class="post" id="posting' + subforum + '" >\
+					title:</br><textarea id="titleToPost' + subforum + '" rows="1" cols="70"/></br>'
+					 + 'body:</br><textarea id="bodyToPost' + subforum + '" rows="10" cols="70" />'
+					 + '<button id="cancelBtn" class="postButton" onclick="cancelPost(\'' + subforum + '\')" >cancel</button>'
+					 + '</div></td></tr>';
 	$('.titleTr').children().append(postHtml);
 	$('#subforumpostbutton').attr("onclick", 'doPost(\'' + subforum + '\')');
+	$('#subforumpostbutton').html("submit");
 	$('#posting' + subforum).hide();
 	$('#posting' + subforum).slideDown('slow');
 	
@@ -286,6 +287,7 @@ function showPost(subforum)
 function cancelPost(subforum)
 {
 	$('#subforumpostbutton').attr('onclick', 'showPost(\'' + subforum + '\')');
+	$('#subforumpostbutton').html("post");
 	$('#posting' + subforum).slideUp('slow', 
 		function(){$('#posting' + subforum).parent().parent().remove();}
 	);
