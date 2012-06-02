@@ -62,9 +62,6 @@
     <Compile Include="PostControlList.cs" />
     <Compile Include="StaticObjects.cs" />
     <Compile Include="SubforumsList.cs" />
-    <Compile Include="temp.xaml.cs">
-      <DependentUpon>temp.xaml</DependentUpon>
-    </Compile>
     <Page Include="AddPostWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -89,10 +86,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PostControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="temp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -21,15 +21,15 @@
             <PropertyRef Name="Username" />
             <PropertyRef Name="Subforum" />
           </Key>
-          <Property Name="Username" Type="nchar" Nullable="false" MaxLength="50" />
-          <Property Name="Subforum" Type="nchar" Nullable="false" MaxLength="50" />
+          <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Subforum" Type="nvarchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblPostKeys">
           <Key>
             <PropertyRef Name="PostKeyId" />
           </Key>
           <Property Name="PostKeyId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="nchar" Nullable="false" MaxLength="20" />
+          <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Time" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tblPosts">
@@ -37,26 +37,26 @@
             <PropertyRef Name="PostKeyId" />
           </Key>
           <Property Name="PostKeyId" Type="int" Nullable="false" />
-          <Property Name="Title" Type="nchar" Nullable="false" MaxLength="100" />
-          <Property Name="Body" Type="nchar" MaxLength="1000" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Body" Type="nvarchar" MaxLength="1000" />
           <Property Name="ParentPostKeyId" Type="int" />
-          <Property Name="SubforumName" Type="nchar" Nullable="false" MaxLength="20" />
+          <Property Name="SubforumName" Type="nvarchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblSubforums">
           <Key>
             <PropertyRef Name="Name" />
           </Key>
-          <Property Name="Name" Type="nchar" Nullable="false" MaxLength="50" />
-          <Property Name="Description" Type="nchar" MaxLength="1000" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="tblUsers">
           <Key>
             <PropertyRef Name="UserName" />
           </Key>
-          <Property Name="UserName" Type="nchar" Nullable="false" MaxLength="20" />
-          <Property Name="Password" Type="nchar" Nullable="false" MaxLength="20" />
-          <Property Name="Authentication" Type="nchar" Nullable="false" MaxLength="20" />
-          <Property Name="State" Type="nchar" MaxLength="10" />
+          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Authentication" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_tblPostKeys_tblUsers">
           <End Role="tblUsers" Type="ForumModel.Store.tblUsers" Multiplicity="1" />
@@ -215,7 +215,7 @@
     <Diagrams>
       <Diagram Name="ForumModel" ZoomLevel="90">
         <EntityTypeShape EntityType="ForumModel.PostKeyEntity" Width="1.5" PointX="3" PointY="1" Height="1.7879850260416674" />
-        <EntityTypeShape EntityType="ForumModel.PostEntity" Width="1.5" PointX="0.75" PointY="3.75" Height="1.9802864583333317" />
+        <EntityTypeShape EntityType="ForumModel.PostEntity" Width="1.5" PointX="0.75" PointY="3.75" Height="2.0002864583333331" />
         <EntityTypeShape EntityType="ForumModel.UserEntity" Width="1.5" PointX="0.75" PointY="0.875" Height="1.9802864583333315" />
         <AssociationConnector Association="ForumModel.FK_tblPostKeys_tblUsers" >
           <ConnectorPoint PointX="2.25" PointY="1.8939925130208337" />
