@@ -18,6 +18,7 @@ namespace ForumServer.DataLayer
         public DataManager()
         {
             ForumContext = new ForumEntities();
+            ForumContext.Connection.Open();
            //CleanForumData();
             
         }
