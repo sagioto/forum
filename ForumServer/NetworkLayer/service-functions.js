@@ -227,10 +227,16 @@ function GoUp()
 {
 	ClearPage();
 	if (currentPost != null &&
-		currentPost.Parent != null)
+		currentPost.ParentPost != null)
 		{
-			currentPost = currentPost.Parent;
-			GetReplies(currentPost.Parent);
+			//currentPost = currentPost.ParentPost;
+			callService("GetPost", {"postkey": { "Username" : currentPost.ParentPost.Username, "Time" : currentPost.ParentPost.Time}},
+				function(result)
+				{
+					currentPost = result.GetPostResult;
+				}
+			);
+			GetReplies(currentPost.ParentPost.Username + ',' + currentPost.ParentPost.Time);
 		}
 	else if(currentPost != null)
 		{
@@ -250,11 +256,11 @@ function GetReplies(postKey)
 			function(result)
 			{
 				currentPost = result.GetPostResult;
-				callService("GetReplies", {"key": { "Username" : splitted[0], "Time" : splitted[1]}},
+				callService("GetReplies", {"postkey": { "Username" : splitted[0], "Time" : splitted[1]}},
 					function(result)
 					{
 						ClearPage();
-						ShowPosts(result.GetSubforumResult);
+						ShowPosts(result.GetRepliesResult);
 					}
 				);
 			}
