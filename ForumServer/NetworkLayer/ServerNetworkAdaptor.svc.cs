@@ -175,11 +175,11 @@ namespace ForumServer
 
         }
 
-        public Result EditPost(Postkey postToUpdate, Post originalPost, string username, string password)
+        public Result EditPost(Postkey oldPost, Post newPost, string username, string password)
         {
             try
             {
-                return controller.EditPost(postToUpdate, originalPost, username, password);
+                return controller.EditPost(oldPost, newPost, username, password);
             }
             catch (Exception e)
             {

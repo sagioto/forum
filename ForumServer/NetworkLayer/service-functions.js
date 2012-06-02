@@ -389,7 +389,7 @@ function doReply(postKey)
 				switch(result.ReplyResult)
 				{
 					case OK:
-						$('#post'+splitted[2]).parent().slideUp('slow', function(){$(toRemove).parent().parent().remove();});
+						$('#post'+splitted[2]).parent().slideUp('slow', function(){$('#posting' + id).remove();});
 						break;
 					default:
 						alert("insufficient permissions!");
@@ -436,8 +436,8 @@ function doEdit(postKey)
 	var splitted = postKey.split(",");
 	var id = splitted[2];
 	var sub = currentSubforum;
-	callService("EditPost", {"currPost": { "Username" : splitted[0], "Time" : splitted[1]},
-							"toPost" : { "Key": null,
+	callService("EditPost", {"oldPost": { "Username" : splitted[0], "Time" : splitted[1]},
+							"newPost" : { "Key": null,
 							"Title": $('#titleToPost' + id).val(), "Body": $('#bodyToPost' + id).val(),
 							"Parent": null,
 							"Subforum": sub },
@@ -449,7 +449,7 @@ function doEdit(postKey)
 				switch(result.EditPostResult)
 				{
 					case OK:
-						$('#post'+splitted[2]).parent().slideUp('slow', function(){$(toRemove).parent().parent().remove();});
+						$('#post'+splitted[2]).parent().slideUp('slow', function(){$('#posting' + id).remove();});
 						refresh();
 						break;
 					default:
