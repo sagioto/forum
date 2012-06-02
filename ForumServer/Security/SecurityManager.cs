@@ -89,7 +89,7 @@ namespace ForumServer.Security
             if (user == null)
                 return Result.USER_NOT_FOUND;
             Post post = dataManager.GetPost(postkey);
-            if (user == null)
+            if (post == null)
                 return Result.POST_NOT_FOUND;
             Subforum sub = dataManager.GetSubforums().Find(subforum => subforum.Name.Equals(post.Subforum));
             if(user.Password.Equals(password)
