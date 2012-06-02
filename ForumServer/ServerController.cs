@@ -21,7 +21,7 @@ namespace ForumServer
         private ISecurityManager securityManager;
         private IPolicyManager policyManager;
         volatile private Post posted = new Post();
-        private static readonly ConcurrentDictionary<string, Object> subscribed = new ConcurrentDictionary<string, Object>();
+        private static ConcurrentDictionary<string, Object> subscribed = new ConcurrentDictionary<string, Object>();
         private TimeSpan timeToWait;
         private log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 

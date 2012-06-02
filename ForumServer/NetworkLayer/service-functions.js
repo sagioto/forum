@@ -374,6 +374,7 @@ function cancelReply(postKey)
 
 function doReply(postKey)
 {
+	cancelReply(postKey);
 	var splitted = postKey.split(",");
 	var id = splitted[2];
 	var sub = currentSubforum;
@@ -390,6 +391,7 @@ function doReply(postKey)
 				{
 					case OK:
 						$('#post'+splitted[2]).parent().slideUp('slow', function(){$('#posting' + id).remove();});
+						refresh();
 						break;
 					default:
 						alert("insufficient permissions!");
