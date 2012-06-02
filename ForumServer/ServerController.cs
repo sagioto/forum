@@ -145,7 +145,7 @@ namespace ForumServer
         }
 
 
-        private void Notify(Post posted)
+        private void Notify()
         {
 
             try
@@ -262,7 +262,8 @@ namespace ForumServer
                 if (res == Result.OK)
                     if (dataManager.AddPost(post, subforum.ToString()))
                     {
-                        Notify(post);
+                        this.posted = post;
+                        Notify();
                         return Result.OK;
                     }
                     else return Result.SUB_FORUM_NOT_FOUND;
@@ -289,7 +290,8 @@ namespace ForumServer
                 if (res == Result.OK)
                     if (dataManager.AddReply(post, currPost))
                     {
-                        Notify(post);
+                        this.posted = post;
+                        Notify();
                         return Result.OK;
                     }
                     else return Result.POST_NOT_FOUND;
