@@ -52,7 +52,7 @@ function RegisterAndLoginCall(user, methodName){
 					$('form[name="login"]').fadeOut('fast',
 						function(){
 							$('form[name="logout"]').html('<p>welcome ' + username + 
-							'&nbsp;&nbsp;&nbsp;<button name="logoutButton" type="button" onclick="Logout(username)" class="login-out-buttons">logout</button></p>');
+							'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button name="logoutButton" type="button" onclick="Logout(username)" class="login-out-buttons">logout</button></p>');
 							$('form[name="logout"]').fadeIn('fast');
 							refresh();
 					});
@@ -109,7 +109,7 @@ function Subscribe()
 		{
 			if(result.SubscribeResult != null)
 				alert(JSON.stringify(result.SubscribeResult.Key.Username + " posted on " + result.SubscribeResult.Subforum));
-			setTimeout('Subscribe()',60 * 1000);
+			Subscribe()
 		}
 	);
 }
@@ -191,7 +191,6 @@ function GetSubforum(name)
 	var tdTitle = document.createElement("td");
 	var tdpost = document.createElement("td");
 	tdpost.setAttribute('align', 'center');
-	tdpost.setAttribute('width', '130px');
 	tdTitle.setAttribute('align', 'center');
 	tdTitle.setAttribute('class', 'post');
 	tdpost.setAttribute('class', 'post');
@@ -272,7 +271,7 @@ function showPost(subforum)
 {
 	var postHtml = '<tr><td colspan="2"><div class="post" id="posting' + subforum + '" >\
 					title:</br><textarea id="titleToPost' + subforum + '" rows="1" cols="70"/></br>'
-					 + 'body:</br><textarea id="bodyToPost' + subforum + '" rows="10" cols="70" />'
+					 + 'body:</br><textarea id="bodyToPost' + subforum + '" rows="10" cols="70" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
 					 + '<button id="cancelBtn" class="postButton" onclick="cancelPost(\'' + subforum + '\')" >cancel</button>'
 					 + '</div></td></tr>';
 	$('.titleTr').children().append(postHtml);
