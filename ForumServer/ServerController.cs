@@ -16,9 +16,9 @@ namespace ForumServer
 {
     public class ServerController
     {
-        private DataManager dataManager;
-        private SecurityManager securityManager;
-        private PolicyManager policyManager;
+        private IDataManager dataManager;
+        private ISecurityManager securityManager;
+        private IPolicyManager policyManager;
         private Post posted;
         private TimeSpan timeToWait;
         private log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);

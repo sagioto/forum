@@ -270,13 +270,14 @@ function GetReplies(postKey)
  //*******************************************Posting Functions
 function showPost(subforum)
 {
-	var postHtml = '<tr><td><div class="post" id="posting' + subforum + '" >\
-						<div>title:</br><textarea id="titleToPost' + subforum + '" rows="1" cols="70"/></div>'
-					 + '<div>body:</br><textarea id="bodyToPost' + subforum + '" rows="10" cols="70" /></div></div></td>'
-					 + '<td width="130px" align="center" class="post"><button id="cancelBtn" class="postButton" onclick="cancelPost(\'' + subforum + '\')" >cancel</button></td>'
-					 + '</tr>';
+	var postHtml = '<tr><td colspan="2"><div class="post" id="posting' + subforum + '" >\
+					title:</br><textarea id="titleToPost' + subforum + '" rows="1" cols="70"/></br>'
+					 + 'body:</br><textarea id="bodyToPost' + subforum + '" rows="10" cols="70" />'
+					 + '<button id="cancelBtn" class="postButton" onclick="cancelPost(\'' + subforum + '\')" >cancel</button>'
+					 + '</div></td></tr>';
 	$('.titleTr').children().append(postHtml);
 	$('#subforumpostbutton').attr("onclick", 'doPost(\'' + subforum + '\')');
+	$('#subforumpostbutton').html("submit");
 	$('#posting' + subforum).hide();
 	$('#posting' + subforum).slideDown('slow');
 	
@@ -286,7 +287,10 @@ function showPost(subforum)
 function cancelPost(subforum)
 {
 	$('#subforumpostbutton').attr('onclick', 'showPost(\'' + subforum + '\')');
-	$('#posting' + subforum).slideUp('slow', function(){$('#posting' + subforum).remove();});
+	$('#subforumpostbutton').html("post");
+	$('#posting' + subforum).slideUp('slow', 
+		function(){$('#posting' + subforum).parent().parent().remove();}
+	);
 }
 function doPost(subforum)
 {
@@ -312,10 +316,13 @@ function doPost(subforum)
 	);
 }
 
-function rollDown(id)
+function rollDown(postKey, method)
 {
+	var splitted = postKey.split(",");
+	var id = splitted[2];
 	var postHtml = '<div id="posting' + id + '"><tr><td><div>title:</br><textarea id="titleToPost' + id + '" rows="1" cols="80"/></div></td></tr>'
-		+ '<tr><td><div>body:</br><textarea id="bodyToPost' + id + '" rows="10" cols="80" /></div></td></tr><div>';
+		+ '<tr><td><div>body:</br><textarea id="bodyToPost' + id + '" rows="10" cols="80" />'+
+		'<button class="postButton" onclick="cancel' + method + '(\'' + postKey + '\')">cancel</button></div></td></tr><div>';
 	$('#post'+id).children().append(postHtml);
 	$('#posting' + id).hide();
 	$('#posting' + id).slideDown('slow');
@@ -327,7 +334,7 @@ function showReply(postKey)
 {
 	var splitted = postKey.split(",");
 	var id = splitted[2];
-	rollDown(id);
+	rollDown(postKey, "Reply");
 	$('#replyB'+id).html('submit');
 	$('#replyB'+id).hide();
 	$('#replyB'+id).show();
@@ -385,7 +392,7 @@ function showEdit(postKey)
 {
 	var splitted = postKey.split(",");
 	var id = splitted[2];
-	rollDown(id);
+	rollDown(postKey, "Edit");
 	$('#editB'+id).html('submit');
 	$('#editB'+id).hide();
 	$('#editB'+id).show();
@@ -395,7 +402,7 @@ function showEdit(postKey)
 	$('#titleToPost' + id).val($('#post' + id).find('.postTitle').html());
 	$('#bodyToPost' + id).val($('#post' + id).find('h2').html());
 }
-//TODO add button
+
 function cancelEdit(postKey)
 {
 	var splitted = postKey.split(",");
