@@ -228,8 +228,8 @@ namespace ForumClientConsole
             string newAdmin = Console.ReadLine();
             Console.WriteLine("Please enter the password of the new admin");
             string newPassword = Console.ReadLine();
-            bool r = controller.ReplaceAdmin(newAdmin, newPassword);
-            if (r)
+            Result r = controller.ReplaceAdmin(newAdmin, newPassword);
+            if (r == Result.OK)
             {
                 Console.WriteLine("Admin replaced successfully!");
             }
