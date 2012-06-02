@@ -211,7 +211,7 @@ namespace ForumClientCore
             return netAdaptor.ReportUserTotalPosts(loggedAs, loggedPassword, username);
         }
 
-        public bool ReplaceAdmin(string newAdminUsername, string newAdminPassword)
+        public Result ReplaceAdmin(string newAdminUsername, string newAdminPassword)
         {
             return netAdaptor.ReplaceAdmin(loggedAs, loggedPassword, newAdminUsername, newAdminPassword);
         }

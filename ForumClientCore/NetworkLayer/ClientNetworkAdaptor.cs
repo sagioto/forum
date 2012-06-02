@@ -232,9 +232,9 @@ namespace ForumClientCore.NetworkLayer
             return webService.ReportUserTotalPosts(adminUsername, adminPassword, username);
         }
 
-        public bool ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
+        public Result ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
         {
-            return ReplaceAdmin(oldAdminUsername, oldAdminPassword, newAdminUsername, newAdminPassword);
+            return webService.ReplaceAdmin(oldAdminUsername, oldAdminPassword, newAdminUsername, newAdminPassword);
         }
 
         public bool AddMessage(string message)
