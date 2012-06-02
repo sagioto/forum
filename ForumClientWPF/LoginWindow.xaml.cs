@@ -37,6 +37,7 @@ namespace ForumClientWPF
             titleLabel.Content = title;
             usernameTextBox.Text = "";
             passwordTextBox.Password = "";
+            usernameTextBox.Focus();
         }
 
         private void goButton_Click(object sender, RoutedEventArgs e)

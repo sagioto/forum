@@ -5,21 +5,37 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" Visibility="Visible" Width="756" Name="usercontrol" Height="175"  VerticalContentAlignment="Stretch" Background="{x:Null}">
     <Grid Width="752" Visibility="Visible" Name="grid" Height="172" Background="{x:Null}">
-        <Border BorderBrush="#FF5B5B5F" BorderThickness="1" Height="172" HorizontalAlignment="Left" Name="border1" VerticalAlignment="Top" Width="752" Background="{x:Null}" />
+        <Border BorderThickness="1" Height="172" HorizontalAlignment="Left" Name="border1" VerticalAlignment="Top" Width="752" Background="{x:Null}" CornerRadius="15">
+            <Border.BorderBrush>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FF0072FF" Offset="0" />
+                    <GradientStop Color="#FF6890CB" Offset="1" />
+                    <GradientStop Color="#FF18385F" Offset="0.674" />
+                    <GradientStop Color="#FF262F3E" Offset="0.319" />
+                </RadialGradientBrush>
+            </Border.BorderBrush>
+        </Border>
         <Image Height="17" HorizontalAlignment="Left" Margin="726,10,0,0" Name="expandIndicatorMinus" Source="/ForumClientWPF;component/images/minus.png" Stretch="Fill" VerticalAlignment="Top" Width="19" Visibility="Hidden" MouseLeftButtonDown="expandIndicator_MouseLeftButtonDown" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="213,14,0,0" Name="postTitleTextbox" VerticalAlignment="Top" Width="466" Background="{x:Null}" Text="Post Title" IsReadOnly="True" Visibility="Hidden" />
         <Image Height="75" HorizontalAlignment="Left" Name="image1" Source="/ForumClientWPF;component/images/profile.jpg" Stretch="Fill" VerticalAlignment="Top" Width="131" Visibility="Visible" Margin="4,15,0,0" />
         <Image Height="17" HorizontalAlignment="Left" Margin="726,10,0,0" Name="expandIndicatorPlus" Stretch="Fill" VerticalAlignment="Top" Width="19" Source="/ForumClientWPF;component/images/plus.png" MouseLeftButtonDown="expandIndicator_MouseLeftButtonDown" Visibility="Visible" />
         <Label Content="Label" Height="31" HorizontalAlignment="Left" Margin="10,10,0,0" Name="postTableTitle" VerticalAlignment="Top" Width="187" Visibility="Hidden" FontFamily="Lucida Sans Unicode" FontSize="13" FontWeight="Bold" />
         <Label Content="Label" Height="31" HorizontalAlignment="Right" Margin="0,10,283,0" Name="postTableUser" VerticalAlignment="Top" Width="122" Visibility="Hidden" />
-        <Label Content="Label" Height="31" HorizontalAlignment="Right" Margin="0,12,55,0" Name="postTableDate" VerticalAlignment="Top" Width="156" Visibility="Hidden" />
+        <Label Content="Label" Height="31" HorizontalAlignment="Right" Margin="0,12,55,0" Name="postTableDate" VerticalAlignment="Top" Width="156" Visibility="Hidden">
+            <Label.BorderBrush>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0" />
+                    <GradientStop Color="White" Offset="1" />
+                </LinearGradientBrush>
+            </Label.BorderBrush>
+        </Label>
         <Label Content="Subject:" FontFamily="Global User Interface" FontSize="16" FontWeight="Bold" Height="31" HorizontalAlignment="Left" Margin="137,10,0,0" Name="subjectLabel" VerticalAlignment="Top" Visibility="Hidden" Width="79" />
         <Label Content="Content:" FontFamily="Global User Interface" FontSize="16" FontWeight="Bold" Height="31" HorizontalAlignment="Left" Margin="137,35,0,0" Name="contentLabel" VerticalAlignment="Top" Visibility="Hidden" Width="79" />
         <Label Content="Post Date" Height="34" HorizontalAlignment="Right" Margin="0,117,617,0" Name="datePostLabel" VerticalAlignment="Top" Width="131" HorizontalContentAlignment="Center" Visibility="Visible" />
         <Image Height="43" HorizontalAlignment="Left" Margin="692,119,0,0" Name="editImage" Source="/ForumClientWPF;component/images/editPost.png" Stretch="Fill" Tag="Edit Post" VerticalAlignment="Top" Width="53" Cursor="Hand" MouseLeftButtonDown="editImage_MouseLeftButtonDown" OverridesDefaultStyle="False" Visibility="Visible" />
         <Image Height="43" HorizontalAlignment="Left" Margin="692,58,0,0" Name="addReplyImage" Source="/ForumClientWPF;component/images/addReply.png" Stretch="Fill" Tag="Add Reply" VerticalAlignment="Top" Width="53" Cursor="Hand" OverridesDefaultStyle="False" Visibility="Visible" MouseLeftButtonDown="addReplyImage_MouseLeftButtonDown" />
         <Image Height="43" HorizontalAlignment="Left" Margin="692,120,0,0" Name="saveImage" Source="/ForumClientWPF;component/images/save.png" Stretch="Fill" Tag="Add Reply" VerticalAlignment="Top" Visibility="Hidden" Width="53" Cursor="Hand" MouseLeftButtonDown="saveImage_MouseLeftButtonDown" />
-        <TextBox Height="105" HorizontalAlignment="Left" Margin="141,61,0,0" Name="postContentTextBox" VerticalAlignment="Top" Width="538" Background="{x:Null}" Text="Post Body" IsReadOnly="True" Visibility="Hidden" TextWrapping="Wrap" />
+        <TextBox Height="105" HorizontalAlignment="Left" Margin="141,61,0,0" Name="postContentTextBox" VerticalAlignment="Top" Width="538" Background="{x:Null}" Text="Post Body" IsReadOnly="True" Visibility="Hidden" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" />
         <!--<ListBox Height="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" ItemsSource="{Binding}" Name="repliesListBox" VerticalAlignment="Top" VerticalContentAlignment="Stretch" Width="751" UseLayoutRounding="False" Margin="0,236.543,0,0" Visibility="Visible" />-->
         <Label Content="username" FontWeight="Bold" Foreground="#FF5B49F7" HorizontalAlignment="Left" Margin="4,96,0,47" Name="usernameLabel" Width="131" HorizontalContentAlignment="Center" Visibility="Visible" />
     </Grid>

@@ -11,7 +11,7 @@
             </LinearGradientBrush>
         </Grid.Background>
         <Label Content="Title" Height="42" HorizontalAlignment="Center" Margin="36,0,20,0" Name="titleLabel" VerticalAlignment="Top" FontSize="18" Width="206" HorizontalContentAlignment="Center" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="89,48,0,0" Name="usernameTextBox" VerticalAlignment="Top" Width="152" TabIndex="0" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="89,48,0,0" Name="usernameTextBox" VerticalAlignment="Top" Width="152" TabIndex="0" Focusable="True" />
         <Label Content="User Name:" Height="28" HorizontalAlignment="Left" Margin="12,46,0,0" Name="label1" VerticalAlignment="Top" />
         <Label Content="User Name:" Height="28" HorizontalAlignment="Left" Margin="12,81,0,0" Name="label2" VerticalAlignment="Top" />
         <Button Content="Go !" Height="23" HorizontalAlignment="Left" Margin="50,127,0,0" Name="goButton" VerticalAlignment="Top" Width="75" Click="goButton_Click" TabIndex="2" />
