@@ -14,12 +14,13 @@ namespace ForumServer.DataLayer
     public class DataManager : IDataManager
     {
         ForumEntities ForumContext;
-
+        private int currentPostKeyId;
         public DataManager()
         {
             ForumContext = new ForumEntities();
             ForumContext.Connection.Open();
            //CleanForumData();
+            currentPostKeyId = 0;
             
         }
 
@@ -32,7 +33,8 @@ namespace ForumServer.DataLayer
                 tblNames.Add("tblPostKeys");
                 tblNames.Add("tblPosts");
                 tblNames.Add("tblUsers");
-                ForumContext.ExecuteStoreCommand(@"DBCC CHECKIDENT (tblPostKeys, RESEED, 0)");
+                currentPostKeyId = 0;
+                //ForumContext.ExecuteStoreCommand(@"DBCC CHECKIDENT (tblPostKeys, RESEED, 0)");
                 foreach (var tableName in tblNames)
                 {
                     ForumContext.ExecuteStoreCommand("DELETE FROM " + tableName);
@@ -165,10 +167,7 @@ namespace ForumServer.DataLayer
 
         public bool AddPost(Post post, string subforum)
         {
-            PostKeyEntity pke = new PostKeyEntity();
-            pke.Username = post.Key.Username;
-            pke.Time = post.Key.Time;
-            PostEntity pe = new PostEntity();
+            //Getting last id:
             IEnumerable<int> postKeysList = (from m in ForumContext.PostKeyEntities
                                              select m.PostKeyId);
             int lastId = 0;
@@ -176,7 +175,15 @@ namespace ForumServer.DataLayer
             {
                 lastId = postKeysList.Max();
             }
-            pe.PostKeyId = lastId + 1;
+            currentPostKeyId = lastId + 1;
+
+            PostKeyEntity pke = new PostKeyEntity();
+            pke.PostKeyId = currentPostKeyId;
+            pke.Username = post.Key.Username;
+            pke.Time = post.Key.Time;
+
+            PostEntity pe = new PostEntity();
+            pe.PostKeyId = currentPostKeyId;
             pe.ParentPostKeyId = -1;
             pe.Title = post.Title;
             pe.Body = post.Body;
@@ -240,14 +247,27 @@ namespace ForumServer.DataLayer
                 IEnumerable<PostKeyEntity> postkeyQuery = GetPostKeyEntity(postKey);
                 IEnumerable<PostEntity> postQuery = GetPostEntity(postKey);
 
+                //Getting last id:
+                IEnumerable<int> postKeysList = (from m in ForumContext.PostKeyEntities
+                                                 select m.PostKeyId);
+                int lastId = 0;
+                if (postKeysList.Count() != 0)
+                {
+                    lastId = postKeysList.Max();
+                }
+                currentPostKeyId = lastId + 1;
+
+
                 PostKeyEntity pke = new PostKeyEntity();
+                pke.PostKeyId = currentPostKeyId;
                 pke.Username = reply.Key.Username;
                 pke.Time = reply.Key.Time;
                 ForumContext.AddToPostKeyEntities(pke);
                 PostEntity pe = new PostEntity();
-                int lastId = (from m in ForumContext.PostKeyEntities
-                              select m.PostKeyId).Max();
-                pe.PostKeyId = lastId + 1;
+
+                
+                pe.PostKeyId = currentPostKeyId;
+                //currentPostKeyId++;
                 pe.ParentPostKeyId = postkeyQuery.ElementAt(0).PostKeyId;
                 pe.Title = reply.Title;
                 pe.Body = reply.Body;

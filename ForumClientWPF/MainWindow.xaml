@@ -28,6 +28,7 @@
         <Image Height="23" HorizontalAlignment="Left" Margin="1112,6,0,0" Name="registerImage" Source="/ForumClientWPF;component/images/register.png" Stretch="Fill" Tag="Register" VerticalAlignment="Top" Width="24" MouseLeftButtonDown="registerButton_Click" Cursor="Hand" ToolTip="Register" />
         <Label Content="Select subforum from list above" Height="44" HorizontalAlignment="Left" Margin="464,373,0,0" Name="mainLabel" VerticalAlignment="Top" Foreground="#FF696161" FontSize="20" Width="293" />
         <Image Height="99" HorizontalAlignment="Left" Margin="441,10,0,0" Name="image1" Stretch="Fill" VerticalAlignment="Top" Width="339" Source="/ForumClientWPF;component/images/logo.png" />
+        <Image Height="31" HorizontalAlignment="Left" Margin="58,74,0,0" Name="notifyImage" Stretch="Fill" VerticalAlignment="Top" Width="37" Source="/ForumClientWPF;component/images/new.png" Visibility="Hidden" MouseLeftButtonDown="notifyImage_MouseLeftButtonDown" Cursor="Hand" />
     </Grid>
     
 </Window>
