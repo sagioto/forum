@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Threading;
 using System.Configuration;
+using System.Collections.Concurrent;
 
 namespace ForumServer
 {
@@ -19,7 +20,8 @@ namespace ForumServer
         private IDataManager dataManager;
         private ISecurityManager securityManager;
         private IPolicyManager policyManager;
-        private Post posted;
+        volatile private Post posted = new Post();
+        private static readonly ConcurrentDictionary<string, Object> subscribed = new ConcurrentDictionary<string, Object>();
         private TimeSpan timeToWait;
         private log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -30,6 +32,7 @@ namespace ForumServer
             try
             {
                 log.Info("initializing service...");
+                subscribed.TryAdd("guest", new Object());
                 dataManager = new DataManager();
                 securityManager = new SecurityManager(dataManager);
                 policyManager = new PolicyManager(dataManager);
@@ -121,15 +124,14 @@ namespace ForumServer
             try
             {
                 log.Info("got request to subscribe frome user " + username);
-                User toSubscribe;
-                if (username.Equals("guest"))
-                    toSubscribe = new User(username, "123");
-                else toSubscribe = dataManager.GetUser(username);
-                if (toSubscribe != null)
+                if(!username.Equals("guest"))
+                    subscribed.TryAdd(username, new Object());
                 {
-                    lock (toSubscribe)
+                    lock (subscribed[username])
                     {
-                        if (Monitor.Wait(toSubscribe, timeToWait))
+                        DateTime start = DateTime.Now;
+                        Monitor.Wait(subscribed[username], timeToWait);
+                        if (DateTime.Now - start < timeToWait)
                             return this.posted;
                     }
                 }
@@ -149,14 +151,14 @@ namespace ForumServer
             try
             {
                 log.Info("got request to notify on post");
-
-                List<User> toNotify = dataManager.GetAllLoggedInUsers().Where(user => policyManager.ShouldNotify(posted, user.Username)).ToList();
-                this.posted = posted;
-                foreach (User user in toNotify)
+                
+                foreach (string username in subscribed.Keys)
                 {
-                    lock (user)
+                    lock (subscribed[username])
                     {
-                        Monitor.Pulse(user);
+                        Monitor.PulseAll(subscribed[username]);
+                        if (!username.Equals("guest"))
+                            subscribed.Keys.Remove(username);
                     }
                 }
 
