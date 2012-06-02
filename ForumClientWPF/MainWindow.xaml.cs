@@ -34,8 +34,9 @@ namespace ForumClientWPF
 
        // Thread getPostsWorkerThread;
 
-        LoginWindow loginWin;
+        private LoginWindow loginWin;
         private string currentSubforum;
+        private string updatedSubforum;
 
 
         public MainWindow()
@@ -124,6 +125,7 @@ namespace ForumClientWPF
             Post p = (Post)e.Result;
             if (p != null)
             {
+                updatedSubforum = p.Subforum;
                 displayNotify(p.Subforum, p.Title);
                 if (p.Subforum == currentSubforum)
                 {
@@ -203,7 +205,7 @@ namespace ForumClientWPF
                 else
                 {
                     currentUser = loginWin.Username;
-                    helloLabel.Content = "Hello " + loginWin.Username;
+                  //  helloLabel.Content = "Hello " + loginWin.Username;
 
                 }
             }
@@ -315,6 +317,11 @@ namespace ForumClientWPF
         private void notifyImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             notifyImage.Visibility = System.Windows.Visibility.Hidden;
+            if (currentSubforum != updatedSubforum)
+            {
+                postsTreeView.Items.Clear();
+                subforumsComboBox.SelectedValue = updatedSubforum;
+            }
         }
 
 
