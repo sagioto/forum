@@ -151,15 +151,24 @@ namespace ForumServer
             try
             {
                 log.Info("got request to notify on post");
-                
+
+
                 foreach (string username in subscribed.Keys)
                 {
                     lock (subscribed[username])
                     {
-                        Monitor.PulseAll(subscribed[username]);
+
                         if (!username.Equals("guest"))
-                            subscribed.Keys.Remove(username);
-                    }
+                        {
+                            if (policyManager.ShouldNotify(posted, username))
+                            {
+                                Monitor.PulseAll(subscribed[username]);
+                                Object obj = new Object();
+                                subscribed.TryRemove(username, out obj);
+                            }
+                        }
+                        else Monitor.PulseAll(subscribed[username]);
+                     }
                 }
 
             }
