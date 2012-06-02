@@ -161,7 +161,7 @@ namespace ForumShared.ForumAPI
         [FaultContract(typeof(FaultException))]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
-        Result EditPost(Postkey oldPost, Post newPost, string usrname, string password);
+        Result EditPost(Postkey oldPost, Post newPost, string username, string password);
 
         /// <summary>
         /// remove the post

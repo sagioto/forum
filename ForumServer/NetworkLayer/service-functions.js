@@ -3,24 +3,24 @@
  */
  
  //*******************************************Variables
-var username = "guest";
+var username = 		"guest";
 var password;
-var currentPost = null;
-var currentSubforum = null;
-var recursionLevel = 1;
-var idCounter = 0;
+var currentPost = 	null;
+var currentSubforum = 	null;
+var recursionLevel = 	1;
+var idCounter = 	0;
 
-var NULL_VALUE = 0x0000;
-var OK = 0x0001;
-var USER_NOT_FOUND = 0x0002;
-var POST_NOT_FOUND = 0x0004;
-var SUB_FORUM_NOT_FOUND = 0x0010;
-var ENTRY_EXISTS = 0x0020;
-var INSUFFICENT_PERMISSIONS = 0x0040;
-var ADMIN_PERMISSIONS_NEEDED = 0x0100;
-var SECURITY_ERROR = 0x0200;
-var POLICY_REJECTED = 0x0400;
-var ILLEGAL_POST = 0x1000;
+var NULL_VALUE =		0x0000;
+var OK = 			0x0001;
+var USER_NOT_FOUND = 		0x0002;
+var POST_NOT_FOUND = 		0x0004;
+var SUB_FORUM_NOT_FOUND = 	0x0010;
+var ENTRY_EXISTS =		0x0020;
+var INSUFFICENT_PERMISSIONS = 	0x0040;
+var ADMIN_PERMISSIONS_NEEDED = 	0x0100;
+var SECURITY_ERROR = 		0x0200;
+var POLICY_REJECTED = 		0x0400;
+var ILLEGAL_POST = 		0x1000;
  
  
 //*******************************************The Ajax Call
@@ -374,6 +374,7 @@ function cancelReply(postKey)
 
 function doReply(postKey)
 {
+	cancelReply(postKey);
 	var splitted = postKey.split(",");
 	var id = splitted[2];
 	var sub = currentSubforum;
@@ -389,7 +390,8 @@ function doReply(postKey)
 				switch(result.ReplyResult)
 				{
 					case OK:
-						$('#post'+splitted[2]).parent().slideUp('slow', function(){$(toRemove).parent().parent().remove();});
+						$('#post'+splitted[2]).parent().slideUp('slow', function(){$('#posting' + id).remove();});
+						refresh();
 						break;
 					default:
 						alert("insufficient permissions!");
@@ -436,8 +438,8 @@ function doEdit(postKey)
 	var splitted = postKey.split(",");
 	var id = splitted[2];
 	var sub = currentSubforum;
-	callService("EditPost", {"currPost": { "Username" : splitted[0], "Time" : splitted[1]},
-							"toPost" : { "Key": null,
+	callService("EditPost", {"oldPost": { "Username" : splitted[0], "Time" : splitted[1]},
+							"newPost" : { "Key": null,
 							"Title": $('#titleToPost' + id).val(), "Body": $('#bodyToPost' + id).val(),
 							"Parent": null,
 							"Subforum": sub },
@@ -449,7 +451,7 @@ function doEdit(postKey)
 				switch(result.EditPostResult)
 				{
 					case OK:
-						$('#post'+splitted[2]).parent().slideUp('slow', function(){$(toRemove).parent().parent().remove();});
+						$('#post'+splitted[2]).parent().slideUp('slow', function(){$('#posting' + id).remove();});
 						refresh();
 						break;
 					default:

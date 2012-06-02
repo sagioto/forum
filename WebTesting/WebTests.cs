@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+//using forum.ForumClientCore.ClientController;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
@@ -62,6 +63,18 @@ namespace WebTesting
                 return false;
             }
         }
+
+        [Test]
+        public void firstWebTest()
+        {
+            ClientController c = new ClientController();
+            driver.Navigate().GoToUrl(baseURL);
+            Thread.Sleep(5000);
+            string cars = driver.FindElement(By.XPath("//*[@id='subforumsTable']/tbody/tr[1]/td")).Text;
+            Assert.True(cars.Equals("Cars"));
+            driver.FindElement(By.XPath("//*[@id='subforumsTable']/tbody/tr[1]/td")).Click();
+        }
+
     }
 }
 

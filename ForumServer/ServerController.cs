@@ -21,7 +21,7 @@ namespace ForumServer
         private ISecurityManager securityManager;
         private IPolicyManager policyManager;
         volatile private Post posted = new Post();
-        private static readonly ConcurrentDictionary<string, Object> subscribed = new ConcurrentDictionary<string, Object>();
+        private static ConcurrentDictionary<string, Object> subscribed = new ConcurrentDictionary<string, Object>();
         private TimeSpan timeToWait;
         private log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -36,8 +36,8 @@ namespace ForumServer
                 dataManager = new DataManager();
                 securityManager = new SecurityManager(dataManager);
                 policyManager = new PolicyManager(dataManager);
-                string time = ConfigurationManager.AppSettings["timeToWaitMinutes"];
-                timeToWait = TimeSpan.FromMinutes(int.Parse(time));
+                string time = ConfigurationManager.AppSettings["timeToWaitSeconds"];
+                timeToWait = TimeSpan.FromSeconds(int.Parse(time));
                 // dataManager.InitForumData();
 
             }
@@ -151,15 +151,24 @@ namespace ForumServer
             try
             {
                 log.Info("got request to notify on post");
-                
+
+
                 foreach (string username in subscribed.Keys)
                 {
                     lock (subscribed[username])
                     {
-                        Monitor.PulseAll(subscribed[username]);
+
                         if (!username.Equals("guest"))
-                            subscribed.Keys.Remove(username);
-                    }
+                        {
+                            if (policyManager.ShouldNotify(posted, username))
+                            {
+                                Monitor.PulseAll(subscribed[username]);
+                                Object obj = new Object();
+                                subscribed.TryRemove(username, out obj);
+                            }
+                        }
+                        else Monitor.PulseAll(subscribed[username]);
+                     }
                 }
 
             }
