@@ -133,7 +133,7 @@ namespace PersistencyTests
                 IForumService sc = new ServerNetworkAdaptor();
                 sc.Login("admin", "admin");
 
-                Assert.AreEqual(Result.OK, sc.AddSubforum("Persistency Test Forum" + DateTime.Now, "admin", "admin"));
+                Assert.AreEqual(Result.OK, sc.AddSubforum("admin", "admin", "Persistency Test Forum" + DateTime.Now));
             }
             catch (Exception e)
             {
