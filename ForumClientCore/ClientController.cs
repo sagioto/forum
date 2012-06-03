@@ -216,9 +216,9 @@ namespace ForumClientCore
             return netAdaptor.ReplaceAdmin(loggedAs, loggedPassword, newAdminUsername, newAdminPassword);
         }
 
-        public Post Subscribe()
+        public Post Subscribe(string username)
         {
-            return netAdaptor.Subscribe(loggedAs);
+            return netAdaptor.Subscribe(username);
         }
     }
 }

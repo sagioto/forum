@@ -66,7 +66,8 @@ namespace ForumClientWPF
                 Topmost = true
             };
             StaticObjects.newPostWin = new AddPostWin();
-            StaticObjects.newPostWin.closed += new AddPostWin.LoginEventHandler(loginWin_cancelled);
+            StaticObjects.newPostWin.cancelled += new AddPostWin.LoginEventHandler(loginWin_cancelled);
+            StaticObjects.newPostWin.posted += new AddPostWin.LoginEventHandler(newPostWin_posted);
             
             currentUser = "guest";
 
@@ -117,7 +118,7 @@ namespace ForumClientWPF
         private void subscriberThread_DoWork(object sender, DoWorkEventArgs e)
         {
             ClientController controller = new ClientController();
-            e.Result = controller.Subscribe();
+            e.Result = controller.Subscribe(currentUser);
         }
 
         private void subscriberThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -152,8 +153,6 @@ namespace ForumClientWPF
             loginWin.Show();
         }
 
-
-
         private void GetSubforums()
         {
             string[] sl = StaticObjects.controller.GetSubforumsList();
@@ -166,6 +165,7 @@ namespace ForumClientWPF
 
 
         }
+
         #region Register/Login
        
         public void loginWin_loggedIn()
@@ -250,6 +250,14 @@ namespace ForumClientWPF
 
         #endregion
 
+
+        public void newPostWin_posted()
+        {
+            StaticObjects.darkwindow.Hide();
+            postsTreeView.Items.Clear();
+            getSubforum();
+        }
+
         private void newPostImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             try
@@ -323,11 +331,6 @@ namespace ForumClientWPF
                 subforumsComboBox.SelectedValue = updatedSubforum;
             }
         }
-
-
-
-
-
 
     }
 }
