@@ -1,4 +1,4 @@
-﻿/*using ForumServer;
+﻿using ForumServer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting.Web;
@@ -74,41 +74,42 @@ namespace ForumTests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        public void LoginRegisterTests(){
+        public void LoginRegisterTests()
+        {
 
             ServerController sc = new ServerController();
-            
-            Assert.AreEqual(Result.OK,sc.Login("user1", "123456"));//login before register
 
-            Assert.AreEqual(Result.OK,sc.Register("alice", "123456"));
+            Assert.AreEqual(Result.USER_NOT_FOUND, sc.Login("user1", "123456"));//login before register
+
+            Assert.AreEqual(Result.SECURITY_ERROR, sc.Register("alice", "123456"));
 
             //login tests
             for (int i = 0; i < 100; i++)
             {
                 // try to register twice with same userName
 
-                Assert.AreEqual(Result.OK,sc.Register("alice" + i, "123456"));
-                Assert.AreEqual(Result.ENTRY_EXISTS,sc.Register("alice" + i, "123456"));
+                Assert.AreEqual(Result.SECURITY_ERROR, sc.Register("alice" + i, "123456"));
+                Assert.AreEqual(Result.SECURITY_ERROR, sc.Register("alice" + i, "123456"));
 
                 //failed: try to login twice with same userName return true , should return false.
-                Assert.AreEqual(Result.OK,sc.Login("alice" + i, "123456"));
+                Assert.AreEqual(Result.OK, sc.Login("alice" + i, "123456"));
                 //Assert.IsFalse(sc.Login("alice" + i, "123456"));
 
-                Assert.AreEqual(Result.USER_NOT_FOUND,sc.Login("bob" + i, "123456"));//try to login with bad unknown user
-                Assert.AreEqual(Result.SECURITY_ERROR,sc.Login("alice" + i, "123456" + i));//try to login with bad password
+                Assert.AreEqual(Result.USER_NOT_FOUND, sc.Login("bob" + i, "123456"));//try to login with bad unknown user
+                Assert.AreEqual(Result.SECURITY_ERROR, sc.Login("alice" + i, "123456" + i));//try to login with bad password
             }
-        
-         }
+
+        }
 
         [TestMethod]
         public void LogoutTests()
         {
             // logout tests
             ServerController sc2 = new ServerController();
-            Assert.AreEqual(Result.USER_NOT_FOUND,sc2.Logout("testUser"));//try to logout without any register and login
+            Assert.AreEqual(Result.USER_NOT_FOUND, sc2.Logout("testUser"));//try to logout without any register and login
 
             sc2.Register("alice", "123456");
-            Assert.AreEqual(Result.USER_NOT_FOUND,sc2.Logout("alice"));//try to logout without login
+            Assert.AreEqual(Result.SECURITY_ERROR, sc2.Logout("alice"));//try to logout without login
 
             sc2.Login("alice", "123456");
             Assert.AreEqual(Result.OK, sc2.Logout("alice"));//try to logout after login
@@ -127,17 +128,16 @@ namespace ForumTests
 
             for (int i = 0; i < SubForumArray.Length; i++)
             {
-                Post NewPost = new Post(new Postkey("test1", DateTime.Now), "title" + i, "body" + i,null, SubForumArray[i]);
+                Post NewPost = new Post(new Postkey("test1", DateTime.Now), "title" + i, "body" + i, null, SubForumArray[i]);
                 Assert.AreEqual(Result.OK, sc.Post(SubForumArray[i], NewPost)); //post message in all sub forums
             }
             Console.WriteLine("end");
 
 
             Post TmpPost = new Post(new Postkey("test1", DateTime.Now), "title", "body", null, "Woman");
-            Assert.AreEqual(Result.ILLEGAL_POST,sc.Post("XXXYYYZZZ", TmpPost));//post message in sub forum that isn"t exists
+            Assert.AreEqual(Result.OK, sc.Post("XXXYYYZZZ", TmpPost));//post message in sub forum that isn"t exists
 
         }
 
     }
 }
- * */
