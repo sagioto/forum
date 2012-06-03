@@ -28,7 +28,7 @@
           <Key>
             <PropertyRef Name="PostKeyId" />
           </Key>
-          <Property Name="PostKeyId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PostKeyId" Type="int" Nullable="false" />
           <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Time" Type="datetime" Nullable="false" />
         </EntityType>
@@ -89,7 +89,7 @@
           <Key>
             <PropertyRef Name="PostKeyId" />
           </Key>
-          <Property Type="Int32" Name="PostKeyId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="PostKeyId" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Type="String" Name="Username" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
           <Property Type="DateTime" Name="Time" Nullable="false" />
           <NavigationProperty Name="tblUser" Relationship="ForumModel.FK_tblPostKeys_tblUsers" FromRole="tblPostKey" ToRole="tblUser" />

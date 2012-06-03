@@ -291,11 +291,13 @@ namespace ServerTests
             DataManager target = new DataManager(); // TODO: Initialize to an appropriate value
             //Subforum subforum = new Subforum("subforum1");
             //target.AddSubforum(subforum);
-            //Postkey pk = new Postkey("dor", DateTime.Now);
-            Postkey pk2 = new Postkey("dor", DateTime.Now);
+            Postkey pk = new Postkey("admin", DateTime.Now);
+            Thread.Sleep(1001);
+            Postkey pk2 = new Postkey("admin", DateTime.Now);
             // target.AddPost(new Post(pk, "post1", "", null , ""), "subforum1");
             //target.AddPost(new Post(new Postkey("dor", DateTime.Now), "post2", "", null, null), "subforum1");
-            target.AddPost(new Post(pk2, "post8", "", null, ""), "subforum1");
+            target.AddPost(new Post(pk, "post-TEST", "", null, ""), "Cars");
+            target.AddReply(new Post(pk2, "reply-TEST", "body", pk, "Cars"), pk);
             //target.AddReply(new Post(pk2, "reply1 to post1", "", null, null), pk);
             bool actual;
             actual = target.RemovePost(pk2);

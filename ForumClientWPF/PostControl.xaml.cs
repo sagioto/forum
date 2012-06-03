@@ -39,7 +39,7 @@ namespace ForumClientWPF
            // repliesList.Add(new PostControl());
             repliesList = new PostControlList();
 
-            StaticObjects.newPostWin.closed += new AddPostWin.LoginEventHandler(newPostWin_closed);
+            StaticObjects.newPostWin.cancelled += new AddPostWin.LoginEventHandler(newPostWin_closed);
             //Thread worker = new Thread(getReplies);
             //worker.Start();
             

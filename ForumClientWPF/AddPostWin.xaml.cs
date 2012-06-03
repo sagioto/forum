@@ -24,7 +24,8 @@ namespace ForumClientWPF
         private string currentSubforum;
 
         public delegate void LoginEventHandler();
-        public event LoginEventHandler closed;
+        public event LoginEventHandler cancelled;
+        public event LoginEventHandler posted;
 
         public AddPostWin()
         {
@@ -58,16 +59,18 @@ namespace ForumClientWPF
                     if (currentPost != null) // This is a reply
                     {
                         r = StaticObjects.controller.Reply(currentPost.Key, postTitleTextbox.Text, postContentTextBox.Text);
+                        posted();
                     }
                     else //New post
                     {
                         r = StaticObjects.controller.Post(currentSubforum, postTitleTextbox.Text, postContentTextBox.Text);
+                        posted();
                     }
                     if (r != Result.OK)
                     {
                         MessageBox.Show("Error in posting a new post. Reason: " + r.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        cancelled();
                     }
-                    closed();
                     this.Hide();
                 }
                 else
@@ -78,28 +81,27 @@ namespace ForumClientWPF
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show("Error occurred. Reason: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                closed();
+                cancelled();
                 this.Hide();
             }
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            closed();
+            cancelled();
             this.Hide();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            closed();
+            cancelled();
             this.Hide();
         }
 
         private void cancelImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            closed();
+            cancelled();
             this.Hide();
         }
     }

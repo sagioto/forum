@@ -18,6 +18,7 @@ using System.Windows.Media.Animation;
 using ForumShared.SharedDataTypes;
 using System.Data;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace ForumClientWPF
 {
@@ -28,11 +29,14 @@ namespace ForumClientWPF
     {
         SubforumsList subforumsList;
         private PostControlList postsControlsList;
+        private BackgroundWorker subscriberThread;
+        private string currentUser;
 
        // Thread getPostsWorkerThread;
 
-        LoginWindow loginWin;
+        private LoginWindow loginWin;
         private string currentSubforum;
+        private string updatedSubforum;
 
 
         public MainWindow()
@@ -62,10 +66,18 @@ namespace ForumClientWPF
                 Topmost = true
             };
             StaticObjects.newPostWin = new AddPostWin();
-            StaticObjects.newPostWin.closed += new AddPostWin.LoginEventHandler(loginWin_cancelled);
+            StaticObjects.newPostWin.cancelled += new AddPostWin.LoginEventHandler(loginWin_cancelled);
+            StaticObjects.newPostWin.posted += new AddPostWin.LoginEventHandler(newPostWin_posted);
+            
+            currentUser = "guest";
 
             postsControlsList = new PostControlList();
             subforumsComboBox.ItemsSource = subforumsList;
+
+            subscriberThread = new BackgroundWorker();
+            subscriberThread.DoWork += new DoWorkEventHandler(subscriberThread_DoWork);
+            subscriberThread.RunWorkerCompleted += new RunWorkerCompletedEventHandler(subscriberThread_RunWorkerCompleted);
+            subscriberThread.RunWorkerAsync();
 
         }
 
@@ -103,7 +115,33 @@ namespace ForumClientWPF
             }
         }
 
+        private void subscriberThread_DoWork(object sender, DoWorkEventArgs e)
+        {
+            ClientController controller = new ClientController();
+            e.Result = controller.Subscribe(currentUser);
+        }
 
+        private void subscriberThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Post p = (Post)e.Result;
+            if (p != null)
+            {
+                updatedSubforum = p.Subforum;
+                displayNotify(p.Subforum, p.Title);
+                if (p.Subforum == currentSubforum)
+                {
+                    postsTreeView.Items.Clear();
+                    getSubforum();
+                }
+            }
+            subscriberThread.RunWorkerAsync();
+        }
+
+        private void displayNotify(string subforum, string postTitle)
+        {
+            notifyImage.ToolTip = "New update: post '" + postTitle + "', in subforum: " + subforum;
+            notifyImage.Visibility = System.Windows.Visibility.Visible;
+        }
 
         #endregion
 
@@ -115,8 +153,6 @@ namespace ForumClientWPF
             loginWin.Show();
         }
 
-
-
         private void GetSubforums()
         {
             string[] sl = StaticObjects.controller.GetSubforumsList();
@@ -125,14 +161,11 @@ namespace ForumClientWPF
                 subforumsList.Add(s);
             }
             
-            //     DataTable dt = ArrayToTable(subforumsList);
-
-            //subforumsListBox.DataContext = subforumsList.to;
-
             currentSubforum = subforumsList[0];
 
 
         }
+
         #region Register/Login
        
         public void loginWin_loggedIn()
@@ -147,6 +180,7 @@ namespace ForumClientWPF
                 }
                 else
                 {
+                    currentUser = loginWin.Username;
                     helloLabel.Content = "Hello " + loginWin.Username;
                     //TODO Add enable logout button
                 }
@@ -170,7 +204,8 @@ namespace ForumClientWPF
                 }
                 else
                 {
-                    helloLabel.Content = "Hello " + loginWin.Username;
+                    currentUser = loginWin.Username;
+                  //  helloLabel.Content = "Hello " + loginWin.Username;
 
                 }
             }
@@ -214,6 +249,14 @@ namespace ForumClientWPF
         }
 
         #endregion
+
+
+        public void newPostWin_posted()
+        {
+            StaticObjects.darkwindow.Hide();
+            postsTreeView.Items.Clear();
+            getSubforum();
+        }
 
         private void newPostImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -279,10 +322,15 @@ namespace ForumClientWPF
             }
         }
 
-
-
-
-
+        private void notifyImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            notifyImage.Visibility = System.Windows.Visibility.Hidden;
+            if (currentSubforum != updatedSubforum)
+            {
+                postsTreeView.Items.Clear();
+                subforumsComboBox.SelectedValue = updatedSubforum;
+            }
+        }
 
     }
 }

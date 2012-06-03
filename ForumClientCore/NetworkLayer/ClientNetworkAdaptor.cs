@@ -38,10 +38,10 @@ namespace ForumClientCore.NetworkLayer
             ChannelFactory<IForumService> cf = new ChannelFactory<IForumService>(new WebHttpBinding(), "http://localhost:52644/NetworkLayer/ServerNetworkAdaptor.svc");
             cf.Endpoint.Behaviors.Add(new WebHttpBehavior());
             webService = cf.CreateChannel();
-            if (GetCallBack)
-            {
-                //webService.SubscribeToForum();  // Subscribing to Forum in order to get callbacks TODO uncomment
-            }
+            //if (GetCallBack)
+            //{
+            //    /webService.SubscribeToForum();  // Subscribing to Forum in order to get callbacks TODO uncomment
+            //}
         }
 
         public ClientNetworkAdaptor()
@@ -254,6 +254,12 @@ namespace ForumClientCore.NetworkLayer
         public void netListener_OnUpdateFromServer(Post message)
         {
             OnUpdateFromServer(message);    // Invoke event OnUpdateFronServer - will be notify controller
+        }
+
+
+        public Post Subscribe(string username)
+        {
+            return webService.Subscribe(username);
         }
     }
 

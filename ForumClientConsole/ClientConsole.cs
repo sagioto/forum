@@ -59,7 +59,7 @@ namespace ForumClientConsole
                             Console.WriteLine("\n\tlist-forums\n\tshow-forum [forum name]\n\tshow-replies [post title]\n\tback\n\trefresh\n\tedit [post title]\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tremove [post title]\n\tquit\n\tadmin-menu\n");
                             break;
                         case "admin-menu": // TODO add report commands
-                            Console.WriteLine("\n\tadd-moderator\n\tremove-moderator\n\treplace-moderator\n\treplace-admin\n\tadd-forum\n\tremove-forum\n\t");
+                            Console.WriteLine("\n\tadd-moderator\n\tremove-moderator\n\treplace-moderator\n\treplace-admin\n\tadd-forum\n\tremove-forum\n\tsubforum-report [subforum name]\n\tuser-report [username]");
                             break;
                         case "remove":
                             if (command.Length < 2)
@@ -141,6 +141,22 @@ namespace ForumClientConsole
                         case "remove-forum":
                             RemoveForum();
                             break;
+                        case "subforum-report":
+                            if (command.Length < 2)
+                            {
+                                Console.WriteLine("Usage: subforum-report [subforum name]");
+                                break;
+                            }
+                            SubForumReport(command[2]);
+                            break;
+                        case "user-report":
+                            if (command.Length < 2)
+                            {
+                                Console.WriteLine("Usage: user-report [username]");
+                                break;
+                            }
+                            UserReport(command[2]);
+                            break;
                         case "refresh":
                             PrintCurrentLocation();
                             break;
@@ -175,6 +191,18 @@ namespace ForumClientConsole
                 }
             }
 
+        }
+
+        private void UserReport(string username)
+        {
+            Console.WriteLine("\nReport for user: " + username);
+            Console.WriteLine("Number of posts by the user: " + controller.ReportUserTotalPosts(username) + "\n");
+        }
+
+        private void SubForumReport(string subforum)
+        {
+            Console.WriteLine("\nReport for subforum: " + subforum);
+            Console.WriteLine("Number of posts in the subforum: " + controller.ReportSubForumTotalPosts(subforum) + "\n");
         }
 
         private void RemoveForum()

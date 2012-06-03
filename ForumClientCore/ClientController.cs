@@ -13,7 +13,7 @@ namespace ForumClientCore
     {
         ClientNetworkAdaptor netAdaptor;
         public bool loggedIn = false;
-        private string loggedAs = "";
+        private string loggedAs = "guest";
         private string loggedPassword = "";
         private string currentSubForum = "";
 
@@ -216,9 +216,9 @@ namespace ForumClientCore
             return netAdaptor.ReplaceAdmin(loggedAs, loggedPassword, newAdminUsername, newAdminPassword);
         }
 
-        public string Subscribe()
+        public Post Subscribe(string username)
         {
-            throw new NotImplementedException();
+            return netAdaptor.Subscribe(username);
         }
     }
 }

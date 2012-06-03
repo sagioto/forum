@@ -18,8 +18,8 @@ namespace ServerTests
         public void TestMethod1()
         {
            sna = new ServerNetworkAdaptor();
-            Thread t = new Thread(getResult);
-            t.Start();
+           // Thread t = new Thread(getResult);
+           // t.Start();
             Result r = sna.Post("Cars", new Post(new Postkey("dor", DateTime.Now), "Test", "Body", null, "Cars"));
             Console.WriteLine(r.ToString());
         }
