@@ -9,6 +9,7 @@ var currentPost = 	null;
 var currentSubforum = 	null;
 var recursionLevel = 	1;
 var idCounter = 	0;
+var subscribeRequest;
 
 var NULL_VALUE =		0x0000;
 var OK = 			0x0001;
@@ -89,6 +90,8 @@ function RegisterAndLogin(methodName)
 	var pass = $('input[name="password"]').val();
 	username = name;
 	password = pass;
+	subscribeRequest.abort();
+	subscribeRequest = Subscribe();
 	return RegisterAndLoginCall({"username": name, "password": pass}, methodName);
 }
 
@@ -103,6 +106,8 @@ function Logout(name)
 					function(){
 						password = null;
 						username = "guest";
+						subscribeRequest.abort();
+						subscribeRequest = Subscribe();
 						refresh();
 						$('form[name="login"]').fadeIn('fast');
 					}
@@ -119,7 +124,7 @@ function Subscribe()
 		{
 			if(result.SubscribeResult != null)
 				alert(JSON.stringify(result.SubscribeResult.Key.Username + " posted on " + result.SubscribeResult.Subforum));
-			Subscribe();
+			subscribeRequest = Subscribe();
 		},
 		function(req, msg, obj){}
 	);
