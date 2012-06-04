@@ -2,6 +2,10 @@
 .login-out-forms
 {
 	text-align: center;
+	border-width: 0px;
+	margin: 0px;
+	width: 100%;
+	height: 100%; 
 }
 .login-out-buttons, .postButton
 {
@@ -20,6 +24,8 @@
 table
 {
 	margin:0 auto;
+	border-right-width: 0px;
+	border-left-width: 0px;
 }
 
 .subforum 
@@ -89,9 +95,13 @@ table
 	text-align: right;
 }
 
-#forms
+div#forms
 {
 	font-family: "Segoe UI", "Segoe WP", Helvetica, "Lucida Grande", sans-serif;
+	position: fixed;
+	height: 40px;
+	width: 100%;
+	background: LightSkyBlue;
 }
 
 textarea
@@ -102,4 +112,12 @@ textarea
 div
 {
 	margin: 0 auto;
+}
+
+html, body
+{
+	border-width: 0px;
+	margin: 0px;
+	width: 100%;
+	height: 100%; 
 }
