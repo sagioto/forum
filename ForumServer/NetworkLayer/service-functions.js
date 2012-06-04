@@ -119,7 +119,7 @@ function Logout(name)
 
 function Subscribe()
 {
-	callServiceWithError("Subscribe", {"username": username},
+	return callServiceWithError("Subscribe", {"username": username},
 		function(result)
 		{
 			if(result.SubscribeResult != null)
