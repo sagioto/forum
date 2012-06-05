@@ -109,7 +109,7 @@ namespace PersistencyTests
                     newNumOfPosts += sc.ReportSubForumTotalPosts("admin", "admin", s);
                 }
 
-                Assert.True(newNumOfPosts - totalNumOfPosts == 2, "Wrong number of posts in DB. expected: " + (totalNumOfPosts + 2) + ", but got: " + newNumOfPosts);
+                Assert.True(newNumOfPosts - totalNumOfPosts == 1, "Wrong number of posts in DB. expected: " + (totalNumOfPosts + 2) + ", but got: " + newNumOfPosts);
 
             }
             catch (Exception e)
@@ -128,12 +128,13 @@ namespace PersistencyTests
         [Test]
         public void AddSubforumPersistencyTest()
         {
+            string newForumName = "Persistency Test Forum" + DateTime.Now;
             try
             {
                 IForumService sc = new ServerNetworkAdaptor();
                 sc.Login("admin", "admin");
 
-                Assert.AreEqual(Result.OK, sc.AddSubforum("admin", "admin", "Persistency Test Forum" + DateTime.Now));
+                Assert.AreEqual(Result.OK, sc.AddSubforum("admin", "admin", newForumName));
             }
             catch (Exception e)
             {
@@ -150,12 +151,12 @@ namespace PersistencyTests
             {
                 IForumService sc = new ServerNetworkAdaptor();
                 subforums = sc.GetSubforumsList();
-                Assert.True(subforums.Contains<string>("Persistency Test Forum"), "The subforum was not found after reloading DB!");
+                Assert.True(subforums.Contains<string>(newForumName), "The subforum was not found after reloading DB!");
 
-                Assert.AreEqual(Result.OK, sc.RemoveSubforum("admin", "admin", "Persistency Test Forum"), "Could not remove the subforum");
+                Assert.AreEqual(Result.OK, sc.RemoveSubforum("admin", "admin", newForumName), "Could not remove the subforum");
 
                 subforums = sc.GetSubforumsList();
-                Assert.False(subforums.Contains<string>("Persistency Test Forum"), "The sub forum was not removed from the DB");
+                Assert.False(subforums.Contains<string>(newForumName), "The sub forum was not removed from the DB");
             }
             catch (Exception e)
             {
@@ -170,7 +171,7 @@ namespace PersistencyTests
             {
                 IForumService sc = new ServerNetworkAdaptor();
                 subforums = sc.GetSubforumsList();
-                Assert.False(subforums.Contains<string>("Persistency Test Forum"), "The subforum exists in DB after reload!!");
+                Assert.False(subforums.Contains<string>(newForumName), "The subforum exists in DB after reload!!");
             }
             catch (Exception e)
             {

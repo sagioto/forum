@@ -56,7 +56,7 @@ namespace ForumClientConsole
                     {
                         case "menu":
                             Console.WriteLine("\nThe available commands are:");
-                            Console.WriteLine("\n\tlist-forums\n\tshow-forum [forum name]\n\tshow-replies [post title]\n\tback\n\trefresh\n\tedit [post title]\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tremove [post title]\n\tquit\n\tadmin-menu\n");
+                            Console.WriteLine("\n\tlist-forums\n\tshow-forum [forum name]\n\tshow-replies [post title]\n\tback\n\trefresh\n\tedit [post title]\n\tregister\n\tlogin\n\tlogout\n\tpost\n\tremove [post title]\n\tnum-of-logged-users\n\tquit\n\tadmin-menu\n");
                             break;
                         case "admin-menu": // TODO add report commands
                             Console.WriteLine("\n\tadd-moderator\n\tremove-moderator\n\treplace-moderator\n\treplace-admin\n\tadd-forum\n\tremove-forum\n\tsubforum-report [subforum name]\n\tuser-report [username]");
@@ -159,6 +159,9 @@ namespace ForumClientConsole
                             break;
                         case "refresh":
                             PrintCurrentLocation();
+                            break;
+                        case "num-of-logged-users":
+                            Console.WriteLine("Number of logged in users: " + controller.GetNumOfLoggedInUsers());
                             break;
                         case "quit":
                             Logout();

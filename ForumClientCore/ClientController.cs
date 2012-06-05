@@ -220,5 +220,10 @@ namespace ForumClientCore
         {
             return netAdaptor.Subscribe(username);
         }
+
+        public int GetNumOfLoggedInUsers()
+        {
+            return netAdaptor.GetNumberOfLoggedInUsers();
+        }
     }
 }

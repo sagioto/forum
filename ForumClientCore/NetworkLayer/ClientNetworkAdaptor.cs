@@ -237,6 +237,11 @@ namespace ForumClientCore.NetworkLayer
             return webService.ReplaceAdmin(oldAdminUsername, oldAdminPassword, newAdminUsername, newAdminPassword);
         }
 
+        public int GetNumberOfLoggedInUsers()
+        {
+            return webService.GetNumOfLoggedInUsers();
+        }
+
         public bool AddMessage(string message)
         {
             throw new NotImplementedException();
