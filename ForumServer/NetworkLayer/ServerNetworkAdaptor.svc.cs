@@ -87,6 +87,34 @@ namespace ForumServer
                 throw new FaultException<Exception>(e, e.Message);
             }
         }
+
+        public Result Activate(string username, string password)
+        {
+            try
+            {
+                return controller.Activate(username, password);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, e.Message);
+            }
+        }
+
+
+        public Result Deactivate(string username, string password)
+        {
+            try
+            {
+                return controller.Deactivate(username, password);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, e.Message);
+            }
+        }
+
+
+
         #endregion
 
         #region viewing functions
@@ -221,6 +249,19 @@ namespace ForumServer
 
         #region admin functions
 
+        public Result Ban(string usernameToBan, string modUsername, string modPassword)
+        {
+            try
+            {
+                return controller.Ban(usernameToBan, modUsername, modPassword);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, e.Message);
+            }
+        }
+        
+        
         public Result AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
         {
 

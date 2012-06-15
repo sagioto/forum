@@ -621,5 +621,20 @@ namespace ForumServer
         }
 
         #endregion
+
+        internal Result Activate(string username, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal Result Deactivate(string username, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal Result Ban(string usernameToBan, string modUsername, string modPassword)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
