@@ -102,6 +102,18 @@ namespace ForumShared.ForumAPI
 
 
         /// <summary>
+        /// get the posts that match the string query
+        /// </summary>
+        /// <param name="subforumName">just the name</param>
+        /// <returns>returns posts that match the string query</returns>
+        [OperationContract]
+        [FaultContract(typeof(FaultException))]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
+            ResponseFormat = WebMessageFormat.Json)]
+        Post[] Search(string query);
+
+
+        /// <summary>
         /// get post object of the provided postkey
         /// </summary>
         /// <param name="postkey"></param>

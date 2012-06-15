@@ -208,7 +208,7 @@ namespace ForumServer
             try
             {
                 log.Info("got request for sub forum " + subforum);
-                return dataManager.GetSubforum(subforum).Posts.Values.ToArray().OrderBy(post => post.Key.Time).ToArray();
+                return dataManager.GetSubforum(subforum).Posts.Values.OrderBy(post => post.Key.Time).ToArray();
             }
             catch (Exception e)
             {
@@ -216,6 +216,22 @@ namespace ForumServer
                 throw e;
             }
 
+        }
+
+       public Post[] Search(string query)
+        {
+            try
+            {
+                log.Info("got request to search for " + query);
+                return dataManager.GetAllPosts().Where(post => post.Key.Username.Contains(query) 
+                    || post.Title.Contains(query)
+                    || post.Body.Contains(query)).OrderByDescending(post => post.Key.Time).ToArray();
+            }
+            catch (Exception e)
+            {
+                log.Error("failed to search for " + query, e);
+                throw e;
+            }
         }
 
         public Post GetPost(Postkey postkey)
@@ -242,7 +258,7 @@ namespace ForumServer
                 if (key != null)
                 {
                     log.Info("got request for post " + key);
-                    return dataManager.GetPost(key).Replies.Values.ToArray();//.OrderBy(post => post.Key.Time).ToArray();
+                    return dataManager.GetPost(key).Replies.Values.OrderBy(post => post.Key.Time).ToArray();
                 }
                 else
                 {
@@ -605,6 +621,5 @@ namespace ForumServer
         }
 
         #endregion
-
     }
 }

@@ -116,6 +116,20 @@ namespace ForumServer
             }
         }
 
+
+        public Post[] Search(string query)
+        {
+            try
+            {
+                return controller.Search(query);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, e.Message);
+            }
+        }
+
+        
         public Post GetPost(Postkey postkey)
         {
             try
