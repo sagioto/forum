@@ -9,7 +9,7 @@
 }
 .login-out-buttons, .postButton
 {
-	display: inline-block;
+	display: inline;
 	outline: none;
 	cursor: pointer;
 	text-align: center;

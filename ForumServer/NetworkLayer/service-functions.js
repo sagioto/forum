@@ -22,6 +22,7 @@ var ADMIN = 					0x4;
  //*******************************************Variables
 var username = 			"guest";
 var password;
+var query;
 var level = 			GUEST;
 var currentPost =		null;
 var currentSubforum = 	null;
@@ -56,14 +57,21 @@ function RegisterAndLoginCall(user, methodName)
 	var response = callService(methodName, user,
 		function(result){
 		//alert("Result is: " + result[methodName + "Result"]);
-		switch(result[methodName + "Result"]){
+		var res = result[methodName + "Result"];
+		switch(res){
 			case OK:
+			case MEMBER:
+			case MODERATOR:
+			case ADMIN:
 				if(methodName == "Register"){
-					RegisterAndLogin("Login");
+					if(res == OK)
+						RegisterAndLogin("Login");
+					else break;
 				}
 				else{
 					$('input[name="username"]').val('');
 					$('input[name="password"]').val('');
+					level = res;
 					$('form[name="login"]').fadeOut('fast',
 						function(){
 							$('form[name="login"]').hide();
@@ -75,11 +83,11 @@ function RegisterAndLoginCall(user, methodName)
 				}
 				break;
 			case NULL_VALUE:
-			case USER_NOT_FOUND:if(methodName == "Login" & username != ""){
-					alert("user " + username + " is not registered");
+			case GUEST:if(methodName == "Login" & (username != "")){
+					alert("check your username and password");
 					break;
-					} 
-				alert("user name and password cannot be empty");
+					}
+					alert("user name and password cannot be empty");
 				break;
 			case SECURITY_ERROR: if(methodName == "Register"){
 					alert("user already exists");
@@ -138,6 +146,18 @@ function Subscribe()
 }
 
 //*******************************************Viewing Functions
+function Search()
+{
+	query = $('input[name="query"]').val();
+	callService("Search", {"query": query},
+			function(result)
+			{
+				$('input[name="query"]').val('');
+				ClearPage();
+				ShowPosts(result.SearchResult);
+			});
+}
+
 function GetSubforumsList()
 {
 	currentSubforum = null;
@@ -169,6 +189,9 @@ function refresh()
 		GetReplies(currentPost.Key.Username + ',' + currentPost.Key.Time);
 	else if(currentSubforum)
 		GetSubforum(currentSubforum);
+	else if(!$('.subforum').exists()) 
+		Search(query)
+		
 }
 
 function ShowPosts(posts)
@@ -306,7 +329,6 @@ function showPost(subforum)
 	
 }
 
-//TODO add button
 function cancelPost(subforum)
 {
 	$('#subforumpostbutton').attr('onclick', 'showPost(\'' + subforum + '\')');
@@ -320,7 +342,7 @@ function doPost(subforum)
 {
 	cancelPost(subforum);
 	callService("Post", {"current": subforum,
-						"toPost" : { "Key": { "Username" : username, "Time" : '\/Date(' + new Date().getTime() + ')\/'},
+						"toPost" : { "Key": { "Username" : username, "Time" : '\/Date(' + new Date().getTime() + '+0300)\/'},
 							"Title": $('#titleToPost' + subforum).val(), "Body": $('#bodyToPost' + subforum).val(),
 							"Parent": null,
 							"Subforum": subforum }
@@ -494,6 +516,8 @@ function Remove(postKey)
 }
 
 //*******************************************Utils
+jQuery.fn.exists = function(){return this.length>0;}
+
 function getDateString(jsonDate)
 {
      if (jsonDate == undefined) {

@@ -24,16 +24,23 @@
 
 <body>
 	<div id="forms" >
-	
+		
 		<form name="login" class="login-out-forms">
 			<input name="username" type="text" placeholder="username">
 			<input name="password" type="password" placeholder="password">
 			<button name="loginButton" type="button" onclick="RegisterAndLogin('Login')" class="login-out-buttons">login</button>
 			<button name="registerButton" type="button" onclick="RegisterAndLogin('Register')" class="login-out-buttons">register</button>
 		</form>
-
-		<form name="logout" class="login-out-forms" style="align: center;"> 
+		
+		
+		<form name="logout" class="login-out-forms" style="align: center;">
 		</form>
+		
+		<form name="search" class="login-out-forms" style="align: right;">
+			<input name="query" type="text" size="10">
+			<button name="searchButton" type="button" onclick="Search()" class="login-out-buttons">search</button>
+		</form>
+		
 	</div>
 	
 	<div id="forum" style="width: 900px; padding-top: 80px">
