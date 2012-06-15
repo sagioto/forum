@@ -3,26 +3,29 @@
  */
  
  //*******************************************Variables
-var username = 		"guest";
+var username = 			"guest";
 var password;
-var currentPost = 	null;
+var currentPost =		null;
 var currentSubforum = 	null;
-var recursionLevel = 	1;
-var idCounter = 	0;
+var recursionLevel =	1;
+var idCounter =			0;
 var subscribeRequest;
 
-var NULL_VALUE =		0x0000;
-var OK = 			0x0001;
-var USER_NOT_FOUND = 		0x0002;
-var POST_NOT_FOUND = 		0x0004;
-var SUB_FORUM_NOT_FOUND = 	0x0010;
-var ENTRY_EXISTS =		0x0020;
+var NULL_VALUE =				0x0000;
+var OK = 						0x0001;
+var USER_NOT_FOUND = 			0x0002;
+var POST_NOT_FOUND = 			0x0004;
+var SUB_FORUM_NOT_FOUND = 		0x0010;
+var ENTRY_EXISTS =				0x0020;
 var INSUFFICENT_PERMISSIONS = 	0x0040;
 var ADMIN_PERMISSIONS_NEEDED = 	0x0100;
-var SECURITY_ERROR = 		0x0200;
-var POLICY_REJECTED = 		0x0400;
-var ILLEGAL_POST = 		0x1000;
- 
+var SECURITY_ERROR = 			0x0200;
+var POLICY_REJECTED = 			0x0400;
+var ILLEGAL_POST = 				0x1000;
+var GUEST = 					0x0;
+var MEMBER =					0x1;
+var MODERATOR =					0x2;
+var ADMIN = 					0x4;
  
 //*******************************************The Ajax Call
 function callServiceWithError(methodName, params, onSuccess, onError)
