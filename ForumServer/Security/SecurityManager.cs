@@ -93,10 +93,10 @@ namespace ForumServer.Security
                 return Result.POST_NOT_FOUND;
             Subforum sub = dataManager.GetSubforums().Find(subforum => subforum.Name.Equals(post.Subforum));
             if(user.Password.Equals(password)
-               && (post.Key.Username.Equals(username)
-                    || (user.Level.Equals(AuthorizationLevel.MODERATOR)
-                        && sub != null && sub.ModeratorsList.Contains(username))
-                    || (user.Level.Equals(AuthorizationLevel.ADMIN))))
+               && (post.Key.Username.Equals(username)))
+                //|| (user.Level.Equals(AuthorizationLevel.MODERATOR)
+                    //    && sub != null && sub.ModeratorsList.Contains(username))
+                    //|| (user.Level.Equals(AuthorizationLevel.ADMIN))))
                 return Result.OK;
             return Result.INSUFFICENT_PERMISSIONS;
         }
