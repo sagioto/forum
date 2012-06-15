@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Configuration;
 using System.Collections.Concurrent;
+using System.Text.RegularExpressions;
 
 namespace ForumServer
 {
@@ -257,9 +258,10 @@ namespace ForumServer
             try
             {
                 log.Info("got request to search for " + query);
-                return dataManager.GetAllPosts().Where(post => post.Key.Username.Contains(query) 
-                    || post.Title.Contains(query)
-                    || post.Body.Contains(query)).OrderByDescending(post => post.Key.Time).ToArray();
+                return dataManager.GetAllPosts().Where(post => post.Key.Username.Contains(query)
+                    || Regex.IsMatch(post.Key.Username, query) || post.Title.Contains(query)
+                    || Regex.IsMatch(post.Title, query)|| post.Body.Contains(query)
+                    || Regex.IsMatch(post.Body, query)).OrderByDescending(post => post.Key.Time).ToArray();
             }
             catch (Exception e)
             {

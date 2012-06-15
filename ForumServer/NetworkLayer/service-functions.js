@@ -153,8 +153,12 @@ function Search()
 			function(result)
 			{
 				$('input[name="query"]').val('');
-				ClearPage();
-				ShowPosts(result.SearchResult);
+				if(result.SearchResult.length > 0){
+					ClearPage();
+					ShowPosts(result.SearchResult);
+				}
+				else alert('no results match ' + query);
+				query = "";
 			});
 }
 
