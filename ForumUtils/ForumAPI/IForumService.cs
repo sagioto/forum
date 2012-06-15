@@ -213,6 +213,22 @@ namespace ForumShared.ForumAPI
         #endregion
 
         #region admin functions
+
+
+        /// <summary>
+        /// ban a user from the forum
+        /// </summary>
+        /// <param name="usernameToBan"></param>
+        /// <param name="modUsername"></param>
+        /// <param name="modPassword"></param>
+        /// <returns>OK if user is banned</returns>
+        [OperationContract]
+        [FaultContract(typeof(FaultException))]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
+            ResponseFormat = WebMessageFormat.Json)]
+        Result Ban(string usernameToBan, string modUsername, string modPassword);
+
+
         /// <summary>
         /// add a moderator to a sub forum
         /// </summary>
