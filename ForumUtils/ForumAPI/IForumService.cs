@@ -74,7 +74,8 @@ namespace ForumShared.ForumAPI
         /// <returns>OK if activated</returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json)]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, 
+            ResponseFormat = WebMessageFormat.Json)]
         Result Activate(String username, String password);
 
         /// <summary>
@@ -85,7 +86,8 @@ namespace ForumShared.ForumAPI
         /// <returns>OK if deactivated</returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json)]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, 
+            ResponseFormat = WebMessageFormat.Json)]
         Result Deactivate(String username, String password);
 
         /// <summary>

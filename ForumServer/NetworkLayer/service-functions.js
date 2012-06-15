@@ -2,15 +2,7 @@
  * @author Sagi Bernstein
  */
  
- //*******************************************Variables
-var username = 			"guest";
-var password;
-var currentPost =		null;
-var currentSubforum = 	null;
-var recursionLevel =	1;
-var idCounter =			0;
-var subscribeRequest;
-
+ //*******************************************Constants
 var NULL_VALUE =				0x0000;
 var OK = 						0x0001;
 var USER_NOT_FOUND = 			0x0002;
@@ -26,6 +18,17 @@ var GUEST = 					0x0;
 var MEMBER =					0x1;
 var MODERATOR =					0x2;
 var ADMIN = 					0x4;
+
+ //*******************************************Variables
+var username = 			"guest";
+var password;
+var level = 			GUEST;
+var currentPost =		null;
+var currentSubforum = 	null;
+var recursionLevel =	1;
+var idCounter =			0;
+var subscribeRequest;
+
 
 //*******************************************The Ajax Call
 function callServiceWithError(methodName, params, onSuccess, onError)
