@@ -26,7 +26,7 @@ var GUEST = 					0x0;
 var MEMBER =					0x1;
 var MODERATOR =					0x2;
 var ADMIN = 					0x4;
- 
+
 //*******************************************The Ajax Call
 function callServiceWithError(methodName, params, onSuccess, onError)
 {
