@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ForumShared.ForumAPI;
 
 namespace ForumServer.DataTypes
 {

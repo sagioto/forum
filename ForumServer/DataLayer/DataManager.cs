@@ -8,6 +8,7 @@ using System.Configuration;
 using ForumUtils.SharedDataTypes;
 using System.Threading;
 using ForumShared.SharedDataTypes;
+using ForumShared.ForumAPI;
 
 namespace ForumServer.DataLayer
 {

@@ -84,7 +84,6 @@
     <Compile Include="DataTypes\Exceptions\SubforumNotFoundException.cs" />
     <Compile Include="DataTypes\Exceptions\UserNotFoundException.cs" />
     <Compile Include="DataTypes\Exceptions\PostNotFoundException.cs" />
-    <Compile Include="DataTypes\AuthorizationLevel.cs" />
     <Compile Include="DataTypes\Subforum.cs" />
     <Compile Include="DataTypes\User.cs" />
     <Compile Include="DataTypes\UserState.cs" />
