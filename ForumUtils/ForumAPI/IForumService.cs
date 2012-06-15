@@ -18,18 +18,7 @@ namespace ForumShared.ForumAPI
     {
  
         #region user functions
-        /// <summary>
-        /// get the number of logged in users.
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        [OperationContract]
-        [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json)]
-        int GetNumOfLoggedInUsers();
-
-
+  
         /// <summary>
         /// register the user to the system
         /// </summary>
@@ -76,6 +65,39 @@ namespace ForumShared.ForumAPI
             ResponseFormat = WebMessageFormat.Json)]
         Post Subscribe(String username);
 
+
+        /// <summary>
+        /// activate the account for a user with username and password
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns>OK if activated</returns>
+        [OperationContract]
+        [FaultContract(typeof(FaultException))]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json)]
+        Result Activate(String username, String password);
+
+        /// <summary>
+        /// deactivate the account for a user with username and password
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns>OK if deactivated</returns>
+        [OperationContract]
+        [FaultContract(typeof(FaultException))]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json)]
+        Result Deactivate(String username, String password);
+
+        /// <summary>
+        /// get the number of logged in users.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(FaultException))]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json)]
+        int GetNumOfLoggedInUsers();
 
         #endregion
 
