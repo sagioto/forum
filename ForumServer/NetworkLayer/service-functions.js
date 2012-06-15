@@ -67,8 +67,8 @@ function RegisterAndLoginCall(user, methodName)
 					$('form[name="login"]').fadeOut('fast',
 						function(){
 							$('form[name="login"]').hide();
-							$('form[name="logout"]').html('<p>welcome ' + username + 
-							'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button name="logoutButton" type="button" onclick="Logout(username)" class="login-out-buttons">logout</button></p>');
+							$('form[name="logout"]').html('welcome ' + username + 
+							'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button name="logoutButton" type="button" onclick="Logout(username)" class="login-out-buttons">logout</button>');
 							$('form[name="logout"]').fadeIn('fast');
 							refresh();
 					});
