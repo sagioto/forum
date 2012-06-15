@@ -102,9 +102,43 @@ namespace ForumServer
 
         }
 
+        public Result Activate(string username, string password)
+        {
+            try
+            {
+                log.Info("got request to activate " + username + "'s account");
+
+                throw new NotImplementedException();
+
+            }
+            catch (Exception e)
+            {
+                log.Error("failed to activate " + username + "'s account", e);
+                throw e;
+            }
+
+        }
+
+        public Result Deactivate(string username, string password)
+        {
+            try
+            {
+                log.Info("got request to deactivate " + username + "'s account");
+
+                throw new NotImplementedException();
+
+            }
+            catch (Exception e)
+            {
+                log.Error("failed to deactivate " + username + "'s account", e);
+                throw e;
+            }
+
+        }
 
 
-        internal int GetNumOfLoggedInUsers()
+
+        public int GetNumOfLoggedInUsers()
         {
             try
             {
@@ -385,6 +419,24 @@ namespace ForumServer
 
         #region admin functions
 
+        public Result Ban(string usernameToBan, string modUsername, string modPassword)
+        {
+
+            try
+            {
+                log.Info("got request to ban: " + usernameToBan);
+
+                throw new NotImplementedException();
+
+            }
+            catch (Exception e)
+            {
+                log.Error("failed to ban: " + usernameToBan, e);
+                throw e;
+            }
+
+        }
+
 
         public Result AddModerator(string adminUsername, string adminPassword, string usernameToAdd, string subforum)
         {
@@ -622,19 +674,8 @@ namespace ForumServer
 
         #endregion
 
-        internal Result Activate(string username, string password)
-        {
-            throw new NotImplementedException();
-        }
+       
 
-        internal Result Deactivate(string username, string password)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal Result Ban(string usernameToBan, string modUsername, string modPassword)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
