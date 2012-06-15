@@ -70,12 +70,14 @@ namespace ForumServer
         }
 
 
-        public Result Login(string username, string password)
+        public AuthorizationLevel Login(string username, string password)
         {
             try
             {
                 log.Info("got request to login from user " + username + " and password *******");
-                return securityManager.AuthorizedLogin(username, password);
+                if (securityManager.AuthorizedLogin(username, password) == Result.OK)
+                    return dataManager.GetUser(username).Level;
+                else return AuthorizationLevel.GUEST;
             }
             catch (Exception e)
             {

@@ -52,7 +52,7 @@ namespace ForumShared.ForumAPI
         [FaultContract(typeof(FaultException))]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
             ResponseFormat = WebMessageFormat.Json)]
-        Result Login(String username, String password);
+        AuthorizationLevel Login(String username, String password);
 
         /// <summary>
         /// logout the user to the system

@@ -33,7 +33,7 @@ namespace ForumServer
 
         }
 
-        public Result Login(String username, String password)
+        public AuthorizationLevel Login(String username, String password)
         {
 
             try
