@@ -21,7 +21,7 @@ namespace ForumServer.DataTypes
             this.password = password;
             friends = new List<string>();
             this.level = AuthorizationLevel.GUEST;
-            currentState = UserState.Logout;
+            currentState = UserState.NotActive;
         }
 
         #region Parameters Properties

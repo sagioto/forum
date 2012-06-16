@@ -97,7 +97,10 @@ namespace ForumClientCore.NetworkLayer
         /// <returns>Returns true if login succeeded, false if User/Password are incorrect.</returns>
         internal Result Login(String username, String password)
         {
-            return webService.Login(username, password);
+            // return webService.Login(username, password); // TODO - fix - change Result to AuthorizationLevel
+            //TODO - delete (only temp for compiling):
+            webService.Login(username, password);
+            return Result.OK;
         }
 
         /// <summary>

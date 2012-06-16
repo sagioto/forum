@@ -598,11 +598,23 @@ namespace ForumServer.DataLayer
 
                     switch (ue.State.Trim())
                     {
-                        case "Login":
-                            user.CurrentState = UserState.Login;
+                        //case "Login":
+                        //    user.CurrentState = UserState.Login;
+                        //    break;
+                        //case "Logout":
+                        //    user.CurrentState = UserState.Logout;
+                        //    break;
+                        case "Active":
+                            user.CurrentState = UserState.Active;
                             break;
-                        case "Logout":
-                            user.CurrentState = UserState.Logout;
+                        case "NotActive":
+                            user.CurrentState = UserState.NotActive;
+                            break;
+                        case "Banned":
+                            user.CurrentState = UserState.Banned;
+                            break;
+                        case "ShouldBeBanned":
+                            user.CurrentState = UserState.ShouldBeBanned;
                             break;
                         default:
                             break;

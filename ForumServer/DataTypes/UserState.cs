@@ -7,7 +7,12 @@ namespace ForumServer.DataTypes
 {
     public enum UserState
     {
-        Login,
-        Logout
+        Login,  // TODO - Delete
+        Logout, // TODO - Delete
+
+        Active,
+        NotActive,
+        Banned,
+        ShouldBeBanned
     }
 }
