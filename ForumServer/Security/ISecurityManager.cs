@@ -27,5 +27,9 @@ namespace ForumServer.Security
         Result IsAuthorizedToEditSubforums(string username);
 
         Result AuthenticateAdmin(string username, string password);
+        
+        Result AuthenticateModerator(string username, string password);
+
+        Result AuthenticateUser(string username, string password);
     }
 }

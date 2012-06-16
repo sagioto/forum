@@ -20,5 +20,10 @@ namespace ForumServer.Policy
 
          Result IsAuthorizedToEdit(Postkey originalPostKey, string username);
 
+         Result IsAuthorizedActivate(string username);
+
+         Result IsAuthorizedDeactivate(string username);
+
+         Result ShouldBeBanned(string username);
     }
 }

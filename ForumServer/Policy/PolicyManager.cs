@@ -65,5 +65,29 @@ namespace ForumServer.Policy
             return (post.Key.Username != username);
         }
 
+        public Result IsAuthorizedActivate(string username)
+        {
+            return CheckUserState(username, UserState.NotActive);
+        }
+
+        private Result CheckUserState(string username, UserState state)
+        {
+            User user = dataManager.GetUser(username);
+            if (user == null)
+                return Result.USER_NOT_FOUND;
+            else if (user.CurrentState == state)
+                return Result.OK;
+            else return Result.POLICY_REJECTED;
+        }
+
+        public Result IsAuthorizedDeactivate(string username)
+        {
+            return CheckUserState(username, UserState.Active);
+        }
+
+        public Result ShouldBeBanned(string username)
+        {
+            return CheckUserState(username, UserState.ShouldBeBanned);
+        }
     }
 }

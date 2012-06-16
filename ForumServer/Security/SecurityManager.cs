@@ -7,15 +7,16 @@ using ForumUtils.SharedDataTypes;
 using ForumShared.SharedDataTypes;
 using ForumShared.ForumAPI;
 using ForumServer.DataLayer;
+using System.Collections.Concurrent;
 
 namespace ForumServer.Security
 {
     public class SecurityManager : ISecurityManager
     {
         private IDataManager dataManager;
-        private System.Collections.Concurrent.ConcurrentDictionary<string, object> subscribed;
+        private ConcurrentDictionary<string, object> subscribed;
 
-        public SecurityManager(IDataManager dataManager, System.Collections.Concurrent.ConcurrentDictionary<string, object> subscribed)
+        public SecurityManager(IDataManager dataManager, ConcurrentDictionary<string, object> subscribed)
         {
             this.dataManager = dataManager;
             this.subscribed = subscribed;
@@ -72,13 +73,23 @@ namespace ForumServer.Security
 
 
         public Result IsAuthorizedToPost(string username, string subforum)
-        {   
+        {
             User user = dataManager.GetUser(username);
             if (user == null)
                 return Result.USER_NOT_FOUND;
             if (!user.Level.Equals(AuthorizationLevel.GUEST)
-                && IsUserLoggendIn(user))
-                return Result.OK;
+                    && IsUserLoggendIn(user))
+            {
+                if (user.CurrentState == UserState.Active)
+                {
+                    return Result.OK;
+                }
+                else if (user.CurrentState == UserState.NotActive)
+                {
+                    dataManager.SetUserState(username, UserState.ShouldBeBanned);
+                    return Result.ILLEGAL_POST;
+                }
+            }
             return Result.INSUFFICENT_PERMISSIONS;
         }
 
@@ -91,12 +102,20 @@ namespace ForumServer.Security
             if (post == null)
                 return Result.POST_NOT_FOUND;
             Subforum sub = dataManager.GetSubforums().Find(subforum => subforum.Name.Equals(post.Subforum));
-            if(user.Password.Equals(password)
+            if (user.Password.Equals(password)
                && (post.Key.Username.Equals(username)))
                 //|| (user.Level.Equals(AuthorizationLevel.MODERATOR)
-                    //    && sub != null && sub.ModeratorsList.Contains(username))
-                    //|| (user.Level.Equals(AuthorizationLevel.ADMIN))))
-                return Result.OK;
+                //    && sub != null && sub.ModeratorsList.Contains(username))
+                //|| (user.Level.Equals(AuthorizationLevel.ADMIN))))
+                if (user.CurrentState == UserState.Active)
+                {
+                    return Result.OK;
+                }
+                else if (user.CurrentState == UserState.NotActive)
+                {
+                    dataManager.SetUserState(username, UserState.ShouldBeBanned);
+                    return Result.ILLEGAL_POST;
+                }
             return Result.INSUFFICENT_PERMISSIONS;
         }
 
@@ -117,17 +136,32 @@ namespace ForumServer.Security
             User admin = dataManager.GetAdmin();
             if (admin == null)
                 return Result.USER_NOT_FOUND;
-            if (admin.Password.Equals(password) && admin.Username.Equals(password))
+            if (admin.Password.Equals(password) && admin.Username.Equals(username))
                 return Result.OK;
             return Result.INSUFFICENT_PERMISSIONS;
         }
 
-        private static bool IsUserLoggendIn(User user)
+        public Result AuthenticateModerator(string username, string password)
         {
-            return user != null && user.CurrentState.Equals(UserState.Login);
+            User mod = dataManager.GetUser(username);
+            if (mod == null)
+                return Result.USER_NOT_FOUND;
+            if (mod.Password.Equals(password) && mod.Level == AuthorizationLevel.MODERATOR)
+                return Result.OK;
+            else return AuthenticateAdmin(username, password);
         }
 
+        private bool IsUserLoggendIn(User user)
+        {
+            return user != null && subscribed.ContainsKey(user.Username);
+        }
 
+        public Result AuthenticateUser(string username, string password)
+        {
+            if (dataManager.GetUser(username).Password.Equals(password))
+                return Result.OK;
+            else return Result.SECURITY_ERROR;
+        }
 
     }
 }

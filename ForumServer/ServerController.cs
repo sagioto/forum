@@ -109,7 +109,22 @@ namespace ForumServer
             {
                 log.Info("got request to activate " + username + "'s account");
 
-                throw new NotImplementedException();
+                User user = dataManager.GetUser(username);
+                if (user != null)
+                {
+                    Result res;
+                    if (Result.OK == (res = securityManager.AuthenticateUser(username, password)))
+                    {
+                        if (Result.OK == (res = policyManager.IsAuthorizedActivate(username)))
+                        {
+                            dataManager.SetUserState(username, UserState.Active);
+                            return Result.OK;
+                        }
+                        else return res;
+                    }
+                    else return res;
+                }
+                else return Result.USER_NOT_FOUND;
 
             }
             catch (Exception e)
@@ -126,7 +141,22 @@ namespace ForumServer
             {
                 log.Info("got request to deactivate " + username + "'s account");
 
-                throw new NotImplementedException();
+                User user = dataManager.GetUser(username);
+                if (user != null)
+                {
+                    Result res;
+                    if (Result.OK == (res = securityManager.AuthenticateUser(username, password)))
+                    {
+                        if (Result.OK == (res = policyManager.IsAuthorizedDeactivate(username)))
+                        {
+                            dataManager.SetUserState(username, UserState.NotActive);
+                            return Result.OK;
+                        }
+                        else return res;
+                    }
+                    else return res;
+                }
+                else return Result.USER_NOT_FOUND;
 
             }
             catch (Exception e)
@@ -161,7 +191,7 @@ namespace ForumServer
             try
             {
                 log.Info("got request to subscribe frome user " + username);
-                if(!username.Equals("guest"))
+                if (!username.Equals("guest"))
                     subscribed.TryAdd(username, new Object());
                 {
                     lock (subscribed[username])
@@ -205,7 +235,7 @@ namespace ForumServer
                             }
                         }
                         else Monitor.PulseAll(subscribed[username]);
-                     }
+                    }
                 }
 
             }
@@ -253,14 +283,14 @@ namespace ForumServer
 
         }
 
-       public Post[] Search(string query)
+        public Post[] Search(string query)
         {
             try
             {
                 log.Info("got request to search for " + query);
                 return dataManager.GetAllPosts().Where(post => post.Key.Username.Contains(query)
                     || Regex.IsMatch(post.Key.Username, query) || post.Title.Contains(query)
-                    || Regex.IsMatch(post.Title, query)|| post.Body.Contains(query)
+                    || Regex.IsMatch(post.Title, query) || post.Body.Contains(query)
                     || Regex.IsMatch(post.Body, query)).OrderByDescending(post => post.Key.Time).ToArray();
             }
             catch (Exception e)
@@ -349,7 +379,7 @@ namespace ForumServer
                 if (!CheckPost(post))
                     return Result.ILLEGAL_POST;
 
-                Result res = securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum);
+                Result res = securityManager.IsAuthorizedToPost(post.Key.Username, post.Subforum) ;
                 if (res == Result.OK)
                     if (dataManager.AddReply(post, currPost))
                     {
@@ -428,7 +458,22 @@ namespace ForumServer
             {
                 log.Info("got request to ban: " + usernameToBan);
 
-                throw new NotImplementedException();
+                User user = dataManager.GetUser(usernameToBan);
+                if (user != null)
+                {
+                    Result res;
+                    if (Result.OK == (res = securityManager.AuthenticateModerator(modUsername, modPassword)))
+                    {
+                        if (Result.OK == (res = policyManager.ShouldBeBanned(usernameToBan)))
+                        {
+                            dataManager.SetUserState(usernameToBan, UserState.Banned);
+                            return Result.OK;
+                        }
+                        else return res;
+                    }
+                    else return res;
+                }
+                else return Result.USER_NOT_FOUND;
 
             }
             catch (Exception e)
@@ -676,8 +721,8 @@ namespace ForumServer
 
         #endregion
 
-       
 
-        
+
+
     }
 }
