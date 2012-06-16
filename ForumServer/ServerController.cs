@@ -35,7 +35,7 @@ namespace ForumServer
                 log.Info("initializing service...");
                 subscribed.TryAdd("guest", new Object());
                 dataManager = new DataManager();
-                securityManager = new SecurityManager(dataManager);
+                securityManager = new SecurityManager(dataManager, subscribed);
                 policyManager = new PolicyManager(dataManager);
                 string time = ConfigurationManager.AppSettings["timeToWaitSeconds"];
                 timeToWait = TimeSpan.FromSeconds(int.Parse(time));

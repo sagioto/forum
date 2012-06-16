@@ -13,10 +13,12 @@ namespace ForumServer.Security
     public class SecurityManager : ISecurityManager
     {
         private IDataManager dataManager;
+        private System.Collections.Concurrent.ConcurrentDictionary<string, object> subscribed;
 
-        public SecurityManager(IDataManager dataManagerArg)
+        public SecurityManager(IDataManager dataManager, System.Collections.Concurrent.ConcurrentDictionary<string, object> subscribed)
         {
-            this.dataManager = dataManagerArg;
+            this.dataManager = dataManager;
+            this.subscribed = subscribed;
         }
 
 
@@ -65,10 +67,7 @@ namespace ForumServer.Security
 
         public bool IsLoggedin(string username)
         {
-            User user = dataManager.GetUser(username);
-            if (user == null)
-                return false;
-            return IsUserLoggendIn(user);
+            return subscribed.ContainsKey(username);
         }
 
 
