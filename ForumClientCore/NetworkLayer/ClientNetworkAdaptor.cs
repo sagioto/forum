@@ -113,6 +113,16 @@ namespace ForumClientCore.NetworkLayer
             return webService.Logout(username);
         }
 
+        public Result Activate(string username, string password)
+        {
+            return webService.Activate(username, password);
+        }
+
+        public Result Deactivate(string username, string password)
+        {
+            return webService.Deactivate(username, password);
+        }
+
         /// <summary>
         /// Gets the list of sub forums from the server.
         /// </summary>
@@ -130,6 +140,11 @@ namespace ForumClientCore.NetworkLayer
         internal Post[] GetSubforum(String subforumname)
         {
             return webService.GetSubforum(subforumname);
+        }
+
+        internal Post[] Search(string query)
+        {
+            return webService.Search(query);
         }
 
         /// <summary>
@@ -238,6 +253,11 @@ namespace ForumClientCore.NetworkLayer
         public Result ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword)
         {
             return webService.ReplaceAdmin(oldAdminUsername, oldAdminPassword, newAdminUsername, newAdminPassword);
+        }
+
+        internal Result Ban(string usernameToBan, string modUsername, string modPassword)
+        {
+            return webService.Ban(usernameToBan, modUsername, modPassword);
         }
 
         public int GetNumberOfLoggedInUsers()

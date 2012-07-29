@@ -112,6 +112,39 @@ namespace ForumClientCore
 
         }
 
+        public bool Activate()
+        {
+            if (!loggedIn)
+            {
+                return false;
+            }
+            if (netAdaptor.Activate(loggedAs, loggedPassword) == Result.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool Deactivate(string username, string password)
+        {
+            if (!loggedIn)
+            {
+                return false;
+            }
+            if (netAdaptor.Deactivate(loggedAs, loggedPassword) == Result.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
         public String[] GetSubforumsList()
         {
             return netAdaptor.GetSubforumsList();
@@ -146,6 +179,11 @@ namespace ForumClientCore
             return subForum;
         }
 
+        internal Post[] Search(string query)
+        {
+            return netAdaptor.Search(query);
+        }
+
         public Post[] GetReplies(Postkey postkey)
         {
             try
@@ -174,6 +212,11 @@ namespace ForumClientCore
         public Result RemovePost(Postkey postkey)
         {
             return netAdaptor.RemovePost(postkey, loggedAs, loggedPassword);
+        }
+
+        internal Result Ban(string usernameToBan)
+        {
+            return netAdaptor.Ban(usernameToBan, loggedAs, loggedPassword);
         }
 
         public Result AddModerator(string usernameToAdd, string subforum)
