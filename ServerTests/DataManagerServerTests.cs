@@ -255,7 +255,7 @@ namespace ServerTests
             DataManager target = new DataManager();
             User user = new User("dor", "dor");
             target.AddUser(user);
-            user.Level = AuthorizationLevel.ADMIN;
+            //user.Level = AuthorizationLevel.ADMIN;
             user.Password = "bla";
             bool actual;
             actual = target.UpdateUser(user);
@@ -375,7 +375,6 @@ namespace ServerTests
             List<Subforum> l = target.GetSubforums();
             Console.WriteLine();
         }
-
 
         [TestMethod()]
         public void ModeratorsMethodsServerTests()

@@ -386,6 +386,21 @@ namespace ForumServer
 
         }
 
+
+        public string[] GetModerators(string subforum)
+        {
+            try
+            {
+                return controller.GetModerators(subforum);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, e.Message);
+            }
+
+        }
+
+
         #endregion
     }
 }

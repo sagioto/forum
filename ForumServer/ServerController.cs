@@ -739,7 +739,26 @@ namespace ForumServer
 
         }
 
+        public string[] GetModerators(string subforum)
+        {
+            try
+            {
+                log.Info("got request to get moderators");
+
+                string[] subs = dataManager.GetModerators(subforum).ToArray();
+                Array.Sort<string>(subs);
+                return subs;
+            }
+            catch (Exception e)
+            {
+                log.Error("got request to get moderators but got error", e);
+                throw e;
+            }
+        }
+
         #endregion
+
+
 
 
 

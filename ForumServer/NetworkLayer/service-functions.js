@@ -627,12 +627,11 @@ function GetModeratosList()
 					td.setAttribute('onclick', 'AddModeratorToSubforum(\'' + result[i] + '\')');
 					td.setAttribute('class', 'subforumsList');
 					td.setAttribute('colspan', '2');
-					//var response2 = callService("GetModerators", "subforum" : result[i], function(result2){
-					var response2 = callService("GetSubforumsList", "", function(result2){
+					var response2 = callService("GetModerators", {"subforum" : result[i]}, function(result2){
 						$.each(result2, function(j)
 						{
 							var td2 = document.createElement("td");
-							td2.innerHTML = result[j];
+							td2.innerHTML = result2[j];
 							tr.appendChild(td2);
 							td2.setAttribute('onclick', 'ModeratorChange(\'' + result2[j] + '\' , \'' + result[i] + '\')');
 							td2.setAttribute('class', 'moderatorsList');

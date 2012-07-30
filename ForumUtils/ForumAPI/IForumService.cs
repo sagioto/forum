@@ -352,6 +352,17 @@ namespace ForumShared.ForumAPI
             ResponseFormat = WebMessageFormat.Json)]
         Result ReplaceAdmin(string oldAdminUsername, string oldAdminPassword, string newAdminUsername, string newAdminPassword);
 
+
+        /// <summary>
+        /// Returns list of moderators of given subforum
+        /// </summary>
+        /// <param name="subforum"></param>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(FaultException))]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
+        string[] GetModerators(string subforum);
+
         #endregion
 
     }

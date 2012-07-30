@@ -145,11 +145,11 @@ namespace ServerTests
             string username = string.Empty; // TODO: Initialize to an appropriate value
             string password = string.Empty; // TODO: Initialize to an appropriate value
             User target = new User(username, password); // TODO: Initialize to an appropriate value
-            AuthorizationLevel expected = new AuthorizationLevel(); // TODO: Initialize to an appropriate value
-            AuthorizationLevel actual;
-            target.Level = expected;
-            actual = target.Level;
-            Assert.AreEqual(expected, actual);
+            //AuthorizationLevel expected = new AuthorizationLevel(); // TODO: Initialize to an appropriate value
+           // AuthorizationLevel actual;
+           // target.Level = expected;
+            //actual = target.Level;
+            //Assert.AreEqual(expected, actual);
             Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
