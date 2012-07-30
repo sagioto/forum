@@ -539,5 +539,11 @@ namespace ForumServer.DataLayer
         {
             throw new NotImplementedException();
         }
+
+
+        public List<string> GetAllShouldBeBannedUserNames()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

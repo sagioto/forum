@@ -200,7 +200,15 @@ namespace ForumServer.DataLayer
         /// <returns></returns>
         List<User> GetAllLoggedInUsers();
 
+        /// <summary>
+        /// Gets a list of all ShouldBeBanned users
+        /// </summary>
+        /// <returns></returns>
+        List<string> GetAllShouldBeBannedUserNames();
+
         #endregion
 
+
+        
     }
 }

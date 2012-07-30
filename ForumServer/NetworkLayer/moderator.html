@@ -1,7 +1,6 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    	<title>Sagioto Forum Admin Tools</title>
+    	<title>Sagioto Forum Moderator Tools</title>
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
         rel="stylesheet" type="text/css" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
@@ -31,49 +30,13 @@
             <td>
                 <div class="header">
                     <img src="logo.PNG" alt="SAGIOTO" height="80" /><span class="style2"> </span><span
-                        class="style3">Admin Tools:
+                        class="style3">Moderator Tools:
                 </div>
             </td>
         </tr>
         <tr>
             <td>
                 <div id="accordion">
-                    <h3>
-                        <a href="#">Add Subforum </a>
-                    </h3>
-                    <div class="menuText">
-                        Enter subforum name:
-                        <br />
-                        <input name="subforumToAddText" type="text" placeholder="Subforum Name">
-                        <button name="addSubforumButton" type="button" onclick="AddSubforum()" class="login-out-buttons">
-                            Add Subforum</button>
-						
-                    </div>
-                    <h3>
-                        <a href="#">Remove Subforum </a>
-                    </h3>
-                    <div id="removeSubforumDiv">
-						<script>GetSubforumsListAdminTools()</script>
-						<div class="menuText">
-							Choose a subforum to remove from forum:
-						</div>
-						<table id="subforumsTableAdminTool" width="500px"></table>
-					</div>
-                    <h3>
-                        <a href="#">Moderators Managment </a>
-                    </h3>
-                    <div id="moderatorsTableDiv">
-						<script> GetModeratosList()</script>
-						<div class="menuText">
-							List of Subforum - Moderators:
-						</div>
-						<table id="moderatorsTable" width="500px"></table>
-						<div class="menuText">
-							<br> * Click on moderator name to Replace/Delete moderator.
-							<br> * Click on subforum name to add Moderator
-						</div>
-						<table id="moderatorButtonsTable" width ="700px"></table>
-					</div>
 					<h3>
                         <a href="#">Ban Users </a>
                     </h3>

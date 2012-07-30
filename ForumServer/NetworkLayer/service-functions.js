@@ -698,7 +698,7 @@ function DeleteModerator(moderator, subforum)
 				switch(result.PostResult)
 				{
 					case OK:
-						alert("Subforum was added successfully!");
+						alert("Moderator was deleted successfully!");
 						break;
 					default:
 						alert("insufficient permissions!");
@@ -722,7 +722,7 @@ function AddNewModerator(subforum)
 				switch(result.PostResult)
 				{
 					case OK:
-						alert("Subforum was added successfully!");
+						alert("Moderator was added successfully!");
 						break;
 					default:
 						alert("insufficient permissions!");
@@ -746,7 +746,7 @@ function ReplaceModerator(oldModerator, subforum)
 				switch(result.PostResult)
 				{
 					case OK:
-						alert("Subforum was added successfully!");
+						alert("Moderator was replaced successfully!");
 						break;
 					default:
 						alert("insufficient permissions!");
@@ -758,3 +758,50 @@ function ReplaceModerator(oldModerator, subforum)
 }
 
 
+function GetShouldBeBannedUsersList()
+{
+	var response = callService("GetShouldBeBannedUsers", "", function(result){
+	$('#banUsersDiv').height(0);
+	$('#shouldBeBannedUsersTable').empty();
+	var sfList = $('#shouldBeBannedUsersTable');
+	sfList.hide();
+		$.each(result, function(i)
+			{
+				var tr = document.createElement("tr");
+				var td = document.createElement("td");
+				td.innerHTML = result[i];
+				tr.appendChild(td);
+				td.setAttribute('onclick', 'BanUser(\'' + result[i] + '\')');
+				td.setAttribute('class', 'subforumsList');
+				td.setAttribute('style','cursor: pointer;');
+				td.setAttribute('colspan', '2');
+				sfList.append(tr);
+				$('#banUsersDiv').height($('#banUsersDiv').height() + 28);
+			}
+		)
+		$('#banUsersDiv').height($('#banUsersDiv').height() + 30);
+		sfList.fadeIn('slow');
+		});
+}
+
+
+function BanUser(userToBan)
+{
+	callService("Ban", {"usernameToBan" : userToBan,
+						"modUsername": username,
+						"modPassword" : password},
+			function(result)
+			{
+				switch(result.PostResult)
+				{
+					case OK:
+						alert("User was banned successfully!");
+						break;
+					default:
+						alert("insufficient permissions!");
+						break;
+				}
+			}
+	);
+	GetShouldBeBannedUsersList();
+}

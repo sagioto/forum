@@ -756,12 +756,28 @@ namespace ForumServer
             }
         }
 
+        public string[] GetShouldBeBannedUsers()
+        {
+            try
+            {
+                log.Info("got request to get showedBeBanned users");
+
+                string[] subs = dataManager.GetAllShouldBeBannedUserNames().ToArray();
+
+                return subs;
+            }
+            catch (Exception e)
+            {
+                log.Error("got request to get moderators but got error", e);
+                throw e;
+            }
+        }
+
         #endregion
 
 
 
 
-
-
+        
     }
 }

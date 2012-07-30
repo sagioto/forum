@@ -363,6 +363,15 @@ namespace ForumShared.ForumAPI
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         string[] GetModerators(string subforum);
 
+        /// <summary>
+        /// Returns a list of all users that in status: "ShouldBeBanned"
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(FaultException))]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json)]
+        string[] GetShouldBeBannedUsers();
+
         #endregion
 
     }

@@ -770,5 +770,27 @@ namespace ForumServer.DataLayer
             }
 
         }
+
+
+        public List<string> GetAllShouldBeBannedUserNames()
+        {
+            try
+            {
+                List<string> result = new List<string>();
+                IEnumerable<UserEntity> usersQuery = from u in ForumContext.UserEntities
+                                                     where u.State == "ShouldBeBanned"
+                                                     select u;
+                foreach (UserEntity user in usersQuery)
+                {
+                    result.Add(user.UserName);
+                }
+                return result;
+            }
+            catch (Exception)
+            {
+                //TODO
+                throw;
+            }
+        }
     }
 }

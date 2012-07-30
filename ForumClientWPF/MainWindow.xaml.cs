@@ -165,8 +165,6 @@ namespace ForumClientWPF
             }
             
             currentSubforum = subforumsList[0];
-
-
         }
 
         #region Register/Login
@@ -280,6 +278,7 @@ namespace ForumClientWPF
         {
             mainLabel.Visibility = System.Windows.Visibility.Hidden;
             currentSubforum = e.AddedItems[0].ToString();
+            StaticObjects.controller.ListenOnForum(currentUser, currentSubforum);
             postsTreeView.Items.Clear();
             //Thread getPostsWorkerThread = new Thread(getSubforum);
             //getPostsWorkerThread.SetApartmentState(ApartmentState.STA);

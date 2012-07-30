@@ -400,6 +400,17 @@ namespace ForumServer
 
         }
 
+        public string[] GetShouldBeBannedUsers()
+        {
+            try
+            {
+                return controller.GetShouldBeBannedUsers();
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, e.Message);
+            }
+        }
 
         #endregion
     }

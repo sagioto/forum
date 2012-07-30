@@ -7,7 +7,7 @@ namespace ForumServer.DataTypes
 {
     public enum UserState
     {
-        Login,  // TODO - Delete
+       Login,  // TODO - Delete
         Logout, // TODO - Delete
 
         Active,
