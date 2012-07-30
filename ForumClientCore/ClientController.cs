@@ -264,6 +264,11 @@ namespace ForumClientCore
             return netAdaptor.Subscribe(username);
         }
 
+        public bool ListenOnForum(string username, string subForumName)
+        {
+            return netAdaptor.ListenOnForum(username, subForumName);
+        }
+
         public int GetNumOfLoggedInUsers()
         {
             return netAdaptor.GetNumberOfLoggedInUsers();

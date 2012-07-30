@@ -289,6 +289,11 @@ namespace ForumClientCore.NetworkLayer
         {
             return webService.Subscribe(username);
         }
+
+        public bool ListenOnForum(string username, string subForumName)
+        {
+            return webService.ListenOnForum(username, subForumName);
+        }
     }
 
 }

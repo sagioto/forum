@@ -126,6 +126,9 @@ namespace ForumClientWPF
             Post p = (Post)e.Result;
             if (p != null)
             {
+                // TODO
+                // 1. if listening on p.subforum - refresh currently viewed thread
+                // 2. else - alert (new reply on user's post)
                 updatedSubforum = p.Subforum;
                 displayNotify(p.Subforum, p.Title);
                 if (p.Subforum == currentSubforum)
