@@ -65,6 +65,17 @@ namespace ForumShared.ForumAPI
             ResponseFormat = WebMessageFormat.Json)]
         Post Subscribe(String username);
 
+        /// <summary>
+        /// subscribe to a specific forum
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="subForumName"></param>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(FaultException))]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool ListenOnForum(string username, string subForumName);
 
         /// <summary>
         /// activate the account for a user with username and password

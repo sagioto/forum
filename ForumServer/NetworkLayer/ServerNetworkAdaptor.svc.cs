@@ -88,6 +88,18 @@ namespace ForumServer
             }
         }
 
+        public bool ListenOnForum(string username, string subForumName)
+        {
+            try
+            {
+                return controller.ListenOnForum(username, subForumName);
+            }
+            catch (Exception e)
+            {
+                throw new FaultException<Exception>(e, e.Message);
+            }
+        }
+
         public Result Activate(string username, string password)
         {
             try

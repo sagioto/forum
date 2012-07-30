@@ -60,9 +60,28 @@ namespace ForumServer.Policy
             return Result.OK;
         }
 
-        public bool ShouldNotify(Post post, string username)
+        public bool ShouldNotify(Post post, string username, string subforum)
         {
-            return (post.Key.Username != username);
+            return (post.Key.Username != username) && ((post.Subforum.Equals(subforum) || Participated(username, post));
+        }
+
+        private bool Participated(string username, Post post)
+        {
+            if (post.ParentPost == null)
+            {
+                return false;
+            }
+            else
+            {
+                if (post.ParentPost.Username.Equals(username))
+                {
+                    return true;
+                }
+                else
+                {
+                    return Participated(username, dataManager.GetPost(post.ParentPost));
+                }
+            }
         }
 
         public Result IsAuthorizedActivate(string username)

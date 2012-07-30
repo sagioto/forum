@@ -16,7 +16,7 @@ namespace ForumServer.Policy
 
          Result ChangeModerator(string oldUsername, string newUsername, string subforum);
 
-         bool ShouldNotify(Post post, string username);
+         bool ShouldNotify(Post post, string username, string subforum);
 
          Result IsAuthorizedToEdit(Postkey originalPostKey, string username);
 

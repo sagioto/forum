@@ -14,9 +14,9 @@ namespace ForumServer.Security
     public class SecurityManager : ISecurityManager
     {
         private IDataManager dataManager;
-        private ConcurrentDictionary<string, object> subscribed;
+        private ConcurrentDictionary<string, String> subscribed;
 
-        public SecurityManager(IDataManager dataManager, ConcurrentDictionary<string, object> subscribed)
+        public SecurityManager(IDataManager dataManager, ConcurrentDictionary<string, String> subscribed)
         {
             this.dataManager = dataManager;
             this.subscribed = subscribed;

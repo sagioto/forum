@@ -22,7 +22,7 @@ namespace ForumServer
         private ISecurityManager securityManager;
         private IPolicyManager policyManager;
         volatile private Post posted = new Post();
-        private static ConcurrentDictionary<string, Object> subscribed = new ConcurrentDictionary<string, Object>();
+        private static ConcurrentDictionary<string, String> subscribed = new ConcurrentDictionary<string, String>();
         private TimeSpan timeToWait;
         private log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -33,7 +33,7 @@ namespace ForumServer
             try
             {
                 log.Info("initializing service...");
-                subscribed.TryAdd("guest", new Object());
+                subscribed.TryAdd("guest", "");
                 dataManager = new DataManager();
                 securityManager = new SecurityManager(dataManager, subscribed);
                 policyManager = new PolicyManager(dataManager);
@@ -192,14 +192,16 @@ namespace ForumServer
             {
                 log.Info("got request to subscribe frome user " + username);
                 if (!username.Equals("guest"))
-                    subscribed.TryAdd(username, new Object());
+                    subscribed.TryAdd(username, "");
                 {
                     lock (subscribed[username])
                     {
                         DateTime start = DateTime.Now;
                         Monitor.Wait(subscribed[username], timeToWait);
                         if (DateTime.Now - start < timeToWait)
+                        {
                             return this.posted;
+                        }
                     }
                 }
                 return null;
@@ -227,10 +229,12 @@ namespace ForumServer
 
                         if (!username.Equals("guest"))
                         {
-                            if (policyManager.ShouldNotify(posted, username))
+                            String listensTo = "";
+                            subscribed.TryGetValue(username, out listensTo);
+                            if (policyManager.ShouldNotify(posted, username, listensTo))
                             {
                                 Monitor.PulseAll(subscribed[username]);
-                                Object obj = new Object();
+                                String obj = "";
                                 subscribed.TryRemove(username, out obj);
                             }
                         }
@@ -245,6 +249,22 @@ namespace ForumServer
                 throw e;
             }
 
+        }
+
+        public bool ListenOnForum(string username, string subForumName)
+        {
+            if (subscribed.ContainsKey(username))
+            {
+                lock (subscribed[username])
+                {
+                    subscribed.TryAdd(username, subForumName);
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
 
         #endregion
