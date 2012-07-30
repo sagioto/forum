@@ -124,7 +124,7 @@ namespace ForumServer.Security
                     //dataManager.SetUserState(username, UserState.ShouldBeBanned);
                     return Result.ILLEGAL_POST;
                 }
-            if (post.Key.Username.Equals(username))
+            if (!post.Key.Username.Equals(username))
                 user.CurrentState = UserState.ShouldBeBanned;
             return Result.INSUFFICENT_PERMISSIONS;
         }
