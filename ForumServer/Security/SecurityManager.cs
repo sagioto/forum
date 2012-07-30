@@ -46,6 +46,10 @@ namespace ForumServer.Security
                 /*&& user.CurrentState == UserState.Logout //Trying to enable multiple logins*/)
             {
                 //user.CurrentState = UserState.Login; //not relevant on newer policy
+                if (user.CurrentState == UserState.Logout)
+                {
+                    user.CurrentState = UserState.Active;
+                }
                 dataManager.UpdateUser(user);
                 return Result.OK;
             }
@@ -60,6 +64,10 @@ namespace ForumServer.Security
             if (IsUserLoggendIn(user))
             {
                 //user.CurrentState = UserState.Logout; //not relevant on newer policy
+                if (user.CurrentState == UserState.Login)
+                {
+                    user.CurrentState = UserState.Active;
+                }
                 dataManager.UpdateUser(user);
                 return Result.OK;
             }
