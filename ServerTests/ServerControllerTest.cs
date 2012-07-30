@@ -560,7 +560,7 @@ namespace ServerTests
         public void GetModerators()
         {
             ServerController target = new ServerController(); // TODO: Initialize to an appropriate value
-            string subforum = "Cars"; // TODO: Initialize to an appropriate value
+            string subforum = "Sports"; // TODO: Initialize to an appropriate value
             string[] expected = null; // TODO: Initialize to an appropriate value
             string[] actual;
             actual = target.GetModerators(subforum);

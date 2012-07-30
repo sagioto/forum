@@ -360,7 +360,7 @@ namespace ForumShared.ForumAPI
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(FaultException))]
-        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         string[] GetModerators(string subforum);
 
         #endregion
