@@ -191,7 +191,7 @@ namespace ForumServer
             try
             {
                 log.Info("got request to subscribe frome user " + username);
-                if (!username.Equals("guest"))
+                if (!username.Equals("guest") && !subscribed.ContainsKey(username))
                     subscribed.TryAdd(username, "");
                 {
                     lock (subscribed[username])
