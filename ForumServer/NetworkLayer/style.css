@@ -114,10 +114,94 @@ div
 	margin: 0 auto;
 }
 
-html, body
+html
 {
 	border-width: 0px;
 	margin: 0px;
-	width: 100%;
-	height: 100%; 
+	
 }
+
+body
+{
+    font-size: .80em;
+    font-family: "Helvetica Neue" , "Lucida Grande" , "Segoe UI" , Arial, Helvetica, Verdana, sans-serif;
+    margin: 0px;
+    padding: 0px;
+    
+}
+
+/**********************************Admin Tools*/
+.page
+{
+    background-color: #FFFFFF;
+}
+
+.header
+{
+    position: relative;
+    background: #FFFFFF;
+    width: 90%;
+}
+
+.button
+{
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Segoe U';
+    padding: .5em 2em .55em;
+
+}
+.menuText
+{
+    font-size: small;
+    color: #808080;
+}
+
+.controlButtons
+{
+	text-align: center;
+	margin:0 auto;
+	padding: 0px 125px 0px 125px;
+	line-height: normal;
+	border-collapse: separate;
+	border: 1px solid black;
+	border-radius: 8px;
+	background: #e4f5fc; /* Old browsers */
+	background: -moz-linear-gradient(top,  #e4f5fc 0%, #bfe8f9 50%, #9fd8ef 51%, #2ab0ed 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e4f5fc), color-stop(50%,#bfe8f9), color-stop(51%,#9fd8ef), color-stop(100%,#2ab0ed)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #e4f5fc 0%,#bfe8f9 50%,#9fd8ef 51%,#2ab0ed 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #e4f5fc 0%,#bfe8f9 50%,#9fd8ef 51%,#2ab0ed 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #e4f5fc 0%,#bfe8f9 50%,#9fd8ef 51%,#2ab0ed 100%); /* IE10+ */
+	background: linear-gradient(top,  #e4f5fc 0%,#bfe8f9 50%,#9fd8ef 51%,#2ab0ed 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e4f5fc', endColorstr='#2ab0ed',GradientType=0 ); /* IE6-9 */
+}
+
+
+.subforumsList
+{
+    font-weight: bold;
+	color: #fffffff;
+}
+.subforumsList:hover {
+color: #C0C0C0;
+}
+
+.moderatorsList
+{
+    font-weight: bold;
+	color: #18527A;
+}
+.moderatorsList:hover {
+color: #DFECF5;
+}
+
+.moderatorInstructions
+{
+	font-size: small;
+	color: #1F3747;
+}
+
+

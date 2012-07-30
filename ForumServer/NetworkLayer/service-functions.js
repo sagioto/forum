@@ -532,4 +532,230 @@ function getDateString(jsonDate)
      var date = new Date(utcTime);
 
      return date.toString("dd/MM/yyyy HH:mm:ss");
+	 
  }
+ 
+ 
+ 
+ 
+ //*******************************************AdminTools
+function GetSubforumsListAdminTools()
+{
+	var response = callService("GetSubforumsList", "", function(result){
+	$('#removeSubforumDiv').height(0);
+	$('#subforumsTableAdminTool').empty();
+	var sfList = $('#subforumsTableAdminTool');
+	sfList.hide();
+		$.each(result, function(i)
+			{
+				var tr = document.createElement("tr");
+				var td = document.createElement("td");
+				td.innerHTML = result[i];
+				tr.appendChild(td);
+				td.setAttribute('onclick', 'RemoveSubforum(\'' + result[i] + '\')');
+				td.setAttribute('class', 'subforumsList');
+				td.setAttribute('style','cursor: pointer;');
+				td.setAttribute('colspan', '2');
+				sfList.append(tr);
+				$('#removeSubforumDiv').height($('#removeSubforumDiv').height() + 28);
+			}
+		)
+		sfList.fadeIn('slow');
+		});
+}
+
+function AddSubforum()
+{
+	var subforum = $('input[name="subforumToAddText"]').val();
+	callService("AddSubforum", {"username": username,
+						"password" : password,
+						"subforum": subforum},
+			function(result)
+			{
+				switch(result.PostResult)
+				{
+					case OK:
+						alert("Subforum was added successfully!");
+						break;
+					default:
+						alert("insufficient permissions!");
+						break;
+				}
+			}
+	);
+	GetSubforumsListAdminTools();
+}
+
+function RemoveSubforum(subforum)
+{
+	callService("RemoveSubforum", {"username": username,
+						"password" : password,
+						"subforum": subforum},
+			function(result)
+			{
+				switch(result.PostResult)
+				{
+					case OK:
+						alert("Subforum was deleted successfully!");
+						break;
+					default:
+						alert("insufficient permissions!");
+						break;
+				}
+			}
+	);
+	//$('#subforumsTableAdminTool').detach();
+	GetSubforumsListAdminTools();
+	
+}
+
+function GetModeratosList()
+{
+	var response = callService("GetSubforumsList", "", function(result){
+		$('#moderatorsTableDiv').height(0);
+		$('#moderatorsTable').empty();
+		$('#moderatorButtonsTable').empty();
+		var sfList = $('#moderatorsTable');
+		sfList.hide();
+			$.each(result, function(i)
+				{
+					var tr = document.createElement("tr");
+					var td = document.createElement("td");
+					td.innerHTML = result[i];
+					tr.appendChild(td);
+					td.setAttribute('style','cursor: pointer;');
+					td.setAttribute('onclick', 'AddModeratorToSubforum(\'' + result[i] + '\')');
+					td.setAttribute('class', 'subforumsList');
+					td.setAttribute('colspan', '2');
+					//var response2 = callService("GetModerators", "subforum" : result[i], function(result2){
+					var response2 = callService("GetSubforumsList", "", function(result2){
+						$.each(result2, function(j)
+						{
+							var td2 = document.createElement("td");
+							td2.innerHTML = result[j];
+							tr.appendChild(td2);
+							td2.setAttribute('onclick', 'ModeratorChange(\'' + result2[j] + '\' , \'' + result[i] + '\')');
+							td2.setAttribute('class', 'moderatorsList');
+							td2.setAttribute('style','cursor: pointer;');
+							td2.setAttribute('colspan', '2');
+						})
+					})
+					sfList.append(tr);
+					$('#moderatorsTableDiv').height($('#moderatorsTableDiv').height() + 28);
+				}
+			)
+			$('#moderatorsTableDiv').height($('#moderatorsTableDiv').height() + 200);
+			sfList.fadeIn('slow');
+			});
+}
+
+function ModeratorChange(moderator, subforum)
+{
+	$('#moderatorButtonsTable').empty();
+	var mbList = $('#moderatorButtonsTable');
+	mbList.hide();
+	var td1 = "<td>";// = document.createElement("td");
+	td1 += "<div class=\"moderatorInstructions\">";
+	td1 += "<br> Subforum: " + subforum + "<br>Replace moderator \'" + moderator + "\' with:";
+	td1 += "<input name=\"newModeratorRep\" type=\"text\" placeholder=\"New Moderator Name\">";
+	td1 += "<button name=\"replaceModeratorButton\" type=\"button\" onclick=\"ReplaceModerator(\'"+moderator+"\' , \'" + subforum + "\')\" class=\"login-out-buttons\">Replace Moderator</button>";//TODO
+	td1 += "</div>";
+	td1 += "</td>";
+	var td2 = "<td> OR ";//document.createElement("td");
+	td2 += "<button name=\"deleteModerator\" type=\"button\" onclick=\"DeleteModerator(\'"+moderator+"\' , \'" + subforum + "\')\" class=\"login-out-buttons\">Delete Moderator "+moderator+"</button>"
+	td2 += "</td>";
+	var tr1 = "<tr>" + td1 + "</tr>";
+	var tr2 = "<tr>" + td2 + "</tr>";
+	//tr1.appendChild(td2);
+	mbList.append(tr1);
+	mbList.append(tr2);
+	mbList.fadeIn('slow');
+}
+
+function AddModeratorToSubforum(subforum)
+{
+	$('#moderatorButtonsTable').empty();
+	var mbList = $('#moderatorButtonsTable');
+	mbList.hide();
+	var td1 = "<td>";
+	td1 += "<div class=\"moderatorInstructions\">";
+	td1 += "<br> Subforum: " + subforum + "<br>New moderator name:";
+	td1 += "<input name=\"newModerator\" type=\"text\" placeholder=\"New Moderator Name\">";
+	td1 += "<button name=\"newModeratorButton\" type=\"button\" onclick=\"AddNewModerator(\'" + subforum + "\')\" class=\"login-out-buttons\">Add Moderator</button>";
+	td1 += "</td>";
+	var tr1 = "<tr>" + td1 + "</tr>";
+	mbList.append(tr1);
+	mbList.fadeIn('slow');
+}
+
+function DeleteModerator(moderator, subforum)
+{
+	callService("RemoveModerator", {"username": username,
+						"password" : password,
+						"userNameToAdd" : moderator,
+						"subforum": subforum},
+			function(result)
+			{
+				switch(result.PostResult)
+				{
+					case OK:
+						alert("Subforum was added successfully!");
+						break;
+					default:
+						alert("insufficient permissions!");
+						break;
+				}
+			}
+	);
+	GetModeratosList();
+}
+
+
+function AddNewModerator(subforum)
+{
+	var newModerator = $('input[name="newModerator"]').val();
+	callService("AddModerator", {"username": username,
+						"password" : password,
+						"userNameToAdd" : newModerator,
+						"subforum": subforum},
+			function(result)
+			{
+				switch(result.PostResult)
+				{
+					case OK:
+						alert("Subforum was added successfully!");
+						break;
+					default:
+						alert("insufficient permissions!");
+						break;
+				}
+			}
+	);
+	GetModeratosList();
+}
+
+function ReplaceModerator(oldModerator, subforum)
+{
+	var newModerator = $('input[name="newModeratorRep"]').val();
+	callService("AddModerator", {"username": username,
+						"password" : password,
+						"userNameToAdd" : newModerator,
+						"userToRemove" : oldModerator,
+						"subforum": subforum},
+			function(result)
+			{
+				switch(result.PostResult)
+				{
+					case OK:
+						alert("Subforum was added successfully!");
+						break;
+					default:
+						alert("insufficient permissions!");
+						break;
+				}
+			}
+	);
+	GetModeratosList();
+}
+
+
