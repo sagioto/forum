@@ -45,7 +45,7 @@ namespace ForumServer.Security
             if (user.Password.Equals(password)
                 /*&& user.CurrentState == UserState.Logout //Trying to enable multiple logins*/)
             {
-                user.CurrentState = UserState.Login;
+                //user.CurrentState = UserState.Login; //not relevant on newer policy
                 dataManager.UpdateUser(user);
                 return Result.OK;
             }
@@ -59,7 +59,7 @@ namespace ForumServer.Security
                 return Result.USER_NOT_FOUND;
             if (IsUserLoggendIn(user))
             {
-                user.CurrentState = UserState.Logout;
+                //user.CurrentState = UserState.Logout; //not relevant on newer policy
                 dataManager.UpdateUser(user);
                 return Result.OK;
             }
@@ -80,13 +80,13 @@ namespace ForumServer.Security
             if (!user.Level.Equals(AuthorizationLevel.GUEST)
                     && IsUserLoggendIn(user))
             {
-                if (user.CurrentState == UserState.Active)
+                if ((user.CurrentState == UserState.Active) || (user.CurrentState == UserState.ShouldBeBanned))
                 {
                     return Result.OK;
                 }
-                else if (user.CurrentState == UserState.NotActive)
+                else //if (user.CurrentState == UserState.NotActive)
                 {
-                    dataManager.SetUserState(username, UserState.ShouldBeBanned);
+                    //dataManager.SetUserState(username, UserState.ShouldBeBanned);
                     return Result.ILLEGAL_POST;
                 }
             }
@@ -107,15 +107,17 @@ namespace ForumServer.Security
                 //|| (user.Level.Equals(AuthorizationLevel.MODERATOR)
                 //    && sub != null && sub.ModeratorsList.Contains(username))
                 //|| (user.Level.Equals(AuthorizationLevel.ADMIN))))
-                if (user.CurrentState == UserState.Active)
+                if ((user.CurrentState == UserState.Active) || (user.CurrentState == UserState.ShouldBeBanned))
                 {
                     return Result.OK;
                 }
-                else if (user.CurrentState == UserState.NotActive)
+                else //if (user.CurrentState == UserState.NotActive)
                 {
-                    dataManager.SetUserState(username, UserState.ShouldBeBanned);
+                    //dataManager.SetUserState(username, UserState.ShouldBeBanned);
                     return Result.ILLEGAL_POST;
                 }
+            if (post.Key.Username.Equals(username))
+                user.CurrentState = UserState.ShouldBeBanned;
             return Result.INSUFFICENT_PERMISSIONS;
         }
 
@@ -127,6 +129,7 @@ namespace ForumServer.Security
                 return Result.USER_NOT_FOUND;
             if (user.Level.Equals(AuthorizationLevel.ADMIN))
                 return Result.OK;
+            user.CurrentState = UserState.ShouldBeBanned;
             return Result.INSUFFICENT_PERMISSIONS;
         }
 
