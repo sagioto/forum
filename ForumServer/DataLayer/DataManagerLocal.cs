@@ -545,5 +545,16 @@ namespace ForumServer.DataLayer
         {
             throw new NotImplementedException();
         }
+
+
+        public bool RemoveModerator(string subforum, string moderatorName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AddModerator(string subforum, string moderatorName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

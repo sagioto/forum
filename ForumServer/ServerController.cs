@@ -516,6 +516,7 @@ namespace ForumServer
                 if (res == Result.OK)
                 {
                     dataManager.GetSubforum(subforum).ModeratorsList.Add(usernameToAdd);
+                    dataManager.AddModerator(subforum, usernameToAdd);
                     User user = dataManager.GetUser(usernameToAdd);
                     if (!user.Level.Equals(AuthorizationLevel.ADMIN))
                     {
@@ -545,6 +546,7 @@ namespace ForumServer
                 if (res == Result.OK)
                 {
                     dataManager.GetSubforum(subforum).ModeratorsList.Remove(usernameToRemove);
+                    dataManager.RemoveModerator(subforum, usernameToRemove);
                     bool moderator = CheckIfModerator(usernameToRemove);
                     if (!moderator)
                     {

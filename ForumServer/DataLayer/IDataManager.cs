@@ -206,6 +206,21 @@ namespace ForumServer.DataLayer
         /// <returns></returns>
         List<string> GetAllShouldBeBannedUserNames();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subforum"></param>
+        /// <param name="moderatorName"></param>
+        /// <returns></returns>
+        bool RemoveModerator(string subforum, string moderatorName);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subforum"></param>
+        /// <param name="moderatorName"></param>
+        /// <returns></returns>
+        bool AddModerator(string subforum, string moderatorName);
         #endregion
 
 

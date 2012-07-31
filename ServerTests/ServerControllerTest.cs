@@ -565,6 +565,9 @@ namespace ServerTests
             string[] expected = null; // TODO: Initialize to an appropriate value
             string[] actual;
             actual = target.GetModerators(subforum);
+           target.RemoveModerator("admin", "admin", "dor", "Bla");
+            target.AddModerator("admin", "admin", "dor", "Bla");
+            target.ReplaceModerator("admin", "admin", "dor", "admin", "Cars");
             Assert.AreEqual(expected, actual);
         }
 

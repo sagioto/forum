@@ -508,28 +508,10 @@ namespace ForumServer.DataLayer
         {
             try
             {
-                // Update in moderators table
-                IEnumerable<ModeratorEntity> getModeratorQuery = from m in ForumContext.ModeratorEntities
-                                                                 where m.Subforum == subforum && m.Username == moderatorName
-                                                                 select m;
-
-
-                // Update in users table
-
-                IEnumerable<ModeratorEntity> userIsStillModeratorQuery = from m in ForumContext.ModeratorEntities
-                                                                         where m.Username == moderatorName
-                                                                         select m;
-                UserEntity ue = null;
-                if (userIsStillModeratorQuery.Count() == 1)     // If user was just moderator of subforum then change his status in yblUsers
-                {
-                    IEnumerable<UserEntity> usersQuery = from u in ForumContext.UserEntities
-                                                         where u.UserName == moderatorName
-                                                         select u;
-                    ue = usersQuery.First();
-                    ue.Authentication = AuthorizationLevel.MEMBER.ToString();
-                }
-                ForumContext.ModeratorEntities.DeleteObject(getModeratorQuery.First());
-
+                IEnumerable<ModeratorEntity> moderatorsQuery = from s in ForumContext.ModeratorEntities
+                                                             where s.Username == moderatorName
+                                                             select s;
+                ForumContext.ModeratorEntities.DeleteObject(moderatorsQuery.First());
                 ForumContext.SaveChanges();
                 return true;
             }
@@ -539,6 +521,58 @@ namespace ForumServer.DataLayer
                 throw;
             }
         }
+
+
+        public bool AddModerator(string subforum, string moderatorName)
+        {
+            try
+            {
+                ModeratorEntity me = new ModeratorEntity();
+                me.Username = moderatorName;
+                me.Subforum = subforum;
+                ForumContext.ModeratorEntities.AddObject(me);
+                ForumContext.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            //try
+            //{
+            //    // Update in moderators table
+            //    IEnumerable<ModeratorEntity> getModeratorQuery = from m in ForumContext.ModeratorEntities
+            //                                                     where m.Subforum == subforum && m.Username == moderatorName
+            //                                                     select m;
+
+
+            //    // Update in users table
+
+            //    IEnumerable<ModeratorEntity> userIsStillModeratorQuery = from m in ForumContext.ModeratorEntities
+            //                                                             where m.Username == moderatorName
+            //                                                             select m;
+            //    UserEntity ue = null;
+            //    if (userIsStillModeratorQuery.Count() == 1)     // If user was just moderator of subforum then change his status in yblUsers
+            //    {
+            //        IEnumerable<UserEntity> usersQuery = from u in ForumContext.UserEntities
+            //                                             where u.UserName == moderatorName
+            //                                             select u;
+            //        ue = usersQuery.First();
+            //        ue.Authentication = AuthorizationLevel.MEMBER.ToString();
+            //    }
+            //    ForumContext.ModeratorEntities.DeleteObject(getModeratorQuery.First());
+
+            //    ForumContext.SaveChanges();
+            //    return true;
+            //}
+            //catch (Exception)
+            //{
+            //    //TODO
+            //    throw;
+            //}
+        }
+
 
         public bool AddUser(User user)
         {

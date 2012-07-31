@@ -597,9 +597,9 @@ function GetSubforumsListAdminTools()
 function AddSubforum()
 {
 	var subforum = $('input[name="subforumToAddText"]').val();
-	callService("AddSubforum", {"username": username,
-						"password" : password,
-						"subforum": subforum},
+	callService("AddSubforum", {"adminUsername": username,
+						"adminPassword" : password,
+						"subforumName": subforum},
 			function(result)
 			{
 				switch(result.AddSubforumResult)
@@ -618,9 +618,9 @@ function AddSubforum()
 
 function RemoveSubforum(subforum)
 {
-	callService("RemoveSubforum", {"username": username,
-						"password" : password,
-						"subforum": subforum},
+	callService("RemoveSubforum", {"adminUsername": username,
+						"adminPassword" : password,
+						"subforumName": subforum},
 			function(result)
 			{
 				switch(result.RemoveSubforumResult)
@@ -719,9 +719,9 @@ function AddModeratorToSubforum(subforum)
 
 function DeleteModerator(moderator, subforum)
 {
-	callService("RemoveModerator", {"username": username,
-						"password" : password,
-						"userNameToAdd" : moderator,
+	callService("RemoveModerator", {"adminUsername": username,
+						"adminPassword" : password,
+						"usernameToRemove" : moderator,
 						"subforum": subforum},
 			function(result)
 			{
@@ -731,7 +731,7 @@ function DeleteModerator(moderator, subforum)
 						alert("Moderator was deleted successfully!");
 						break;
 					default:
-						alert("insufficient permissions!");
+						alert("POLICY REJECTED Request!");
 						break;
 				}
 			}
@@ -743,9 +743,9 @@ function DeleteModerator(moderator, subforum)
 function AddNewModerator(subforum)
 {
 	var newModerator = $('input[name="newModerator"]').val();
-	callService("AddModerator", {"username": username,
-						"password" : password,
-						"userNameToAdd" : newModerator,
+	callService("AddModerator", {"adminUsername": username,
+						"adminPassword" : password,
+						"usernameToAdd" : newModerator,
 						"subforum": subforum},
 			function(result)
 			{
@@ -755,7 +755,7 @@ function AddNewModerator(subforum)
 						alert("Moderator was added successfully!");
 						break;
 					default:
-						alert("insufficient permissions!");
+						alert("POLICY REJECTED Request!");
 						break;
 				}
 			}
@@ -766,10 +766,10 @@ function AddNewModerator(subforum)
 function ReplaceModerator(oldModerator, subforum)
 {
 	var newModerator = $('input[name="newModeratorRep"]').val();
-	callService("ReplaceModerator", {"username": username,
-						"password" : password,
-						"userNameToAdd" : newModerator,
-						"userToRemove" : oldModerator,
+	callService("ReplaceModerator", {"adminUsername": username,
+						"adminPassword" : password,
+						"usernameToAdd" : newModerator,
+						"usernameToRemove" : oldModerator,
 						"subforum": subforum},
 			function(result)
 			{
@@ -779,7 +779,7 @@ function ReplaceModerator(oldModerator, subforum)
 						alert("Moderator was replaced successfully!");
 						break;
 					default:
-						alert("insufficient permissions!");
+						alert("POLICY REJECTED Request!");
 						break;
 				}
 			}
