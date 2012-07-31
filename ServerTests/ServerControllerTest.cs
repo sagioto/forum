@@ -487,6 +487,7 @@ using ForumServer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting.Web;
+using ForumShared.ForumAPI;
 
 namespace ServerTests
 {
@@ -564,6 +565,25 @@ namespace ServerTests
             string[] expected = null; // TODO: Initialize to an appropriate value
             string[] actual;
             actual = target.GetModerators(subforum);
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        ///A test for AddSubforum
+        ///</summary>
+        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
+        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
+        // whether you are testing a page, web service, or a WCF service.
+        [TestMethod()]
+        public void AddSubforum()
+        {
+            ServerNetworkAdaptor target = new ServerNetworkAdaptor(); // TODO: Initialize to an appropriate value
+            string adminUsername = "admin"; // TODO: Initialize to an appropriate value
+            string adminPassword = "admin"; // TODO: Initialize to an appropriate value
+            string subforumName = "aaaaa"; // TODO: Initialize to an appropriate value
+            Result expected = new Result(); // TODO: Initialize to an appropriate value
+            Result actual;
+            actual = target.AddSubforum(adminUsername, adminPassword, subforumName);
             Assert.AreEqual(expected, actual);
         }
     }

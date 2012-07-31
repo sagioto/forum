@@ -12,6 +12,8 @@
     $(document).ready(function() {
 		$('#forum').hide();
 		$('form[name="logout"]').hide();
+		$('form[name="adminTools"]').hide();
+		$('form[name="moderatorTools"]').hide();
 		$('form[name="login"]').hide();
 		$('form[name="login"]').fadeIn('slow');
 		$('#forum').fadeIn('slow');
@@ -23,7 +25,7 @@
 </head>
 
 <body>
-	<div id="forms" >
+	<!--<div id="forms" >
 		
 		<form name="login" class="login-out-forms" style="display: inline;">
 			<input name="username" type="text" placeholder="username">
@@ -40,10 +42,40 @@
 			<input name="query" type="text" size="10">
 			<button name="searchButton" type="button" onclick="Search()" class="login-out-buttons">search</button>
 		</form>
+		<form name="adminTools" class="login-out-forms" style="align: center; display: inline;">
 		
-	</div>
-	
-	<div id="forum" style="width: 900px; padding-top: 80px">
+	</div>-->
+	<table width=100% height=100%>
+	<tr>
+
+	<td style="text-align: left; vertical-align: middle;" >
+		<form name="login" class="login-out-forms" style="display: inline;">
+			<input name="username" type="text" placeholder="username">
+			<input name="password" type="password" placeholder="password">
+			<button name="loginButton" type="button" onclick="RegisterAndLogin('Login')" class="login-out-buttons">login</button>
+			<button name="registerButton" type="button" onclick="RegisterAndLogin('Register')" class="login-out-buttons">register</button>
+		</form>
+		<form name="logout" class="login-out-forms" style="align: center; display: inline;">
+		</form>
+	</td>
+	<td style="text-align: right; vertical-align: middle;">
+		<form name="search" class="login-out-forms" style="align: right; display: inline;">
+			<input name="query" type="text" size="10">
+			<button name="searchButton" type="button" onclick="Search()" class="login-out-buttons">search</button>
+		</form>
+		<form name="adminTools" class="login-out-forms" style="align: center; display: inline;">
+		<form name="moderatorTools" class="login-out-forms" style="align: center; display: inline;">
+	</td>
+	</tr>
+	</table>
+	<tr>
+	<table width=100% height=100%>
+	<td style="text-align: center; vertical-align: middle;">
+		<img src="logo.PNG" alt="SAGIOTO" height="80" />
+	</td>
+	</tr>
+	</table>
+	<div id="forum" style="width: 900px; padding-top: 50px">
 		<table id="controlButtons" width="800px" />
 			<tr>
 				<td class="controlButtons" onclick="GetSubforumsList()" ><img src="img/home.ico" align="absmiddle" /></td>

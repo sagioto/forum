@@ -62,6 +62,8 @@ function RegisterAndLoginCall(user, methodName)
 			case OK:
 			case MEMBER:
 			case MODERATOR:
+				$('form[name="moderatorTools"]').html('<button name="moderatorTools" type="button" onclick="openModeratorToolsWin()" class="login-out-buttons">Moderator Tools</button>');
+				$('form[name="moderatorTools"]').fadeIn('fast');
 			case ADMIN:
 				if(methodName == "Register"){
 					if(res == OK)
@@ -78,6 +80,12 @@ function RegisterAndLoginCall(user, methodName)
 							$('form[name="logout"]').html('welcome ' + username + 
 							'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button name="logoutButton" type="button" onclick="Logout(username)" class="login-out-buttons">logout</button>');
 							$('form[name="logout"]').fadeIn('fast');
+							
+							$('form[name="adminTools"]').html('<button name="adminTools" type="button" onclick="openAdminToolsWin()" class="login-out-buttons">Admin Tools</button>');
+							if (username == 'admin')
+							{
+								$('form[name="adminTools"]').fadeIn('fast');
+							}
 							refresh();
 					});
 				}
@@ -125,6 +133,8 @@ function Logout(name)
 						subscribeRequest = Subscribe();
 						refresh();
 						$('form[name="login"]').fadeIn('fast');
+						$('form[name="adminTools"]').fadeOut('fast');
+						$('form[name="moderatorTools"]').fadeOut('fast');
 					}
 			);
 		}
@@ -518,6 +528,21 @@ function Remove(postKey)
 			}
 	);
 }
+//*******************************************New in main forum
+function openAdminToolsWin()
+{
+//var usernamePara = {"username" : username};
+var w =  window.open('admin.htm','popUpWindow', 'height=500,width=910,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes');
+w.myVariable = username;
+w.MyVariable2 = password;
+}
+
+function openModeratorToolsWin()
+{
+var w =  window.open('moderator.htm','popUpWindow', 'height=500,width=910,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes');
+w.myVariable = username;
+w.MyVariable2 = password;
+}
 
 //*******************************************Utils
 jQuery.fn.exists = function(){return this.length>0;}
@@ -539,6 +564,11 @@ function getDateString(jsonDate)
  
  
  //*******************************************AdminTools
+ function ready()
+ {
+	username = window.opener.username;
+	password = window.opener.password;
+ }
 function GetSubforumsListAdminTools()
 {
 	var response = callService("GetSubforumsList", "", function(result){
