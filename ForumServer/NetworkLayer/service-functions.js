@@ -602,7 +602,7 @@ function AddSubforum()
 						"subforum": subforum},
 			function(result)
 			{
-				switch(result.PostResult)
+				switch(result.AddSubforumResult)
 				{
 					case OK:
 						alert("Subforum was added successfully!");
@@ -623,7 +623,7 @@ function RemoveSubforum(subforum)
 						"subforum": subforum},
 			function(result)
 			{
-				switch(result.PostResult)
+				switch(result.RemoveSubforumResult)
 				{
 					case OK:
 						alert("Subforum was deleted successfully!");
@@ -725,7 +725,7 @@ function DeleteModerator(moderator, subforum)
 						"subforum": subforum},
 			function(result)
 			{
-				switch(result.PostResult)
+				switch(result.RemoveModeratorResult)
 				{
 					case OK:
 						alert("Moderator was deleted successfully!");
@@ -749,7 +749,7 @@ function AddNewModerator(subforum)
 						"subforum": subforum},
 			function(result)
 			{
-				switch(result.PostResult)
+				switch(result.AddModeratorResult)
 				{
 					case OK:
 						alert("Moderator was added successfully!");
@@ -766,14 +766,14 @@ function AddNewModerator(subforum)
 function ReplaceModerator(oldModerator, subforum)
 {
 	var newModerator = $('input[name="newModeratorRep"]').val();
-	callService("AddModerator", {"username": username,
+	callService("ReplaceModerator", {"username": username,
 						"password" : password,
 						"userNameToAdd" : newModerator,
 						"userToRemove" : oldModerator,
 						"subforum": subforum},
 			function(result)
 			{
-				switch(result.PostResult)
+				switch(result.ReplaceModeratorResult)
 				{
 					case OK:
 						alert("Moderator was replaced successfully!");
@@ -822,7 +822,7 @@ function BanUser(userToBan)
 						"modPassword" : password},
 			function(result)
 			{
-				switch(result.PostResult)
+				switch(result.BanResult)
 				{
 					case OK:
 						alert("User was banned successfully!");
