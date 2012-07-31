@@ -125,7 +125,10 @@ namespace ForumServer.Security
                     return Result.ILLEGAL_POST;
                 }
             if (!post.Key.Username.Equals(username))
+            {
                 user.CurrentState = UserState.ShouldBeBanned;
+                dataManager.UpdateUser(user);
+            }
             return Result.INSUFFICENT_PERMISSIONS;
         }
 
@@ -138,6 +141,7 @@ namespace ForumServer.Security
             if (user.Level.Equals(AuthorizationLevel.ADMIN))
                 return Result.OK;
             user.CurrentState = UserState.ShouldBeBanned;
+            dataManager.UpdateUser(user);
             return Result.INSUFFICENT_PERMISSIONS;
         }
 
