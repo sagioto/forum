@@ -62,7 +62,7 @@ namespace ForumServer.Policy
 
         public bool ShouldNotify(Post post, string username, string subforum)
         {
-            return (post.Key.Username != username) && ((post.Subforum.Equals(subforum) || Participated(username, post)));
+            return ((post.Key.Username != username) && ((post.Subforum.Equals(subforum) || Participated(username, post))));
         }
 
         private bool Participated(string username, Post post)
